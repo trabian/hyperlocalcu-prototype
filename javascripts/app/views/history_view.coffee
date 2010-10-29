@@ -2,7 +2,7 @@ define ['app/models/item_list', 'app/views/item_view'], (Items, ItemView) ->
 
   class HistoryView extends Backbone.View
 
-    el: $('#history')
+    el: $('#history tbody')
 
     initialize: ->
 

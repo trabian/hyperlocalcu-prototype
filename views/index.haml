@@ -1,10 +1,12 @@
 !!! 5
 %head
-  %link{:href => 'screen.css', :rel => 'stylesheet'}
+  %link{:href => '/screen.css', :rel => 'stylesheet'}
+  %link{:href => '/stylesheets/jquery-ui.css', :rel => 'stylesheet'}
 %body
   #container
     #main
-      = haml(:history, :layout => false)
+      .content
+        = haml(:history, :layout => false)
     #sidebar
       sidebar
   %script{"data-main" => "main", :src => "javascripts/require-jquery.js?v=1"}

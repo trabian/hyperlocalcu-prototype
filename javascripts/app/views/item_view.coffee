@@ -14,4 +14,10 @@ define ['lib/handlebars'], ->
 
       $(this.el).html this.template(this.model.toViewJSON())
 
+      this.addRowClass()
+
       return this
+
+    addRowClass: ->
+
+      $(this.el).addClass 'selected' if this.model.get('selected')

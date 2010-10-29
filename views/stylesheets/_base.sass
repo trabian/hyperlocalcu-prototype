@@ -6,15 +6,31 @@
 
 @import compass/reset.sass
 @import compass/utilities.sass
+@import compass/css3.sass
 @import blueprint/screen.sass
+
+body
+  background: #D3DADF url(/images/background.png) repeat-x left top
 
 #container
   +column(24)
   margin: 0 40px
+  padding: 10px 0
   #main
-    +column(16)
-    background: #f9f9f9
+    +column(15)
+    +box-shadow(#ccc, 2px)
+    z-index: 2
+    background: #fff
+    border: 1px solid #ccc
+    .content
+      padding: 12px
   #sidebar
-    +column(8)
+    +column(9)
     +last
-    background: #ddd
+    float: none
+    display: block
+    z-index: 1
+    background: #F6FAFD
+    margin: 15px 0 0 590px
+    +border-right-radius(8px)
+    min-height: 1000px
