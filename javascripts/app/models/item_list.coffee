@@ -4,6 +4,12 @@ define ['app/models/item'], (Item) ->
 
     model: Item
 
+    events:
+      "change:selected": "changeSelection"
+
+    changeSelection: ->
+      alert('changed selection')
+
     url: '/items.json'
 
   window.Items = new ItemList

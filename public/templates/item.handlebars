@@ -1,0 +1,13 @@
+<td class="date">
+  <span>{{ formatted_timestamp }}<span>
+</td>
+<td class="name">
+  <p class="name">{{ name }}</p>
+  {{#offer}}
+  <p class="offer {{ category }}">
+    <a href="{{ url }}">{{ title }}</a>
+  </p>
+  {{/offer}}
+</td>
+<td class="amount">{{{ formatted_amount }}}</td>
+<td class="spacer"></td>

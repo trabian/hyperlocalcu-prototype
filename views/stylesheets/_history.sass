@@ -1,33 +1,66 @@
 $history_row_border_color = lighten(#A7CFE6, 15)
 $history_row_date_border_color = lighten(#A7CFE6, 10)
-$history_row_stripe_color = lighten(#A7CFE6, 20)
+$history_row_stripe_color = lighten(#A7CFE6, 19)
+$history_row_selected_color = lighten(#A7CFE6, 10)
+$history_row_selected_border_color = #A7CFE6
 $history_font_color = #5F83B9
 //$history_font_color = #0d2054
 
+$table_padding = 12px
+
 table#history
   +reset-box-model
+  thead
+    tr
+      td.date
+        width: 60px
+      td.spacer
+        background: #fff
+        width: 12px
+        padding: 0
   tbody
     tr
       td, th
         border-top: 2px solid $history_row_date_border_color
         color: $history_font_color
         font-size: 13px
-        padding: 10px 5px
+        padding: 8px 5px
+        p
+          margin: 0
+          padding: 0
       td
         &.amount
           width: 15%
           text-align: right
           padding-right: 10px
+        &.spacer
+          border: none !important
+        &.name
+          .offer
+            margin: -0.2em 0 0 0
+            a
+              +link-colors(#aaa)
+              +hover-link
+              text-decoration: none
+              font-size: 10px
       th
         font-weight: normal
       &.repeat-date
         td, th
           border-top: 1px solid $history_row_border_color
-        td.date span
-          display: none
+        td
+          &.date span
+            display: none
       &:nth-child(odd)
         td, th
           background: $history_row_stripe_color
+          &.spacer
+            background: none
       &:first-child
         td, th
           border-top: none
+      &.selected
+        td, th, td.spacer
+          border-top-color: $history_row_selected_color
+          background: $history_row_selected_color
+

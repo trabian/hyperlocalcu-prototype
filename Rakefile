@@ -21,14 +21,29 @@ namespace :import do
   task :items do
     file = ENV['FILE']
 
+    Item.destroy_all
+
     FasterCSV.foreach(file) do |row|
 
-      Item.create(
+
+      attributes = {
         :timestamp => row[0],
         :name => row[1],
         :original_name => row[2],
         :amount => row[3]
-      )
+      }
+
+      unless (row[4].blank?)
+        attributes[:offer] = {
+          :title => row[4],
+          :url => row[5],
+          :amount => row[6],
+          :category => row[7]
+        }
+      end
+
+      Item.create(attributes)
+
 
     end
 

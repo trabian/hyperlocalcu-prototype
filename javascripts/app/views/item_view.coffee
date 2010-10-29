@@ -1,14 +1,19 @@
-define ['lib/handlebars'], ->
+define ['lib/handlebars', 'text!/templates/item.handlebars'], (handlebars, template) ->
 
   class ItemView extends Backbone.View
 
+    events:
+      "click": "select"
+
     tagName: 'tr'
 
-    template: Handlebars.compile('<td class="date"><span>{{ formatted_timestamp }}<span></td><th>{{ name }}</th><td class="amount">{{ formatted_amount }}</td>')
+    template: Handlebars.compile(template)
 
     initialize: ->
 
       _.bindAll this, 'render'
+
+      this.model.bind 'change', this.render
 
     render: ->
 
@@ -19,5 +24,10 @@ define ['lib/handlebars'], ->
       return this
 
     addRowClass: ->
+      if this.model.get('selected')
+        $(this.el).addClass 'selected'
+      else
+        $(this.el).removeClass 'selected'
 
-      $(this.el).addClass 'selected' if this.model.get('selected')
+    select: ->
+      this.model.select()
