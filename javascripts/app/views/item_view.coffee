@@ -1,4 +1,4 @@
-define ['lib/handlebars', 'text!/templates/item.handlebars'], (handlebars, template) ->
+define ['lib/handlebars', 'text!/templates/item.handlebars?v=1'], (handlebars, template) ->
 
   class ItemView extends Backbone.View
 
@@ -28,6 +28,9 @@ define ['lib/handlebars', 'text!/templates/item.handlebars'], (handlebars, templ
         $(this.el).addClass 'selected'
       else
         $(this.el).removeClass 'selected'
+
+      if this.model.get('amount') > 0
+        $(this.el).addClass('reward')
 
     select: ->
       this.model.select()

@@ -1,10 +1,12 @@
-define ['app/models/item_list', 'app/views/item_view'], (Items, ItemView) ->
+define ['app/models/item_list', 'app/views/item_view', 'app/views/summary_view'], (Items, ItemView, SummaryView) ->
 
   class HistoryView extends Backbone.View
 
     el: $('#history tbody')
 
     initialize: ->
+
+      summary_view = new SummaryView
 
       _.bindAll this, 'addAll'
 
