@@ -1,4 +1,4 @@
-define ['lib/handlebars', 'text!/templates/item.handlebars?v=1'], (handlebars, template) ->
+define ['lib/handlebars', 'text!/templates/item.handlebars?v=2'], (handlebars, template) ->
 
   class ItemView extends Backbone.View
 
