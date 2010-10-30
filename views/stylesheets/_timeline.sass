@@ -1,8 +1,8 @@
-//$history_font_color = #0d2054
+//$timeline_font_color = #0d2054
 
 $table_padding = 12px
 
-table#history
+table#timeline
   +reset-box-model
   thead
     tr
@@ -15,8 +15,8 @@ table#history
   tbody
     tr
       td, th
-        border-top: 2px solid $history_row_date_border_color
-        color: $history_font_color
+        border-top: 2px solid $timeline_row_date_border_color
+        color: $timeline_font_color
         font-size: 13px
         padding: 8px 5px
         p
@@ -42,13 +42,13 @@ table#history
         font-weight: normal
       &.repeat-date
         td, th
-          border-top: 1px solid $history_row_border_color
+          border-top: 1px solid $timeline_row_border_color
         td
           &.date span
             display: none
       &:nth-child(odd)
         td, th
-          background: $history_row_stripe_color
+          background: $timeline_row_stripe_color
           &.spacer
             background: none
       &:first-child
@@ -56,8 +56,8 @@ table#history
           border-top: none
       &.selected
         td, th, td.spacer
-          border-top-color: $history_row_selected_color
-          background: $history_row_selected_color
+          border-top-color: $timeline_row_selected_color
+          background: $timeline_row_selected_color
       &.reward
         td, th
           //background: #eaffe7

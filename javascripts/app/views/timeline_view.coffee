@@ -1,8 +1,8 @@
 define ['app/models/item_list', 'app/views/item_view', 'app/views/summary_view'], (Items, ItemView, SummaryView) ->
 
-  class HistoryView extends Backbone.View
+  class TimelineView extends Backbone.View
 
-    el: $('#history tbody')
+    el: $('#timeline tbody')
 
     initialize: ->
 
@@ -16,7 +16,8 @@ define ['app/models/item_list', 'app/views/item_view', 'app/views/summary_view']
 
       view = new ItemView { model: item }
 
-      this.$('#history').append view.render().el
+      #TODO: This doesn't look right
+      this.$('#timeline').append view.render().el
 
       $(view.el).addClass('repeat-date') if item.get('timestamp') is this.lastTimestamp
 

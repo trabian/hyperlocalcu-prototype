@@ -5,12 +5,12 @@
 $font_color = darken(#5F83B9, 5)
 $subtle_color = #999
 
-$history_row_border_color = lighten(#A7CFE6, 15)
-$history_row_date_border_color = lighten(#A7CFE6, 10)
-$history_row_stripe_color = lighten(#A7CFE6, 20)
-$history_row_selected_color = lighten(#A7CFE6, 10)
-$history_row_selected_border_color = #A7CFE6
-$history_font_color = $font_color
+$timeline_row_border_color = lighten(#A7CFE6, 15)
+$timeline_row_date_border_color = lighten(#A7CFE6, 10)
+$timeline_row_stripe_color = lighten(#A7CFE6, 20)
+$timeline_row_selected_color = lighten(#A7CFE6, 10)
+$timeline_row_selected_border_color = #A7CFE6
+$timeline_font_color = $font_color
 
 @import compass/reset.sass
 @import compass/utilities.sass
@@ -43,4 +43,4 @@ body
     +border-right-radius(8px)
     min-height: 1000px
     &.selected
-      background: $history_row_selected_color
+      background: $timeline_row_selected_color

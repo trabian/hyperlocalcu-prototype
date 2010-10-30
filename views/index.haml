@@ -6,7 +6,7 @@
   #container
     #main
       .content
-        = haml(:history, :layout => false)
+        = haml(:timeline, :layout => false)
     #sidebar
       .default
         = haml(:accounts, :layout => false)
@@ -15,4 +15,4 @@
   %script{:src => "javascripts/lib/require-jquery.js?v=1"}
 
   :javascript
-    require({ baseUrl: "/javascripts" }, ["order!lib/underscore", "order!lib/backbone", "order!app/history"])
+    require({ baseUrl: "/javascripts" }, ["order!lib/underscore", "order!lib/backbone", "order!app/timeline"])
