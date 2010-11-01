@@ -3,7 +3,7 @@
   <span class="nx">class</span> <span class="nx">ItemView</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
 
     <span class="nv">events:</span>
-      <span class="s2">&quot;click&quot;</span><span class="o">:</span> <span class="s2">&quot;select&quot;</span>
+      <span class="nv">click: </span><span class="s2">&quot;select&quot;</span>
 
     <span class="nv">tagName: </span><span class="s1">&#39;tr&#39;</span>
 
@@ -33,6 +33,6 @@
         <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;reward&#39;</span><span class="p">)</span>
 
     <span class="nv">select: </span><span class="o">-&gt;</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">select</span><span class="p">()</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">toggleSelect</span><span class="p">()</span>
 
 </pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
