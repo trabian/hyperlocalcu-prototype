@@ -1,27 +1,37 @@
 define ['app/models/item_list', 'app/views/item_view', 'app/views/summary_view'], (Items, ItemView, SummaryView) ->
 
+  # The TimelineView is responsible for rendering the list of [timeline items](item.html)
   class TimelineView extends Backbone.View
 
+    # The items should be added to the timeline table's tbody to allow for a header row
+    # within the thead.
     el: $('#timeline tbody')
 
+    # Create the [summary view](summary_view.html) and bind the [item list's](item_list.html) 
+    # "refresh" event to the timeline's "addAll" event.
     initialize: ->
 
       summary_view = new SummaryView
 
-      _.bindAll this, 'addAll'
+      _.bindAll this, 'addAll', 'addOne'
 
-      Items.bind 'refresh', this.addAll
+      Items.bind 'refresh', @addAll
 
+    # Add a timeline item to the bottom of the timeline.
     addOne: (item) ->
 
       view = new ItemView { model: item }
 
-      #TODO: This doesn't look right
-      this.$('#timeline').append view.render().el
+      $(@el).append view.render().el
 
-      $(view.el).addClass('repeat-date') if item.get('timestamp') is this.lastTimestamp
+      this.addTimestampClass view, item
 
-      this.lastTimestamp = item.get('timestamp')
-
+    # Add all items to the timeline
     addAll: ->
-      Items.each this.addOne
+      Items.each @addOne
+
+    # Add a "repeat-date' class to rows whose preceding row had the same timestamp.
+    # This allows us to hide them in order to clean up the interface.
+    addTimestampClass: (view, item) ->
+      $(view.el).addClass('repeat-date') if item.get('timestamp') is @lastTimestamp
+      @lastTimestamp = item.get('timestamp')

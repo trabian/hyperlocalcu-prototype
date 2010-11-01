@@ -4,7 +4,7 @@ define ->
   class Item extends Backbone.Model
 
     # Toggle whether this item is selected in the timeline view.
-    toggleSelect: ->
+    toggleSelected: ->
       this.set(selected: ! this.get('selected'))
 
     # Convert timestamps from 2010-10-28 to 10/28.

@@ -1,3 +1,4 @@
+# In Progress: This is the summary view in the right sidebar
 define ["lib/jquery-ui"], ->
   class SummaryView extends Backbone.View
 

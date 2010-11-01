@@ -5,6 +5,12 @@ define ['app/models/item'], (Item) ->
 
     model: Item
 
+    # This will likely change in the future
     url: '/items.json'
 
-  window.Items = new ItemList
+    # Remove all items from the item list. This does not destroy the items on the backend.
+    clear: ->
+      this.remove @models
+
+  # Return the ItemList
+  new ItemList
