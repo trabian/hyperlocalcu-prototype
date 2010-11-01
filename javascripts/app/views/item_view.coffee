@@ -3,7 +3,7 @@ define ['lib/handlebars', 'text!/templates/item.handlebars?v=2'], (handlebars, t
   class ItemView extends Backbone.View
 
     events:
-      "click": "select"
+      click: "select"
 
     tagName: 'tr'
 
@@ -33,4 +33,4 @@ define ['lib/handlebars', 'text!/templates/item.handlebars?v=2'], (handlebars, t
         $(this.el).addClass('reward')
 
     select: ->
-      this.model.select()
+      this.model.toggleSelect()
