@@ -8,6 +8,7 @@ rescue LoadError
   Bundler.setup
 end
 
+require 'rake'
 require 'mongoid'
 
 Mongoid.configure do |config|
@@ -24,7 +25,6 @@ namespace :import do
     Item.destroy_all
 
     FasterCSV.foreach(file) do |row|
-
 
       attributes = {
         :timestamp => row[0],
@@ -50,3 +50,6 @@ namespace :import do
   end
 
 end
+
+require 'jasmine'
+load 'jasmine/tasks/jasmine.rake'

@@ -12,7 +12,7 @@
         = haml(:accounts, :layout => false)
         = haml(:"rewards-summary", :layout => false)
 
-  %script{:src => "javascripts/lib/require-jquery.js?v=1"}
+  %script{:src => "javascripts/compiled/lib/require-jquery.js?v=1"}
 
   :javascript
-    require({ baseUrl: "/javascripts" }, ["order!lib/underscore", "order!lib/backbone", "order!app/timeline"])
+    require({ baseUrl: "/javascripts/compiled" }, ["order!lib/underscore", "order!lib/backbone", "order!app/timeline"])

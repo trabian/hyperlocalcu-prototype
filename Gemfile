@@ -11,4 +11,8 @@ gem 'fastercsv'
 
 group :test do
   gem "jasmine"
+  gem "rb-fsevent"
+  gem "growl"
+  gem "guard"
+  gem "guard-coffeescript", :git => "git://github.com/trabian/guard-coffeescript.git"
 end
