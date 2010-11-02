@@ -17,6 +17,15 @@ end
 
 require File.join(File.dirname(__FILE__), 'lib', 'demo')
 
+namespace :doc do
+
+  desc "Generate javascript documentation"
+  task :javascript do
+    `docco javascripts/**/*.coffee`
+  end
+
+end
+
 namespace :import do
 
   desc "Import items provided in ENV['FILE']"

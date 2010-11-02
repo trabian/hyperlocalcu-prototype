@@ -12,6 +12,8 @@ use Rack::Auth::Basic do |username, password|
   [username, password] == ['techatchery', 'trabian']
 end
 
+use Rack::Static, :urls => ["/docs"]
+
 set :show_exceptions, true
 
 run Sinatra::Application
