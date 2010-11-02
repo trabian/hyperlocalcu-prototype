@@ -19,6 +19,7 @@ require File.join(File.dirname(__FILE__), 'lib', 'demo')
 
 namespace :import do
 
+  desc "Import items provided in ENV['FILE']"
   task :items do
     file = ENV['FILE']
 
