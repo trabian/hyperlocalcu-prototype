@@ -22,7 +22,7 @@ require({
       this.view.addAll();
       return (this.el = $(this.view.el));
     });
-    it("should have two rows", function() {
+    it("should be able to add multiple rows", function() {
       return expect(this.el.find('tr').length).toEqual(2);
     });
     return describe("selection", function() {

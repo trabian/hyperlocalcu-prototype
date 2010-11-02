@@ -16,14 +16,16 @@ define(['app/views/item_view', 'app/views/summary_view'], function(ItemView, Sum
   TimelineView.prototype.initialize = function(items) {
     var summary_view;
     summary_view = new SummaryView();
-    _.bindAll(this, 'addAll', 'addOne');
+    _.bindAll(this, 'addAll', 'addOne', 'selectItem');
     this.items = items;
-    return this.items.bind('refresh', this.addAll);
+    this.items.bind('refresh', this.addAll);
+    return this.items.bind('select', this.selectItem);
   };
   TimelineView.prototype.addOne = function(item) {
     var view;
     view = new ItemView({
-      model: item
+      model: item,
+      timelineView: this
     });
     $(this.el).append(view.render().el);
     return this.addTimestampClass(view, item);
@@ -36,6 +38,11 @@ define(['app/views/item_view', 'app/views/summary_view'], function(ItemView, Sum
       $(view.el).addClass('repeat-date');
     }
     return (this.lastTimestamp = item.get('timestamp'));
+  };
+  TimelineView.prototype.selectItem = function(item, previousItem) {
+    return previousItem.set({
+      'selected': false
+    });
   };
   return TimelineView;
 });

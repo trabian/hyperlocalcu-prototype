@@ -7,22 +7,25 @@ define ['app/views/item_view', 'app/views/summary_view'], (ItemView, SummaryView
     # within the thead.
     el: $('#timeline tbody')
 
-    # Create the [summary view](summary_view.html) and bind the [item list's](item_list.html) 
+    # Create the [summary view](summary_view.html) and bind the [item list's](item_list.html)
     # "refresh" event to the timeline's "addAll" event.
     initialize: (items) ->
 
       summary_view = new SummaryView
 
-      _.bindAll this, 'addAll', 'addOne'
+      _.bindAll this, 'addAll', 'addOne', 'selectItem'
 
       @items = items
 
       @items.bind 'refresh', @addAll
+      @items.bind 'select', @selectItem
 
     # Add a timeline item to the bottom of the timeline.
     addOne: (item) ->
 
-      view = new ItemView { model: item }
+      view = new ItemView
+        model: item
+        timelineView: this
 
       $(@el).append view.render().el
 
@@ -37,3 +40,6 @@ define ['app/views/item_view', 'app/views/summary_view'], (ItemView, SummaryView
     addTimestampClass: (view, item) ->
       $(view.el).addClass('repeat-date') if item.get('timestamp') is @lastTimestamp
       @lastTimestamp = item.get('timestamp')
+
+    selectItem: (item, previousItem) ->
+      previousItem.set 'selected': false

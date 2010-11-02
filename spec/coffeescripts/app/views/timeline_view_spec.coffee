@@ -30,16 +30,16 @@ require { baseUrl: "/javascripts/compiled" }, ["order!lib/underscore", "order!li
 
       @el = $(@view.el)
 
-    it "should have two rows", ->
+    it "should be able to add multiple rows", ->
 
       expect(@el.find('tr').length).toEqual(2)
 
     describe "selection", ->
-      
+
       it "should unselect any already-selected rows when selecting a different row", ->
 
         @item.set('selected': true)
         expect(@el.find('tr.selected').length).toEqual(1)
-        
+
         @item_2.set('selected': true)
         expect(@el.find('tr.selected').length).toEqual(1)
