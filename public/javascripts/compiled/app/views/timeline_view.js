@@ -6,18 +6,19 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(['app/models/item_list', 'app/views/item_view', 'app/views/summary_view'], function(Items, ItemView, SummaryView) {
+define(['app/views/item_view', 'app/views/summary_view'], function(ItemView, SummaryView) {
   var TimelineView;
   TimelineView = function() {
     return Backbone.View.apply(this, arguments);
   };
   __extends(TimelineView, Backbone.View);
   TimelineView.prototype.el = $('#timeline tbody');
-  TimelineView.prototype.initialize = function() {
+  TimelineView.prototype.initialize = function(items) {
     var summary_view;
     summary_view = new SummaryView();
     _.bindAll(this, 'addAll', 'addOne');
-    return Items.bind('refresh', this.addAll);
+    this.items = items;
+    return this.items.bind('refresh', this.addAll);
   };
   TimelineView.prototype.addOne = function(item) {
     var view;
@@ -28,7 +29,7 @@ define(['app/models/item_list', 'app/views/item_view', 'app/views/summary_view']
     return this.addTimestampClass(view, item);
   };
   TimelineView.prototype.addAll = function() {
-    return Items.each(this.addOne);
+    return this.items.each(this.addOne);
   };
   TimelineView.prototype.addTimestampClass = function(view, item) {
     if (item.get('timestamp') === this.lastTimestamp) {

@@ -17,5 +17,5 @@ define(['app/models/item'], function(Item) {
   ItemList.prototype.clear = function() {
     return this.remove(this.models);
   };
-  return new ItemList();
+  return ItemList;
 });

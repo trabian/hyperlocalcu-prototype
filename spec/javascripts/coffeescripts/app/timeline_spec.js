@@ -15,7 +15,6 @@ require({
         amount: -30.45
       });
       Timeline.items.trigger('refresh');
-      console.log($('#timeline'));
       return expect($('#timeline tbody tr').length).toEqual(1);
     });
   });

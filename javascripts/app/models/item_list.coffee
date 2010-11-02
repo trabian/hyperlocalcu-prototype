@@ -11,6 +11,3 @@ define ['app/models/item'], (Item) ->
     # Remove all items from the item list. This does not destroy the items on the backend.
     clear: ->
       this.remove @models
-
-  # Return the ItemList
-  new ItemList

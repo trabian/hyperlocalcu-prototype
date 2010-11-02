@@ -22,6 +22,4 @@ require { baseUrl: "/javascripts/compiled" }, ["order!lib/underscore", "order!li
 
       Timeline.items.trigger 'refresh'
 
-      console.log($('#timeline'))
-
       expect($('#timeline tbody tr').length).toEqual(1)

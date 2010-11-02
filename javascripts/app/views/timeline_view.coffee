@@ -1,4 +1,4 @@
-define ['app/models/item_list', 'app/views/item_view', 'app/views/summary_view'], (Items, ItemView, SummaryView) ->
+define ['app/views/item_view', 'app/views/summary_view'], (ItemView, SummaryView) ->
 
   # The TimelineView is responsible for rendering the list of [timeline items](item.html)
   class TimelineView extends Backbone.View
@@ -9,13 +9,15 @@ define ['app/models/item_list', 'app/views/item_view', 'app/views/summary_view']
 
     # Create the [summary view](summary_view.html) and bind the [item list's](item_list.html) 
     # "refresh" event to the timeline's "addAll" event.
-    initialize: ->
+    initialize: (items) ->
 
       summary_view = new SummaryView
 
       _.bindAll this, 'addAll', 'addOne'
 
-      Items.bind 'refresh', @addAll
+      @items = items
+
+      @items.bind 'refresh', @addAll
 
     # Add a timeline item to the bottom of the timeline.
     addOne: (item) ->
@@ -28,7 +30,7 @@ define ['app/models/item_list', 'app/views/item_view', 'app/views/summary_view']
 
     # Add all items to the timeline
     addAll: ->
-      Items.each @addOne
+      @items.each @addOne
 
     # Add a "repeat-date' class to rows whose preceding row had the same timestamp.
     # This allows us to hide them in order to clean up the interface.
