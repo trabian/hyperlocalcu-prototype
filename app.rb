@@ -7,7 +7,9 @@ require 'compass'
 Dir["#{File.dirname(__FILE__)}/lib/demo.rb"].each { |f| load(f) }
 
 Mongoid.configure do |config|
-  config.master = Mongo::Connection.new.db('techatchery_demo')
+  config.master = Mongo::Connection.new.db(ENV['MONGOHQ_URL'])
+
+  #config.master = Mongo::Connection.new.db('techatchery_demo')
 end
 
 configure do
