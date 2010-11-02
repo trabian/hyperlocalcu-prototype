@@ -5,6 +5,3 @@ define ["app/views/timeline_view", "app/models/item_list"], (TimelineView, ItemL
 
   items: @items
   timeline: new TimelineView(@items)
-
-  # Fetch the items from the data store.  This will add all the items to the timeline.
-  #Items.fetch()
