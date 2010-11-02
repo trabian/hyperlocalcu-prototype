@@ -25,7 +25,6 @@ define ['lib/handlebars', 'text!/templates/item.handlebars?v=2'], (handlebars, t
       _.bindAll this, 'render', 'changeSelection', 'changeName'
 
       @model.bind 'change:selected', @changeSelection
-      @model.bind 'change:name', @changeName
 
       @collection = @options.collection
 
