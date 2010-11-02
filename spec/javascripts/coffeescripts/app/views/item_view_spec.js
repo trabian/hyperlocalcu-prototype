@@ -49,7 +49,7 @@ require({
         return expect(this.el.is('.selected')).toBeTruthy();
       });
       it("should become 'selected' on toggleSelected if not already selected", function() {
-        this.view.toggleSelected();
+        this.view.toggleSelectOne();
         return expect(this.el.is('.selected')).toBeTruthy();
       });
       return it("should become un 'selected' on toggleSelected if already selected", function() {
@@ -57,7 +57,7 @@ require({
           selected: true
         });
         expect(this.el.is('.selected')).toBeTruthy();
-        this.view.toggleSelected();
+        this.view.toggleSelectOne();
         return expect(this.el.is('.selected')).toBeFalsy();
       });
     });

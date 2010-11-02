@@ -17,5 +17,25 @@ define(['app/models/item'], function(Item) {
   ItemList.prototype.clear = function() {
     return this.remove(this.models);
   };
+  ItemList.prototype.selected = function() {
+    return this.filter(function(item) {
+      return item.get('selected');
+    });
+  };
+  ItemList.prototype.selectOne = function(item) {
+    _.each(this.selected(), function(selectedItem) {
+      return selectedItem.set({
+        'selected': false
+      });
+    });
+    return item.set({
+      'selected': true
+    });
+  };
+  ItemList.prototype.toggleOrSelectOne = function(item) {
+    return item.get('selected') ? item.set({
+      'selected': false
+    }) : this.selectOne(item);
+  };
   return ItemList;
 });

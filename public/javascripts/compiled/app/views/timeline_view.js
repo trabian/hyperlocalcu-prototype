@@ -25,7 +25,7 @@ define(['app/views/item_view', 'app/views/summary_view'], function(ItemView, Sum
     var view;
     view = new ItemView({
       model: item,
-      timelineView: this
+      collection: this.items
     });
     $(this.el).append(view.render().el);
     return this.addTimestampClass(view, item);
@@ -38,11 +38,6 @@ define(['app/views/item_view', 'app/views/summary_view'], function(ItemView, Sum
       $(view.el).addClass('repeat-date');
     }
     return (this.lastTimestamp = item.get('timestamp'));
-  };
-  TimelineView.prototype.selectItem = function(item, previousItem) {
-    return previousItem.set({
-      'selected': false
-    });
   };
   return TimelineView;
 });

@@ -22,6 +22,7 @@ require({
       this.view.addAll();
       return (this.el = $(this.view.el));
     });
+    afterEach(function() {});
     it("should be able to add multiple rows", function() {
       return expect(this.el.find('tr').length).toEqual(2);
     });
@@ -31,9 +32,7 @@ require({
           'selected': true
         });
         expect(this.el.find('tr.selected').length).toEqual(1);
-        this.item_2.set({
-          'selected': true
-        });
+        this.items.selectOne(this.item_2);
         return expect(this.el.find('tr.selected').length).toEqual(1);
       });
     });

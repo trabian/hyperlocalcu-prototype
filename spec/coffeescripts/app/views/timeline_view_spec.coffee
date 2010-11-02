@@ -30,6 +30,8 @@ require { baseUrl: "/javascripts/compiled" }, ["order!lib/underscore", "order!li
 
       @el = $(@view.el)
 
+    afterEach ->
+
     it "should be able to add multiple rows", ->
 
       expect(@el.find('tr').length).toEqual(2)
@@ -41,5 +43,6 @@ require { baseUrl: "/javascripts/compiled" }, ["order!lib/underscore", "order!li
         @item.set('selected': true)
         expect(@el.find('tr.selected').length).toEqual(1)
 
-        @item_2.set('selected': true)
+        @items.selectOne @item_2
+
         expect(@el.find('tr.selected').length).toEqual(1)

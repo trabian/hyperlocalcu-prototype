@@ -25,7 +25,7 @@ define ['app/views/item_view', 'app/views/summary_view'], (ItemView, SummaryView
 
       view = new ItemView
         model: item
-        timelineView: this
+        collection: @items
 
       $(@el).append view.render().el
 
@@ -40,6 +40,3 @@ define ['app/views/item_view', 'app/views/summary_view'], (ItemView, SummaryView
     addTimestampClass: (view, item) ->
       $(view.el).addClass('repeat-date') if item.get('timestamp') is @lastTimestamp
       @lastTimestamp = item.get('timestamp')
-
-    selectItem: (item, previousItem) ->
-      previousItem.set 'selected': false

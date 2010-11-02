@@ -13,7 +13,7 @@ define(['lib/handlebars', 'text!/templates/item.handlebars?v=2'], function(handl
   };
   __extends(ItemView, Backbone.View);
   ItemView.prototype.events = {
-    click: "toggleSelected"
+    click: "toggleSelectOne"
   };
   ItemView.prototype.tagName = 'tr';
   ItemView.prototype.template = Handlebars.compile(template);
@@ -21,6 +21,7 @@ define(['lib/handlebars', 'text!/templates/item.handlebars?v=2'], function(handl
     _.bindAll(this, 'render', 'changeSelection', 'changeName');
     this.model.bind('change:selected', this.changeSelection);
     this.model.bind('change:name', this.changeName);
+    this.collection = this.options.collection;
     return this.render();
   };
   ItemView.prototype.render = function() {
@@ -33,8 +34,9 @@ define(['lib/handlebars', 'text!/templates/item.handlebars?v=2'], function(handl
   ItemView.prototype.changeSelection = function() {
     return $(this.el).toggleClass('selected', this.model.get('selected'));
   };
-  ItemView.prototype.toggleSelected = function() {
-    return this.model.toggleSelected();
+  ItemView.prototype.toggleSelectOne = function() {
+    var _ref;
+    return (typeof (_ref = this.collection) !== "undefined" && _ref !== null) ? this.collection.toggleOrSelectOne(this.model) : this.model.toggleSelected();
   };
   return ItemView;
 });

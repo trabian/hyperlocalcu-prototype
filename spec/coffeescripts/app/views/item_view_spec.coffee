@@ -52,11 +52,11 @@ require { baseUrl: "/javascripts/compiled" }, ["order!lib/underscore", "order!li
         expect(@el.is('.selected')).toBeTruthy()
 
       it "should become 'selected' on toggleSelected if not already selected", ->
-        @view.toggleSelected()
+        @view.toggleSelectOne()
         expect(@el.is('.selected')).toBeTruthy()
 
       it "should become un 'selected' on toggleSelected if already selected", ->
         @item.set selected: true
         expect(@el.is('.selected')).toBeTruthy()
-        @view.toggleSelected()
+        @view.toggleSelectOne()
         expect(@el.is('.selected')).toBeFalsy()

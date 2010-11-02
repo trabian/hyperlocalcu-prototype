@@ -4,13 +4,13 @@ define ['lib/handlebars', 'text!/templates/item.handlebars?v=2'], (handlebars, t
   class ItemView extends Backbone.View
 
     events:
-      click: "toggleSelected"
+      click: "toggleSelectOne"
 
     # The item view rendered by the template will be wrapped in a tr
-    # so it can be inserted into the +tbody+ of the timeline view.
+    # so it can be inserted into the `tbody` of the timeline view.
     tagName: 'tr'
 
-    # The template referenced here is provided by the "define" call above
+    # The template referenced here is provided by the `define` call above
     # and will be cached on both client and server.
     #
     # The template is also compiled via Handlebars for faster per-item
@@ -27,9 +27,11 @@ define ['lib/handlebars', 'text!/templates/item.handlebars?v=2'], (handlebars, t
       @model.bind 'change:selected', @changeSelection
       @model.bind 'change:name', @changeName
 
+      @collection = @options.collection
+
       this.render()
 
-    # Render the compiled template and decorate the surrounding "tr".
+    # Render the compiled template and decorate the surrounding `tr`.
     render: ->
 
       $(@el).html @template(@model.toViewJSON())
@@ -43,6 +45,11 @@ define ['lib/handlebars', 'text!/templates/item.handlebars?v=2'], (handlebars, t
     changeSelection: ->
       $(@el).toggleClass 'selected', @model.get('selected')
 
-    # Triggered by the DOM events.
-    toggleSelected: ->
-      @model.toggleSelected()
+    # If the model is selected, unselect it.  Otherwise if this view is
+    # part of a collection then select only this model (by deselecting 
+    # all others).  If it's not part of a collection then just select it.
+    toggleSelectOne: ->
+      if @collection?
+        @collection.toggleOrSelectOne @model
+      else
+        @model.toggleSelected()
