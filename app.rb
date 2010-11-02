@@ -15,7 +15,7 @@ Mongoid.configure do |config|
     config.master = conn.db(uri.path.gsub(/^\//, ''))
 
   else
-    config.master = Mongo::Connection.new.db('techatchery_demo')
+    config.master = Mongo::Connection.new.db('techatchery-hyperlocalcu')
   end
   
 end
@@ -31,6 +31,8 @@ configure do
   set :sass, Compass.sass_engine_options
 
 end
+
+mime_type :handlebars, "text/html"
 
 get '/' do
   haml :index

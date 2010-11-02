@@ -12,7 +12,7 @@ require 'rake'
 require 'mongoid'
 
 Mongoid.configure do |config|
-  config.master = Mongo::Connection.new.db('techatchery_demo')
+  config.master = Mongo::Connection.new.db('techatchery-hyperlocalcu')
 end
 
 require File.join(File.dirname(__FILE__), 'lib', 'demo')
