@@ -9,6 +9,10 @@ var __extends = function(child, parent) {
 define(['app/views/item_view', 'app/views/summary_view'], function(ItemView, SummaryView) {
   var TimelineView;
   TimelineView = function() {
+    var _this;
+    _this = this;
+    this.addAll = function(){ return TimelineView.prototype.addAll.apply(_this, arguments); };
+    this.addOne = function(){ return TimelineView.prototype.addOne.apply(_this, arguments); };
     return Backbone.View.apply(this, arguments);
   };
   __extends(TimelineView, Backbone.View);
@@ -16,7 +20,6 @@ define(['app/views/item_view', 'app/views/summary_view'], function(ItemView, Sum
   TimelineView.prototype.initialize = function(items) {
     var summary_view;
     summary_view = new SummaryView();
-    _.bindAll(this, 'addAll', 'addOne', 'selectItem');
     this.items = items;
     this.items.bind('refresh', this.addAll);
     return this.items.bind('select', this.selectItem);

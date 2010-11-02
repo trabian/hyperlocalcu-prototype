@@ -22,8 +22,6 @@ define ['lib/handlebars', 'text!/templates/item.handlebars?v=2'], (handlebars, t
     # Setup the event bindings and render the view.
     initialize: ->
 
-      _.bindAll this, 'render', 'changeSelection', 'changeName'
-
       @model.bind 'change:selected', @changeSelection
 
       @collection = @options.collection
@@ -41,7 +39,7 @@ define ['lib/handlebars', 'text!/templates/item.handlebars?v=2'], (handlebars, t
       return this
 
     # Change the 'selected' class for the row without re-rendering.
-    changeSelection: ->
+    changeSelection: =>
       $(@el).toggleClass 'selected', @model.get('selected')
 
     # If the model is selected, unselect it.  Otherwise if this view is

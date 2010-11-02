@@ -9,6 +9,9 @@ var __extends = function(child, parent) {
 define(['lib/handlebars', 'text!/templates/item.handlebars?v=2'], function(handlebars, template) {
   var ItemView;
   ItemView = function() {
+    var _this;
+    _this = this;
+    this.changeSelection = function(){ return ItemView.prototype.changeSelection.apply(_this, arguments); };
     return Backbone.View.apply(this, arguments);
   };
   __extends(ItemView, Backbone.View);
@@ -18,9 +21,7 @@ define(['lib/handlebars', 'text!/templates/item.handlebars?v=2'], function(handl
   ItemView.prototype.tagName = 'tr';
   ItemView.prototype.template = Handlebars.compile(template);
   ItemView.prototype.initialize = function() {
-    _.bindAll(this, 'render', 'changeSelection', 'changeName');
     this.model.bind('change:selected', this.changeSelection);
-    this.model.bind('change:name', this.changeName);
     this.collection = this.options.collection;
     return this.render();
   };

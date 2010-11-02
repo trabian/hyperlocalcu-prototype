@@ -13,15 +13,13 @@ define ['app/views/item_view', 'app/views/summary_view'], (ItemView, SummaryView
 
       summary_view = new SummaryView
 
-      _.bindAll this, 'addAll', 'addOne', 'selectItem'
-
       @items = items
 
       @items.bind 'refresh', @addAll
       @items.bind 'select', @selectItem
 
     # Add a timeline item to the bottom of the timeline.
-    addOne: (item) ->
+    addOne: (item) =>
 
       view = new ItemView
         model: item
@@ -32,7 +30,7 @@ define ['app/views/item_view', 'app/views/summary_view'], (ItemView, SummaryView
       this.addTimestampClass view, item
 
     # Add all items to the timeline
-    addAll: ->
+    addAll: =>
       @items.each @addOne
 
     # Add a "repeat-date' class to rows whose preceding row had the same timestamp.
