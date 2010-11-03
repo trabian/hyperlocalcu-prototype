@@ -8,10 +8,6 @@ table#timeline
     tr
       td.date
         width: 60px
-      td.spacer
-        background: #fff
-        width: 12px
-        padding: 0
   tbody
     tr
       td, th
@@ -27,8 +23,6 @@ table#timeline
           width: 15%
           text-align: right
           padding-right: 10px
-        &.spacer
-          border: none !important
         &.name
           .offer
             margin: 0
@@ -55,11 +49,10 @@ table#timeline
         td, th
           border-top: none
       &.selected
-        td, th, td.spacer
+        td, th
           border-top-color: $timeline_row_selected_color
           background: $timeline_row_selected_color
       &.reward
         td, th
-          //background: #eaffe7
           color: #090
 

@@ -6,7 +6,7 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(['lib/handlebars', 'text!/templates/item.handlebars?v=2'], function(handlebars, template) {
+define(['lib/handlebars', 'text!/templates/item.handlebars?v=3'], function(handlebars, template) {
   var ItemView;
   ItemView = function() {
     var _this;
