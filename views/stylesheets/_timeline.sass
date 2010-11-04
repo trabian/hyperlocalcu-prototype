@@ -43,16 +43,17 @@ table#timeline
       &:nth-child(odd)
         td, th
           background: $timeline_row_stripe_color
-          &.spacer
-            background: none
       &:first-child
         td, th
           border-top: none
       &.selected
         td, th
-          border-top-color: $timeline_row_selected_color
+          border-top-color: $timeline_row_selected_border_color
           background: $timeline_row_selected_color
       &.reward
         td, th
           color: #090
+    tr.selected + tr
+      td, th
+        border-top-color: #e3e3e3
 
