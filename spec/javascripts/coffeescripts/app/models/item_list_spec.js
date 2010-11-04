@@ -18,6 +18,17 @@ require({
     it('should know how many items it has', function() {
       return expect(this.items.length).toEqual(2);
     });
+    it("should trigger the selectItem event when an item is selected", function() {
+      var changedItem;
+      changedItem = null;
+      this.items.bind('change:selected', function(item) {
+        return (changedItem = item);
+      });
+      this.item.set({
+        'selected': true
+      });
+      return expect(changedItem).toEqual(this.item);
+    });
     return describe('with a selected item', function() {
       beforeEach(function() {
         return this.item_2.set({

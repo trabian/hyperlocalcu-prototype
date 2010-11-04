@@ -19,6 +19,17 @@ require { baseUrl: "/javascripts/compiled" }, ["order!lib/underscore", "order!li
     it 'should know how many items it has', ->
       expect(@items.length).toEqual(2)
 
+    it "should trigger the selectItem event when an item is selected", ->
+
+      changedItem = null
+
+      @items.bind 'change:selected', (item)->
+        changedItem = item
+
+      @item.set 'selected': true
+
+      expect(changedItem).toEqual(@item)
+
     describe 'with a selected item', ->
 
       beforeEach ->

@@ -21,8 +21,7 @@ define(['app/views/item_view', 'app/views/summary_view'], function(ItemView, Sum
     var summary_view;
     summary_view = new SummaryView();
     this.items = items;
-    this.items.bind('refresh', this.addAll);
-    return this.items.bind('select', this.selectItem);
+    return this.items.bind('refresh', this.addAll);
   };
   TimelineView.prototype.addOne = function(item) {
     var view;

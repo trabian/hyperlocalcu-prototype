@@ -16,7 +16,6 @@ define ['app/views/item_view', 'app/views/summary_view'], (ItemView, SummaryView
       @items = items
 
       @items.bind 'refresh', @addAll
-      @items.bind 'select', @selectItem
 
     # Add a timeline item to the bottom of the timeline.
     addOne: (item) =>

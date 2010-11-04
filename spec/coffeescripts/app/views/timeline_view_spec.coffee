@@ -30,8 +30,6 @@ require { baseUrl: "/javascripts/compiled" }, ["order!lib/underscore", "order!li
 
       @el = $(@view.el)
 
-    afterEach ->
-
     it "should be able to add multiple rows", ->
 
       expect(@el.find('tr').length).toEqual(2)

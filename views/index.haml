@@ -11,6 +11,7 @@
       .default
         = haml(:accounts, :layout => false)
         = haml(:"rewards-summary", :layout => false)
+      #merchant-view{:style => "display: none" }= haml(:"merchant-view", :layout => false)
 
   %script{:src => "javascripts/compiled/lib/require-jquery.js?v=1"}
 
