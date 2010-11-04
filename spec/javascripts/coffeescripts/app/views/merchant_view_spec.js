@@ -5,7 +5,7 @@ require({
     beforeEach(function() {
       this.items = new ItemList();
       $('#merchant-view').remove();
-      $('body').append('<div id="merchant-view" style="display: none;"><a href="#" class="close">close</a><div class="content"></div></div>');
+      $('body').append('<div id="sidebar"><div id="merchant-view" style="display: none;"><a href="#" class="close">close</a><div class="content"></div></div></div>');
       this.view = new MerchantView(this.items);
       this.view.el = $('#merchant-view');
       this.view.delegateEvents();
@@ -31,11 +31,33 @@ require({
       });
       return expect(this.el.is(':visible')).toBeTruthy();
     });
+    it("should trigger the view's 'show' event when shown", function() {
+      var shown;
+      shown = false;
+      this.view.bind('show', function() {
+        return (shown = true);
+      });
+      this.item.set({
+        'selected': true
+      });
+      return expect(shown).toBeTruthy();
+    });
     return describe("the merchant view with an item already selected", function() {
       beforeEach(function() {
         return this.item.set({
           'selected': 'true'
         });
+      });
+      it("should trigger the view's 'hide' event when hidden", function() {
+        var hidden;
+        hidden = false;
+        this.view.bind('hide', function() {
+          return (hidden = true);
+        });
+        this.item.set({
+          'selected': false
+        });
+        return expect(hidden).toBeTruthy();
       });
       it("should close when the close button is clicked", function() {
         this.el.find('.close').click();

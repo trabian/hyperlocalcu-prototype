@@ -23,7 +23,7 @@ require { baseUrl: "/javascripts/compiled" }, ["order!lib/underscore", "order!li
 
       changedItem = null
 
-      @items.bind 'change:selected', (item)->
+      @items.bind 'change:selected', (item) ->
         changedItem = item
 
       @item.set 'selected': true

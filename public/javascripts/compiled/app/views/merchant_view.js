@@ -23,19 +23,23 @@ define(["lib/jquery-ui"], function() {
   };
   MerchantView.prototype.initialize = function(items) {
     items.bind('change:selected', this.changeSelected);
-    return this.$('.close').button({
+    this.$('.close').button({
       icons: {
         primary: 'ui-icon-close'
       }
     });
+    return _.extend(this, Backbone.Events);
   };
   MerchantView.prototype.changeSelected = function(item) {
     if (item.get('selected')) {
-      this.loadContent(item);
       this.currentItem = item;
-      return $(this.el).show();
+      this.loadContent(item);
+      $(this.el).show();
+      return this.trigger('show');
     } else {
-      return $(this.el).find('.content').html('').end().hide();
+      this.$('.content').empty();
+      $(this.el).hide();
+      return this.trigger('hide');
     }
   };
   MerchantView.prototype.close = function() {
@@ -44,7 +48,7 @@ define(["lib/jquery-ui"], function() {
     });
   };
   MerchantView.prototype.loadContent = function(item) {
-    return $(this.el).find('.content').html('<h3>' + item.get('name') + '<h3>');
+    return this.$('.content').html('<h3>' + item.get('name') + '<h3>');
   };
   return MerchantView;
 });

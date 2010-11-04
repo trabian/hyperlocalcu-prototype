@@ -6,7 +6,7 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(['app/views/item_view', 'app/views/summary_view'], function(ItemView, SummaryView) {
+define(['app/views/item_view'], function(ItemView) {
   var TimelineView;
   TimelineView = function() {
     var _this;
@@ -18,8 +18,6 @@ define(['app/views/item_view', 'app/views/summary_view'], function(ItemView, Sum
   __extends(TimelineView, Backbone.View);
   TimelineView.prototype.el = $('#timeline tbody');
   TimelineView.prototype.initialize = function(items) {
-    var summary_view;
-    summary_view = new SummaryView();
     this.items = items;
     return this.items.bind('refresh', this.addAll);
   };

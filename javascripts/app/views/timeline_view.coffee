@@ -1,4 +1,4 @@
-define ['app/views/item_view', 'app/views/summary_view'], (ItemView, SummaryView) ->
+define ['app/views/item_view'], (ItemView) ->
 
   # The TimelineView is responsible for rendering the list of [timeline items](item.html)
   class TimelineView extends Backbone.View
@@ -10,8 +10,6 @@ define ['app/views/item_view', 'app/views/summary_view'], (ItemView, SummaryView
     # Create the [summary view](summary_view.html) and bind the [item list's](item_list.html)
     # "refresh" event to the timeline's "addAll" event.
     initialize: (items) ->
-
-      summary_view = new SummaryView
 
       @items = items
 

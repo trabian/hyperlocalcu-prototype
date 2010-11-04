@@ -8,7 +8,7 @@ require { baseUrl: "/javascripts/compiled" }, ["order!lib/underscore", "order!li
 
       $('#merchant-view').remove()
 
-      $('body').append('<div id="merchant-view" style="display: none;"><a href="#" class="close">close</a><div class="content"></div></div>')
+      $('body').append('<div id="sidebar"><div id="merchant-view" style="display: none;"><a href="#" class="close">close</a><div class="content"></div></div></div>')
 
       @view = new MerchantView(@items)
 
@@ -36,10 +36,32 @@ require { baseUrl: "/javascripts/compiled" }, ["order!lib/underscore", "order!li
       @item.set 'selected': 'true'
       expect(@el.is(':visible')).toBeTruthy()
 
+    it "should trigger the view's 'show' event when shown", ->
+
+      shown = false
+
+      @view.bind 'show', ->
+        shown = true
+
+      @item.set 'selected': true
+
+      expect(shown).toBeTruthy()
+
     describe "the merchant view with an item already selected", ->
 
       beforeEach ->
         @item.set('selected': 'true')
+
+      it "should trigger the view's 'hide' event when hidden", ->
+
+        hidden = false
+
+        @view.bind 'hide', ->
+          hidden = true
+
+        @item.set 'selected': false
+
+        expect(hidden).toBeTruthy()
 
       it "should close when the close button is clicked", ->
         @el.find('.close').click()
