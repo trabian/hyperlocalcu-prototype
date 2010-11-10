@@ -1,6 +1,6 @@
 require({
   baseUrl: "/javascripts/compiled"
-}, ["order!lib/underscore", "order!lib/backbone", "order!app/views/item_view", "order!app/models/item"], function(underscore, backbone, ItemView, Item) {
+}, ["order!vendor/underscore", "order!vendor/backbone", "order!member-timeline/views/item_view", "order!member-timeline/models/item"], function(underscore, backbone, ItemView, Item) {
   return describe('ItemView', function() {
     beforeEach(function() {
       this.item = new Item({

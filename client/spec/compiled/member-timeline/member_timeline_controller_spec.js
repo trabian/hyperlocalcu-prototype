@@ -1,6 +1,6 @@
 require({
   baseUrl: "/javascripts/compiled"
-}, ["order!vendor/underscore", "order!vendor/backbone", "order!member-timeline/member_timelien_controller"], function(underscore, backbone, Timeline) {
+}, ["order!vendor/underscore", "order!vendor/backbone", "order!member-timeline/member_timeline_controller"], function(underscore, backbone, Timeline) {
   return describe("Timeline", function() {
     beforeEach(function() {
       Timeline.items.clear();

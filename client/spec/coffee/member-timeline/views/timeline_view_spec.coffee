@@ -1,4 +1,4 @@
-require { baseUrl: "/javascripts/compiled" }, ["order!lib/underscore", "order!lib/backbone", "app/models/item", "app/models/item_list", "app/views/timeline_view"], (underscore, backbone, Item, ItemList, TimelineView) ->
+require { baseUrl: "/javascripts/compiled" }, ["order!vendor/underscore", "order!vendor/backbone", "member-timeline/models/item", "member-timeline/models/item_list", "member-timeline/views/timeline_view"], (underscore, backbone, Item, ItemList, TimelineView) ->
 
   describe 'TimelineView', ->
 
