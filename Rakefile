@@ -21,7 +21,8 @@ namespace :doc do
 
   desc "Generate javascript documentation"
   task :javascript do
-    `docco javascripts/**/*.coffee`
+    files = Dir.glob('client/coffee/**/*.coffee').join(' ')
+    `docco #{files}`
   end
 
 end
@@ -53,7 +54,6 @@ namespace :import do
       end
 
       Item.create(attributes)
-
 
     end
 

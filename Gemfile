@@ -13,7 +13,6 @@ group :development do
   gem "growl"
   gem "rb-fsevent"
   gem "guard"
-  gem "guard-bundler"
   gem "guard-compass"
   gem "guard-livereload"
   gem "guard-shell"
