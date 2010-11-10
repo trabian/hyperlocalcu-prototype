@@ -1,0 +1,21 @@
+!!! 5
+%head
+  %link{:href => '/stylesheets/compiled/screen.css', :rel => 'stylesheet'}
+  %link{:href => '/stylesheets/jquery-ui.css', :rel => 'stylesheet'}
+%body
+  #container
+    #main
+      .content
+        = haml(:timeline, :layout => false)
+    #sidebar
+      .default
+        = haml(:accounts, :layout => false)
+        = haml(:"rewards-summary", :layout => false)
+      #merchant-view{:style => "display: none" }= haml(:"merchant-view", :layout => false)
+
+  %script{:src => "javascripts/compiled/vendor/require-jquery.js?v=1"}
+
+  :javascript
+    require({ baseUrl: "/javascripts/compiled" }, ["order!vendor/underscore", "order!vendor/backbone", "order!member-timeline/member_timeline_controller"], function(underscore, backbone, Timeline) {
+      Timeline.items.fetch();
+    });

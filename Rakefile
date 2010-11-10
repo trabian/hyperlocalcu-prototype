@@ -15,7 +15,7 @@ Mongoid.configure do |config|
   config.master = Mongo::Connection.new.db('techatchery-hyperlocalcu')
 end
 
-require File.join(File.dirname(__FILE__), 'lib', 'demo')
+require File.join(File.dirname(__FILE__), 'server', 'init')
 
 namespace :doc do
 

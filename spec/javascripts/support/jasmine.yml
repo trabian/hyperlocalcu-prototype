@@ -11,7 +11,7 @@
 #   - dist/**/*.js
 #
 src_files:
-    - javascripts/compiled/lib/require-jquery.js
+    - javascripts/compiled/vendor/require-jquery.js
 
 # stylesheets
 #
@@ -71,3 +71,4 @@ src_dir: public
 # spec_dir: spec/javascripts
 #
 spec_dir:
+

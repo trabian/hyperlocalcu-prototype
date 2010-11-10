@@ -1,0 +1,30 @@
+client
+  ~coffee
+    ~member-timeline
+      -controller.coffee
+      +models
+      +views
+  ~views
+    ~member-timeline
+      -item.handlebars
+  ~spec
+    ~src
+    ~compiled
+  ~stylesheets
+  ~vendor
+    -backbone.js
+development
+  +data
+  +design
+docs
+server
+  ~app
+    ~models
+    ~views
+      -index.haml
+    server.rb
+  ~log
+public
+  ~images
+  ~javascripts
+  ~stylesheets
