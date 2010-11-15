@@ -10,7 +10,7 @@ tmux rename-window -t hlcu:2 console
 tmux new-window -t hlcu:3 "bundle exec guard"
 tmux rename-window -t hlcu:3 guard
 
-tmux new-window -t hlcu:4 "bundle exec gollum"
+tmux new-window -t hlcu:4 "cd development/wiki && bundle exec gollum"
 tmux rename-window -t hlcu:4 wiki
 
 tmux select-window -t hlcu:0
