@@ -1,0 +1,3 @@
+[submodule "development/wiki"]
+	path = development/wiki
+	url = git@github.com:trabian/hyperlocalcu-prototype.wiki.git
