@@ -17,6 +17,10 @@ group :development do
   gem "guard-livereload"
   gem "guard-shell"
   gem "guard-coffeescript", :git => "git://github.com/trabian/guard-coffeescript.git"
+  gem "gollum"
+  gem "rdiscount"
+  gem "racksh"
+  gem "interactive_editor"
 end
 
 group :test do

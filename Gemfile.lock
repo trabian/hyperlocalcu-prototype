@@ -14,6 +14,7 @@ GEM
       i18n (~> 0.4.1)
     activesupport (3.0.1)
     addressable (2.2.2)
+    albino (1.0)
     bson (1.0.4)
     bson_ext (1.0.4)
     builder (2.1.2)
@@ -22,6 +23,7 @@ GEM
       haml (>= 3.0.4)
     configuration (1.1.0)
     daemons (1.0.10)
+    diff-lcs (1.1.2)
     em-websocket (0.1.4)
       addressable (>= 2.1.1)
       eventmachine (>= 0.12.9)
@@ -29,6 +31,18 @@ GEM
     fastercsv (1.4.0)
     fastthread (1.0.1)
     gem_plugin (0.2.3)
+    github-markup (0.5.0)
+    gollum (1.1.0)
+      albino (~> 1.0)
+      github-markup (>= 0.4.0, < 1.0.0)
+      grit (~> 2.3)
+      mustache (>= 0.11.2, < 1.0.0)
+      nokogiri (~> 1.4)
+      sanitize (~> 1.1)
+      sinatra (~> 1.0)
+    grit (2.3.0)
+      diff-lcs (~> 1.1)
+      mime-types (~> 1.15)
     growl (1.0.3)
     guard (0.2.2)
       open_gem (~> 1.4.2)
@@ -44,6 +58,8 @@ GEM
       guard (>= 0.2.0)
     haml (3.0.6)
     i18n (0.4.2)
+    interactive_editor (0.0.5)
+      spoon (>= 0.0.1)
     jasmine (1.0.1)
       json_pure (>= 1.4.3)
       rack (>= 1.0.0)
@@ -56,6 +72,7 @@ GEM
     launchy (0.3.7)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
+    mime-types (1.16)
     mongo (1.0.7)
       bson (>= 1.0.4)
     mongoid (2.0.0.beta.17)
@@ -69,20 +86,31 @@ GEM
       daemons (>= 1.0.3)
       fastthread (>= 1.0.1)
       gem_plugin (>= 0.2.3)
+    mustache (0.11.2)
+    nokogiri (1.4.3.1)
     open_gem (1.4.2)
       launchy (~> 0.3.5)
     rack (1.2.1)
     rack-coffee (0.3.2)
       rack
+    rack-test (0.5.6)
+      rack (>= 1.0)
+    racksh (0.9.8)
+      rack (>= 1.0)
+      rack-test (>= 0.5)
     rake (0.8.7)
     rb-fsevent (0.3.6)
+    rdiscount (1.6.5)
     rspec (1.2.8)
+    sanitize (1.2.1)
+      nokogiri (~> 1.4.1)
     selenium-client (1.2.18)
     selenium-rc (2.2.4)
       selenium-client (>= 1.2.18)
     sinatra (1.1.0)
       rack (~> 1.1)
       tilt (~> 1.1)
+    spoon (0.0.1)
     thor (0.14.3)
     tilt (1.1)
     tzinfo (0.3.23)
@@ -95,6 +123,7 @@ DEPENDENCIES
   bson_ext (= 1.0.4)
   compass
   fastercsv
+  gollum
   growl
   guard
   guard-coffeescript!
@@ -102,9 +131,12 @@ DEPENDENCIES
   guard-livereload
   guard-shell
   haml
+  interactive_editor
   jasmine
   mongoid (= 2.0.0.beta.17)
   mongrel
   rack-coffee
+  racksh
   rb-fsevent
+  rdiscount
   sinatra
