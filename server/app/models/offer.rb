@@ -3,10 +3,10 @@ class Offer
   include Mongoid::Document
 
   field :name
-  field :url
   field :amount
-  field :category
+  field :template
+  field :options, :type => Hash
 
-  embedded_in :item, :inverse_of => :offer
+  embedded_in :merchant, :inverse_of => :offers
 
 end

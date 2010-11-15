@@ -26,6 +26,8 @@ define ['vendor/handlebars', 'text!views/member-timeline/item.handlebars?v=3'], 
 
       @collection = @options.collection
 
+      this.id = "item-#{@model.id}"
+
       this.render()
 
     # Render the compiled template and decorate the surrounding `tr`.

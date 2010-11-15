@@ -9,9 +9,9 @@ var __extends = function(child, parent) {
 define(['vendor/handlebars', 'text!views/member-timeline/item.handlebars?v=3'], function(handlebars, template) {
   var ItemView;
   ItemView = function() {
-    var _this;
-    _this = this;
-    this.changeSelection = function(){ return ItemView.prototype.changeSelection.apply(_this, arguments); };
+    var _a;
+    _a = this;
+    this.changeSelection = function(){ return ItemView.prototype.changeSelection.apply(_a, arguments); };
     return Backbone.View.apply(this, arguments);
   };
   __extends(ItemView, Backbone.View);
@@ -23,6 +23,7 @@ define(['vendor/handlebars', 'text!views/member-timeline/item.handlebars?v=3'], 
   ItemView.prototype.initialize = function() {
     this.model.bind('change:selected', this.changeSelection);
     this.collection = this.options.collection;
+    this.id = ("item-" + (this.model.id));
     return this.render();
   };
   ItemView.prototype.render = function() {
@@ -36,8 +37,8 @@ define(['vendor/handlebars', 'text!views/member-timeline/item.handlebars?v=3'], 
     return $(this.el).toggleClass('selected', this.model.get('selected'));
   };
   ItemView.prototype.toggleSelectOne = function() {
-    var _ref;
-    return (typeof (_ref = this.collection) !== "undefined" && _ref !== null) ? this.collection.toggleOrSelectOne(this.model) : this.model.toggleSelected();
+    var _a;
+    return (typeof (_a = this.collection) !== "undefined" && _a !== null) ? this.collection.toggleOrSelectOne(this.model) : this.model.toggleSelected();
   };
   return ItemView;
 });

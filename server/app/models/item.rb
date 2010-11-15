@@ -6,8 +6,8 @@ class Item
   field :timestamp, :type => Date
   field :amount, :type => Float
 
-  embeds_one :offer
-
   scope :ordered, desc(:timestamp)
+
+  references_one :merchant
 
 end
