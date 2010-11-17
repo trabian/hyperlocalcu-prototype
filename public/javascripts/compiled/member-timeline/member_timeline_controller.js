@@ -25,7 +25,7 @@ define(["member-timeline/views/timeline_view", "member-timeline/models/item_list
   MemberTimelineController.prototype.initialize = function(options) {
     this.setupItemList();
     this.setupTimelineView();
-    this.setupMemberOverviewView();
+    this.setupMemberOverviewView(options.member);
     if (options.fetchOnInit === true) {
       return this.fetch();
     }
@@ -40,10 +40,10 @@ define(["member-timeline/views/timeline_view", "member-timeline/models/item_list
   MemberTimelineController.prototype.setupTimelineView = function() {
     return (this.timelineView = new TimelineView(this.items));
   };
-  MemberTimelineController.prototype.setupMemberOverviewView = function() {
+  MemberTimelineController.prototype.setupMemberOverviewView = function(member) {
     return (this.memberOverviewView = new MemberOverviewView({
       el: $('#overview'),
-      model: options.member
+      model: member
     }));
   };
   MemberTimelineController.prototype.routes = {

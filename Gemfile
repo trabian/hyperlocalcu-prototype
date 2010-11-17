@@ -8,6 +8,8 @@ gem 'compass'
 gem 'mongoid', '2.0.0.beta.17'
 gem "bson_ext", "1.0.4"
 gem 'fastercsv'
+gem 'activemodel', '3.0.1'
+gem 'activesupport', '3.0.1'
 
 group :development do
   gem "growl"

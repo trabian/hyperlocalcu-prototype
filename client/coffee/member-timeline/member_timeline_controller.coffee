@@ -8,7 +8,7 @@ define ["member-timeline/views/timeline_view", "member-timeline/models/item_list
       # Setup item list, timeline, and member overview
       this.setupItemList()
       this.setupTimelineView()
-      this.setupMemberOverviewView()
+      this.setupMemberOverviewView options.member
 
       # Optionally fetch as the final step of initialization
       this.fetch() if options.fetchOnInit == true
@@ -30,10 +30,10 @@ define ["member-timeline/views/timeline_view", "member-timeline/models/item_list
     setupTimelineView: =>
       @timelineView = new TimelineView(@items)
 
-    setupMemberOverviewView: =>
+    setupMemberOverviewView: (member) =>
       @memberOverviewView = new MemberOverviewView
         el: $('#overview')
-        model: options.member
+        model: member
 
     # ##Routes and Actions
 
