@@ -147,6 +147,3 @@ DEPENDENCIES
   rb-fsevent
   rdiscount
   sinatra
-
-METADATA
-  version: 1.0.6
