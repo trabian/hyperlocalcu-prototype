@@ -30,3 +30,7 @@ mime_type :handlebars, "text/html"
 get '/items.json' do
   Item.ordered.to_json(:except => ["_id"], :methods => ["id", :merchant])
 end
+
+get '/' do
+  File.read(File.join('public', 'index.html'))
+end
