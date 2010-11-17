@@ -1,4 +1,4 @@
-define ['vendor/handlebars', 'text!views/member-timeline/item.handlebars?v=3'], (handlebars, template) ->
+define ['vendor/handlebars', 'text!views/member-timeline/item.handlebars?v=4'], (handlebars, template) ->
 
   # The ItemView is a representation of a [Timeline Item](item.html).
   class ItemView extends Backbone.View
@@ -14,7 +14,7 @@ define ['vendor/handlebars', 'text!views/member-timeline/item.handlebars?v=3'], 
     # and will be cached on both client and server.
     #
     # The template is also compiled via Handlebars for faster per-item
-    # rendering.  Because this method is called with ItemView is defined
+    # rendering.  Because this method is called when ItemView is defined
     # and not when it's instantiated, the compilation should only happen
     # once, not once per item.
     template: Handlebars.compile(template)
@@ -25,8 +25,6 @@ define ['vendor/handlebars', 'text!views/member-timeline/item.handlebars?v=3'], 
       @model.bind 'change:selected', @changeSelection
 
       @collection = @options.collection
-
-      this.id = "item-#{@model.id}"
 
       this.render()
 

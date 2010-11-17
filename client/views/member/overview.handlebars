@@ -1,0 +1,56 @@
+<div id="accounts">
+  <table>
+    <thead><tr><th>Account Balances</th></tr></thead>
+    <tbody>
+      {{#accounts}}
+        <tr>
+          <th><a href="#">{{ name }}</a></th>
+          <td>{{ amount }}</td>
+        </tr>
+      {{/accounts}}
+    </tbody>
+  </table>
+</div>
+
+{{#rewards}}
+  <div id="rewards-summary">
+    <table> 
+      <thead> 
+        <tr> 
+          <th> 
+            Rewards Summary
+          </th> 
+          <td class='timeframe'> 
+            <span>This Month</span> 
+          </td> 
+        </tr> 
+      </thead> 
+      <tbody> 
+        <tr class='title'> 
+          <th colspan='2'> 
+            Rewards earned
+          </th> 
+        </tr> 
+        {{#earned}}
+          <tr> 
+            <th>{{ name }}</th> 
+            <td>{{ amount }}</td> 
+          </tr> 
+        {{/earned}}
+
+        <tr class='title'> 
+          <th colspan='2'> 
+            Rewards to redeem
+          </th> 
+        </tr> 
+        {{#toRedeem}}
+          <tr> 
+            <th>{{ name }}</th> 
+            <td>{{ amount }}</td> 
+          </tr> 
+        {{/toRedeem}}
+      </tbody> 
+    </table>
+
+  </div>
+{{/rewards}}

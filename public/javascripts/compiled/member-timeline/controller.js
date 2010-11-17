@@ -1,1 +1,0 @@
-define(["member-timeline/views/timeline_view", "member-timeline/models/item_list", "member-timeline/views/merchant_view", "member-timeline/views/summary_view"], function(TimelineView, ItemList, MerchantView, SummaryView) {});

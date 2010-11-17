@@ -1,52 +1,41 @@
-define ["vendor/jquery-ui"], ->
+define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=2"], (jqueryUI, sidebarTemplate) ->
 
   # The MerchantView is used to show merchant-specific information
   # such as the current offer.
   class MerchantView extends Backbone.View
 
-    # This element will be hidden by default
-    el: $('#merchant-view')
-
     # Bind to DOM events within the view
     events:
       "click .close": "close"
 
-    initialize: (items) ->
+    template: Handlebars.compile(sidebarTemplate)
 
-      # Listen for the selection or deselection of items
-      items.bind 'change:selected', @changeSelected
-
-      # Convert the .close link into a jQuery UI button
-      this.$('.close').button
-        icons:
-          primary: 'ui-icon-close'
+    initialize: ->
 
       # Mix in the Events module for custom event support
       _.extend this, Backbone.Events
 
-    # Change the view based on which item is selected.
-    # If no item is selected, then clear and hide the view.
-    changeSelected: (item) =>
-
-      if item.get('selected')
-
-        @currentItem = item
-
-        this.loadContent item
-
-        $(@el).show()
-
-        this.trigger 'show'
-
-      else
-        this.$('.content').empty()
-        $(@el).hide()
-        this.trigger 'hide'
-
     # Unselect the item, thus triggering the changeSelected and hiding the view
     close: =>
-      @currentItem.set 'selected': false
+      @model.set 'selected': false
 
-    # This will eventually pull content via AJAX
-    loadContent: (item) =>
-      this.$('.content').html('<h3>' + item.get('name') + '<h3>')
+    render: ->
+
+      $(@el).html @template(@model.toJSON())
+      
+      # Turn 'close' button into jQuery UI button
+      this.$('.close').button
+        icons:
+          primary: 'ui-icon-close'
+
+      # Advertise the fact that the merchant view is about to be shown.
+      this.trigger('show')
+
+      $(@el).show()
+
+    hide: ->
+
+      # Advertise the fact that the merchant view is about to be hidden.
+      this.trigger('hide')
+
+      $(@el).empty().hide()

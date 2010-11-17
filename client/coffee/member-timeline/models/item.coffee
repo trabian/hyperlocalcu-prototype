@@ -9,7 +9,10 @@ define ->
 
     # Convert timestamps from 2010-10-28 to 10/28.
     formatted_timestamp: ->
-      @timestamp.split('-').slice(1).join('/')
+      if @timestamp
+        @timestamp.split('-').slice(1).join('/')
+      else
+        ""
 
     # Move the negative sign in front of the dollar sign for negative amounts and wrap the dollar
     # sign in <span class="currency"> to allow font customization.
@@ -19,6 +22,8 @@ define ->
 
     # Add the formatted timestamp and amount to the json for the view
     toViewJSON: ->
+      merchant = this.get('merchant')
       _.extend this.toJSON(),
         formatted_timestamp: @formatted_timestamp
         formatted_amount: @formatted_amount
+        offer: merchant.offers[0] if merchant? && merchant.offers?

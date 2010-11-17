@@ -8,7 +8,8 @@ define ['member-timeline/models/item'], (Item) ->
     # This will likely change in the future
     url: '/items.json'
 
-    # Remove all items from the item list. This does not destroy the items on the backend.
+    # Remove all items from the item list. This does not destroy the items on
+    # the backend.
     clear: ->
       this.remove @models
 
@@ -24,9 +25,18 @@ define ['member-timeline/models/item'], (Item) ->
 
       item.set 'selected': true
 
-    # If the item is already selected then unselect it. Otherwise make sure it's the only one selected.
+    # If the item is already selected then unselect it. Otherwise make sure
+    # it's the only one selected.
     toggleOrSelectOne: (item) ->
-      if item.get 'selected' 
+
+      if item.get 'selected'
+
+        # Allow listeners to know when an item is explicitly unselected (as
+        # opposed to becoming unselected because another item is selected).
+        this.trigger('unselect')
+
         item.set 'selected': false
+
       else
+
         this.selectOne item

@@ -9,10 +9,10 @@ var __extends = function(child, parent) {
 define(['member-timeline/views/item_view'], function(ItemView) {
   var TimelineView;
   TimelineView = function() {
-    var _this;
-    _this = this;
-    this.addAll = function(){ return TimelineView.prototype.addAll.apply(_this, arguments); };
-    this.addOne = function(){ return TimelineView.prototype.addOne.apply(_this, arguments); };
+    var _a;
+    _a = this;
+    this.addAll = function(){ return TimelineView.prototype.addAll.apply(_a, arguments); };
+    this.addOne = function(){ return TimelineView.prototype.addOne.apply(_a, arguments); };
     return Backbone.View.apply(this, arguments);
   };
   __extends(TimelineView, Backbone.View);
@@ -25,7 +25,8 @@ define(['member-timeline/views/item_view'], function(ItemView) {
     var view;
     view = new ItemView({
       model: item,
-      collection: this.items
+      collection: this.items,
+      id: item.id
     });
     $(this.el).append(view.render().el);
     return this.addTimestampClass(view, item);

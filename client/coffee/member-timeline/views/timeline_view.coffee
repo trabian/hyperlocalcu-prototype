@@ -21,6 +21,7 @@ define ['member-timeline/views/item_view'], (ItemView) ->
       view = new ItemView
         model: item
         collection: @items
+        id: item.id
 
       $(@el).append view.render().el
 

@@ -18,7 +18,7 @@ define(function() {
     });
   };
   Item.prototype.formatted_timestamp = function() {
-    return this.timestamp.split('-').slice(1).join('/');
+    return this.timestamp ? this.timestamp.split('-').slice(1).join('/') : "";
   };
   Item.prototype.formatted_amount = function() {
     var sign;
@@ -26,9 +26,16 @@ define(function() {
     return "" + (sign) + "<span class='currency'>$</span>" + (Math.abs(this.amount).toFixed(2));
   };
   Item.prototype.toViewJSON = function() {
+    var _a, merchant;
+    merchant = this.get('merchant');
     return _.extend(this.toJSON(), {
       formatted_timestamp: this.formatted_timestamp,
-      formatted_amount: this.formatted_amount
+      formatted_amount: this.formatted_amount,
+      offer: (function() {
+        if ((typeof merchant !== "undefined" && merchant !== null) && (typeof (_a = merchant.offers) !== "undefined" && _a !== null)) {
+          return merchant.offers[0];
+        }
+      })()
     });
   };
   return Item;

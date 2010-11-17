@@ -33,9 +33,14 @@ define(['member-timeline/models/item'], function(Item) {
     });
   };
   ItemList.prototype.toggleOrSelectOne = function(item) {
-    return item.get('selected') ? item.set({
-      'selected': false
-    }) : this.selectOne(item);
+    if (item.get('selected')) {
+      this.trigger('unselect');
+      return item.set({
+        'selected': false
+      });
+    } else {
+      return this.selectOne(item);
+    }
   };
   return ItemList;
 });

@@ -6,7 +6,7 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(['vendor/handlebars', 'text!views/member-timeline/item.handlebars?v=3'], function(handlebars, template) {
+define(['vendor/handlebars', 'text!views/member-timeline/item.handlebars?v=4'], function(handlebars, template) {
   var ItemView;
   ItemView = function() {
     var _a;
@@ -23,7 +23,6 @@ define(['vendor/handlebars', 'text!views/member-timeline/item.handlebars?v=3'], 
   ItemView.prototype.initialize = function() {
     this.model.bind('change:selected', this.changeSelection);
     this.collection = this.options.collection;
-    this.id = ("item-" + (this.model.id));
     return this.render();
   };
   ItemView.prototype.render = function() {

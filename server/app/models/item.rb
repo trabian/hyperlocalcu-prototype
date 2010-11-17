@@ -10,4 +10,6 @@ class Item
 
   references_one :merchant
 
+  alias_method :_id, :id
+
 end
