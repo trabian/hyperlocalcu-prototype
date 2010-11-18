@@ -1491,6 +1491,6 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 }
 /* line 20, ../../../client/sass/_merchants.sass */
 #merchant-view form textarea {
-  width: 100%;
+  width: 98%;
   height: 75px;
 }
