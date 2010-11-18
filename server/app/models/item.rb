@@ -8,7 +8,7 @@ class Item
 
   scope :ordered, desc(:timestamp)
 
-  #references_one :merchant
+  references_one :merchant
 
   alias_method :_id, :id
 

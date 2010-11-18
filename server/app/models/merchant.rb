@@ -5,6 +5,6 @@ class Merchant
   field :name
   embeds_many :offers
 
-  referenced_in :item
+  references_many :items, :stored_as => :array, :inverse_of => :merchant
 
 end

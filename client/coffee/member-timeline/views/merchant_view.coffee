@@ -1,4 +1,4 @@
-define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=2"], (jqueryUI, sidebarTemplate) ->
+define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=2", "member-timeline/views/offer_view"], (jqueryUI, sidebarTemplate, OfferView) ->
 
   # The MerchantView is used to show merchant-specific information
   # such as the current offer.
@@ -19,10 +19,12 @@ define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=2"]
     close: =>
       @model.set 'selected': false
 
-    render: ->
+    render: =>
 
       $(@el).html @template(@model.toJSON())
-      
+
+      this.renderMerchantForm()
+
       # Turn 'close' button into jQuery UI button
       this.$('.close').button
         icons:
@@ -39,3 +41,20 @@ define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=2"]
       this.trigger('hide')
 
       $(@el).empty().hide()
+
+    renderMerchantForm: ->
+
+      merchant = @model.get('merchant')
+
+      if merchant?.offers?
+
+        form = this.make('form')
+
+        $(@el).append(form)
+
+        @offerView = new OfferView
+          model: merchant.offers[0]
+          el: form
+
+        #require(["text!views/offers/templates/#{offer.template}.handlebars"], (template )->
+          #console.l"g('template', template)
