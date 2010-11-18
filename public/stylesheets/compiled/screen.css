@@ -1491,11 +1491,6 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 }
 /* line 20, ../../../client/sass/_merchants.sass */
 #merchant-view form textarea {
-  width: 95%;
+  width: 100%;
   height: 75px;
-}
-/* line 24, ../../../client/sass/_merchants.sass */
-#merchant-view form button .ui-button-text {
-  font-size: 11px;
-  line-height: 1.2em;
 }
