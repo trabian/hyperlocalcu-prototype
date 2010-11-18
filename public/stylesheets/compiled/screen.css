@@ -136,17 +136,6 @@ body {
   background: #f1f1f1;
 }
 
-/* line 2, ../../../client/sass/_theme.sass */
-.ui-button .ui-icon {
-  margin-top: -9px !important;
-}
-/* line 4, ../../../client/sass/_theme.sass */
-.ui-button .ui-button-text {
-  font-size: 11px;
-  line-height: 1em;
-  padding: 3px 5px 3px 25px;
-}
-
 /* line 39, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_typography.scss */
 body {
   line-height: 1.5;

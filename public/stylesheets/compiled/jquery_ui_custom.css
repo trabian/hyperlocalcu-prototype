@@ -1,0 +1,10 @@
+/* line 2, ../../../client/sass/jquery_ui_custom.sass */
+.ui-button .ui-icon {
+  margin-top: -9px;
+}
+/* line 4, ../../../client/sass/jquery_ui_custom.sass */
+.ui-button .ui-button-text {
+  font-size: 11px;
+  line-height: 1em;
+  padding: 7px 12px 7px 23px;
+}
