@@ -1520,7 +1520,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 .tweet-form p.note {
   font-size: 85%;
   float: left;
-  width: 65%;
+  width: 60%;
   margin: 0;
 }
 /* line 11, ../../../client/sass/_social.sass */
