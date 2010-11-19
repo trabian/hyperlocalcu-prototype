@@ -17,7 +17,8 @@ define(["vendor/jquery-ui", "vendor/jquery-form"], function(jqueryUI) {
     return Backbone.View.apply(this, arguments);
   };
   __extends(OfferView, Backbone.View);
-  OfferView.prototype.initialize = function() {
+  OfferView.prototype.initialize = function(options) {
+    this.item = options.item;
     return this.render();
   };
   OfferView.prototype.loadTemplate = function(templateName, callback) {
@@ -29,7 +30,7 @@ define(["vendor/jquery-ui", "vendor/jquery-form"], function(jqueryUI) {
         return callback.call(this, compiledTemplate);
       }
     } else {
-      templateLocation = ("views/offers/templates/" + (templateName) + ".handlebars?v=2");
+      templateLocation = ("views/offers/templates/" + (templateName) + ".handlebars?v=6");
       return require([("text!" + (templateLocation))], function(offerTemplate) {
         compiledTemplate = Handlebars.compile(offerTemplate);
         window.offerTemplates[templateName] = compiledTemplate;
@@ -42,7 +43,8 @@ define(["vendor/jquery-ui", "vendor/jquery-form"], function(jqueryUI) {
       var formContents;
       formContents = compiledTemplate({
         question: this.model.options.question,
-        additional_question: this.model.options.additional_question
+        additional_question: this.model.options.additional_question,
+        reward: ("Reward: " + (this.model.amount))
       });
       $(this.el).append(formContents);
       this.$('.submit').button({
@@ -50,9 +52,12 @@ define(["vendor/jquery-ui", "vendor/jquery-form"], function(jqueryUI) {
           primary: 'ui-icon-check'
         }
       });
-      return $(this.el).ajaxForm(__bind(function() {
-        return alert("yep, you submitted a question: " + (this.$('textarea').val()));
-      }, this));
+      return $(this.el).ajaxForm({
+        dataType: 'json',
+        success: __bind(function(response) {
+          return this.item.set(response);
+        }, this)
+      });
     }, this));
   };
   return OfferView;

@@ -1,0 +1,52 @@
+<!DOCTYPE html>  <html> <head>   <title>tweet_view.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="member_timeline_controller.html">                 member_timeline_controller.coffee               </a>                                           <a class="source" href="item.html">                 item.coffee               </a>                                           <a class="source" href="item_list.html">                 item_list.coffee               </a>                                           <a class="source" href="member.html">                 member.coffee               </a>                                           <a class="source" href="item_view.html">                 item_view.coffee               </a>                                           <a class="source" href="member_overview_view.html">                 member_overview_view.coffee               </a>                                           <a class="source" href="merchant_view.html">                 merchant_view.coffee               </a>                                           <a class="source" href="offer_view.html">                 offer_view.coffee               </a>                                           <a class="source" href="timeline_view.html">                 timeline_view.coffee               </a>                                           <a class="source" href="tweet_view.html">                 tweet_view.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               tweet_view.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-1">#</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="nx">define</span> <span class="p">[</span><span class="s2">&quot;vendor/jquery-ui&quot;</span><span class="p">,</span> <span class="s2">&quot;vendor/showdown&quot;</span><span class="p">,</span> <span class="s2">&quot;text!views/social/twitter/form.handlebars?version=5&quot;</span><span class="p">],</span> <span class="p">(</span><span class="nx">jqueryUI</span><span class="p">,</span> <span class="nx">showdown</span><span class="p">,</span> <span class="nx">tweetFormTemplate</span><span class="p">)</span> <span class="o">-&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-2">#</a>               </div>               <p>The MerchantView is used to show merchant-specific information
+such as the current offer.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">class</span> <span class="nx">TweetView</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-3">#</a>               </div>               <p>Bind to DOM events within the view</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">events:</span>
+      <span class="s2">&quot;keyup textarea&quot;</span><span class="o">:</span> <span class="s2">&quot;updateCount&quot;</span>
+      <span class="s2">&quot;click button&quot;</span><span class="o">:</span> <span class="s2">&quot;submitTweet&quot;</span>
+
+    <span class="nv">template: </span><span class="nx">Handlebars</span><span class="p">.</span><span class="nx">compile</span><span class="p">(</span><span class="nx">tweetFormTemplate</span><span class="p">)</span>
+
+    <span class="nv">initialize: </span><span class="o">-&gt;</span>
+
+      <span class="err">@</span><span class="nx">maxChars</span> <span class="o">=</span> <span class="mi">140</span>
+
+      <span class="err">@</span><span class="nx">markdownConverter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Showdown</span><span class="p">.</span><span class="nx">converter</span><span class="p">()</span>
+
+      <span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">()</span>
+
+    <span class="nv">updateCount: </span><span class="o">=&gt;</span>
+
+      <span class="err">@</span><span class="nx">count</span> <span class="o">or=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.count&#39;</span><span class="p">)</span>
+      <span class="err">@</span><span class="nx">field</span> <span class="o">or=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;textarea&#39;</span><span class="p">)</span>
+      <span class="err">@</span><span class="nx">button</span> <span class="o">or=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">)</span>
+      <span class="err">@</span><span class="nx">form</span> <span class="o">or=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.tweet-form&#39;</span><span class="p">)</span>
+
+      <span class="nx">charCount</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">trim</span><span class="p">(</span><span class="err">@</span><span class="nx">field</span><span class="p">.</span><span class="nx">val</span><span class="p">()).</span><span class="nx">length</span>
+
+      <span class="err">@</span><span class="nx">count</span><span class="p">.</span><span class="nx">text</span> <span class="err">@</span><span class="nx">maxChars</span> <span class="o">-</span> <span class="nx">charCount</span>
+
+      <span class="k">if</span> <span class="nx">charCount</span> <span class="o">&gt;</span> <span class="err">@</span><span class="nx">maxChars</span>
+        <span class="err">@</span><span class="nx">button</span><span class="p">.</span><span class="nx">button</span><span class="p">(</span><span class="s1">&#39;disable&#39;</span><span class="p">)</span>
+        <span class="err">@</span><span class="nx">form</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;over-limit&#39;</span><span class="p">)</span>
+      <span class="k">else</span>
+        <span class="k">if</span> <span class="nx">charCount</span> <span class="o">==</span> <span class="mi">0</span>
+          <span class="err">@</span><span class="nx">button</span><span class="p">.</span><span class="nx">button</span><span class="p">(</span><span class="s1">&#39;disable&#39;</span><span class="p">)</span>
+        <span class="k">else</span>
+          <span class="err">@</span><span class="nx">button</span><span class="p">.</span><span class="nx">button</span><span class="p">(</span><span class="s1">&#39;enable&#39;</span><span class="p">)</span>
+        <span class="err">@</span><span class="nx">form</span><span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="s1">&#39;over-limit&#39;</span><span class="p">)</span>
+
+    <span class="nv">render: </span><span class="o">=&gt;</span>
+
+      <span class="nx">tweet</span> <span class="o">=</span>
+        <span class="nv">message: </span><span class="err">@</span><span class="nx">options</span><span class="p">.</span><span class="nx">twitterSettings</span><span class="p">.</span><span class="nx">default</span>
+        <span class="nv">prompt: </span><span class="err">@</span><span class="nx">markdownConverter</span><span class="p">.</span><span class="nx">makeHtml</span><span class="p">(</span><span class="err">@</span><span class="nx">options</span><span class="p">.</span><span class="nx">twitterSettings</span><span class="p">.</span><span class="nx">prompt</span><span class="p">)</span>
+
+      <span class="nx">$</span><span class="p">(</span><span class="err">@</span><span class="nx">el</span><span class="p">).</span><span class="nx">html</span> <span class="err">@</span><span class="nx">template</span><span class="p">(</span><span class="nx">tweet</span><span class="p">)</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">).</span><span class="nx">button</span><span class="p">()</span>
+
+      <span class="k">this</span><span class="p">.</span><span class="nx">updateCount</span><span class="p">()</span>
+
+    <span class="nv">submitTweet: </span><span class="o">=&gt;</span>
+      <span class="nx">unless</span> <span class="err">@</span><span class="nx">button</span><span class="p">.</span><span class="nx">button</span><span class="p">(</span><span class="s1">&#39;option&#39;</span><span class="p">,</span> <span class="s1">&#39;disabled&#39;</span><span class="p">)</span>
+        <span class="nx">alert</span> <span class="s2">&quot;This doesn&#39;t work quite yet.  But it will.  Oh, it will.&quot;</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

@@ -2,7 +2,8 @@ define ["vendor/jquery-ui", "vendor/jquery-form"], (jqueryUI) ->
 
   class OfferView extends Backbone.View
 
-    initialize: ->
+    initialize: (options) ->
+      @item = options.item
       this.render()
 
     loadTemplate: (templateName, callback) ->
@@ -16,7 +17,7 @@ define ["vendor/jquery-ui", "vendor/jquery-form"], (jqueryUI) ->
 
       else
 
-        templateLocation = "views/offers/templates/#{templateName}.handlebars?v=2"
+        templateLocation = "views/offers/templates/#{templateName}.handlebars?v=6"
 
         require ["text!#{templateLocation}"], (offerTemplate) ->
 
@@ -33,6 +34,7 @@ define ["vendor/jquery-ui", "vendor/jquery-form"], (jqueryUI) ->
         formContents = compiledTemplate
           question: @model.options.question
           additional_question: @model.options.additional_question
+          reward: "Reward: #{@model.amount}"
 
         $(@el).append(formContents)
 
@@ -40,5 +42,7 @@ define ["vendor/jquery-ui", "vendor/jquery-form"], (jqueryUI) ->
           icons:
             primary: 'ui-icon-check'
 
-        $(@el).ajaxForm =>
-          alert("yep, you submitted a question: #{this.$('textarea').val()}")
+        $(@el).ajaxForm
+          dataType: 'json'
+          success: (response) =>
+            @item.set response

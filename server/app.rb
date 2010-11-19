@@ -34,3 +34,13 @@ end
 get '/' do
   File.read(File.join('public', 'index.html'))
 end
+
+put '/items/:item_id/feedback' do
+
+  item = Item.find(params[:item_id])
+
+  item.create_feedback :response => params[:response]
+
+  item.to_json
+
+end

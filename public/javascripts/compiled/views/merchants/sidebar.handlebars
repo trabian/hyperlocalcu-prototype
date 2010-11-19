@@ -1,5 +1,16 @@
 <a href="#" class="close">Close</a>
 
 <div class="content">
-  <h3>{{ name }}</h3>
+  {{#merchant}}
+    <h3>{{ name }}</h3>
+  {{/merchant}}
+  {{^merchant}}
+    <h3>{{ name }}</h3>
+  {{/merchant}}
 </div>
+
+{{#feedback}}
+  <div class="feedback">
+    <div class="tweet-feedback"></div>
+  </div>
+{{/feedback}}

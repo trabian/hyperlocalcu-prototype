@@ -1,4 +1,4 @@
-define ['vendor/handlebars', 'text!views/member-timeline/item.handlebars?v=4'], (handlebars, template) ->
+define ['vendor/handlebars', 'text!views/member-timeline/item.handlebars?v=7'], (handlebars, template) ->
 
   # The ItemView is a representation of a [Timeline Item](item.html).
   class ItemView extends Backbone.View
@@ -22,7 +22,7 @@ define ['vendor/handlebars', 'text!views/member-timeline/item.handlebars?v=4'], 
     # Setup the event bindings and render the view.
     initialize: ->
 
-      @model.bind 'change:selected', @changeSelection
+      @model.bind 'change', @onChange
 
       @collection = @options.collection
 
@@ -37,6 +37,16 @@ define ['vendor/handlebars', 'text!views/member-timeline/item.handlebars?v=4'], 
         $(@el).addClass('reward')
 
       return this
+
+    onChange: =>
+
+      onlySelectedChanged = _.keys(@model.changedAttributes()).join('') is 'selected' 
+
+      # No need to re-render the whole item if the only thing changed is the 'selected' field
+      if onlySelectedChanged
+        this.changeSelection()
+      else
+        this.render()
 
     # Change the 'selected' class for the row without re-rendering.
     changeSelection: =>

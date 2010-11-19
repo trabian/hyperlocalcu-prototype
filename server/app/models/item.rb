@@ -10,6 +10,8 @@ class Item
 
   references_one :merchant
 
+  embeds_one :feedback
+
   alias_method :_id, :id
 
 end
