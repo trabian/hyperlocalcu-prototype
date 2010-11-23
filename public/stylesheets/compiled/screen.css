@@ -1540,3 +1540,144 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 .tweet-form.over-limit .count {
   color: #990000;
 }
+
+/* line 2, ../../../client/sass/_demo.sass */
+#snapshot-dialog .form {
+  margin-bottom: 0.5em;
+}
+/* line 4, ../../../client/sass/_demo.sass */
+#snapshot-dialog .form input.text {
+  font-size: 14px;
+  float: left;
+  margin: 0 5px 0 0;
+}
+/* line 8, ../../../client/sass/_demo.sass */
+#snapshot-dialog .snapshots {
+  clear: both;
+  height: 250px;
+  overflow: auto;
+}
+/* line 14, ../../../client/sass/_demo.sass */
+#snapshot-dialog .snapshots ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+}
+/* line 11, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_bullets.scss */
+#snapshot-dialog .snapshots ul li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0px;
+}
+/* line 9, ../../../client/sass/_ui_mixins.sass */
+#snapshot-dialog .snapshots ul li.snapshot {
+  overflow: hidden;
+  *zoom: 1;
+  clear: both;
+  padding: 6px 5px;
+  border-bottom: 1px solid #e3eff7;
+}
+/* line 14, ../../../client/sass/_ui_mixins.sass */
+#snapshot-dialog .snapshots ul li.snapshot:nth-child(odd) {
+  background: #f6fafd;
+}
+/* line 16, ../../../client/sass/_ui_mixins.sass */
+#snapshot-dialog .snapshots ul li.snapshot h3 {
+  font-size: 13px;
+  margin: 0.2em 0 0.2em;
+}
+/* line 19, ../../../client/sass/_ui_mixins.sass */
+#snapshot-dialog .snapshots ul li.snapshot p.meta {
+  margin: 0;
+  font-size: 0.83em;
+  line-height: 1em;
+  color: #999999;
+}
+/* line 24, ../../../client/sass/_ui_mixins.sass */
+#snapshot-dialog .snapshots ul li.snapshot ul.buttons {
+  float: right;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  overflow: hidden;
+  *zoom: 1;
+}
+/* line 56, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_horizontal-list.scss */
+#snapshot-dialog .snapshots ul li.snapshot ul.buttons li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0px;
+  white-space: nowrap;
+  display: inline;
+  float: left;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+/* line 45, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_horizontal-list.scss */
+#snapshot-dialog .snapshots ul li.snapshot ul.buttons li:first-child, #snapshot-dialog .snapshots ul li.snapshot ul.buttons li.first {
+  padding-left: 0;
+}
+/* line 46, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_horizontal-list.scss */
+#snapshot-dialog .snapshots ul li.snapshot ul.buttons li:last-child, #snapshot-dialog .snapshots ul li.snapshot ul.buttons li.last {
+  padding-right: 0;
+}
+/* line 3, ../../../client/sass/_ui_mixins.sass */
+#snapshot-dialog .snapshots ul li.snapshot ul.buttons .ui-button .ui-button-text {
+  font-size: 10px;
+}
+
+/* line 19, ../../../client/sass/screen.sass */
+#container {
+  position: relative;
+}
+
+/* line 22, ../../../client/sass/screen.sass */
+#global {
+  position: absolute;
+  top: 2px;
+  right: 15px;
+}
+/* line 26, ../../../client/sass/screen.sass */
+#global ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  overflow: hidden;
+  *zoom: 1;
+}
+/* line 56, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_horizontal-list.scss */
+#global ul li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0px;
+  white-space: nowrap;
+  display: inline;
+  float: left;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+/* line 45, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_horizontal-list.scss */
+#global ul li:first-child, #global ul li.first {
+  padding-left: 0;
+}
+/* line 46, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_horizontal-list.scss */
+#global ul li:last-child, #global ul li.last {
+  padding-right: 0;
+}
+/* line 28, ../../../client/sass/screen.sass */
+#global ul a {
+  text-decoration: none;
+  color: white;
+}
+/* line 4, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#global ul a:hover {
+  text-decoration: underline;
+}
+/* line 24, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_link-colors.scss */
+#global ul a:hover {
+  color: white;
+}

@@ -7,8 +7,24 @@
 +blueprint-interaction
 +blueprint-form
 
+@import ui_mixins
+
 @import timeline
 @import rewards
 @import merchants
 @import social
 
+@import demo
+
+#container
+  position: relative
+
+#global
+  position: absolute
+  top: 2px
+  right: 15px
+  ul
+    +horizontal-list(5px)
+    a
+      +hover-link
+      +link-colors(#fff, #fff)

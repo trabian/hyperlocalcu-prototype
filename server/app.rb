@@ -27,13 +27,14 @@ end
 
 mime_type :handlebars, "text/html"
 
-get '/items.json' do
+get '/items' do
   Item.ordered.to_json(:except => ["_id"], :methods => ["id", :merchant])
 end
 
 get '/' do
   File.read(File.join('public', 'index.html'))
 end
+
 
 put '/items/:item_id/feedback' do
 
@@ -43,4 +44,22 @@ put '/items/:item_id/feedback' do
 
   item.to_json
 
+end
+
+get '/demo/snapshots' do
+  Snapshot.ordered.to_json(:except => ["_id"], :methods => ["id"])
+end
+
+post '/demo/snapshots/:id/restore' do |id|
+  Snapshot.find(id).restore
+  'Snapshot has been restored'
+end
+
+post '/demo/snapshots' do
+  snapshot = Snapshot.create(JSON.parse(request.body.read.to_s))
+  "Snapshot created"
+end
+
+delete '/demo/snapshots/:id' do |id|
+  Snapshot.find(id).destroy
 end

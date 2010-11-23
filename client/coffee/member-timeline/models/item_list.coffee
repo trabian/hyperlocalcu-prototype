@@ -6,7 +6,7 @@ define ['member-timeline/models/item'], (Item) ->
     model: Item
 
     # This will likely change in the future
-    url: '/items.json'
+    url: '/items'
 
     # Remove all items from the item list. This does not destroy the items on
     # the backend.

@@ -6,6 +6,11 @@
 </head> 
 <body> 
   <div id='container'> 
+    <div id="global">
+      <ul>
+        <li><a href="#demo/snapshots">Snapshots</a></li>
+      </ul>
+    </div>
     <div id='main'> 
       <div class='content'> 
         <div class='ui-widget'> 
@@ -31,7 +36,7 @@
   <script src='javascripts/compiled/vendor/require-jquery.js?v=1'></script> 
   <script type='text/javascript'> 
     //<![CDATA[
-      require({ baseUrl: "/javascripts/compiled" }, ["order!vendor/underscore", "order!vendor/backbone", "order!member-timeline/member_timeline_controller", "order!member-timeline/models/member"], function(underscore, backbone, MemberTimelineController, Member) {
+      require({ baseUrl: "/javascripts/compiled" }, ["order!vendor/underscore", "order!vendor/backbone", "order!member-timeline/member_timeline_controller", "order!member-timeline/models/member", "order!demo/demo_controller"], function(underscore, backbone, MemberTimelineController, Member, DemoController) {
       
         // This will be pulled dynamically (eventually)
         var member = new Member({
@@ -71,6 +76,8 @@
           fetchOnInit: true,
           member: member
         });
+
+        var demoController = new DemoController();
       
       });
     //]]>

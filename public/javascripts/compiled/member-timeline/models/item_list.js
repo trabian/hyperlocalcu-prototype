@@ -13,7 +13,7 @@ define(['member-timeline/models/item'], function(Item) {
   };
   __extends(ItemList, Backbone.Collection);
   ItemList.prototype.model = Item;
-  ItemList.prototype.url = '/items.json';
+  ItemList.prototype.url = '/items';
   ItemList.prototype.clear = function() {
     return this.remove(this.models);
   };
