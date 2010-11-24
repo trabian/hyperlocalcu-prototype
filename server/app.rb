@@ -35,6 +35,9 @@ get '/' do
   File.read(File.join('public', 'index.html'))
 end
 
+get '/merchants' do
+  Merchant.all.to_json(:except => ["_id"], :methods => ["id"])
+end
 
 put '/items/:item_id/feedback' do
 

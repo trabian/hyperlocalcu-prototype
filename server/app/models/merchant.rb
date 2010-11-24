@@ -9,4 +9,6 @@ class Merchant
 
   references_many :items, :stored_as => :array, :inverse_of => :merchant
 
+  alias_method :_id, :id
+
 end

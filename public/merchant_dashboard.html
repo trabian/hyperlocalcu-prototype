@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+  <link href='/stylesheets/compiled/screen.css' rel='stylesheet'>
+  <link href='/stylesheets/jquery-ui.css' rel='stylesheet'>
+  <link href='/stylesheets/compiled/jquery_ui_custom.css' rel='stylesheet'>
+</head>
+<body>
+  <div id='container'>
+    <div id="global">
+      <ul>
+        <li><a href="#demo/snapshots">Snapshots</a></li>
+      </ul>
+    </div>
+    <div id='main'>
+      <div class='content'>
+        <div class='ui-widget'>
+          <div id="dashboard-loading">Loading...</div>
+          <ul id="feedback">
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id='sidebar'>
+      <div id="offers"></div>
+    </div>
+  </div>
+  <script src='/javascripts/compiled/vendor/require-jquery.js?v=1'></script>
+  <script type='text/javascript'>
+    //<![CDATA[
+      require({ baseUrl: "/javascripts/compiled" }, ["order!vendor/underscore", "order!vendor/backbone", "order!merchants/merchant_dashboard_controller", "order!merchants/models/merchant"], function(underscore, backbone, MerchantDashboardController, Merchant) {
+
+          var the_ram = new Merchant({
+            id: '4ce0c42ec8bb95d50d000001'
+            });
+
+          the_ram.fetch()
+
+          var controller = new MerchantDashboardController({ merchant: the_ram });
+
+      });
+    //]]>
+  </script>
+</body>
+
+
