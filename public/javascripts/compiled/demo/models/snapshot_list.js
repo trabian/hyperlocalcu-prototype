@@ -15,7 +15,7 @@ define(['demo/models/snapshot'], function(Snapshot) {
   SnapshotList.prototype.model = Snapshot;
   SnapshotList.prototype.url = '/demo/snapshots';
   SnapshotList.prototype.comparator = function(snapshot) {
-    return new Date() - new Date(snapshot.get('timestamp'));
+    return snapshot.age();
   };
   return SnapshotList;
 });
