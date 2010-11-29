@@ -5,7 +5,6 @@ define ['merchants/models/feedback'], (Feedback) ->
     model: Feedback
 
     url: =>
-      console.log @merchant.merchant.id
       "/merchants/#{@merchant.id}/feedbacks"
 
     initialize: (options) =>

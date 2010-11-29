@@ -27,42 +27,9 @@ end
 
 mime_type :handlebars, "text/html"
 
-get '/items' do
-  Item.ordered.to_json(:except => ["_id"], :methods => ["id", :merchant])
-end
+Dir["#{File.dirname(__FILE__)}/app/controllers/*.rb"].each { |f| load(f) }
 
 get '/' do
   File.read(File.join('public', 'index.html'))
 end
 
-get '/merchants' do
-  Merchant.all.to_json(:except => ["_id"], :methods => ["id"])
-end
-
-put '/items/:item_id/feedback' do
-
-  item = Item.find(params[:item_id])
-
-  item.create_feedback :response => params[:response]
-
-  item.to_json
-
-end
-
-get '/demo/snapshots' do
-  Snapshot.ordered.to_json(:except => ["_id"], :methods => ["id"])
-end
-
-post '/demo/snapshots/:id/restore' do |id|
-  Snapshot.find(id).restore
-  'Snapshot has been restored'
-end
-
-post '/demo/snapshots' do
-  snapshot = Snapshot.create(JSON.parse(request.body.read.to_s))
-  "Snapshot created"
-end
-
-delete '/demo/snapshots/:id' do |id|
-  Snapshot.find(id).destroy
-end

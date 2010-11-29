@@ -7,8 +7,13 @@ class Merchant
 
   embeds_many :offers
 
-  references_many :items, :stored_as => :array, :inverse_of => :merchant
+  references_many :items
 
   alias_method :_id, :id
+
+  # Obviously this isn't efficient for a real system.
+  def feedbacks
+    items.where(:feedback.exists => true).collect(&:feedback).sort_by { |item| item.created_at }.reverse
+  end
 
 end

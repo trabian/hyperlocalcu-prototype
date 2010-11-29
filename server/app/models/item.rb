@@ -8,7 +8,7 @@ class Item
 
   scope :ordered, desc(:timestamp)
 
-  references_one :merchant
+  referenced_in :merchant
 
   embeds_one :feedback
 

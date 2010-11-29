@@ -18,7 +18,6 @@ define(['merchants/models/feedback'], function(Feedback) {
   __extends(FeedbackList, Backbone.Collection);
   FeedbackList.prototype.model = Feedback;
   FeedbackList.prototype.url = function() {
-    console.log(this.merchant.merchant.id);
     return "/merchants/" + (this.merchant.id) + "/feedbacks";
   };
   FeedbackList.prototype.initialize = function(options) {

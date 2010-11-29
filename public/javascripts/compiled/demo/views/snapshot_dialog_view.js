@@ -6,7 +6,7 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(['vendor/handlebars', 'demo/views/snapshot_view', 'demo/models/snapshot_list', 'text!views/demo/snapshot_dialog.handlebars?v=10'], function(handlebars, SnapshotView, SnapshotList, template) {
+define(['vendor/handlebars', 'vendor/jquery-ui', 'demo/views/snapshot_view', 'demo/models/snapshot_list', 'text!views/demo/snapshot_dialog.handlebars?v=10'], function(handlebars, ui, SnapshotView, SnapshotList, template) {
   var SnapshotDialogView;
   SnapshotDialogView = function() {
     var _a;

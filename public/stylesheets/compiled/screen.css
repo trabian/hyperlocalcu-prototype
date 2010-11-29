@@ -1510,6 +1510,89 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   margin: 0.5em 0.2em;
 }
 
+/* line 33, ../../../client/sass/_merchants.sass */
+#feedback h3 {
+  margin: 0 0 0.3em;
+  font-size: 14px;
+}
+/* line 36, ../../../client/sass/_merchants.sass */
+#feedback #feedback-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  border: 1px solid #e3eff7;
+  border-width: 1px 1px 0;
+}
+/* line 11, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_bullets.scss */
+#feedback #feedback-list li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0px;
+}
+/* line 9, ../../../client/sass/_ui_mixins.sass */
+#feedback #feedback-list li.feedback {
+  overflow: hidden;
+  *zoom: 1;
+  clear: both;
+  padding: 6px 5px;
+  border-bottom: 1px solid #e3eff7;
+}
+/* line 14, ../../../client/sass/_ui_mixins.sass */
+#feedback #feedback-list li.feedback:nth-child(odd) {
+  background: #f6fafd;
+}
+/* line 16, ../../../client/sass/_ui_mixins.sass */
+#feedback #feedback-list li.feedback h3 {
+  font-size: 13px;
+  margin: 0.2em 0 0.2em;
+}
+/* line 19, ../../../client/sass/_ui_mixins.sass */
+#feedback #feedback-list li.feedback p.meta {
+  margin: 0;
+  font-size: 0.83em;
+  line-height: 1em;
+  color: #999999;
+}
+/* line 24, ../../../client/sass/_ui_mixins.sass */
+#feedback #feedback-list li.feedback ul.buttons {
+  float: right;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  overflow: hidden;
+  *zoom: 1;
+}
+/* line 56, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_horizontal-list.scss */
+#feedback #feedback-list li.feedback ul.buttons li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0px;
+  white-space: nowrap;
+  display: inline;
+  float: left;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+/* line 45, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_horizontal-list.scss */
+#feedback #feedback-list li.feedback ul.buttons li:first-child, #feedback #feedback-list li.feedback ul.buttons li.first {
+  padding-left: 0;
+}
+/* line 46, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_horizontal-list.scss */
+#feedback #feedback-list li.feedback ul.buttons li:last-child, #feedback #feedback-list li.feedback ul.buttons li.last {
+  padding-right: 0;
+}
+/* line 3, ../../../client/sass/_ui_mixins.sass */
+#feedback #feedback-list li.feedback ul.buttons .ui-button .ui-button-text {
+  font-size: 10px;
+}
+/* line 41, ../../../client/sass/_merchants.sass */
+#feedback #feedback-list li p.comment {
+  margin: 0 0 0.2em;
+}
+
 /* line 2, ../../../client/sass/_social.sass */
 .tweet-form textarea {
   width: 96%;
@@ -1557,7 +1640,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   height: 250px;
   overflow: auto;
 }
-/* line 14, ../../../client/sass/_demo.sass */
+/* line 13, ../../../client/sass/_demo.sass */
 #snapshot-dialog .snapshots ul {
   list-style: none;
   margin: 0;

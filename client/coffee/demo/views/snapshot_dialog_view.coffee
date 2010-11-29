@@ -1,4 +1,4 @@
-define ['vendor/handlebars', 'demo/views/snapshot_view', 'demo/models/snapshot_list', 'text!views/demo/snapshot_dialog.handlebars?v=10'], (handlebars, SnapshotView, SnapshotList, template) ->
+define ['vendor/handlebars', 'vendor/jquery-ui', 'demo/views/snapshot_view', 'demo/models/snapshot_list', 'text!views/demo/snapshot_dialog.handlebars?v=10'], (handlebars, ui, SnapshotView, SnapshotList, template) ->
 
   class SnapshotDialogView extends Backbone.View
 

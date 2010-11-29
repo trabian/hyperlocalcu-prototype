@@ -1,14 +1,17 @@
-define ["merchants/models/merchant", "merchants/models/feedback_list"], (Merchant, FeedbackList) ->
+define ["merchants/models/merchant", "merchants/models/feedback_list", "merchants/views/feedback_list_view"], (Merchant, FeedbackList, FeedbackListView) ->
 
   class MerchantDashboardController extends Backbone.Controller
 
-    initialize: (merchant) ->
+    initialize: (options) ->
 
-      @merchant = merchant
+      @merchant = options.merchant
 
-      @feedback_list = new FeedbackList
+      @feedbackList = new FeedbackList
         merchant: @merchant
 
-      @feedback_list.fetch()
+      @feedbackListView = new FeedbackListView(@feedbackList)
 
-      console.log 'initialized controller with merchant', @merchant, @feedback_list
+      @feedbackList.fetch
+        success: ->
+          $('#dashboard-loading').hide()
+          $('#feedback').show()
