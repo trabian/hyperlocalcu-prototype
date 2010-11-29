@@ -13,7 +13,7 @@ class Merchant
 
   # Obviously this isn't efficient for a real system.
   def feedbacks
-    items.where(:feedback.exists => true).collect(&:feedback).sort_by { |item| item.created_at }.reverse
+    items.where(:feedback.exists => true).collect(&:feedback).compact.sort_by { |feedback| feedback.created_at }.reverse
   end
 
 end

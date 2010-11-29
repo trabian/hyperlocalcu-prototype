@@ -46,6 +46,7 @@ define(['vendor/handlebars', 'vendor/jquery-ui', 'demo/views/snapshot_view', 'de
   SnapshotDialogView.prototype.open = function(event, ui) {
     this.snapshots = new SnapshotList();
     this.snapshots.bind('refresh', this.addAll);
+    this.snapshots.bind('add', this.addAll);
     this.snapshots.fetch();
     this.delegateEvents();
     return this.$('.form button').button({
@@ -67,7 +68,7 @@ define(['vendor/handlebars', 'vendor/jquery-ui', 'demo/views/snapshot_view', 'de
   };
   SnapshotDialogView.prototype.addAll = function() {
     this.$('.snapshot-list').empty();
-    return this.snapshots.each(this.addOne);
+    return this.snapshots.each(this.addOne, true);
   };
   SnapshotDialogView.prototype.updateForm = function() {
     var name;
@@ -86,7 +87,7 @@ define(['vendor/handlebars', 'vendor/jquery-ui', 'demo/views/snapshot_view', 'de
       this.snapshots.create({
         "name": this.$('input.name').val()
       });
-      return this.snapshots.fetch();
+      return this.$('input.name').val('');
     }
   };
   return SnapshotDialogView;

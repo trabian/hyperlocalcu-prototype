@@ -9,6 +9,5 @@ define ['merchants/models/feedback'], (Feedback) ->
 
     initialize: (options) =>
       @merchant = options.merchant
-      console.log @merchant
       
   

@@ -32,6 +32,8 @@ define ['vendor/handlebars', 'vendor/jquery-ui', 'demo/views/snapshot_view', 'de
 
       @snapshots.bind 'refresh', @addAll
 
+      @snapshots.bind 'add', @addAll
+
       @snapshots.fetch()
 
       this.delegateEvents()
@@ -57,7 +59,7 @@ define ['vendor/handlebars', 'vendor/jquery-ui', 'demo/views/snapshot_view', 'de
       
     addAll: =>
       this.$('.snapshot-list').empty()
-      @snapshots.each @addOne
+      @snapshots.each @addOne, true
 
     updateForm: =>
 
@@ -82,4 +84,4 @@ define ['vendor/handlebars', 'vendor/jquery-ui', 'demo/views/snapshot_view', 'de
 
       if name.length > 0
         @snapshots.create "name": this.$('input.name').val()
-        @snapshots.fetch()
+        this.$('input.name').val('')

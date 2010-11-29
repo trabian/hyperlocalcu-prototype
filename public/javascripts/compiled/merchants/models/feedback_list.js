@@ -21,8 +21,7 @@ define(['merchants/models/feedback'], function(Feedback) {
     return "/merchants/" + (this.merchant.id) + "/feedbacks";
   };
   FeedbackList.prototype.initialize = function(options) {
-    this.merchant = options.merchant;
-    return console.log(this.merchant);
+    return (this.merchant = options.merchant);
   };
   return FeedbackList;
 });

@@ -2,6 +2,9 @@
 
   <span class="nx">class</span> <span class="nx">Snapshot</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span>
 
+    <span class="nv">age: </span><span class="o">-&gt;</span>
+      <span class="err">@</span><span class="nx">age</span> <span class="o">or=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()</span> <span class="o">-</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">))</span>
+
     <span class="nv">restore: </span><span class="o">-&gt;</span>
       <span class="nx">$</span><span class="p">.</span><span class="nx">post</span> <span class="s2">&quot;#{this.url()}/restore&quot;</span><span class="p">,</span> <span class="o">=&gt;</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span> <span class="s1">&#39;restore&#39;</span>

@@ -32,6 +32,8 @@
 
       <span class="err">@</span><span class="nx">snapshots</span><span class="p">.</span><span class="nx">bind</span> <span class="s1">&#39;refresh&#39;</span><span class="p">,</span> <span class="err">@</span><span class="nx">addAll</span>
 
+      <span class="err">@</span><span class="nx">snapshots</span><span class="p">.</span><span class="nx">bind</span> <span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="err">@</span><span class="nx">addAll</span>
+
       <span class="err">@</span><span class="nx">snapshots</span><span class="p">.</span><span class="nx">fetch</span><span class="p">()</span>
 
       <span class="k">this</span><span class="p">.</span><span class="nx">delegateEvents</span><span class="p">()</span>
@@ -57,7 +59,7 @@
       
     <span class="nv">addAll: </span><span class="o">=&gt;</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.snapshot-list&#39;</span><span class="p">).</span><span class="nx">empty</span><span class="p">()</span>
-      <span class="err">@</span><span class="nx">snapshots</span><span class="p">.</span><span class="nx">each</span> <span class="err">@</span><span class="nx">addOne</span>
+      <span class="err">@</span><span class="nx">snapshots</span><span class="p">.</span><span class="nx">each</span> <span class="err">@</span><span class="nx">addOne</span><span class="p">,</span> <span class="kc">true</span>
 
     <span class="nv">updateForm: </span><span class="o">=&gt;</span>
 
@@ -82,6 +84,6 @@
 
       <span class="k">if</span> <span class="nx">name</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
         <span class="err">@</span><span class="nx">snapshots</span><span class="p">.</span><span class="nx">create</span> <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;input.name&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span>
-        <span class="err">@</span><span class="nx">snapshots</span><span class="p">.</span><span class="nx">fetch</span><span class="p">()</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;input.name&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
 
 </pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

@@ -15,6 +15,14 @@ class Snapshot
     end
   end
 
+  def age
+    Time.now = self.timestamp
+  end
+
+  def as_json(options = {})
+    super(:except => ["_id"], :methods => ["id"])
+  end
+
 protected
 
   set_callback(:create, :before) do |snapshot|
@@ -49,7 +57,9 @@ protected
 
     snapshot_name = snapshot_collection_name(collection_name)
 
-    db.eval("db.#{collection_name}.find().forEach( function(x) { db.#{snapshot_name}.save(x)});")
+    puts "storing snapshot #{snapshot_name} - #{collection_name}"
+
+    db.eval("db.#{collection_name}.find().forEach( function(x) { db.#{snapshot_name}.save(x)});", :timeout => false)
 
   end
 
