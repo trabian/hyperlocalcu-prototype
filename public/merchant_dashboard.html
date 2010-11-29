@@ -14,7 +14,11 @@
     <div id='main'>
       <div class='content'>
         <div class='ui-widget'>
+          <h2 id="merchant-name"></h2>
           <div id="dashboard-loading">Loading...</div>
+          <div id="sales-chart" style="display: none;">
+            <h3>Sales</h3>
+          </div>
           <div id="feedback" style="display: none;">
             <h3>Feedback</h3>
             <ul id="feedback-list">
@@ -33,17 +37,24 @@
     //<![CDATA[
       require({ baseUrl: "/javascripts/compiled" }, ["order!vendor/underscore", "order!vendor/backbone", "order!merchants/merchant_dashboard_controller", "order!merchants/models/merchant", "order!demo/demo_controller"], function(underscore, backbone, MerchantDashboardController, Merchant, DemoController) {
 
-          var the_ram = new Merchant({
-            id: '4ce0c42ec8bb95d50d000001'
-            });
+        var the_ram = new Merchant();
 
-          the_ram.fetch()
+        the_ram.id = '4ce0c42ec8bb95d50d000001';
+        the_ram.url = "/merchants/" + the_ram.id;
 
-          var controller = new MerchantDashboardController({ merchant: the_ram });
+        the_ram.fetch({
+          success: function() {
 
-          var demoController = new DemoController();
+            $('#merchant-name').html(the_ram.get('name'));
 
-          Backbone.history.start();
+            var controller = new MerchantDashboardController({ merchant: the_ram });
+
+            var demoController = new DemoController();
+
+            Backbone.history.start();
+
+          }
+        });
 
       });
     //]]>

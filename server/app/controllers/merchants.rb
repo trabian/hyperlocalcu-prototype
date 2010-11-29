@@ -1,5 +1,10 @@
 get '/merchants' do
-  Merchant.all.to_json(:except => ["_id"], :methods => ["id"])
+  render_backbone_json Merchant.all
+end
+
+get '/merchants/:id' do |id|
+
+  render_backbone_json Merchant.find(id)
 end
 
 get '/merchants/:id/feedbacks' do |id|

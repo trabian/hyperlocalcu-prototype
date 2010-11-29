@@ -1511,11 +1511,16 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 }
 
 /* line 33, ../../../client/sass/_merchants.sass */
-#feedback h3 {
-  margin: 0 0 0.3em;
+#feedback h3, #sales-chart h3 {
+  margin: 0 0 0.5em;
   font-size: 14px;
 }
-/* line 36, ../../../client/sass/_merchants.sass */
+
+/* line 37, ../../../client/sass/_merchants.sass */
+#feedback {
+  padding: 10px 0 0 0;
+}
+/* line 39, ../../../client/sass/_merchants.sass */
 #feedback #feedback-list {
   list-style: none;
   margin: 0;
@@ -1588,7 +1593,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #feedback #feedback-list li.feedback ul.buttons .ui-button .ui-button-text {
   font-size: 10px;
 }
-/* line 41, ../../../client/sass/_merchants.sass */
+/* line 44, ../../../client/sass/_merchants.sass */
 #feedback #feedback-list li p.comment {
   margin: 0 0 0.2em;
 }

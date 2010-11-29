@@ -12,6 +12,5 @@ define(function() {
     return Backbone.Model.apply(this, arguments);
   };
   __extends(Merchant, Backbone.Model);
-  Merchant.prototype.url = '/merchants';
   return Merchant;
 });

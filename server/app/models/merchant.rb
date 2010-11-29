@@ -4,6 +4,7 @@ class Merchant
 
   field :name
   field :social, :type => Hash
+  field :sales, :type => Array
 
   embeds_many :offers
 

@@ -15,7 +15,7 @@ define(function() {
   };
   __extends(Snapshot, Backbone.Model);
   Snapshot.prototype.age = function() {
-    return this.age || (this.age = (new Date() - new Date(this.get('timestamp'))));
+    return new Date() - new Date(this.get('timestamp'));
   };
   Snapshot.prototype.restore = function() {
     return $.post("" + (this.url()) + "/restore", __bind(function() {

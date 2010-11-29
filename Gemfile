@@ -12,6 +12,7 @@ gem 'activemodel', '3.0.1'
 gem 'activesupport', '3.0.1'
 
 group :development do
+  gem "backports"
   gem "growl"
   gem "rb-fsevent"
   gem "guard"
