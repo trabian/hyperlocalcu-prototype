@@ -2,6 +2,8 @@ require 'sinatra'
 require 'haml'
 require 'mongoid'
 
+require 'juggernaut'
+
 require File.join(File.dirname(__FILE__), 'init')
 
 Mongoid.configure do |config|

@@ -11,6 +11,9 @@ gem 'fastercsv'
 gem 'activemodel', '3.0.1'
 gem 'activesupport', '3.0.1'
 
+gem 'juggernaut', '2.0.0'
+gem 'system_timer', '1.0'
+
 group :development do
   gem "backports"
   gem "growl"
