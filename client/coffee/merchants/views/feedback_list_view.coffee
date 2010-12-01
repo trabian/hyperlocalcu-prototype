@@ -9,6 +9,7 @@ define ['merchants/views/feedback_view'], (FeedbackView) ->
       @feedbacks = feedbacks
 
       @feedbacks.bind 'refresh', @addAll
+      @feedbacks.bind 'add', @addOne
 
     addOne: (feedback) =>
 
@@ -16,7 +17,7 @@ define ['merchants/views/feedback_view'], (FeedbackView) ->
         model: feedback
         id: feedback.id
 
-      $(@el).append view.render().el
+      $(@el).prepend view.render().el
 
     addAll: =>
       @feedbacks.each @addOne

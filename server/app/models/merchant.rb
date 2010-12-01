@@ -1,6 +1,7 @@
 class Merchant
 
   include Mongoid::Document
+  include ModelExtensions::Publication
   include ModelExtensions::Serialization
 
   field :name
@@ -13,7 +14,7 @@ class Merchant
 
   # Obviously this isn't efficient for a real system.
   def feedbacks
-    items.where(:feedback.exists => true).collect(&:feedback).compact.sort_by { |feedback| feedback.created_at }.reverse
+    items.where(:feedback.exists => true).collect(&:feedback).compact.sort_by { |feedback| feedback.created_at }
   end
 
 end

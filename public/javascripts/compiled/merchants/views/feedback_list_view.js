@@ -19,7 +19,8 @@ define(['merchants/views/feedback_view'], function(FeedbackView) {
   FeedbackListView.prototype.el = $('#feedback-list');
   FeedbackListView.prototype.initialize = function(feedbacks) {
     this.feedbacks = feedbacks;
-    return this.feedbacks.bind('refresh', this.addAll);
+    this.feedbacks.bind('refresh', this.addAll);
+    return this.feedbacks.bind('add', this.addOne);
   };
   FeedbackListView.prototype.addOne = function(feedback) {
     var view;
@@ -27,7 +28,7 @@ define(['merchants/views/feedback_view'], function(FeedbackView) {
       model: feedback,
       id: feedback.id
     });
-    return $(this.el).append(view.render().el);
+    return $(this.el).prepend(view.render().el);
   };
   FeedbackListView.prototype.addAll = function() {
     return this.feedbacks.each(this.addOne);

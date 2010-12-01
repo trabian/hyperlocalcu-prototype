@@ -9,7 +9,7 @@ class Feedback
   embedded_in :item, :inverse_of => :feedback
 
   set_callback(:create, :after) do |feedback|
-    Juggernaut.publish(["monitor", "merchant-#{feedback.item.merchant.id}-feedback"], feedback.to_json)
+    feedback.item.merchant.publish('add:feedback', feedback)
   end
 
 end

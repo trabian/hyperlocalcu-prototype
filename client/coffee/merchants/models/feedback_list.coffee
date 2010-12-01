@@ -9,5 +9,6 @@ define ['merchants/models/feedback'], (Feedback) ->
 
     initialize: (options) =>
       @merchant = options.merchant
-      
-  
+
+      @merchant.bind 'add:feedback', (feedback) =>
+        this.add feedback

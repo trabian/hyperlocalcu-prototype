@@ -6,7 +6,7 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(["merchants/models/merchant", "merchants/models/feedback_list", "merchants/views/feedback_list_view", "merchants/views/sales_chart_view"], function(Merchant, FeedbackList, FeedbackListView, SalesChartView) {
+define(["merchants/models/merchant", "merchants/models/feedback_list", "merchants/views/feedback_list_view", "merchants/views/sales_chart_view", "lib/socket"], function(Merchant, FeedbackList, FeedbackListView, SalesChartView, socket) {
   var MerchantDashboardController;
   MerchantDashboardController = function() {
     return Backbone.Controller.apply(this, arguments);
@@ -21,12 +21,13 @@ define(["merchants/models/merchant", "merchants/models/feedback_list", "merchant
       merchant: this.merchant
     });
     this.feedbackListView = new FeedbackListView(this.feedbackList);
-    return this.feedbackList.fetch({
+    this.feedbackList.fetch({
       success: function() {
         $('#dashboard-loading').hide();
         return $('#feedback').show();
       }
     });
+    return socket.listenTo(this.merchant);
   };
   return MerchantDashboardController;
 });

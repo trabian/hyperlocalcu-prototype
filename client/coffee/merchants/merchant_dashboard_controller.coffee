@@ -1,4 +1,4 @@
-define ["merchants/models/merchant", "merchants/models/feedback_list", "merchants/views/feedback_list_view", "merchants/views/sales_chart_view"], (Merchant, FeedbackList, FeedbackListView, SalesChartView) ->
+define ["merchants/models/merchant", "merchants/models/feedback_list", "merchants/views/feedback_list_view", "merchants/views/sales_chart_view", "lib/socket"], (Merchant, FeedbackList, FeedbackListView, SalesChartView, socket) ->
 
   class MerchantDashboardController extends Backbone.Controller
 
@@ -18,3 +18,5 @@ define ["merchants/models/merchant", "merchants/models/feedback_list", "merchant
         success: ->
           $('#dashboard-loading').hide()
           $('#feedback').show()
+
+      socket.listenTo @merchant

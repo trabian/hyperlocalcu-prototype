@@ -1,4 +1,6 @@
-var __extends = function(child, parent) {
+var __bind = function(func, context) {
+    return function(){ return func.apply(context, arguments); };
+  }, __extends = function(child, parent) {
     var ctor = function(){};
     ctor.prototype = parent.prototype;
     child.prototype = new ctor();
@@ -21,7 +23,10 @@ define(['merchants/models/feedback'], function(Feedback) {
     return "/merchants/" + (this.merchant.id) + "/feedbacks";
   };
   FeedbackList.prototype.initialize = function(options) {
-    return (this.merchant = options.merchant);
+    this.merchant = options.merchant;
+    return this.merchant.bind('add:feedback', __bind(function(feedback) {
+      return this.add(feedback);
+    }, this));
   };
   return FeedbackList;
 });
