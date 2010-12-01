@@ -1,12 +1,17 @@
-define ["order!vendor/socket_io", "order!vendor/juggernaut"], (socket_io, juggernaut) ->
+define ["http://js.pusherapp.com/1.6/pusher.min.js"], (pusher) ->
 
   class Socket
 
     listenTo: (model) =>
 
-      @jug or= new Juggernaut
+      @pusher or= new Pusher(PUSHER_KEY)
 
-      @jug.subscribe model.url, (data) =>
-        model.trigger data.event, data.object
+      channel = @pusher.subscribe this.channelName(model)
+
+      channel.bind_all (event, data) =>
+        model.trigger event, data
+
+    channelName: (model) =>
+      model.url.replace(/^\//, '').replace(/\//, '_')
 
   new Socket

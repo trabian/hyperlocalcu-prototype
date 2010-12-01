@@ -5,6 +5,7 @@ require 'sinatra'
 
 require 'sass/plugin/rack'
 require 'compass'
+require 'pusher'
 
 require 'server/app.rb'
 
@@ -15,5 +16,6 @@ end
 use Rack::Static, :urls => ["/docs"]
 
 set :show_exceptions, true
+
 
 run Sinatra::Application

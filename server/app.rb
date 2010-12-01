@@ -20,10 +20,18 @@ Mongoid.configure do |config|
   
 end
 
+configure :development do
+
+  ENV['PUSHER_URL'] = 'http://458ecea51903933ff9fb:9454fffb7dc81026b35b@api.pusherapp.com/apps/3014'
+
+end
+
 configure do
 
   set :haml, { :format => :html5 }
   set :views, Proc.new { File.join(root, "server", "app", "views") }
+
+  Pusher.url = ENV['PUSHER_URL']
 
 end
 
@@ -33,5 +41,13 @@ Dir["#{File.dirname(__FILE__)}/app/controllers/*.rb"].each { |f| load(f) }
 
 get '/' do
   File.read(File.join('public', 'index.html'))
+end
+
+get '/merchant_dashboard' do
+  haml :merchant_dashboard
+end
+
+get '/merchant_dashboard.html' do
+  haml :merchant_dashboard
 end
 

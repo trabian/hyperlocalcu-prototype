@@ -11,6 +11,8 @@ gem 'fastercsv'
 gem 'activemodel', '3.0.1'
 gem 'activesupport', '3.0.1'
 
+gem 'pusher', '0.7.0'
+
 gem 'juggernaut', '2.0.0'
 gem 'system_timer', '1.0'
 

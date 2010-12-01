@@ -1,0 +1,58 @@
+!!!
+%head
+  - ['compiled/screen.css', 'jquery-ui.css', 'compiled/jquery_ui_custom.css'].each do |stylesheet|
+    %link{:href => "/stylesheets/#{stylesheet}", :rel => 'stylesheet'}
+  %title Hyperlocal CU Merchant Dashboard
+%body
+  #container
+    #global
+      %ul
+        %li
+          %a{:href => '#demo/snapshots'} Snapshots
+    #main
+      .content
+        .ui-widget
+          %h2#merchant-name
+
+          #dashboard-loading Loading...
+
+          #sales-chart{:style => "display: none;"}
+            %h3 Sales
+
+          #feedback{:style => "display: none;"}
+
+            %h3 Feedback
+
+            %ul#feedback-list
+
+    #sidebar
+      #offers
+
+  %script{:src => '/javascripts/compiled/vendor/require-jquery.js?v=1'}
+
+  :javascript
+
+    PUSHER_KEY = '#{Pusher.key}';
+
+    require({ baseUrl: "/javascripts/compiled" }, ["order!vendor/underscore", "order!vendor/backbone", "order!merchants/merchant_dashboard_controller", "order!merchants/models/merchant", "order!demo/demo_controller"], function(underscore, backbone, MerchantDashboardController, Merchant, DemoController) {
+
+      var the_ram = new Merchant();
+
+      the_ram.id = '4ce0c42ec8bb95d50d000001';
+      the_ram.url = "/merchants/" + the_ram.id;
+
+      the_ram.fetch({
+        success: function() {
+
+          $('#merchant-name').html(the_ram.get('name'));
+
+          var controller = new MerchantDashboardController({ merchant: the_ram });
+
+          var demoController = new DemoController();
+
+          Backbone.history.start();
+
+        }
+      });
+
+    });
