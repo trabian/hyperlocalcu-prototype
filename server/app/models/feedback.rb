@@ -2,6 +2,7 @@ class Feedback
 
   include Mongoid::Document
   include Mongoid::Timestamps
+  include ModelExtensions::Serialization
 
   field :response, :type => Hash
 

@@ -27,10 +27,6 @@ end
 
 mime_type :handlebars, "text/html"
 
-def render_backbone_json(obj)
-  obj.to_json(:except => ["_id"], :methods => ["id"])
-end
-
 Dir["#{File.dirname(__FILE__)}/app/controllers/*.rb"].each { |f| load(f) }
 
 get '/' do

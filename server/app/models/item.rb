@@ -1,6 +1,7 @@
 class Item
 
   include Mongoid::Document
+  include ModelExtensions::Serialization
 
   field :name
   field :timestamp, :type => Date
@@ -11,7 +12,5 @@ class Item
   referenced_in :merchant
 
   embeds_one :feedback
-
-  alias_method :_id, :id
 
 end

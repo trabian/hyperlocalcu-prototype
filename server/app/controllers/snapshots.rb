@@ -1,5 +1,5 @@
 get '/demo/snapshots' do
-  render_backbone_json Snapshot.ordered
+  Snapshot.ordered.to_json
 end
 
 post '/demo/snapshots/:id/restore' do |id|
@@ -8,7 +8,7 @@ post '/demo/snapshots/:id/restore' do |id|
 end
 
 post '/demo/snapshots' do
-  render_backbone_json Snapshot.create(JSON.parse(request.body.read.to_s))
+  Snapshot.create(JSON.parse(request.body.read.to_s)).to_json
 end
 
 delete '/demo/snapshots/:id' do |id|

@@ -1,11 +1,10 @@
 class Snapshot
 
   include Mongoid::Document
+  include ModelExtensions::Serialization
 
   field :name, :type => String
   field :timestamp, :type => DateTime
-
-  alias_method :_id, :id
 
   scope :ordered, desc(:timestamp)
 
@@ -17,10 +16,6 @@ class Snapshot
 
   def age
     Time.now = self.timestamp
-  end
-
-  def as_json(options = {})
-    super(:except => ["_id"], :methods => ["id"])
   end
 
 protected

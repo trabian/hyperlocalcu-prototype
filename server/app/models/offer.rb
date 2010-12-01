@@ -1,6 +1,7 @@
 class Offer
 
   include Mongoid::Document
+  include ModelExtensions::Serialization
 
   field :name
   field :amount

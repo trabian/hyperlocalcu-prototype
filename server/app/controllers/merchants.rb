@@ -1,10 +1,9 @@
 get '/merchants' do
-  render_backbone_json Merchant.all
+  Merchant.all.to_json
 end
 
 get '/merchants/:id' do |id|
-
-  render_backbone_json Merchant.find(id)
+  Merchant.find(id).to_json
 end
 
 get '/merchants/:id/feedbacks' do |id|

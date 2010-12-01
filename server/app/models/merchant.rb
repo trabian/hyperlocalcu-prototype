@@ -1,6 +1,7 @@
 class Merchant
 
   include Mongoid::Document
+  include ModelExtensions::Serialization
 
   field :name
   field :social, :type => Hash
@@ -9,8 +10,6 @@ class Merchant
   embeds_many :offers
 
   references_many :items
-
-  alias_method :_id, :id
 
   # Obviously this isn't efficient for a real system.
   def feedbacks
