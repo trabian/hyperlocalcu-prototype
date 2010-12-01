@@ -13,12 +13,6 @@ tmux rename-window -t hlcu:3 guard
 tmux new-window -t hlcu:4 "cd development/wiki && bundle exec gollum"
 tmux rename-window -t hlcu:4 wiki
 
-tmux new-window -t hlcu:5 "redis-server /usr/local/etc/redis.conf"
-tmux rename-window -t hlcu:5 redis
-
-tmux new-window -t hlcu:6 "cd server/juggernaut && node server.js"
-tmux rename-window -t hlcu:6 juggernaut
-
 tmux select-window -t hlcu:0
 
 tmux attach -t hlcu
