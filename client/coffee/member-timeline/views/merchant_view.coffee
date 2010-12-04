@@ -1,4 +1,4 @@
-define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=12", "member-timeline/views/offer_view", "social/views/tweet_view"], (jqueryUI, sidebarTemplate, OfferView, TweetView) ->
+define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=15", "member-timeline/views/offer_view", "social/views/tweet_view"], (jqueryUI, sidebarTemplate, OfferView, TweetView) ->
 
   # The MerchantView is used to show merchant-specific information
   # such as the current offer.
@@ -26,19 +26,20 @@ define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=12"
 
     render: =>
 
-      $(@el).html @template(@model.toJSON())
+      $(@el).html @template(@model.toMerchantJSON())
 
-      if @model.get('feedback')
+      # Disable the feedback form temporarily
+      #if @model.get('feedback')
 
-        twitterSettings = @model.get('merchant')?.social?.twitter
+        #twitterSettings = @model.get('merchant')?.social?.twitter
 
-        if twitterSettings
-          tweetView = new TweetView
-            el: this.$('.tweet-feedback')
-            twitterSettings: twitterSettings
+        #if twitterSettings
+          #tweetView = new TweetView
+            #el: this.$('.tweet-feedback')
+            #twitterSettings: twitterSettings
 
-      else
-        this.renderMerchantForm()
+      #else
+        #this.renderMerchantForm()
 
       # Turn 'close' button into jQuery UI button
       this.$('.close').button

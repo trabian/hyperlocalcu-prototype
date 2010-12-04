@@ -1,17 +1,28 @@
 #merchant-view
   position: fixed
   top: 32px
-  padding: 10px
+  padding: 20px 10px
   border: 1px solid #ccc
   border-width: 1px 1px 1px 0
   +border-right-radius(5px)
-  background: $timeline_row_selected_color
+  background: #fff
   width: 323px
   min-height: 500px
   .close
+    display: none
     float: right
     .ui-button-text
       font-size: 11px
+  .name-and-location
+    .avatar
+      float: right
+      padding: 3px
+    h3
+      font-size: 16px
+      margin: 0 0 0.5em 0
+    p.address, p.phone
+      font-size: 11px
+      margin: 0.2em 0
   form.offer
     margin: 2em 0.5em 0
     p.additional-question
