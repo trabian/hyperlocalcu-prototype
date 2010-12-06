@@ -1,5 +1,5 @@
 get '/items' do
-  Item.ordered.to_json(:methods => [:merchant])
+  Item.ordered.to_json(:methods => [:merchant, :location])
 end
 
 put '/items/:item_id/feedback' do

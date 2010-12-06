@@ -20,6 +20,14 @@ define ->
       sign = if @amount < 0 then '<span class="sign">-</span>' else ''
       "#{sign}<span class='currency'>$</span>#{Math.abs(@amount).toFixed(2)}"
 
+    formatted_address: =>
+      location = this.get('location')
+      "#{location.address} in #{location.city}"
+
+    toMerchantJSON: ->
+      _.extend this.toJSON(),
+        formatted_address: @formatted_address
+
     # Add the formatted timestamp and amount to the json for the view
     toViewJSON: ->
       merchant = this.get('merchant')

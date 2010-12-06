@@ -1,4 +1,4 @@
-define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=12", "member-timeline/views/offer_view", "social/views/tweet_view"], (jqueryUI, sidebarTemplate, OfferView, TweetView) ->
+define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=15", "member-timeline/views/offer_view", "member-timeline/views/social_view"], (jqueryUI, sidebarTemplate, OfferView, SocialView) ->
 
   # The MerchantView is used to show merchant-specific information
   # such as the current offer.
@@ -6,6 +6,7 @@ define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=12"
 
     # Bind to DOM events within the view
     events:
+      "click .avatar": "toggleSocial"
       "click .close": "close"
 
     template: Handlebars.compile(sidebarTemplate)
@@ -26,19 +27,28 @@ define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=12"
 
     render: =>
 
-      $(@el).html @template(@model.toJSON())
+      $(@el).html @template(@model.toMerchantJSON())
 
-      if @model.get('feedback')
+      socialSettings = @model.get('merchant')?.social
 
-        twitterSettings = @model.get('merchant')?.social?.twitter
+      if socialSettings
+        @socialView = new SocialView
+          socialSettings: socialSettings
 
-        if twitterSettings
-          tweetView = new TweetView
-            el: this.$('.tweet-feedback')
-            twitterSettings: twitterSettings
+        $(@el).append @socialView.render().el
 
-      else
-        this.renderMerchantForm()
+      # Disable the feedback form temporarily
+      #if @model.get('feedback')
+
+        #twitterSettings = @model.get('merchant')?.social?.twitter
+
+        #if twitterSettings
+          #tweetView = new TweetView
+            #el: this.$('.tweet-feedback')
+            #twitterSettings: twitterSettings
+
+      #else
+        #this.renderMerchantForm()
 
       # Turn 'close' button into jQuery UI button
       this.$('.close').button
@@ -56,6 +66,9 @@ define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=12"
       this.trigger('hide')
 
       $(@el).empty().hide()
+
+    toggleSocial: =>
+      this.$('.social').toggle()
 
     renderMerchantForm: ->
 

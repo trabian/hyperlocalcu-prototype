@@ -9,6 +9,9 @@ var __extends = function(child, parent) {
 define(function() {
   var Item;
   Item = function() {
+    var _a;
+    _a = this;
+    this.formatted_address = function(){ return Item.prototype.formatted_address.apply(_a, arguments); };
     return Backbone.Model.apply(this, arguments);
   };
   __extends(Item, Backbone.Model);
@@ -24,6 +27,16 @@ define(function() {
     var sign;
     sign = this.amount < 0 ? '<span class="sign">-</span>' : '';
     return "" + (sign) + "<span class='currency'>$</span>" + (Math.abs(this.amount).toFixed(2));
+  };
+  Item.prototype.formatted_address = function() {
+    var location;
+    location = this.get('location');
+    return "" + (location.address) + " in " + (location.city);
+  };
+  Item.prototype.toMerchantJSON = function() {
+    return _.extend(this.toJSON(), {
+      formatted_address: this.formatted_address
+    });
   };
   Item.prototype.toViewJSON = function() {
     var _a, merchant;

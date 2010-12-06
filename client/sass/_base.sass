@@ -4,6 +4,7 @@
 
 $font_color = darken(#5F83B9, 5)
 $subtle_color = #999
+$link_color = #06d
 
 $timeline_row_border_color = lighten(#A7CFE6, 15)
 $timeline_row_date_border_color = lighten(#A7CFE6, 10)
@@ -35,6 +36,8 @@ textarea
   +column(24)
   margin: 0 40px
   padding: 10px 0
+  a
+    +link-colors($link_color, $link_color)
   #main
     +column(15)
     +box-shadow(#ccc, 2px)
