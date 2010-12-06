@@ -6,11 +6,12 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=15", "member-timeline/views/offer_view", "social/views/tweet_view"], function(jqueryUI, sidebarTemplate, OfferView, TweetView) {
+define(["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=15", "member-timeline/views/offer_view", "member-timeline/views/social_view"], function(jqueryUI, sidebarTemplate, OfferView, SocialView) {
   var MerchantView;
   MerchantView = function() {
     var _a;
     _a = this;
+    this.toggleSocial = function(){ return MerchantView.prototype.toggleSocial.apply(_a, arguments); };
     this.render = function(){ return MerchantView.prototype.render.apply(_a, arguments); };
     this.close = function(){ return MerchantView.prototype.close.apply(_a, arguments); };
     this.onChange = function(){ return MerchantView.prototype.onChange.apply(_a, arguments); };
@@ -18,6 +19,7 @@ define(["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=15"
   };
   __extends(MerchantView, Backbone.View);
   MerchantView.prototype.events = {
+    "click .avatar": "toggleSocial",
     "click .close": "close"
   };
   MerchantView.prototype.template = Handlebars.compile(sidebarTemplate);
@@ -37,7 +39,15 @@ define(["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=15"
     });
   };
   MerchantView.prototype.render = function() {
+    var _a, socialSettings;
     $(this.el).html(this.template(this.model.toMerchantJSON()));
+    socialSettings = (typeof (_a = (this.model.get('merchant'))) === "undefined" || _a === null) ? undefined : _a.social;
+    if (socialSettings) {
+      this.socialView = new SocialView({
+        socialSettings: socialSettings
+      });
+      $(this.el).append(this.socialView.render().el);
+    }
     this.$('.close').button({
       icons: {
         primary: 'ui-icon-close'
@@ -49,6 +59,9 @@ define(["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=15"
   MerchantView.prototype.hide = function() {
     this.trigger('hide');
     return $(this.el).empty().hide();
+  };
+  MerchantView.prototype.toggleSocial = function() {
+    return this.$('.social').toggle();
   };
   MerchantView.prototype.renderMerchantForm = function() {
     var _a, form, merchant, methodInput;

@@ -359,6 +359,8 @@ if (typeof window != 'undefined'){
  */
 
 (function(){
+
+  console.log('initialize socket_io');
 	
 	var WS = io.Transport.websocket = function(){
 		io.Transport.apply(this, arguments);

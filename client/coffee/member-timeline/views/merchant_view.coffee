@@ -1,4 +1,4 @@
-define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=15", "member-timeline/views/offer_view", "social/views/tweet_view"], (jqueryUI, sidebarTemplate, OfferView, TweetView) ->
+define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=15", "member-timeline/views/offer_view", "member-timeline/views/social_view"], (jqueryUI, sidebarTemplate, OfferView, SocialView) ->
 
   # The MerchantView is used to show merchant-specific information
   # such as the current offer.
@@ -6,6 +6,7 @@ define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=15"
 
     # Bind to DOM events within the view
     events:
+      "click .avatar": "toggleSocial"
       "click .close": "close"
 
     template: Handlebars.compile(sidebarTemplate)
@@ -27,6 +28,14 @@ define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=15"
     render: =>
 
       $(@el).html @template(@model.toMerchantJSON())
+
+      socialSettings = @model.get('merchant')?.social
+
+      if socialSettings
+        @socialView = new SocialView
+          socialSettings: socialSettings
+
+        $(@el).append @socialView.render().el
 
       # Disable the feedback form temporarily
       #if @model.get('feedback')
@@ -57,6 +66,9 @@ define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=15"
       this.trigger('hide')
 
       $(@el).empty().hide()
+
+    toggleSocial: =>
+      this.$('.social').toggle()
 
     renderMerchantForm: ->
 
