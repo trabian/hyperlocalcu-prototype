@@ -7,8 +7,10 @@ class Merchant
   field :name
   field :social, :type => Hash
   field :sales, :type => Array
+  field :avatar
 
   embeds_many :offers
+  embeds_many :locations
 
   references_many :items
 

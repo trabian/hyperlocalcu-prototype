@@ -59,12 +59,12 @@ a img {
   border: none;
 }
 
-/* line 24, ../../../client/sass/_base.sass */
+/* line 25, ../../../client/sass/_base.sass */
 body {
   background: #d3dadf url(/images/background.png) repeat-x left top;
 }
 
-/* line 27, ../../../client/sass/_base.sass */
+/* line 28, ../../../client/sass/_base.sass */
 textarea {
   font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-size: 13px;
@@ -72,7 +72,7 @@ textarea {
   line-height: 1.4em;
 }
 
-/* line 34, ../../../client/sass/_base.sass */
+/* line 35, ../../../client/sass/_base.sass */
 #container {
   display: inline;
   float: left;
@@ -85,7 +85,15 @@ textarea {
 * html #container {
   overflow-x: hidden;
 }
-/* line 38, ../../../client/sass/_base.sass */
+/* line 39, ../../../client/sass/_base.sass */
+#container a {
+  color: #0066dd;
+}
+/* line 24, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_link-colors.scss */
+#container a:hover {
+  color: #0066dd;
+}
+/* line 41, ../../../client/sass/_base.sass */
 #container #main {
   display: inline;
   float: left;
@@ -104,11 +112,11 @@ textarea {
 * html #container #main {
   overflow-x: hidden;
 }
-/* line 45, ../../../client/sass/_base.sass */
+/* line 48, ../../../client/sass/_base.sass */
 #container #main .content {
   padding: 12px;
 }
-/* line 47, ../../../client/sass/_base.sass */
+/* line 50, ../../../client/sass/_base.sass */
 #container #sidebar {
   display: inline;
   float: left;
@@ -139,7 +147,7 @@ textarea {
 * html #container #sidebar {
   overflow-x: hidden;
 }
-/* line 58, ../../../client/sass/_base.sass */
+/* line 61, ../../../client/sass/_base.sass */
 #container #sidebar.selected {
   background: #f1f1f1;
 }
@@ -224,11 +232,11 @@ p img.right {
 /* line 77, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_typography.scss */
 a {
   text-decoration: underline;
-  color: #000099;
+  color: #0066dd;
 }
 /* line 18, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_link-colors.scss */
 a:visited {
-  color: #000066;
+  color: #0033aa;
 }
 /* line 21, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_link-colors.scss */
 a:focus {
@@ -240,7 +248,7 @@ a:hover {
 }
 /* line 27, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_link-colors.scss */
 a:active {
-  color: #cc0099;
+  color: #cc66dd;
 }
 
 /* line 78, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_typography.scss */
@@ -1453,8 +1461,9 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 /* line 1, ../../../client/sass/_merchants.sass */
 #merchant-view {
   position: fixed;
+  color: #444444;
   top: 32px;
-  padding: 10px;
+  padding: 20px 10px 20px 15px;
   border: 1px solid #cccccc;
   border-width: 1px 1px 1px 0;
   -moz-border-radius-topright: 5px;
@@ -1469,58 +1478,164 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   -ms-border-bottom-right-radius: 5px;
   -khtml-border-bottom-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  background: #f1f1f1;
-  width: 323px;
+  background: #f6f6f6;
+  width: 318px;
   min-height: 500px;
 }
-/* line 11, ../../../client/sass/_merchants.sass */
+/* line 12, ../../../client/sass/_merchants.sass */
 #merchant-view .close {
+  display: none;
   float: right;
 }
-/* line 13, ../../../client/sass/_merchants.sass */
+/* line 15, ../../../client/sass/_merchants.sass */
 #merchant-view .close .ui-button-text {
   font-size: 11px;
 }
-/* line 15, ../../../client/sass/_merchants.sass */
+/* line 18, ../../../client/sass/_merchants.sass */
+#merchant-view .name-and-location .avatar {
+  float: right;
+  padding: 3px;
+  background: white;
+  border: 1px solid #dddddd;
+  cursor: pointer;
+}
+/* line 24, ../../../client/sass/_merchants.sass */
+#merchant-view .name-and-location h3 {
+  font-size: 16px;
+  margin: 0 0 0.5em 0;
+}
+/* line 27, ../../../client/sass/_merchants.sass */
+#merchant-view .name-and-location p.address, #merchant-view .name-and-location p.phone {
+  font-size: 11px;
+  margin: 0.2em 0;
+}
+/* line 30, ../../../client/sass/_merchants.sass */
 #merchant-view form.offer {
   margin: 2em 0.5em 0;
 }
-/* line 17, ../../../client/sass/_merchants.sass */
+/* line 32, ../../../client/sass/_merchants.sass */
 #merchant-view form.offer p.additional-question {
   margin: 0.5em 0;
   font-size: 93%;
 }
-/* line 20, ../../../client/sass/_merchants.sass */
+/* line 35, ../../../client/sass/_merchants.sass */
 #merchant-view form.offer textarea {
   width: 98%;
   height: 75px;
 }
-/* line 23, ../../../client/sass/_merchants.sass */
+/* line 38, ../../../client/sass/_merchants.sass */
 #merchant-view form.offer p.reward {
   float: right;
   color: #009900;
   margin: 0.3em 0 0;
 }
-/* line 27, ../../../client/sass/_merchants.sass */
+/* line 43, ../../../client/sass/_merchants.sass */
+#merchant-view .social::before, #merchant-view .social::after {
+  content: "";
+  display: block;
+  height: 0px;
+  width: 0px;
+  position: absolute;
+}
+/* line 50, ../../../client/sass/_merchants.sass */
+#merchant-view .social::before {
+  border: 14px solid transparent;
+  border-bottom-color: #dddddd;
+  right: 14px;
+  top: -28px;
+}
+/* line 56, ../../../client/sass/_merchants.sass */
+#merchant-view .social::after {
+  border: 12px solid transparent;
+  border-bottom-color: white;
+  right: 16px;
+  top: -24px;
+}
+/* line 62, ../../../client/sass/_merchants.sass */
+#merchant-view .social {
+  position: relative;
+  margin: 10px 0 0 0;
+  background: white;
+  border: 1px solid #dddddd;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 11px;
+}
+/* line 70, ../../../client/sass/_merchants.sass */
+#merchant-view .social .twitter, #merchant-view .social .facebook {
+  clear: both;
+  padding: 0 0 10px;
+}
+/* line 73, ../../../client/sass/_merchants.sass */
+#merchant-view .social .twitter .view-profile, #merchant-view .social .facebook .view-profile {
+  float: right;
+  margin: 5px;
+}
+/* line 76, ../../../client/sass/_merchants.sass */
+#merchant-view .social .twitter .tweet_time, #merchant-view .social .twitter .post_time, #merchant-view .social .facebook .tweet_time, #merchant-view .social .facebook .post_time {
+  display: block;
+  color: #999999;
+}
+/* line 79, ../../../client/sass/_merchants.sass */
+#merchant-view .social .twitter .tweet_time a, #merchant-view .social .twitter .post_time a, #merchant-view .social .facebook .tweet_time a, #merchant-view .social .facebook .post_time a {
+  color: #999999;
+}
+/* line 24, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_link-colors.scss */
+#merchant-view .social .twitter .tweet_time a:hover, #merchant-view .social .twitter .post_time a:hover, #merchant-view .social .facebook .tweet_time a:hover, #merchant-view .social .facebook .post_time a:hover {
+  color: #0066dd;
+}
+/* line 81, ../../../client/sass/_merchants.sass */
+#merchant-view .social .twitter {
+  border-bottom: 1px solid #e3e3e3;
+  margin-bottom: 10px;
+}
+/* line 85, ../../../client/sass/_merchants.sass */
+#merchant-view .social .twitter .latest-tweet .tweet_list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+}
+/* line 11, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_bullets.scss */
+#merchant-view .social .twitter .latest-tweet .tweet_list li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0px;
+}
+/* line 88, ../../../client/sass/_merchants.sass */
+#merchant-view .social p.security {
+  border-top: 1px solid #e3e3e3;
+  font-size: 10px;
+  margin: 0;
+  background: url(/images/icons/lock.png) no-repeat left 15px;
+  padding: 10px 0 0 25px;
+}
+/* line 94, ../../../client/sass/_merchants.sass */
 #merchant-view .feedback {
   padding: 15px 0 0;
 }
-/* line 29, ../../../client/sass/_merchants.sass */
+/* line 96, ../../../client/sass/_merchants.sass */
 #merchant-view .feedback p {
   margin: 0.5em 0.2em;
 }
 
-/* line 33, ../../../client/sass/_merchants.sass */
+/* line 100, ../../../client/sass/_merchants.sass */
 #feedback h3, #sales-chart h3 {
   margin: 0 0 0.5em;
   font-size: 14px;
 }
 
-/* line 37, ../../../client/sass/_merchants.sass */
+/* line 104, ../../../client/sass/_merchants.sass */
 #feedback {
   padding: 10px 0 0 0;
 }
-/* line 39, ../../../client/sass/_merchants.sass */
+/* line 106, ../../../client/sass/_merchants.sass */
 #feedback #feedback-list {
   list-style: none;
   margin: 0;
@@ -1593,7 +1708,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #feedback #feedback-list li.feedback ul.buttons .ui-button .ui-button-text {
   font-size: 10px;
 }
-/* line 44, ../../../client/sass/_merchants.sass */
+/* line 111, ../../../client/sass/_merchants.sass */
 #feedback #feedback-list li p.comment {
   margin: 0 0 0.2em;
 }
