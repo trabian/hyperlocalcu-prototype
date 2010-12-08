@@ -1,4 +1,4 @@
-define ['vendor/handlebars', 'text!views/member-timeline/item.handlebars?v=7'], (handlebars, template) ->
+define ['vendor/handlebars', 'lib/views/rating_view', 'text!views/member-timeline/item.handlebars?v=10'], (handlebars, RatingView, template) ->
 
   # The ItemView is a representation of a [Timeline Item](item.html).
   class ItemView extends Backbone.View
@@ -32,6 +32,11 @@ define ['vendor/handlebars', 'text!views/member-timeline/item.handlebars?v=7'], 
     render: ->
 
       $(@el).html @template(@model.toViewJSON())
+
+      ratingView = new RatingView
+        model: @model
+
+      this.$('td.name').prepend ratingView.render().el
 
       if @model.get('amount') > 0
         $(@el).addClass('reward')
