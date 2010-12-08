@@ -14,9 +14,27 @@ within the thead.</p>             </td>             <td class="code">           
       <span class="nx">$</span><span class="p">(</span><span class="err">@</span><span class="nx">el</span><span class="p">).</span><span class="nx">append</span> <span class="nx">view</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span>
 
       <span class="k">this</span><span class="p">.</span><span class="nx">addTimestampClass</span> <span class="nx">view</span><span class="p">,</span> <span class="nx">item</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-6">#</a>               </div>               <p>Add all items to the timeline</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">addAll: </span><span class="o">=&gt;</span>
-      <span class="err">@</span><span class="nx">items</span><span class="p">.</span><span class="nx">each</span> <span class="err">@</span><span class="nx">addOne</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-7">#</a>               </div>               <p>Add a "repeat-date' class to rows whose preceding row had the same timestamp.
+      <span class="err">@</span><span class="nx">items</span><span class="p">.</span><span class="nx">each</span> <span class="err">@</span><span class="nx">addOne</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">addRating</span><span class="p">()</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-7">#</a>               </div>               <p>Add a "repeat-date' class to rows whose preceding row had the same timestamp.
 This allows us to hide them in order to clean up the interface.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">addTimestampClass: </span><span class="p">(</span><span class="nx">view</span><span class="p">,</span> <span class="nx">item</span><span class="p">)</span> <span class="o">-&gt;</span>
       <span class="nx">$</span><span class="p">(</span><span class="nx">view</span><span class="p">.</span><span class="nx">el</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;repeat-date&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="nx">item</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">)</span> <span class="o">is</span> <span class="err">@</span><span class="nx">lastTimestamp</span>
       <span class="err">@</span><span class="nx">lastTimestamp</span> <span class="o">=</span> <span class="nx">item</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">)</span>
+
+    <span class="nv">addRating: </span><span class="o">-&gt;</span>
+
+      <span class="nx">itemList</span> <span class="o">=</span> <span class="err">@</span><span class="nx">items</span>
+
+      <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.rating&#39;</span><span class="p">).</span><span class="nx">raty</span>
+
+        <span class="nv">path: </span><span class="s1">&#39;/images/raty/&#39;</span>
+        <span class="nv">onClick: </span><span class="p">(</span><span class="nx">rating</span><span class="p">)</span> <span class="o">-&gt;</span>
+
+          <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">toggleClass</span> <span class="s1">&#39;active&#39;</span><span class="p">,</span> <span class="nx">rating</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+          <span class="nx">item_id</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">closest</span><span class="p">(</span><span class="s1">&#39;tr&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+          
+          <span class="nx">item</span> <span class="o">=</span> <span class="nx">itemList</span><span class="p">.</span><span class="nx">get</span> <span class="nx">item_id</span>
+          <span class="nx">item</span><span class="p">.</span><span class="nx">set</span>
+            <span class="nv">rating: </span><span class="nx">rating</span>
 
 </pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

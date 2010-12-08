@@ -14,11 +14,8 @@ the backend.</p>             </td>             <td class="code">               <
 it's the only one selected.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">toggleOrSelectOne: </span><span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="o">-&gt;</span>
 
       <span class="k">if</span> <span class="nx">item</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;selected&#39;</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-7">#</a>               </div>               <p>Allow listeners to know when an item is explicitly unselected (as
-opposed to becoming unselected because another item is selected).</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;unselect&#39;</span><span class="p">)</span>
-
-        <span class="nx">item</span><span class="p">.</span><span class="nx">set</span> <span class="s1">&#39;selected&#39;</span><span class="o">:</span> <span class="kc">false</span>
-
-      <span class="k">else</span>
+opposed to becoming unselected because another item is selected).
+this.trigger('unselect')</p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-8">#</a>               </div>               <p>item.set 'selected': false</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="k">else</span>
 
         <span class="k">this</span><span class="p">.</span><span class="nx">selectOne</span> <span class="nx">item</span>
 

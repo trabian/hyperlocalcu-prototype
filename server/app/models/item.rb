@@ -4,6 +4,7 @@ class Item
   include ModelExtensions::Serialization
 
   field :name
+  field :rating, :type => Integer
   field :timestamp, :type => Date
   field :amount, :type => Float
 

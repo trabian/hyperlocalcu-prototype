@@ -1348,50 +1348,66 @@ table#timeline tbody tr td.amount {
   padding-right: 10px;
 }
 /* line 27, ../../../client/sass/_timeline.sass */
+table#timeline tbody tr td.name .rating {
+  width: 80px !important;
+  float: right;
+  margin-top: 2px;
+  opacity: 0.5;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+  line-height: 1em;
+}
+/* line 33, ../../../client/sass/_timeline.sass */
+table#timeline tbody tr td.name .rating:hover, table#timeline tbody tr td.name .rating.active {
+  opacity: 1;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+}
+/* line 35, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr td.name .offer, table#timeline tbody tr td.name .feedback {
   margin: 0;
   font-size: 10px;
   color: #999999;
 }
-/* line 31, ../../../client/sass/_timeline.sass */
+/* line 39, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr td.name .offer em, table#timeline tbody tr td.name .feedback em {
   font-style: normal;
   color: #009900;
 }
-/* line 34, ../../../client/sass/_timeline.sass */
+/* line 42, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr td.name .feedback {
   color: #009900;
 }
-/* line 37, ../../../client/sass/_timeline.sass */
+/* line 45, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr th {
   font-weight: normal;
 }
-/* line 40, ../../../client/sass/_timeline.sass */
+/* line 48, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr.repeat-date td, table#timeline tbody tr.repeat-date th {
   border-top: 1px solid #e3eff7;
 }
-/* line 43, ../../../client/sass/_timeline.sass */
+/* line 51, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr.repeat-date td.date span {
   display: none;
 }
-/* line 46, ../../../client/sass/_timeline.sass */
+/* line 54, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr:nth-child(odd) td, table#timeline tbody tr:nth-child(odd) th {
   background: #f6fafd;
 }
-/* line 49, ../../../client/sass/_timeline.sass */
+/* line 57, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr:first-child td, table#timeline tbody tr:first-child th {
   border-top: none;
 }
-/* line 52, ../../../client/sass/_timeline.sass */
+/* line 60, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr.selected td, table#timeline tbody tr.selected th {
   border-top-color: #dddddd;
   background: #f1f1f1;
 }
-/* line 56, ../../../client/sass/_timeline.sass */
+/* line 64, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr.reward td, table#timeline tbody tr.reward th {
   color: #009900;
 }
-/* line 59, ../../../client/sass/_timeline.sass */
+/* line 67, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr th {
   border-top-color: #e3e3e3;
 }
@@ -1491,7 +1507,11 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #merchant-view .close .ui-button-text {
   font-size: 11px;
 }
-/* line 18, ../../../client/sass/_merchants.sass */
+/* line 17, ../../../client/sass/_merchants.sass */
+#merchant-view .name-and-location {
+  height: 58px;
+}
+/* line 19, ../../../client/sass/_merchants.sass */
 #merchant-view .name-and-location .avatar {
   float: right;
   padding: 3px;
@@ -1499,37 +1519,37 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   border: 1px solid #dddddd;
   cursor: pointer;
 }
-/* line 24, ../../../client/sass/_merchants.sass */
+/* line 25, ../../../client/sass/_merchants.sass */
 #merchant-view .name-and-location h3 {
   font-size: 16px;
   margin: 0 0 0.5em 0;
 }
-/* line 27, ../../../client/sass/_merchants.sass */
+/* line 28, ../../../client/sass/_merchants.sass */
 #merchant-view .name-and-location p.address, #merchant-view .name-and-location p.phone {
   font-size: 11px;
   margin: 0.2em 0;
 }
-/* line 30, ../../../client/sass/_merchants.sass */
+/* line 31, ../../../client/sass/_merchants.sass */
 #merchant-view form.offer {
   margin: 2em 0.5em 0;
 }
-/* line 32, ../../../client/sass/_merchants.sass */
+/* line 33, ../../../client/sass/_merchants.sass */
 #merchant-view form.offer p.additional-question {
   margin: 0.5em 0;
   font-size: 93%;
 }
-/* line 35, ../../../client/sass/_merchants.sass */
+/* line 36, ../../../client/sass/_merchants.sass */
 #merchant-view form.offer textarea {
   width: 98%;
   height: 75px;
 }
-/* line 38, ../../../client/sass/_merchants.sass */
+/* line 39, ../../../client/sass/_merchants.sass */
 #merchant-view form.offer p.reward {
   float: right;
   color: #009900;
   margin: 0.3em 0 0;
 }
-/* line 43, ../../../client/sass/_merchants.sass */
+/* line 44, ../../../client/sass/_merchants.sass */
 #merchant-view .social::before, #merchant-view .social::after {
   content: "";
   display: block;
@@ -1537,21 +1557,21 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   width: 0px;
   position: absolute;
 }
-/* line 50, ../../../client/sass/_merchants.sass */
+/* line 51, ../../../client/sass/_merchants.sass */
 #merchant-view .social::before {
   border: 14px solid transparent;
   border-bottom-color: #dddddd;
   right: 14px;
   top: -28px;
 }
-/* line 56, ../../../client/sass/_merchants.sass */
+/* line 57, ../../../client/sass/_merchants.sass */
 #merchant-view .social::after {
   border: 12px solid transparent;
   border-bottom-color: white;
   right: 16px;
   top: -24px;
 }
-/* line 62, ../../../client/sass/_merchants.sass */
+/* line 63, ../../../client/sass/_merchants.sass */
 #merchant-view .social {
   position: relative;
   margin: 10px 0 0 0;
@@ -1566,22 +1586,22 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   padding: 10px;
   font-size: 11px;
 }
-/* line 70, ../../../client/sass/_merchants.sass */
+/* line 71, ../../../client/sass/_merchants.sass */
 #merchant-view .social .twitter, #merchant-view .social .facebook {
   clear: both;
   padding: 0 0 10px;
 }
-/* line 73, ../../../client/sass/_merchants.sass */
+/* line 74, ../../../client/sass/_merchants.sass */
 #merchant-view .social .twitter .view-profile, #merchant-view .social .facebook .view-profile {
   float: right;
   margin: 5px;
 }
-/* line 76, ../../../client/sass/_merchants.sass */
+/* line 77, ../../../client/sass/_merchants.sass */
 #merchant-view .social .twitter .tweet_time, #merchant-view .social .twitter .post_time, #merchant-view .social .facebook .tweet_time, #merchant-view .social .facebook .post_time {
   display: block;
   color: #999999;
 }
-/* line 79, ../../../client/sass/_merchants.sass */
+/* line 80, ../../../client/sass/_merchants.sass */
 #merchant-view .social .twitter .tweet_time a, #merchant-view .social .twitter .post_time a, #merchant-view .social .facebook .tweet_time a, #merchant-view .social .facebook .post_time a {
   color: #999999;
 }
@@ -1589,12 +1609,12 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #merchant-view .social .twitter .tweet_time a:hover, #merchant-view .social .twitter .post_time a:hover, #merchant-view .social .facebook .tweet_time a:hover, #merchant-view .social .facebook .post_time a:hover {
   color: #0066dd;
 }
-/* line 81, ../../../client/sass/_merchants.sass */
+/* line 82, ../../../client/sass/_merchants.sass */
 #merchant-view .social .twitter {
   border-bottom: 1px solid #e3e3e3;
   margin-bottom: 10px;
 }
-/* line 85, ../../../client/sass/_merchants.sass */
+/* line 86, ../../../client/sass/_merchants.sass */
 #merchant-view .social .twitter .latest-tweet .tweet_list {
   list-style: none;
   margin: 0;
@@ -1608,7 +1628,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   list-style-type: none;
   margin-left: 0px;
 }
-/* line 88, ../../../client/sass/_merchants.sass */
+/* line 89, ../../../client/sass/_merchants.sass */
 #merchant-view .social p.security {
   border-top: 1px solid #e3e3e3;
   font-size: 10px;
@@ -1616,26 +1636,26 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   background: url(/images/icons/lock.png) no-repeat left 15px;
   padding: 10px 0 0 25px;
 }
-/* line 94, ../../../client/sass/_merchants.sass */
+/* line 95, ../../../client/sass/_merchants.sass */
 #merchant-view .feedback {
   padding: 15px 0 0;
 }
-/* line 96, ../../../client/sass/_merchants.sass */
+/* line 97, ../../../client/sass/_merchants.sass */
 #merchant-view .feedback p {
   margin: 0.5em 0.2em;
 }
 
-/* line 100, ../../../client/sass/_merchants.sass */
+/* line 101, ../../../client/sass/_merchants.sass */
 #feedback h3, #sales-chart h3 {
   margin: 0 0 0.5em;
   font-size: 14px;
 }
 
-/* line 104, ../../../client/sass/_merchants.sass */
+/* line 105, ../../../client/sass/_merchants.sass */
 #feedback {
   padding: 10px 0 0 0;
 }
-/* line 106, ../../../client/sass/_merchants.sass */
+/* line 107, ../../../client/sass/_merchants.sass */
 #feedback #feedback-list {
   list-style: none;
   margin: 0;
@@ -1708,7 +1728,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #feedback #feedback-list li.feedback ul.buttons .ui-button .ui-button-text {
   font-size: 10px;
 }
-/* line 111, ../../../client/sass/_merchants.sass */
+/* line 112, ../../../client/sass/_merchants.sass */
 #feedback #feedback-list li p.comment {
   margin: 0 0 0.2em;
 }

@@ -6,7 +6,7 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(['vendor/handlebars', 'text!views/member-timeline/item.handlebars?v=7'], function(handlebars, template) {
+define(['vendor/handlebars', 'vendor/jquery-raty', 'text!views/member-timeline/item.handlebars?v=9'], function(handlebars, raty, template) {
   var ItemView;
   ItemView = function() {
     var _a;

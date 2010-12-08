@@ -32,13 +32,30 @@ define(['member-timeline/views/item_view'], function(ItemView) {
     return this.addTimestampClass(view, item);
   };
   TimelineView.prototype.addAll = function() {
-    return this.items.each(this.addOne);
+    this.items.each(this.addOne);
+    return this.addRating();
   };
   TimelineView.prototype.addTimestampClass = function(view, item) {
     if (item.get('timestamp') === this.lastTimestamp) {
       $(view.el).addClass('repeat-date');
     }
     return (this.lastTimestamp = item.get('timestamp'));
+  };
+  TimelineView.prototype.addRating = function() {
+    var itemList;
+    itemList = this.items;
+    return this.$('.rating').raty({
+      path: '/images/raty/',
+      onClick: function(rating) {
+        var item, item_id;
+        $(this).toggleClass('active', rating > 0);
+        item_id = $(this).closest('tr').attr('id');
+        item = itemList.get(item_id);
+        return item.set({
+          rating: rating
+        });
+      }
+    });
   };
   return TimelineView;
 });

@@ -30,9 +30,28 @@ define ['member-timeline/views/item_view'], (ItemView) ->
     # Add all items to the timeline
     addAll: =>
       @items.each @addOne
+      this.addRating()
 
     # Add a "repeat-date' class to rows whose preceding row had the same timestamp.
     # This allows us to hide them in order to clean up the interface.
     addTimestampClass: (view, item) ->
       $(view.el).addClass('repeat-date') if item.get('timestamp') is @lastTimestamp
       @lastTimestamp = item.get('timestamp')
+
+    addRating: ->
+
+      itemList = @items
+
+      this.$('.rating').raty
+
+        path: '/images/raty/'
+        onClick: (rating) ->
+
+          $(this).toggleClass 'active', rating > 0
+
+          item_id = $(this).closest('tr').attr('id')
+          
+          item = itemList.get item_id
+          item.set
+            rating: rating
+
