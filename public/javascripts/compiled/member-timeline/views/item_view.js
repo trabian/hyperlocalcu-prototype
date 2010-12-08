@@ -6,7 +6,7 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(['vendor/handlebars', 'vendor/jquery-raty', 'text!views/member-timeline/item.handlebars?v=9'], function(handlebars, raty, template) {
+define(['vendor/handlebars', 'lib/views/rating_view', 'text!views/member-timeline/item.handlebars?v=10'], function(handlebars, RatingView, template) {
   var ItemView;
   ItemView = function() {
     var _a;
@@ -27,7 +27,12 @@ define(['vendor/handlebars', 'vendor/jquery-raty', 'text!views/member-timeline/i
     return this.render();
   };
   ItemView.prototype.render = function() {
+    var ratingView;
     $(this.el).html(this.template(this.model.toViewJSON()));
+    ratingView = new RatingView({
+      model: this.model
+    });
+    this.$('td.name').prepend(ratingView.render().el);
     if (this.model.get('amount') > 0) {
       $(this.el).addClass('reward');
     }

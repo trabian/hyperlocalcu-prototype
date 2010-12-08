@@ -1319,37 +1319,71 @@ textarea {
 }
 
 /* line 5, ../../../client/sass/_timeline.sass */
+.rating {
+  width: 80px !important;
+}
+/* line 7, ../../../client/sass/_timeline.sass */
+.rating .star, .rating .cancel {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  text-indent: -5000px;
+  margin-left: 2px;
+}
+/* line 13, ../../../client/sass/_timeline.sass */
+.rating .star {
+  background: url(/images/ratings/star-off.png) no-repeat left top;
+}
+/* line 15, ../../../client/sass/_timeline.sass */
+.rating .star.on {
+  background-image: url(/images/ratings/star-on.png);
+}
+/* line 17, ../../../client/sass/_timeline.sass */
+.rating .cancel {
+  background: url(/images/ratings/cancel-off.png) no-repeat left top;
+  display: none;
+}
+/* line 20, ../../../client/sass/_timeline.sass */
+.rating.rated {
+  width: 94px !important;
+}
+/* line 22, ../../../client/sass/_timeline.sass */
+.rating.rated .cancel {
+  display: inline-block;
+  background-image: url(/images/ratings/cancel-on.png);
+}
+
+/* line 26, ../../../client/sass/_timeline.sass */
 table#timeline {
   margin: 0;
   padding: 0;
   border: 0;
   outline: 0;
 }
-/* line 9, ../../../client/sass/_timeline.sass */
+/* line 30, ../../../client/sass/_timeline.sass */
 table#timeline thead tr td.date {
   width: 60px;
 }
-/* line 13, ../../../client/sass/_timeline.sass */
+/* line 34, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr td, table#timeline tbody tr th {
   border-top: 2px solid #cfe5f1;
   color: #4d75b1;
   font-size: 13px;
   padding: 8px 5px;
 }
-/* line 18, ../../../client/sass/_timeline.sass */
+/* line 39, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr td p, table#timeline tbody tr th p {
   margin: 0;
   padding: 0;
 }
-/* line 22, ../../../client/sass/_timeline.sass */
+/* line 43, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr td.amount {
   width: 15%;
   text-align: right;
   padding-right: 10px;
 }
-/* line 27, ../../../client/sass/_timeline.sass */
+/* line 48, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr td.name .rating {
-  width: 80px !important;
   float: right;
   margin-top: 2px;
   opacity: 0.5;
@@ -1357,57 +1391,57 @@ table#timeline tbody tr td.name .rating {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   line-height: 1em;
 }
-/* line 33, ../../../client/sass/_timeline.sass */
+/* line 53, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr td.name .rating:hover, table#timeline tbody tr td.name .rating.active {
   opacity: 1;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
 }
-/* line 35, ../../../client/sass/_timeline.sass */
+/* line 55, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr td.name .offer, table#timeline tbody tr td.name .feedback {
   margin: 0;
   font-size: 10px;
   color: #999999;
 }
-/* line 39, ../../../client/sass/_timeline.sass */
+/* line 59, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr td.name .offer em, table#timeline tbody tr td.name .feedback em {
   font-style: normal;
   color: #009900;
 }
-/* line 42, ../../../client/sass/_timeline.sass */
+/* line 62, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr td.name .feedback {
   color: #009900;
 }
-/* line 45, ../../../client/sass/_timeline.sass */
+/* line 65, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr th {
   font-weight: normal;
 }
-/* line 48, ../../../client/sass/_timeline.sass */
+/* line 68, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr.repeat-date td, table#timeline tbody tr.repeat-date th {
   border-top: 1px solid #e3eff7;
 }
-/* line 51, ../../../client/sass/_timeline.sass */
+/* line 71, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr.repeat-date td.date span {
   display: none;
 }
-/* line 54, ../../../client/sass/_timeline.sass */
+/* line 74, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr:nth-child(odd) td, table#timeline tbody tr:nth-child(odd) th {
   background: #f6fafd;
 }
-/* line 57, ../../../client/sass/_timeline.sass */
+/* line 77, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr:first-child td, table#timeline tbody tr:first-child th {
   border-top: none;
 }
-/* line 60, ../../../client/sass/_timeline.sass */
+/* line 80, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr.selected td, table#timeline tbody tr.selected th {
   border-top-color: #dddddd;
   background: #f1f1f1;
 }
-/* line 64, ../../../client/sass/_timeline.sass */
+/* line 84, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr.reward td, table#timeline tbody tr.reward th {
   color: #009900;
 }
-/* line 67, ../../../client/sass/_timeline.sass */
+/* line 87, ../../../client/sass/_timeline.sass */
 table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr th {
   border-top-color: #e3e3e3;
 }
@@ -1594,7 +1628,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 /* line 74, ../../../client/sass/_merchants.sass */
 #merchant-view .social .twitter .view-profile, #merchant-view .social .facebook .view-profile {
   float: right;
-  margin: 5px;
+  margin: 5px 5px 10px 10px;
 }
 /* line 77, ../../../client/sass/_merchants.sass */
 #merchant-view .social .twitter .tweet_time, #merchant-view .social .twitter .post_time, #merchant-view .social .facebook .tweet_time, #merchant-view .social .facebook .post_time {

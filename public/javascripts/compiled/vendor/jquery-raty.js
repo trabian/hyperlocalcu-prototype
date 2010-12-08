@@ -33,7 +33,7 @@
 
 	$.fn.raty = function(settings) {
 		// Public functions need a global variable to use the last element raty. In functions this not happen because it's become a static value as parameter.
-		options = $.extend({}, $.fn.raty.defaults, settings);
+		var options = $.extend({}, $.fn.raty.defaults, settings);
 
 		if (this.length == 0) {
 			debug('Invalid selector!');
@@ -55,7 +55,7 @@
 		}
 
 		// Public functions need a global variable to use the last element raty.
-		$global = $(this);
+		var $global = $(this);
 
 		// Local variables to keep the current value and not the last one. Why, Mr. Anderson? Why? 
 		var id			= this.attr('id'),
@@ -205,6 +205,7 @@
 
 		$('img.' + id)
 		.mouseenter(function() {
+      console.log('fill start', id, this.alt, options);
 			fillStar(id, this.alt, options);
 		}).click(function() {
 			score.val(this.alt);

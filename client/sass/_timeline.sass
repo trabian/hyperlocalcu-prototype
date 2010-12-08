@@ -2,6 +2,27 @@
 
 $table_padding = 12px
 
+.rating
+  width: 80px !important
+  .star, .cancel
+    display: inline-block
+    width: 12px
+    height: 12px
+    text-indent: -5000px
+    margin-left: 2px
+  .star
+    background: url(/images/ratings/star-off.png) no-repeat left top
+    &.on
+      background-image: url(/images/ratings/star-on.png)
+  .cancel
+    background: url(/images/ratings/cancel-off.png) no-repeat left top
+    display: none
+  &.rated
+    width: 94px !important
+    .cancel
+      display: inline-block 
+      background-image: url(/images/ratings/cancel-on.png)
+
 table#timeline
   +reset-box-model
   thead
@@ -25,7 +46,6 @@ table#timeline
           padding-right: 10px
         &.name
           .rating
-            width: 80px !important
             float: right
             margin-top: 2px
             +opacity(0.5)

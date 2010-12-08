@@ -34,7 +34,10 @@ define(['member-timeline/models/item'], function(Item) {
   };
   ItemList.prototype.toggleOrSelectOne = function(item) {
     if (item.get('selected')) {
-
+      this.trigger('unselect');
+      return item.set({
+        'selected': false
+      });
     } else {
       return this.selectOne(item);
     }

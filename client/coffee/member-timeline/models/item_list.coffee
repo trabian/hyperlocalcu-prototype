@@ -33,9 +33,9 @@ define ['member-timeline/models/item'], (Item) ->
 
         # Allow listeners to know when an item is explicitly unselected (as
         # opposed to becoming unselected because another item is selected).
-        #this.trigger('unselect')
+        this.trigger('unselect')
 
-        #item.set 'selected': false
+        item.set 'selected': false
 
       else
 
