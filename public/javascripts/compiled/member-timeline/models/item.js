@@ -12,6 +12,8 @@ define(function() {
     var _a;
     _a = this;
     this.formatted_address = function(){ return Item.prototype.formatted_address.apply(_a, arguments); };
+    this.formatted_amount = function(){ return Item.prototype.formatted_amount.apply(_a, arguments); };
+    this.formatted_timestamp = function(){ return Item.prototype.formatted_timestamp.apply(_a, arguments); };
     return Backbone.Model.apply(this, arguments);
   };
   __extends(Item, Backbone.Model);
@@ -21,12 +23,20 @@ define(function() {
     });
   };
   Item.prototype.formatted_timestamp = function() {
-    return this.timestamp ? this.timestamp.split('-').slice(1).join('/') : "";
+    var _a, _b, date, day, month, time, year;
+    _a = this.get('timestamp').split('T');
+    date = _a[0];
+    time = _a[1];
+    _b = date.split('-');
+    year = _b[0];
+    month = _b[1];
+    day = _b[2];
+    return [month, day].join('/');
   };
   Item.prototype.formatted_amount = function() {
     var sign;
-    sign = this.amount < 0 ? '<span class="sign">-</span>' : '';
-    return "" + (sign) + "<span class='currency'>$</span>" + (Math.abs(this.amount).toFixed(2));
+    sign = this.get('amount') < 0 ? '<span class="sign">-</span>' : '';
+    return "" + (sign) + "<span class='currency'>$</span>" + (Math.abs(this.get('amount')).toFixed(2));
   };
   Item.prototype.formatted_address = function() {
     var location;

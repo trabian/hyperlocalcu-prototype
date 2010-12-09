@@ -1,65 +1,7 @@
-begin
-  # Require the preresolved locked set of gems.
-  require ::File.expand_path('../.bundle/environment', __FILE__)
-rescue LoadError
-  # Fallback on doing the resolve at runtime.
-  require "rubygems"
-  require "bundler"
-  Bundler.setup
-end
+# Add your own tasks in files placed in lib/tasks ending in .rake,
+# for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
+require File.expand_path('../config/application', __FILE__)
 require 'rake'
-require 'mongoid'
 
-Mongoid.configure do |config|
-  config.master = Mongo::Connection.new.db('techatchery-hyperlocalcu')
-end
-
-require File.join(File.dirname(__FILE__), 'server', 'init')
-
-namespace :doc do
-
-  desc "Generate javascript documentation"
-  task :javascript do
-    files = Dir.glob('client/coffee/**/*.coffee').join(' ')
-    `docco #{files}`
-  end
-
-end
-
-namespace :import do
-
-  desc "Import items provided in ENV['FILE']"
-  task :items do
-    file = ENV['FILE']
-
-    Item.destroy_all
-
-    FasterCSV.foreach(file) do |row|
-
-      attributes = {
-        :timestamp => row[0],
-        :name => row[1],
-        :original_name => row[2],
-        :amount => row[3]
-      }
-
-      unless (row[4].blank?)
-        attributes[:offer] = {
-          :title => row[4],
-          :url => row[5],
-          :amount => row[6],
-          :category => row[7]
-        }
-      end
-
-      Item.create(attributes)
-
-    end
-
-  end
-
-end
-
-require 'jasmine'
-load 'jasmine/tasks/jasmine.rake'
+Hyperlocalcu::Application.load_tasks

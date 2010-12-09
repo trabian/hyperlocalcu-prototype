@@ -1,0 +1,20 @@
+<td class="date">
+  <span>{{ formatted_timestamp }}<span>
+</td>
+<td class="name">
+  <p class="name">{{ name }}</p>
+  {{#feedback}}
+    <p class="feedback">
+      Thanks for your feedback!
+    </p>
+  {{/feedback}}
+  {{^feedback}}
+    {{#offer}}
+      <p class="offer">
+        {{ name }}
+        <em>Reward: {{ amount }}</em>
+      </p>
+    {{/offer}}
+  {{/feedback}}
+</td>
+<td class="amount">{{{ formatted_amount }}}</td>
