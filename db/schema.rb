@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101209054600) do
+ActiveRecord::Schema.define(:version => 20101210205323) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(:version => 20101209054600) do
     t.integer  "merchant_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "rating"
+    t.text     "comment"
   end
 
 end

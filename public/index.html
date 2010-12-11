@@ -34,6 +34,8 @@
   <script type='text/javascript'> 
     //<![CDATA[
       require({ baseUrl: "/javascripts/compiled" }, ["order!vendor/underscore", "order!vendor/backbone", "order!member-timeline/member_timeline_controller", "order!member-timeline/models/member", "order!demo/demo_controller"], function(underscore, backbone, MemberTimelineController, Member, DemoController) {
+
+        Backbone.emulateHTTP = true;
       
         // This will be pulled dynamically (eventually)
         var member = new Member({
