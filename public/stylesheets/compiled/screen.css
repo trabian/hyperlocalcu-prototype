@@ -140,6 +140,7 @@ textarea {
   -ms-border-bottom-right-radius: 8px;
   -khtml-border-bottom-right-radius: 8px;
   border-bottom-right-radius: 8px;
+  height: 100%;
   min-height: 1000px;
   position: relative;
 }
@@ -147,7 +148,7 @@ textarea {
 * html #container #sidebar {
   overflow-x: hidden;
 }
-/* line 61, ../../../frontend/sass/_base.sass */
+/* line 62, ../../../frontend/sass/_base.sass */
 #container #sidebar.selected {
   background: #f1f1f1;
 }
@@ -1318,6 +1319,48 @@ textarea {
   height: 250px;
 }
 
+/* line 4, ../../../frontend/sass/_prompts.sass */
+#sidebar .prompt {
+  position: relative;
+  margin: 20px 0 0;
+  border: 1px solid #a7cfe6;
+  background: white;
+  padding: 25px 10px;
+}
+/* line 10, ../../../frontend/sass/_prompts.sass */
+#sidebar .prompt a.hide-message {
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  font-size: 9px;
+}
+/* line 15, ../../../frontend/sass/_prompts.sass */
+#sidebar .prompt h2 {
+  font-size: 14px;
+  line-height: 1em;
+  margin: 0 0 0.5em;
+}
+/* line 19, ../../../frontend/sass/_prompts.sass */
+#sidebar .prompt p {
+  font-size: 11px;
+}
+/* line 22, ../../../frontend/sass/_prompts.sass */
+#sidebar .prompt .screenshot {
+  text-align: center;
+}
+/* line 24, ../../../frontend/sass/_prompts.sass */
+#sidebar .prompt .screenshot img {
+  -moz-box-shadow: #333333 1px 1px 5px 0;
+  -webkit-box-shadow: #333333 1px 1px 5px 0;
+  -o-box-shadow: #333333 1px 1px 5px 0;
+  box-shadow: #333333 1px 1px 5px 0;
+}
+/* line 26, ../../../frontend/sass/_prompts.sass */
+#sidebar .prompt .screenshot p {
+  color: #666666;
+  margin: 0.1em 0;
+}
+
 /* line 5, ../../../frontend/sass/_timeline.sass */
 .rating {
   width: 80px !important;
@@ -1679,48 +1722,149 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   margin: 0.5em 0.2em;
 }
 /* line 101, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search .branding {
+  position: absolute;
+  bottom: -17px;
+  right: 0;
+  font-size: 10px;
+  color: #333333;
+  line-height: 15px;
+}
+/* line 108, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search .branding img {
+  display: inline-block;
+  position: relative;
+  top: 5px;
+}
+/* line 112, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search h4 {
   font-size: 13px;
   line-height: 1.4em;
   margin: 0 0 0.35em;
 }
-/* line 105, ../../../frontend/sass/_merchants.sass */
+/* line 116, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search h4 em {
   font-weight: bold;
   font-style: normal;
 }
-/* line 109, ../../../frontend/sass/_merchants.sass */
+/* line 119, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search .merchant-search-form {
+  overflow: hidden;
+  *zoom: 1;
+}
+/* line 121, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-form .ui-button {
   float: left;
   margin: 0 !important;
 }
-/* line 112, ../../../frontend/sass/_merchants.sass */
+/* line 124, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-form .ui-button .ui-button-text {
   padding-top: 6px;
   padding-bottom: 6px;
 }
-/* line 115, ../../../frontend/sass/_merchants.sass */
+/* line 127, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-form .search-field {
   float: left;
-  width: 200px;
+  width: 195px;
   margin: 0 5px 0 0;
 }
-/* line 120, ../../../frontend/sass/_merchants.sass */
+/* line 132, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-results {
+  margin: 5px 0 0 0;
+  border: 1px solid #dddddd;
+  background: white;
+  max-height: 250px;
+  overflow: auto;
+}
+/* line 138, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search .merchant-search-results ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+}
+/* line 11, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_bullets.scss */
+#merchant-view .merchant-search .merchant-search-results ul li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0px;
+}
+/* line 9, ../../../frontend/sass/_ui_mixins.sass */
+#merchant-view .merchant-search .merchant-search-results ul li.result {
+  overflow: hidden;
+  *zoom: 1;
   clear: both;
+  padding: 6px 5px;
+  border-bottom: 1px solid #e3eff7;
+}
+/* line 14, ../../../frontend/sass/_ui_mixins.sass */
+#merchant-view .merchant-search .merchant-search-results ul li.result:nth-child(odd) {
+  background: #f6fafd;
+}
+/* line 16, ../../../frontend/sass/_ui_mixins.sass */
+#merchant-view .merchant-search .merchant-search-results ul li.result h3 {
+  font-size: 13px;
+  margin: 0.2em 0 0.2em;
+}
+/* line 19, ../../../frontend/sass/_ui_mixins.sass */
+#merchant-view .merchant-search .merchant-search-results ul li.result p.meta {
+  margin: 0;
+  font-size: 0.83em;
+  line-height: 1.3em;
+  color: #999999;
+}
+/* line 24, ../../../frontend/sass/_ui_mixins.sass */
+#merchant-view .merchant-search .merchant-search-results ul li.result ul.buttons {
+  float: right;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  overflow: hidden;
+  *zoom: 1;
+}
+/* line 56, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_horizontal-list.scss */
+#merchant-view .merchant-search .merchant-search-results ul li.result ul.buttons li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0px;
+  white-space: nowrap;
+  display: inline;
+  float: left;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+/* line 45, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_horizontal-list.scss */
+#merchant-view .merchant-search .merchant-search-results ul li.result ul.buttons li:first-child, #merchant-view .merchant-search .merchant-search-results ul li.result ul.buttons li.first {
+  padding-left: 0;
+}
+/* line 46, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_horizontal-list.scss */
+#merchant-view .merchant-search .merchant-search-results ul li.result ul.buttons li:last-child, #merchant-view .merchant-search .merchant-search-results ul li.result ul.buttons li.last {
+  padding-right: 0;
+}
+/* line 3, ../../../frontend/sass/_ui_mixins.sass */
+#merchant-view .merchant-search .merchant-search-results ul li.result ul.buttons .ui-button .ui-button-text {
+  font-size: 10px;
+}
+/* line 140, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search .merchant-search-results ul p {
+  font-size: 11px;
+  color: #333333;
+  margin: 0.2em 0;
 }
 
-/* line 124, ../../../frontend/sass/_merchants.sass */
+/* line 146, ../../../frontend/sass/_merchants.sass */
 #feedback h3, #sales-chart h3 {
   margin: 0 0 0.5em;
   font-size: 14px;
 }
 
-/* line 128, ../../../frontend/sass/_merchants.sass */
+/* line 150, ../../../frontend/sass/_merchants.sass */
 #feedback {
   padding: 10px 0 0 0;
 }
-/* line 130, ../../../frontend/sass/_merchants.sass */
+/* line 152, ../../../frontend/sass/_merchants.sass */
 #feedback #feedback-list {
   list-style: none;
   margin: 0;
@@ -1757,7 +1901,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #feedback #feedback-list li.feedback p.meta {
   margin: 0;
   font-size: 0.83em;
-  line-height: 1em;
+  line-height: 1.3em;
   color: #999999;
 }
 /* line 24, ../../../frontend/sass/_ui_mixins.sass */
@@ -1793,7 +1937,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #feedback #feedback-list li.feedback ul.buttons .ui-button .ui-button-text {
   font-size: 10px;
 }
-/* line 135, ../../../frontend/sass/_merchants.sass */
+/* line 157, ../../../frontend/sass/_merchants.sass */
 #feedback #feedback-list li p.comment {
   margin: 0 0 0.2em;
 }
@@ -1880,7 +2024,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #snapshot-dialog .snapshots ul li.snapshot p.meta {
   margin: 0;
   font-size: 0.83em;
-  line-height: 1em;
+  line-height: 1.3em;
   color: #999999;
 }
 /* line 24, ../../../frontend/sass/_ui_mixins.sass */
@@ -1917,18 +2061,18 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   font-size: 10px;
 }
 
-/* line 19, ../../../frontend/sass/screen.sass */
+/* line 21, ../../../frontend/sass/screen.sass */
 #container {
   position: relative;
 }
 
-/* line 22, ../../../frontend/sass/screen.sass */
+/* line 24, ../../../frontend/sass/screen.sass */
 #global {
   position: absolute;
   top: 2px;
   right: 15px;
 }
-/* line 26, ../../../frontend/sass/screen.sass */
+/* line 28, ../../../frontend/sass/screen.sass */
 #global ul {
   margin: 0;
   padding: 0;
@@ -1956,7 +2100,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #global ul li:last-child, #global ul li.last {
   padding-right: 0;
 }
-/* line 28, ../../../frontend/sass/screen.sass */
+/* line 30, ../../../frontend/sass/screen.sass */
 #global ul a {
   text-decoration: none;
   color: white;

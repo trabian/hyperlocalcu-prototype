@@ -6,7 +6,7 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=15", "member-timeline/views/offer_view", "member-timeline/views/social_view", "member-timeline/views/merchant_search_view"], function(jqueryUI, sidebarTemplate, OfferView, SocialView, MerchantSearchView) {
+define(["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=16", "member-timeline/views/offer_view", "member-timeline/views/social_view", "member-timeline/views/merchant_search_view"], function(jqueryUI, sidebarTemplate, OfferView, SocialView, MerchantSearchView) {
   var MerchantView;
   MerchantView = function() {
     var _a;
@@ -59,8 +59,7 @@ define(["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=15"
       merchantSearchView = new MerchantSearchView({
         model: this.model
       });
-      $(this.el).append(merchantSearchView.render().el);
-      return merchantSearchView.search();
+      return $(this.el).append(merchantSearchView.render().el);
     }
   };
   MerchantView.prototype.hide = function() {

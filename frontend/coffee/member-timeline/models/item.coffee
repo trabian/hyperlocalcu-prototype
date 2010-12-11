@@ -10,6 +10,7 @@ define ['lib/models/custom_sync'], (CustomSync) ->
     toUpdateJSON: =>
       item:
         rating: this.get('rating')
+        name: this.get('name')
 
     # Toggle whether this item is selected in the timeline view.
     toggleSelected: ->

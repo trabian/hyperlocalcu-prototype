@@ -1,4 +1,4 @@
-define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=15", "member-timeline/views/offer_view", "member-timeline/views/social_view", "member-timeline/views/merchant_search_view"], (jqueryUI, sidebarTemplate, OfferView, SocialView, MerchantSearchView) ->
+define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=16", "member-timeline/views/offer_view", "member-timeline/views/social_view", "member-timeline/views/merchant_search_view"], (jqueryUI, sidebarTemplate, OfferView, SocialView, MerchantSearchView) ->
 
   # The MerchantView is used to show merchant-specific information
   # such as the current offer.
@@ -65,8 +65,6 @@ define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=15"
           model: @model
 
         $(@el).append merchantSearchView.render().el
-
-        merchantSearchView.search()
 
     hide: ->
 

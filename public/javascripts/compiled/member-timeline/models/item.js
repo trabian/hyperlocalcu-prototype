@@ -25,7 +25,8 @@ define(['lib/models/custom_sync'], function(CustomSync) {
   Item.prototype.toUpdateJSON = function() {
     return {
       item: {
-        rating: this.get('rating')
+        rating: this.get('rating'),
+        name: this.get('name')
       }
     };
   };
