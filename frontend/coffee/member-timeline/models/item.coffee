@@ -1,7 +1,14 @@
 # An Item is a timeline event such as a transaction or other non-transactional event to be presented on the timeline.
-define ->
+define ['lib/models/custom_sync'], (CustomSync) ->
 
   class Item extends Backbone.Model
+
+    initialize: ->
+      this.sync = CustomSync
+
+    toUpdateJSON: =>
+      item:
+        rating: this.get('rating')
 
     # Toggle whether this item is selected in the timeline view.
     toggleSelected: ->

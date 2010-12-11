@@ -6,7 +6,7 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(function() {
+define(['lib/models/custom_sync'], function(CustomSync) {
   var Item;
   Item = function() {
     var _a;
@@ -14,9 +14,20 @@ define(function() {
     this.formatted_address = function(){ return Item.prototype.formatted_address.apply(_a, arguments); };
     this.formatted_amount = function(){ return Item.prototype.formatted_amount.apply(_a, arguments); };
     this.formatted_timestamp = function(){ return Item.prototype.formatted_timestamp.apply(_a, arguments); };
+    this.toUpdateJSON = function(){ return Item.prototype.toUpdateJSON.apply(_a, arguments); };
     return Backbone.Model.apply(this, arguments);
   };
   __extends(Item, Backbone.Model);
+  Item.prototype.initialize = function() {
+    return (this.sync = CustomSync);
+  };
+  Item.prototype.toUpdateJSON = function() {
+    return {
+      item: {
+        rating: this.get('rating')
+      }
+    };
+  };
   Item.prototype.toggleSelected = function() {
     return this.set({
       selected: !this.get('selected')
