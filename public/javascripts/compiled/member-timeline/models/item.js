@@ -19,7 +19,8 @@ define(['lib/models/custom_sync'], function(CustomSync) {
   };
   __extends(Item, Backbone.Model);
   Item.prototype.initialize = function() {
-    return (this.sync = CustomSync);
+    this.sync = CustomSync;
+    return (this.member = window.member);
   };
   Item.prototype.toUpdateJSON = function() {
     return {

@@ -6,7 +6,7 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=15", "member-timeline/views/offer_view", "member-timeline/views/social_view"], function(jqueryUI, sidebarTemplate, OfferView, SocialView) {
+define(["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=15", "member-timeline/views/offer_view", "member-timeline/views/social_view", "member-timeline/views/merchant_search_view"], function(jqueryUI, sidebarTemplate, OfferView, SocialView, MerchantSearchView) {
   var MerchantView;
   MerchantView = function() {
     var _a;
@@ -39,7 +39,7 @@ define(["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=15"
     });
   };
   MerchantView.prototype.render = function() {
-    var _a, socialSettings;
+    var _a, _b, merchantSearchView, socialSettings;
     $(this.el).html(this.template(this.model.toMerchantJSON()));
     socialSettings = (typeof (_a = (this.model.get('merchant'))) === "undefined" || _a === null) ? undefined : _a.social;
     if (socialSettings) {
@@ -54,7 +54,14 @@ define(["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=15"
       }
     });
     this.trigger('show');
-    return $(this.el).show();
+    $(this.el).show();
+    if (!(typeof (_b = this.model.get('merchant')) !== "undefined" && _b !== null)) {
+      merchantSearchView = new MerchantSearchView({
+        model: this.model
+      });
+      $(this.el).append(merchantSearchView.render().el);
+      return merchantSearchView.search();
+    }
   };
   MerchantView.prototype.hide = function() {
     this.trigger('hide');

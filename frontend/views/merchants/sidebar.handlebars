@@ -1,18 +1,15 @@
 <a href="#" class="close">Close</a>
 
+{{#merchant}}
 <div class="name-and-location">
-  {{#merchant}}
-    {{#avatar}}
-    <img src="{{ . }}" class="avatar" />
-    {{/avatar}}
-    <h3>{{ name }}</h3>
-  {{/merchant}}
+  {{#avatar}}
+  <img src="{{ . }}" class="avatar" />
+  {{/avatar}}
+  <h3>{{ name }}</h3>
   {{#location}}
     <p class="address">{{ ../formatted_address }}</p>
     <p class="phone">{{ phone }}</p>
   {{/location}}
-  {{^merchant}}
-    <h3>{{ name }}</h3>
-  {{/merchant}}
+  <h3>{{ name }}</h3>
 </div>
-
+{{/merchant}}

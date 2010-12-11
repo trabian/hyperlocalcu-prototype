@@ -13,7 +13,7 @@ end
 # Regenerate public/stylesheets/compiled/screen.css as needed.  The compass
 # configuration is in config.rb.
 guard 'compass' do
-  watch('^frontenc\/sass/(.*)\.s[ac]ss')
+  watch('^frontend\/sass/(.*)\.s[ac]ss')
 end
 
 guard 'shell' do

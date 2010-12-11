@@ -5,6 +5,7 @@ define ['lib/models/custom_sync'], (CustomSync) ->
 
     initialize: ->
       this.sync = CustomSync
+      this.member = window.member
 
     toUpdateJSON: =>
       item:

@@ -1328,7 +1328,7 @@ textarea {
   width: 12px;
   height: 12px;
   text-indent: -5000px;
-  margin-left: 2px;
+  padding-left: 2px;
 }
 /* line 13, ../../../frontend/sass/_timeline.sass */
 .rating .star {
@@ -1678,18 +1678,49 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #merchant-view .feedback p {
   margin: 0.5em 0.2em;
 }
-
 /* line 101, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search h4 {
+  font-size: 13px;
+  line-height: 1.4em;
+  margin: 0 0 0.35em;
+}
+/* line 105, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search h4 em {
+  font-weight: bold;
+  font-style: normal;
+}
+/* line 109, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search .merchant-search-form .ui-button {
+  float: left;
+  margin: 0 !important;
+}
+/* line 112, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search .merchant-search-form .ui-button .ui-button-text {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+/* line 115, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search .merchant-search-form .search-field {
+  float: left;
+  width: 200px;
+  margin: 0 5px 0 0;
+}
+/* line 120, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search .merchant-search-results {
+  clear: both;
+}
+
+/* line 124, ../../../frontend/sass/_merchants.sass */
 #feedback h3, #sales-chart h3 {
   margin: 0 0 0.5em;
   font-size: 14px;
 }
 
-/* line 105, ../../../frontend/sass/_merchants.sass */
+/* line 128, ../../../frontend/sass/_merchants.sass */
 #feedback {
   padding: 10px 0 0 0;
 }
-/* line 107, ../../../frontend/sass/_merchants.sass */
+/* line 130, ../../../frontend/sass/_merchants.sass */
 #feedback #feedback-list {
   list-style: none;
   margin: 0;
@@ -1762,7 +1793,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #feedback #feedback-list li.feedback ul.buttons .ui-button .ui-button-text {
   font-size: 10px;
 }
-/* line 112, ../../../frontend/sass/_merchants.sass */
+/* line 135, ../../../frontend/sass/_merchants.sass */
 #feedback #feedback-list li p.comment {
   margin: 0 0 0.2em;
 }

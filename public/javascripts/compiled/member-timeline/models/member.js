@@ -9,8 +9,14 @@ var __extends = function(child, parent) {
 define(function() {
   var Member;
   Member = function() {
+    var _a;
+    _a = this;
+    this.cityState = function(){ return Member.prototype.cityState.apply(_a, arguments); };
     return Backbone.Model.apply(this, arguments);
   };
   __extends(Member, Backbone.Model);
+  Member.prototype.cityState = function() {
+    return [this.get('address').city, this.get('address').state].join(', ');
+  };
   return Member;
 });
