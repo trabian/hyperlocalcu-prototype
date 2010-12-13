@@ -6,7 +6,7 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(['vendor/handlebars', 'text!views/member-timeline/merchant_search_result.handlebars?v=3'], function(handlebars, template) {
+define(['vendor/handlebars', 'text!views/member-timeline/merchant_search_result.handlebars?v=4'], function(handlebars, template) {
   var MerchantSearchResultView;
   MerchantSearchResultView = function() {
     var _a;

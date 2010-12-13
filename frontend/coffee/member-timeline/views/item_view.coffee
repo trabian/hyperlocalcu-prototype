@@ -1,4 +1,4 @@
-define ['vendor/handlebars', 'lib/views/rating_view', 'text!views/member-timeline/item.handlebars?v=10'], (handlebars, RatingView, template) ->
+define ['vendor/handlebars', 'lib/views/rating_view', 'text!views/member-timeline/item.handlebars?v=11'], (handlebars, RatingView, template) ->
 
   # The ItemView is a representation of a [Timeline Item](item.html).
   class ItemView extends Backbone.View

@@ -1,4 +1,4 @@
-define ['vendor/handlebars', 'text!views/member-timeline/merchant_search_result.handlebars?v=3'], (handlebars, template) ->
+define ['vendor/handlebars', 'text!views/member-timeline/merchant_search_result.handlebars?v=4'], (handlebars, template) ->
 
   class MerchantSearchResultView extends Backbone.View
 
