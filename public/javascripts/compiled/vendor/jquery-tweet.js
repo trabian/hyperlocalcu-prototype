@@ -137,6 +137,10 @@
           var tweets = (data.results || data);
           var count = 0;
 
+          if (s.onLoad) {
+            s.onLoad.call(this, data)
+          }
+
           $.each(tweets, function(i,item){
 
             if (s.broadcast_only) {

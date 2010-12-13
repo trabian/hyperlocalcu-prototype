@@ -8,7 +8,7 @@ var __bind = function(func, context) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(['lib/models/custom_sync'], function(CustomSync) {
+define(['lib/models/custom_sync'], function(CustomSync, Merchant) {
   var Item;
   Item = function() {
     var _a;
@@ -85,16 +85,11 @@ define(['lib/models/custom_sync'], function(CustomSync) {
     });
   };
   Item.prototype.toViewJSON = function() {
-    var _a, merchant;
+    var merchant;
     merchant = this.get('merchant');
     return _.extend(this.toJSON(), {
       formatted_timestamp: this.formatted_timestamp,
-      formatted_amount: this.formatted_amount,
-      offer: (function() {
-        if ((typeof merchant !== "undefined" && merchant !== null) && (typeof (_a = merchant.offers) !== "undefined" && _a !== null)) {
-          return merchant.offers[0];
-        }
-      })()
+      formatted_amount: this.formatted_amount
     });
   };
   return Item;

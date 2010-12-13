@@ -15,13 +15,19 @@ define ['vendor/handlebars', 'text!views/member-timeline/merchant_search_result.
 
       result = @options.result
 
-      @model.addMerchant
+      params =
         name: result.titleNoFormatting
         street1: result.streetAddress
         city: result.city
         region: result.region
         address_summary: result.addressLines.join("<br />")
-        full_result: JSON.stringify(result)
+
+      try
+        params.full_result = JSON.stringify(result)
+      catch error
+        #Nothing
+
+      @model.addMerchant params
 
     render: =>
 

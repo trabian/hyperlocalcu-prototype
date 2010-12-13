@@ -23,16 +23,21 @@ define(['vendor/handlebars', 'text!views/member-timeline/merchant_search_result.
   };
   MerchantSearchResultView.prototype.template = Handlebars.compile(template);
   MerchantSearchResultView.prototype.select = function() {
-    var result;
+    var params, result;
     result = this.options.result;
-    return this.model.addMerchant({
+    params = {
       name: result.titleNoFormatting,
       street1: result.streetAddress,
       city: result.city,
       region: result.region,
-      address_summary: result.addressLines.join("<br />"),
-      full_result: JSON.stringify(result)
-    });
+      address_summary: result.addressLines.join("<br />")
+    };
+    try {
+      params.full_result = JSON.stringify(result);
+    } catch (error) {
+
+    }
+    return this.model.addMerchant(params);
   };
   MerchantSearchResultView.prototype.render = function() {
     var context, result;

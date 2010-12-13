@@ -1,4 +1,4 @@
-define ["vendor/jquery-tweet", "vendor/jquery-timeago", "text!views/member-timeline/social.handlebars?v=2", "text!views/social/facebook/post.handlebars?v=1", "vendor/date"], (jquery_tweet, jquery_timeago, template, facebookPostTemplate) ->
+define ["vendor/jquery-tweet", "vendor/jquery-timeago", "text!views/member-timeline/social.handlebars?v=4", "text!views/social/facebook/post.handlebars?v=1", "vendor/date", "member-timeline/views/social_username_form_view"], (jquery_tweet, jquery_timeago, template, facebookPostTemplate, date, SocialUsernameFormView) ->
 
   class SocialView extends Backbone.View
 
@@ -8,41 +8,66 @@ define ["vendor/jquery-tweet", "vendor/jquery-timeago", "text!views/member-timel
 
     events:
       'click .security a': 'showSecurityMessage'
+
+    initialize: =>
+
+      @model.bind 'change:twitter_username', @renderTwitter
+      @model.bind 'change:facebook_username', @renderFacebook
     
     template: Handlebars.compile(template)
 
     facebookPostTemplate: Handlebars.compile(facebookPostTemplate)
 
-    initialize: (options) ->
-      @socialSettings = options.socialSettings
-
     render: =>
 
-      $(@el).html @template(@socialSettings)
+      $(@el).html @template(@model.toJSON())
 
-      if @socialSettings.twitter
-        this.renderTwitter(@socialSettings.twitter)
+      twitterForm = new SocialUsernameFormView
+        model: @model
+        fieldname: 'twitter_username'
+        el: this.$('.twitter')
 
-      if @socialSettings.facebook
-        this.renderFacebook(@socialSettings.facebook)
+      facebookForm = new SocialUsernameFormView
+        model: @model
+        fieldname: 'facebook_username'
+        el: this.$('.facebook')
+
+      if @model.get('twitter_username')
+        this.renderTwitter()
+
+      if @model.get('facebook_username')
+        this.renderFacebook()
+
+      this.$('button').button
+        icons:
+          primary: 'ui-icon-plus'
 
       return this
 
-    renderTwitter: (twitterSettings)=>
+    renderTwitter: =>
+
+      username = @model.get('twitter_username')
+
       this.$('.twitter .latest-tweet').tweet
-        username: twitterSettings.username
+        username: username
         count: 1
         broadcast_only: true
+        onLoad: (data) =>
+          this.$('.twitter .form').remove()
+          unless @model.get('avatar')?
+            @model.save 'avatar': data[0]?.user?.profile_image_url 
 
-    renderFacebook: (facebookSettings)=>
+    renderFacebook: =>
 
-      $.getJSON "https://graph.facebook.com/#{facebookSettings.username}/posts?limit=1&callback=?", (response) =>
+      username = @model.get('facebook_username')
+
+      $.getJSON "https://graph.facebook.com/#{username}/posts?limit=1&callback=?", (response) =>
 
         post = response.data[0]
        
         post.date = $.timeago(post.created_time)
 
-        post.username = facebookSettings.username
+        post.username = username
 
         this.$('.facebook .latest-post').html @facebookPostTemplate(post)
 

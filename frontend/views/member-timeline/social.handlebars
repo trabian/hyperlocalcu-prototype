@@ -1,18 +1,30 @@
-{{#twitter}}
 <div class="twitter">
-  <a href="http://twitter.com/{{username}}" class="view-profile" target="_blank"><img src="/images/twitter-button.png" /></a>
-  <div class="latest-tweet"></div>
-</div>
-{{/twitter}}
-
-{{#facebook}}
-<div class="facebook">
-  <a href="http://facebook.com/{{username}}" class="view-profile" target="_blank"><img src="/images/facebook-button.png" /></a>
-  <div class="latest-post">
-    Loading...
+  {{#twitter_username}}
+    <a href="http://twitter.com/{{.}}" class="view-profile" target="_blank"><img src="/images/twitter-button.png" /></a>
+  {{/twitter_username}}
+  <div class="latest-tweet">
+  {{^twitter_username}}
+    <div class="form">
+      <input type="text" placeholder="Twitter username for {{name}}" class="text" />
+      <button>Add</button>
+    </div>
+  {{/twitter_username}}
   </div>
 </div>
-{{/facebook}}
+
+<div class="facebook">
+  {{#facebook_username}}
+    <a href="http://facebook.com/{{.}}" class="view-profile" target="_blank"><img src="/images/facebook-button.png" /></a>
+  {{/facebook_username}}
+  <div class="latest-post">
+    {{^facebook_username}}
+    <div class="form">
+      <input type="text" placeholder="Facebook username for {{name}}" class="text" />
+      <button>Add</button>
+    </div>
+    {{/facebook_username}}
+  </div>
+</div>
 
 <p class="security">
   Don't trust Facebook or Twitter with your financial information? That's ok -- <a href="#">neither do we</a>.

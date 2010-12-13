@@ -62,4 +62,3 @@ define ['lib/models/custom_sync'], (CustomSync) ->
       _.extend this.toJSON(),
         formatted_timestamp: @formatted_timestamp
         formatted_amount: @formatted_amount
-        offer: merchant.offers[0] if merchant? && merchant.offers?

@@ -1,4 +1,4 @@
-define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=17", "member-timeline/views/offer_view", "member-timeline/views/social_view", "member-timeline/views/merchant_search_view"], (jqueryUI, sidebarTemplate, OfferView, SocialView, MerchantSearchView) ->
+define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=17", "member-timeline/views/offer_view", "member-timeline/views/social_view", "member-timeline/views/merchant_search_view", "merchants/models/merchant"], (jqueryUI, sidebarTemplate, OfferView, SocialView, MerchantSearchView, Merchant) ->
 
   # The MerchantView is used to show merchant-specific information
   # such as the current offer.
@@ -25,15 +25,20 @@ define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=17"
     close: =>
       @model.set 'selected': false
 
+    updateAvatar: =>
+      this.$('img.avatar').attr('src', @merchant.get('avatar'))
+
     render: =>
 
       $(@el).html @template(@model.toMerchantJSON())
 
-      socialSettings = @model.get('merchant')?.social
+      if @model.get('merchant')?
+        @merchant = new Merchant(@model.get('merchant'))
+        @merchant.bind 'change:avatar', @updateAvatar
 
-      if socialSettings
+      if @merchant?
         @socialView = new SocialView
-          socialSettings: socialSettings
+          model: @merchant
 
         $(@el).append @socialView.render().el
 
