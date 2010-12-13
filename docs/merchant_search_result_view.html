@@ -13,9 +13,15 @@
 
     <span class="nv">select: </span><span class="o">=&gt;</span>
 
-      <span class="nx">alert</span> <span class="s2">&quot;(This will soon create a merchant and associate it with this item.  For now, we&#39;ll change the name in the transaction list)&quot;</span>
+      <span class="nx">result</span> <span class="o">=</span> <span class="err">@</span><span class="nx">options</span><span class="p">.</span><span class="nx">result</span>
 
-      <span class="err">@</span><span class="nx">model</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="o">:</span> <span class="err">@</span><span class="nx">options</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">titleNoFormatting</span><span class="p">)</span>
+      <span class="err">@</span><span class="nx">model</span><span class="p">.</span><span class="nx">addMerchant</span>
+        <span class="nv">name: </span><span class="nx">result</span><span class="p">.</span><span class="nx">titleNoFormatting</span>
+        <span class="nv">street1: </span><span class="nx">result</span><span class="p">.</span><span class="nx">streetAddress</span>
+        <span class="nv">city: </span><span class="nx">result</span><span class="p">.</span><span class="nx">city</span>
+        <span class="nv">region: </span><span class="nx">result</span><span class="p">.</span><span class="nx">region</span>
+        <span class="nv">address_summary: </span><span class="nx">result</span><span class="p">.</span><span class="nx">addressLines</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;&lt;br /&gt;&quot;</span><span class="p">)</span>
+        <span class="nv">full_result: </span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
 
     <span class="nv">render: </span><span class="o">=&gt;</span>
 

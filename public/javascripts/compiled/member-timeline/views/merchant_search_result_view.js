@@ -23,9 +23,15 @@ define(['vendor/handlebars', 'text!views/member-timeline/merchant_search_result.
   };
   MerchantSearchResultView.prototype.template = Handlebars.compile(template);
   MerchantSearchResultView.prototype.select = function() {
-    alert("(This will soon create a merchant and associate it with this item.  For now, we'll change the name in the transaction list)");
-    return this.model.save({
-      'name': this.options.result.titleNoFormatting
+    var result;
+    result = this.options.result;
+    return this.model.addMerchant({
+      name: result.titleNoFormatting,
+      street1: result.streetAddress,
+      city: result.city,
+      region: result.region,
+      address_summary: result.addressLines.join("<br />"),
+      full_result: JSON.stringify(result)
     });
   };
   MerchantSearchResultView.prototype.render = function() {

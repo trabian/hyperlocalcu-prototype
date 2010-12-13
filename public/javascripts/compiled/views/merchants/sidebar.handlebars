@@ -6,10 +6,6 @@
   <img src="{{ . }}" class="avatar" />
   {{/avatar}}
   <h3>{{ name }}</h3>
-  {{#location}}
-    <p class="address">{{ ../formatted_address }}</p>
-    <p class="phone">{{ phone }}</p>
-  {{/location}}
-  <h3>{{ name }}</h3>
+  <p class="address">{{{../formatted_address}}}</p>
 </div>
 {{/merchant}}

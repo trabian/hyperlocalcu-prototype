@@ -1441,13 +1441,13 @@ table#timeline tbody tr td.name .rating:hover, table#timeline tbody tr td.name .
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
 }
 /* line 55, ../../../frontend/sass/_timeline.sass */
-table#timeline tbody tr td.name .offer, table#timeline tbody tr td.name .feedback {
+table#timeline tbody tr td.name .offer, table#timeline tbody tr td.name .feedback, table#timeline tbody tr td.name .meta {
   margin: 0;
   font-size: 10px;
   color: #999999;
 }
 /* line 59, ../../../frontend/sass/_timeline.sass */
-table#timeline tbody tr td.name .offer em, table#timeline tbody tr td.name .feedback em {
+table#timeline tbody tr td.name .offer em, table#timeline tbody tr td.name .feedback em, table#timeline tbody tr td.name .meta em {
   font-style: normal;
   color: #009900;
 }

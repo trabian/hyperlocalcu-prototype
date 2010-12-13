@@ -8,4 +8,14 @@ class ItemsController < ApplicationController
 
   respond_to :json
 
+  def add_merchant
+
+    resource.merchant = Merchant.create(params[:merchant])
+
+    resource.save
+
+    render :json => resource
+
+  end
+
 end

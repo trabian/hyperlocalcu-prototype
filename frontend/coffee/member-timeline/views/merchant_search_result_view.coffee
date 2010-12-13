@@ -13,9 +13,15 @@ define ['vendor/handlebars', 'text!views/member-timeline/merchant_search_result.
 
     select: =>
 
-      alert "(This will soon create a merchant and associate it with this item.  For now, we'll change the name in the transaction list)"
+      result = @options.result
 
-      @model.save('name': @options.result.titleNoFormatting)
+      @model.addMerchant
+        name: result.titleNoFormatting
+        street1: result.streetAddress
+        city: result.city
+        region: result.region
+        address_summary: result.addressLines.join("<br />")
+        full_result: JSON.stringify(result)
 
     render: =>
 

@@ -1,4 +1,6 @@
-var __extends = function(child, parent) {
+var __bind = function(func, context) {
+    return function(){ return func.apply(context, arguments); };
+  }, __extends = function(child, parent) {
     var ctor = function(){};
     ctor.prototype = parent.prototype;
     child.prototype = new ctor();
@@ -11,16 +13,35 @@ define(['lib/models/custom_sync'], function(CustomSync) {
   Item = function() {
     var _a;
     _a = this;
+    this.toMerchantJSON = function(){ return Item.prototype.toMerchantJSON.apply(_a, arguments); };
     this.formatted_address = function(){ return Item.prototype.formatted_address.apply(_a, arguments); };
     this.formatted_amount = function(){ return Item.prototype.formatted_amount.apply(_a, arguments); };
     this.formatted_timestamp = function(){ return Item.prototype.formatted_timestamp.apply(_a, arguments); };
     this.toUpdateJSON = function(){ return Item.prototype.toUpdateJSON.apply(_a, arguments); };
+    this.addMerchant = function(){ return Item.prototype.addMerchant.apply(_a, arguments); };
     return Backbone.Model.apply(this, arguments);
   };
   __extends(Item, Backbone.Model);
   Item.prototype.initialize = function() {
     this.sync = CustomSync;
     return (this.member = window.member);
+  };
+  Item.prototype.addMerchant = function(merchant) {
+    var params;
+    params = {
+      url: ("" + (this.url()) + "/add_merchant"),
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        merchant: merchant
+      }),
+      dataType: 'json',
+      processData: false,
+      success: __bind(function(resp) {
+        return this.set(this.parse(resp));
+      }, this)
+    };
+    return $.ajax(params);
   };
   Item.prototype.toUpdateJSON = function() {
     return {
@@ -52,13 +73,15 @@ define(['lib/models/custom_sync'], function(CustomSync) {
     return "" + (sign) + "<span class='currency'>$</span>" + (Math.abs(this.get('amount')).toFixed(2));
   };
   Item.prototype.formatted_address = function() {
-    var location;
-    location = this.get('location');
-    return "" + (location.address) + " in " + (location.city);
+    var merchant;
+    merchant = this.get('merchant');
+    if (typeof merchant !== "undefined" && merchant !== null) {
+      return merchant.address_summary;
+    }
   };
   Item.prototype.toMerchantJSON = function() {
     return _.extend(this.toJSON(), {
-      formatted_address: this.formatted_address
+      formatted_address: this.formatted_address()
     });
   };
   Item.prototype.toViewJSON = function() {

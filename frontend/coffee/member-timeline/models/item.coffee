@@ -7,6 +7,23 @@ define ['lib/models/custom_sync'], (CustomSync) ->
       this.sync = CustomSync
       this.member = window.member
 
+    addMerchant: (merchant) =>
+
+      params =
+        url: "#{this.url()}/add_merchant"
+        type: 'POST'
+        contentType: 'application/json'
+
+        data: JSON.stringify
+          merchant: merchant
+
+        dataType: 'json'
+        processData: false
+        success: (resp) =>
+          this.set(this.parse(resp))
+
+      $.ajax params
+
     toUpdateJSON: =>
       item:
         rating: this.get('rating')
@@ -32,12 +49,12 @@ define ['lib/models/custom_sync'], (CustomSync) ->
       "#{sign}<span class='currency'>$</span>#{Math.abs(this.get('amount')).toFixed(2)}"
 
     formatted_address: =>
-      location = this.get('location')
-      "#{location.address} in #{location.city}"
+      merchant = this.get('merchant')
+      merchant.address_summary if merchant?
 
-    toMerchantJSON: ->
+    toMerchantJSON: =>
       _.extend this.toJSON(),
-        formatted_address: @formatted_address
+        formatted_address: this.formatted_address()
 
     # Add the formatted timestamp and amount to the json for the view
     toViewJSON: ->

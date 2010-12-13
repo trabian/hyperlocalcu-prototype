@@ -6,6 +6,23 @@
       <span class="k">this</span><span class="p">.</span><span class="nx">sync</span> <span class="o">=</span> <span class="nx">CustomSync</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">member</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">member</span>
 
+    <span class="nv">addMerchant: </span><span class="p">(</span><span class="nx">merchant</span><span class="p">)</span> <span class="o">=&gt;</span>
+
+      <span class="nx">params</span> <span class="o">=</span>
+        <span class="nv">url: </span><span class="s2">&quot;#{this.url()}/add_merchant&quot;</span>
+        <span class="nv">type: </span><span class="s1">&#39;POST&#39;</span>
+        <span class="nv">contentType: </span><span class="s1">&#39;application/json&#39;</span>
+
+        <span class="nv">data: </span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span>
+          <span class="nv">merchant: </span><span class="nx">merchant</span>
+
+        <span class="nv">dataType: </span><span class="s1">&#39;json&#39;</span>
+        <span class="nv">processData: </span><span class="kc">false</span>
+        <span class="nv">success: </span><span class="p">(</span><span class="nx">resp</span><span class="p">)</span> <span class="o">=&gt;</span>
+          <span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">resp</span><span class="p">))</span>
+
+      <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span> <span class="nx">params</span>
+
     <span class="nv">toUpdateJSON: </span><span class="o">=&gt;</span>
       <span class="nv">item:</span>
         <span class="nv">rating: </span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;rating&#39;</span><span class="p">)</span>
@@ -22,12 +39,12 @@ sign in <span class="currency"> to allow font customization.</p>             </t
       <span class="s2">&quot;#{sign}&lt;span class=&#39;currency&#39;&gt;$&lt;/span&gt;#{Math.abs(this.get(&#39;amount&#39;)).toFixed(2)}&quot;</span>
 
     <span class="nv">formatted_address: </span><span class="o">=&gt;</span>
-      <span class="nx">location</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;location&#39;</span><span class="p">)</span>
-      <span class="s2">&quot;#{location.address} in #{location.city}&quot;</span>
+      <span class="nx">merchant</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;merchant&#39;</span><span class="p">)</span>
+      <span class="nx">merchant</span><span class="p">.</span><span class="nx">address_summary</span> <span class="k">if</span> <span class="nx">merchant</span><span class="o">?</span>
 
-    <span class="nv">toMerchantJSON: </span><span class="o">-&gt;</span>
+    <span class="nv">toMerchantJSON: </span><span class="o">=&gt;</span>
       <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span> <span class="k">this</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">(),</span>
-        <span class="nv">formatted_address: </span><span class="err">@</span><span class="nx">formatted_address</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-5">#</a>               </div>               <p>Add the formatted timestamp and amount to the json for the view</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">toViewJSON: </span><span class="o">-&gt;</span>
+        <span class="nv">formatted_address: </span><span class="k">this</span><span class="p">.</span><span class="nx">formatted_address</span><span class="p">()</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-5">#</a>               </div>               <p>Add the formatted timestamp and amount to the json for the view</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">toViewJSON: </span><span class="o">-&gt;</span>
       <span class="nx">merchant</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;merchant&#39;</span><span class="p">)</span>
       <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span> <span class="k">this</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">(),</span>
         <span class="nv">formatted_timestamp: </span><span class="err">@</span><span class="nx">formatted_timestamp</span>

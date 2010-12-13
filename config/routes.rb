@@ -1,7 +1,13 @@
 Hyperlocalcu::Application.routes.draw do
 
+  resources :merchants
+
   resources :accounts do
-    resources :items
+    resources :items do
+      member do
+        post 'add_merchant'
+      end
+    end
   end
 
   root :to => "items#index", :account_id => 1

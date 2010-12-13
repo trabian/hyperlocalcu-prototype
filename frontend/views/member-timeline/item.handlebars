@@ -2,7 +2,13 @@
   <span>{{ formatted_timestamp }}<span>
 </td>
 <td class="name">
-  <p class="name">{{ name }}</p>
+  {{#merchant}}
+    <p class="name">{{ name }}</p>
+    <p class="meta">{{ ../original_name }}</p>
+  {{/merchant}}
+  {{^merchant}}
+    <p class="name">{{ name }}</p>
+  {{/merchant}}
   {{#feedback}}
     <p class="feedback">
       Thanks for your feedback!
