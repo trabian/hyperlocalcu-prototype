@@ -1,0 +1,84 @@
+<!DOCTYPE html>  <html> <head>   <title>merchant_search_view.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="demo_controller.html">                 demo_controller.coffee               </a>                                           <a class="source" href="snapshot.html">                 snapshot.coffee               </a>                                           <a class="source" href="snapshot_list.html">                 snapshot_list.coffee               </a>                                           <a class="source" href="snapshot_dialog_view.html">                 snapshot_dialog_view.coffee               </a>                                           <a class="source" href="snapshot_view.html">                 snapshot_view.coffee               </a>                                           <a class="source" href="custom_sync.html">                 custom_sync.coffee               </a>                                           <a class="source" href="socket.html">                 socket.coffee               </a>                                           <a class="source" href="rating_view.html">                 rating_view.coffee               </a>                                           <a class="source" href="member_timeline_controller.html">                 member_timeline_controller.coffee               </a>                                           <a class="source" href="item.html">                 item.coffee               </a>                                           <a class="source" href="item_list.html">                 item_list.coffee               </a>                                           <a class="source" href="member.html">                 member.coffee               </a>                                           <a class="source" href="item_view.html">                 item_view.coffee               </a>                                           <a class="source" href="member_overview_view.html">                 member_overview_view.coffee               </a>                                           <a class="source" href="merchant_search_result_view.html">                 merchant_search_result_view.coffee               </a>                                           <a class="source" href="merchant_search_view.html">                 merchant_search_view.coffee               </a>                                           <a class="source" href="merchant_view.html">                 merchant_view.coffee               </a>                                           <a class="source" href="offer_view.html">                 offer_view.coffee               </a>                                           <a class="source" href="social_username_form_view.html">                 social_username_form_view.coffee               </a>                                           <a class="source" href="social_view.html">                 social_view.coffee               </a>                                           <a class="source" href="timeline_view.html">                 timeline_view.coffee               </a>                                           <a class="source" href="merchant_dashboard_controller.html">                 merchant_dashboard_controller.coffee               </a>                                           <a class="source" href="feedback.html">                 feedback.coffee               </a>                                           <a class="source" href="feedback_list.html">                 feedback_list.coffee               </a>                                           <a class="source" href="merchant.html">                 merchant.coffee               </a>                                           <a class="source" href="feedback_list_view.html">                 feedback_list_view.coffee               </a>                                           <a class="source" href="feedback_view.html">                 feedback_view.coffee               </a>                                           <a class="source" href="sales_chart_view.html">                 sales_chart_view.coffee               </a>                                           <a class="source" href="tweet_view.html">                 tweet_view.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               merchant_search_view.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-1">#</a>               </div>               <p>http://code.google.com/apis/maps/documentation/localsearch/devguide.html#execute<em>a</em>search<em>and</em>display_results</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">define</span> <span class="p">[</span><span class="s1">&#39;vendor/handlebars&#39;</span><span class="p">,</span> <span class="s1">&#39;member-timeline/views/merchant_search_result_view&#39;</span><span class="p">,</span> <span class="s1">&#39;text!views/member-timeline/merchant_search.handlebars?v=5&#39;</span><span class="p">],</span> <span class="p">(</span><span class="nx">handlebars</span><span class="p">,</span> <span class="nx">MerchantSearchResultView</span><span class="p">,</span> <span class="nx">template</span><span class="p">)</span> <span class="o">-&gt;</span>
+
+  <span class="nx">class</span> <span class="nx">MerchantSearchView</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+
+    <span class="nv">tagName: </span><span class="s1">&#39;div&#39;</span>
+
+    <span class="nv">className: </span><span class="s1">&#39;merchant-search&#39;</span>
+
+    <span class="nv">events:</span>
+      <span class="s1">&#39;click button.search&#39;</span><span class="o">:</span> <span class="s1">&#39;search&#39;</span>
+      <span class="s1">&#39;keypress input.search-field&#39;</span><span class="o">:</span> <span class="s1">&#39;searchOnEnter&#39;</span>
+      <span class="s1">&#39;click a.hide-message&#39;</span><span class="o">:</span> <span class="s1">&#39;hidePrompt&#39;</span>
+
+    <span class="nv">template: </span><span class="nx">Handlebars</span><span class="p">.</span><span class="nx">compile</span><span class="p">(</span><span class="nx">template</span><span class="p">)</span>
+
+    <span class="nv">render: </span><span class="o">=&gt;</span>
+
+      <span class="nx">context</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span> <span class="err">@</span><span class="nx">model</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">(),</span>
+        <span class="nv">defaultSearch: </span><span class="s2">&quot;#{@model.get(&#39;name&#39;)} in #{@model.member.cityState()}&quot;</span>
+
+      <span class="nx">$</span><span class="p">(</span><span class="err">@</span><span class="nx">el</span><span class="p">).</span><span class="nx">html</span> <span class="err">@</span><span class="nx">template</span><span class="p">(</span><span class="nx">context</span><span class="p">)</span>
+
+      <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">).</span><span class="nx">button</span>
+        <span class="nv">icons:</span>
+          <span class="nv">primary: </span><span class="s1">&#39;ui-icon-search&#39;</span>
+
+      <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.prompt&#39;</span><span class="p">).</span><span class="nx">show</span><span class="p">()</span> <span class="nx">unless</span> <span class="err">@</span><span class="nx">model</span><span class="p">.</span><span class="nx">member</span><span class="p">.</span><span class="nx">hideMemberSidebarPrompt</span><span class="o">?</span>
+
+      <span class="k">return</span> <span class="k">this</span>
+
+    <span class="nv">hidePrompt: </span><span class="o">=&gt;</span>
+      <span class="err">@</span><span class="nx">model</span><span class="p">.</span><span class="nx">member</span><span class="p">.</span><span class="nx">hideMemberSidebarPrompt</span> <span class="o">=</span> <span class="kc">true</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.prompt&#39;</span><span class="p">).</span><span class="nx">hide</span><span class="p">()</span>
+      <span class="nx">alert</span> <span class="s2">&quot;For now, this prompt will be shown again when you refresh the page -- we&#39;re not storing the preference in the database yet.&quot;</span>
+      <span class="k">return</span> <span class="kc">false</span>
+
+    <span class="nv">searchOnEnter: </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="o">=&gt;</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">search</span><span class="p">()</span> <span class="k">if</span> <span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">==</span> <span class="mi">13</span>
+
+    <span class="nv">search: </span><span class="o">=&gt;</span>
+
+      <span class="nx">query</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.search-field&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span>
+
+      <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.prompt&#39;</span><span class="p">).</span><span class="nx">hide</span><span class="p">()</span>
+
+      <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;button.search&#39;</span><span class="p">).</span><span class="nx">button</span><span class="p">(</span><span class="s1">&#39;option&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;Searching...&#39;</span><span class="p">).</span><span class="nx">button</span><span class="p">(</span><span class="s1">&#39;disable&#39;</span><span class="p">)</span>
+
+      <span class="k">if</span> <span class="err">@</span><span class="nx">localSearch</span><span class="o">?</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">searchGoogle</span><span class="p">(</span><span class="nx">query</span><span class="p">)</span>
+      <span class="k">else</span>
+        <span class="nx">google</span><span class="p">.</span><span class="nx">load</span> <span class="s1">&#39;search&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="nv">callback: </span><span class="o">=&gt;</span>
+          <span class="err">@</span><span class="nx">localSearch</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">search</span><span class="p">.</span><span class="nx">LocalSearch</span><span class="p">()</span>
+          <span class="err">@</span><span class="nx">localSearch</span><span class="p">.</span><span class="nx">setCenterPoint</span> <span class="err">@</span><span class="nx">model</span><span class="p">.</span><span class="nx">member</span><span class="p">.</span><span class="nx">cityState</span><span class="p">()</span>
+          <span class="err">@</span><span class="nx">localSearch</span><span class="p">.</span><span class="nx">setResultSetSize</span> <span class="mi">5</span>
+          <span class="err">@</span><span class="nx">localSearch</span><span class="p">.</span><span class="nx">setSearchCompleteCallback</span> <span class="k">this</span><span class="p">,</span> <span class="err">@</span><span class="nx">displaySearchResults</span><span class="p">,</span> <span class="kc">null</span>
+          <span class="k">this</span><span class="p">.</span><span class="nx">searchGoogle</span> <span class="nx">query</span>
+
+    <span class="nv">displaySearchResults: </span><span class="o">=&gt;</span>
+
+      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.merchant-search-results&#39;</span><span class="p">).</span><span class="nx">remove</span><span class="p">()</span>
+  
+      <span class="k">if</span> <span class="nx">_</span><span class="p">.</span><span class="nx">any</span> <span class="err">@</span><span class="nx">localSearch</span><span class="p">.</span><span class="nx">results</span>
+
+        <span class="nx">resultsDiv</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">make</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nv">className: </span><span class="s1">&#39;merchant-search-results&#39;</span> <span class="p">})</span>
+
+        <span class="nx">resultsList</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">make</span><span class="p">(</span><span class="s1">&#39;ul&#39;</span><span class="p">)</span>
+
+        <span class="nx">_</span><span class="p">.</span><span class="nx">each</span> <span class="err">@</span><span class="nx">localSearch</span><span class="p">.</span><span class="nx">results</span><span class="p">,</span> <span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span>
+          <span class="nx">resultView</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MerchantSearchResultView</span>
+            <span class="nv">model: </span><span class="err">@</span><span class="nx">model</span>
+            <span class="nv">result: </span><span class="nx">result</span>
+
+          <span class="nx">$</span><span class="p">(</span><span class="nx">resultsList</span><span class="p">).</span><span class="nx">append</span> <span class="nx">resultView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span>
+
+        <span class="nx">$</span><span class="p">(</span><span class="nx">resultsDiv</span><span class="p">).</span><span class="nx">append</span> <span class="nx">resultsList</span>
+
+        <span class="nx">$</span><span class="p">(</span><span class="err">@</span><span class="nx">el</span><span class="p">).</span><span class="nx">append</span> <span class="nx">resultsDiv</span>
+
+      <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;button.search&#39;</span><span class="p">).</span><span class="nx">button</span><span class="p">(</span><span class="s1">&#39;option&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;Search&#39;</span><span class="p">).</span><span class="nx">button</span><span class="p">(</span><span class="s1">&#39;enable&#39;</span><span class="p">)</span>
+
+    <span class="nv">searchGoogle: </span><span class="p">(</span><span class="nx">query</span><span class="p">)</span> <span class="o">=&gt;</span>
+      <span class="err">@</span><span class="nx">localSearch</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="nx">query</span><span class="p">)</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

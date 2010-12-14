@@ -1,0 +1,18 @@
+#!/bin/sh
+tmux new-session -d -s hlcu
+
+tmux new-window -t hlcu:1 "passenger start"
+tmux rename-window -t hlcu:1 passenger
+
+tmux new-window -t hlcu:2 "bundle exec racksh"
+tmux rename-window -t hlcu:2 console
+
+tmux new-window -t hlcu:3 "bundle exec guard"
+tmux rename-window -t hlcu:3 guard
+
+tmux new-window -t hlcu:4 "cd development/wiki && bundle exec gollum"
+tmux rename-window -t hlcu:4 wiki
+
+tmux select-window -t hlcu:0
+
+tmux attach -t hlcu

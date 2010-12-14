@@ -1,0 +1,63 @@
+!blueprint_grid_columns = 24
+!blueprint_grid_width = 30px
+!blueprint_grid_margin = 10px
+
+$font_color = darken(#5F83B9, 5)
+$subtle_color = #999
+$link_color = #06d
+
+$timeline_row_border_color = lighten(#A7CFE6, 15)
+$timeline_row_date_border_color = lighten(#A7CFE6, 10)
+$timeline_row_stripe_color = lighten(#A7CFE6, 20)
+
+$timeline_row_selected_color = #f1f1f1
+
+$timeline_row_selected_border_color = #ddd
+
+$timeline_font_color = $font_color
+
+@import compass/reset
+@import compass/utilities
+@import compass/css3
+
+@import blueprint/screen
+
+body
+  background: #D3DADF url(/images/background.png) repeat-x left top
+
+textarea
+  font-family: $blueprint_font_family
+  font-size: 13px
+  color: #333
+  line-height: 1.4em
+
+
+#container
+  +column(24)
+  margin: 0 40px
+  padding: 10px 0
+  a
+    +link-colors($link_color, $link_color)
+  #main
+    +column(15)
+    +box-shadow(#ccc, 2px)
+    z-index: 2
+    background: #fff
+    border: 1px solid #ccc
+    position: relative
+    .content
+      padding: 12px
+  #sidebar
+    +column(9)
+    +last
+    float: none
+    display: block
+    z-index: 1
+    background: #F6FAFD
+    margin: 15px 0 0 590px
+    +border-right-radius(8px)
+    height: 100%
+    min-height: 1000px
+    position: relative
+    &.selected
+      background: $timeline_row_selected_color

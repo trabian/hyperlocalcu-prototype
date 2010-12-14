@@ -59,12 +59,12 @@ a img {
   border: none;
 }
 
-/* line 25, ../../../client/sass/_base.sass */
+/* line 25, ../../../frontend/sass/_base.sass */
 body {
   background: #d3dadf url(/images/background.png) repeat-x left top;
 }
 
-/* line 28, ../../../client/sass/_base.sass */
+/* line 28, ../../../frontend/sass/_base.sass */
 textarea {
   font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-size: 13px;
@@ -72,7 +72,7 @@ textarea {
   line-height: 1.4em;
 }
 
-/* line 35, ../../../client/sass/_base.sass */
+/* line 35, ../../../frontend/sass/_base.sass */
 #container {
   display: inline;
   float: left;
@@ -85,7 +85,7 @@ textarea {
 * html #container {
   overflow-x: hidden;
 }
-/* line 39, ../../../client/sass/_base.sass */
+/* line 39, ../../../frontend/sass/_base.sass */
 #container a {
   color: #0066dd;
 }
@@ -93,7 +93,7 @@ textarea {
 #container a:hover {
   color: #0066dd;
 }
-/* line 41, ../../../client/sass/_base.sass */
+/* line 41, ../../../frontend/sass/_base.sass */
 #container #main {
   display: inline;
   float: left;
@@ -112,11 +112,11 @@ textarea {
 * html #container #main {
   overflow-x: hidden;
 }
-/* line 48, ../../../client/sass/_base.sass */
+/* line 48, ../../../frontend/sass/_base.sass */
 #container #main .content {
   padding: 12px;
 }
-/* line 50, ../../../client/sass/_base.sass */
+/* line 50, ../../../frontend/sass/_base.sass */
 #container #sidebar {
   display: inline;
   float: left;
@@ -140,6 +140,7 @@ textarea {
   -ms-border-bottom-right-radius: 8px;
   -khtml-border-bottom-right-radius: 8px;
   border-bottom-right-radius: 8px;
+  height: 100%;
   min-height: 1000px;
   position: relative;
 }
@@ -147,7 +148,7 @@ textarea {
 * html #container #sidebar {
   overflow-x: hidden;
 }
-/* line 61, ../../../client/sass/_base.sass */
+/* line 62, ../../../frontend/sass/_base.sass */
 #container #sidebar.selected {
   background: #f1f1f1;
 }
@@ -1318,71 +1319,113 @@ textarea {
   height: 250px;
 }
 
-/* line 5, ../../../client/sass/_timeline.sass */
+/* line 4, ../../../frontend/sass/_prompts.sass */
+#sidebar .prompt {
+  position: relative;
+  margin: 20px 0 0;
+  border: 1px solid #a7cfe6;
+  background: white;
+  padding: 25px 10px;
+}
+/* line 10, ../../../frontend/sass/_prompts.sass */
+#sidebar .prompt a.hide-message {
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  font-size: 9px;
+}
+/* line 15, ../../../frontend/sass/_prompts.sass */
+#sidebar .prompt h2 {
+  font-size: 14px;
+  line-height: 1em;
+  margin: 0 0 0.5em;
+}
+/* line 19, ../../../frontend/sass/_prompts.sass */
+#sidebar .prompt p {
+  font-size: 11px;
+}
+/* line 22, ../../../frontend/sass/_prompts.sass */
+#sidebar .prompt .screenshot {
+  text-align: center;
+}
+/* line 24, ../../../frontend/sass/_prompts.sass */
+#sidebar .prompt .screenshot img {
+  -moz-box-shadow: #333333 1px 1px 5px 0;
+  -webkit-box-shadow: #333333 1px 1px 5px 0;
+  -o-box-shadow: #333333 1px 1px 5px 0;
+  box-shadow: #333333 1px 1px 5px 0;
+}
+/* line 26, ../../../frontend/sass/_prompts.sass */
+#sidebar .prompt .screenshot p {
+  color: #666666;
+  margin: 0.1em 0;
+}
+
+/* line 5, ../../../frontend/sass/_timeline.sass */
 .rating {
   width: 80px !important;
 }
-/* line 7, ../../../client/sass/_timeline.sass */
+/* line 7, ../../../frontend/sass/_timeline.sass */
 .rating .star, .rating .cancel {
   display: inline-block;
   width: 12px;
   height: 12px;
   text-indent: -5000px;
-  margin-left: 2px;
+  padding-left: 2px;
 }
-/* line 13, ../../../client/sass/_timeline.sass */
+/* line 13, ../../../frontend/sass/_timeline.sass */
 .rating .star {
   background: url(/images/ratings/star-off.png) no-repeat left top;
 }
-/* line 15, ../../../client/sass/_timeline.sass */
+/* line 15, ../../../frontend/sass/_timeline.sass */
 .rating .star.on {
   background-image: url(/images/ratings/star-on.png);
 }
-/* line 17, ../../../client/sass/_timeline.sass */
+/* line 17, ../../../frontend/sass/_timeline.sass */
 .rating .cancel {
   background: url(/images/ratings/cancel-off.png) no-repeat left top;
   display: none;
 }
-/* line 20, ../../../client/sass/_timeline.sass */
+/* line 20, ../../../frontend/sass/_timeline.sass */
 .rating.rated {
   width: 94px !important;
 }
-/* line 22, ../../../client/sass/_timeline.sass */
+/* line 22, ../../../frontend/sass/_timeline.sass */
 .rating.rated .cancel {
   display: inline-block;
   background-image: url(/images/ratings/cancel-on.png);
 }
 
-/* line 26, ../../../client/sass/_timeline.sass */
+/* line 26, ../../../frontend/sass/_timeline.sass */
 table#timeline {
   margin: 0;
   padding: 0;
   border: 0;
   outline: 0;
 }
-/* line 30, ../../../client/sass/_timeline.sass */
+/* line 30, ../../../frontend/sass/_timeline.sass */
 table#timeline thead tr td.date {
   width: 60px;
 }
-/* line 34, ../../../client/sass/_timeline.sass */
+/* line 34, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td, table#timeline tbody tr th {
   border-top: 2px solid #cfe5f1;
   color: #4d75b1;
   font-size: 13px;
   padding: 8px 5px;
 }
-/* line 39, ../../../client/sass/_timeline.sass */
+/* line 39, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td p, table#timeline tbody tr th p {
   margin: 0;
   padding: 0;
 }
-/* line 43, ../../../client/sass/_timeline.sass */
+/* line 43, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.amount {
   width: 15%;
   text-align: right;
   padding-right: 10px;
 }
-/* line 48, ../../../client/sass/_timeline.sass */
+/* line 48, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name .rating {
   float: right;
   margin-top: 2px;
@@ -1391,124 +1434,124 @@ table#timeline tbody tr td.name .rating {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   line-height: 1em;
 }
-/* line 53, ../../../client/sass/_timeline.sass */
+/* line 53, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name .rating:hover, table#timeline tbody tr td.name .rating.active {
   opacity: 1;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
 }
-/* line 55, ../../../client/sass/_timeline.sass */
-table#timeline tbody tr td.name .offer, table#timeline tbody tr td.name .feedback {
+/* line 55, ../../../frontend/sass/_timeline.sass */
+table#timeline tbody tr td.name .offer, table#timeline tbody tr td.name .feedback, table#timeline tbody tr td.name .meta {
   margin: 0;
   font-size: 10px;
   color: #999999;
 }
-/* line 59, ../../../client/sass/_timeline.sass */
-table#timeline tbody tr td.name .offer em, table#timeline tbody tr td.name .feedback em {
+/* line 59, ../../../frontend/sass/_timeline.sass */
+table#timeline tbody tr td.name .offer em, table#timeline tbody tr td.name .feedback em, table#timeline tbody tr td.name .meta em {
   font-style: normal;
   color: #009900;
 }
-/* line 62, ../../../client/sass/_timeline.sass */
+/* line 62, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name .feedback {
   color: #009900;
 }
-/* line 65, ../../../client/sass/_timeline.sass */
+/* line 65, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr th {
   font-weight: normal;
 }
-/* line 68, ../../../client/sass/_timeline.sass */
+/* line 68, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.repeat-date td, table#timeline tbody tr.repeat-date th {
   border-top: 1px solid #e3eff7;
 }
-/* line 71, ../../../client/sass/_timeline.sass */
+/* line 71, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.repeat-date td.date span {
   display: none;
 }
-/* line 74, ../../../client/sass/_timeline.sass */
+/* line 74, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr:nth-child(odd) td, table#timeline tbody tr:nth-child(odd) th {
   background: #f6fafd;
 }
-/* line 77, ../../../client/sass/_timeline.sass */
+/* line 77, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr:first-child td, table#timeline tbody tr:first-child th {
   border-top: none;
 }
-/* line 80, ../../../client/sass/_timeline.sass */
+/* line 80, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.selected td, table#timeline tbody tr.selected th {
   border-top-color: #dddddd;
   background: #f1f1f1;
 }
-/* line 84, ../../../client/sass/_timeline.sass */
+/* line 84, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.reward td, table#timeline tbody tr.reward th {
   color: #009900;
 }
-/* line 87, ../../../client/sass/_timeline.sass */
+/* line 87, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr th {
   border-top-color: #e3e3e3;
 }
 
-/* line 1, ../../../client/sass/_rewards.sass */
+/* line 1, ../../../frontend/sass/_rewards.sass */
 #rewards-summary, #accounts {
   padding: 1.5em 0 0.5em;
 }
-/* line 3, ../../../client/sass/_rewards.sass */
+/* line 3, ../../../frontend/sass/_rewards.sass */
 #rewards-summary table, #accounts table {
   width: 330px;
 }
-/* line 6, ../../../client/sass/_rewards.sass */
+/* line 6, ../../../frontend/sass/_rewards.sass */
 #rewards-summary table thead th, #rewards-summary table thead td, #accounts table thead th, #accounts table thead td {
   padding-bottom: 10px;
   background: none;
 }
-/* line 9, ../../../client/sass/_rewards.sass */
+/* line 9, ../../../frontend/sass/_rewards.sass */
 #rewards-summary table thead th, #accounts table thead th {
   font-size: 14px;
 }
-/* line 11, ../../../client/sass/_rewards.sass */
+/* line 11, ../../../frontend/sass/_rewards.sass */
 #rewards-summary table thead td, #accounts table thead td {
   text-align: right;
 }
-/* line 13, ../../../client/sass/_rewards.sass */
+/* line 13, ../../../frontend/sass/_rewards.sass */
 #rewards-summary table thead td .ui-button .ui-button-text, #accounts table thead td .ui-button .ui-button-text {
   font-size: 12px;
 }
-/* line 17, ../../../client/sass/_rewards.sass */
+/* line 17, ../../../frontend/sass/_rewards.sass */
 #rewards-summary table tbody th, #accounts table tbody th {
   font-weight: normal;
   padding-left: 10px;
 }
-/* line 20, ../../../client/sass/_rewards.sass */
+/* line 20, ../../../frontend/sass/_rewards.sass */
 #rewards-summary table tbody th a, #accounts table tbody th a {
   color: #4d75b1;
 }
-/* line 22, ../../../client/sass/_rewards.sass */
+/* line 22, ../../../frontend/sass/_rewards.sass */
 #rewards-summary table tbody td, #accounts table tbody td {
   font-weight: bold;
   text-align: right;
   padding-right: 25px;
 }
-/* line 27, ../../../client/sass/_rewards.sass */
+/* line 27, ../../../frontend/sass/_rewards.sass */
 #rewards-summary table tbody tr.title th, #accounts table tbody tr.title th {
   font-weight: bold;
   font-size: 14px;
   padding-top: 20px;
   border-bottom: 1px solid #e3eff7;
 }
-/* line 33, ../../../client/sass/_rewards.sass */
+/* line 33, ../../../frontend/sass/_rewards.sass */
 #rewards-summary table tbody tr.title:first-child th, #accounts table tbody tr.title:first-child th {
   padding-top: 10px;
 }
 
-/* line 36, ../../../client/sass/_rewards.sass */
+/* line 36, ../../../frontend/sass/_rewards.sass */
 #accounts {
   padding-top: 2em;
 }
 
-/* line 38, ../../../client/sass/_rewards.sass */
+/* line 38, ../../../frontend/sass/_rewards.sass */
 #rewards-summary {
   border-top: 3px solid #e3eff7;
 }
 
-/* line 1, ../../../client/sass/_merchants.sass */
+/* line 1, ../../../frontend/sass/_merchants.sass */
 #merchant-view {
   position: fixed;
   color: #444444;
@@ -1532,20 +1575,20 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   width: 318px;
   min-height: 500px;
 }
-/* line 12, ../../../client/sass/_merchants.sass */
+/* line 12, ../../../frontend/sass/_merchants.sass */
 #merchant-view .close {
   display: none;
   float: right;
 }
-/* line 15, ../../../client/sass/_merchants.sass */
+/* line 15, ../../../frontend/sass/_merchants.sass */
 #merchant-view .close .ui-button-text {
   font-size: 11px;
 }
-/* line 17, ../../../client/sass/_merchants.sass */
+/* line 17, ../../../frontend/sass/_merchants.sass */
 #merchant-view .name-and-location {
   height: 58px;
 }
-/* line 19, ../../../client/sass/_merchants.sass */
+/* line 19, ../../../frontend/sass/_merchants.sass */
 #merchant-view .name-and-location .avatar {
   float: right;
   padding: 3px;
@@ -1553,37 +1596,37 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   border: 1px solid #dddddd;
   cursor: pointer;
 }
-/* line 25, ../../../client/sass/_merchants.sass */
+/* line 25, ../../../frontend/sass/_merchants.sass */
 #merchant-view .name-and-location h3 {
   font-size: 16px;
   margin: 0 0 0.5em 0;
 }
-/* line 28, ../../../client/sass/_merchants.sass */
+/* line 28, ../../../frontend/sass/_merchants.sass */
 #merchant-view .name-and-location p.address, #merchant-view .name-and-location p.phone {
   font-size: 11px;
   margin: 0.2em 0;
 }
-/* line 31, ../../../client/sass/_merchants.sass */
+/* line 31, ../../../frontend/sass/_merchants.sass */
 #merchant-view form.offer {
   margin: 2em 0.5em 0;
 }
-/* line 33, ../../../client/sass/_merchants.sass */
+/* line 33, ../../../frontend/sass/_merchants.sass */
 #merchant-view form.offer p.additional-question {
   margin: 0.5em 0;
   font-size: 93%;
 }
-/* line 36, ../../../client/sass/_merchants.sass */
+/* line 36, ../../../frontend/sass/_merchants.sass */
 #merchant-view form.offer textarea {
   width: 98%;
   height: 75px;
 }
-/* line 39, ../../../client/sass/_merchants.sass */
+/* line 39, ../../../frontend/sass/_merchants.sass */
 #merchant-view form.offer p.reward {
   float: right;
   color: #009900;
   margin: 0.3em 0 0;
 }
-/* line 44, ../../../client/sass/_merchants.sass */
+/* line 44, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social::before, #merchant-view .social::after {
   content: "";
   display: block;
@@ -1591,21 +1634,21 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   width: 0px;
   position: absolute;
 }
-/* line 51, ../../../client/sass/_merchants.sass */
+/* line 51, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social::before {
   border: 14px solid transparent;
   border-bottom-color: #dddddd;
   right: 14px;
   top: -28px;
 }
-/* line 57, ../../../client/sass/_merchants.sass */
+/* line 57, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social::after {
   border: 12px solid transparent;
   border-bottom-color: white;
   right: 16px;
   top: -24px;
 }
-/* line 63, ../../../client/sass/_merchants.sass */
+/* line 63, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social {
   position: relative;
   margin: 10px 0 0 0;
@@ -1620,22 +1663,30 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   padding: 10px;
   font-size: 11px;
 }
-/* line 71, ../../../client/sass/_merchants.sass */
+/* line 71, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social .twitter, #merchant-view .social .facebook {
   clear: both;
   padding: 0 0 10px;
 }
-/* line 74, ../../../client/sass/_merchants.sass */
+/* line 3, ../../../frontend/sass/_ui_mixins.sass */
+#merchant-view .social .twitter .form .ui-button .ui-button-text, #merchant-view .social .facebook .form .ui-button .ui-button-text {
+  font-size: 10px;
+}
+/* line 76, ../../../frontend/sass/_merchants.sass */
+#merchant-view .social .twitter .form input.text, #merchant-view .social .facebook .form input.text {
+  width: 220px;
+}
+/* line 78, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social .twitter .view-profile, #merchant-view .social .facebook .view-profile {
   float: right;
   margin: 5px 5px 10px 10px;
 }
-/* line 77, ../../../client/sass/_merchants.sass */
+/* line 81, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social .twitter .tweet_time, #merchant-view .social .twitter .post_time, #merchant-view .social .facebook .tweet_time, #merchant-view .social .facebook .post_time {
   display: block;
   color: #999999;
 }
-/* line 80, ../../../client/sass/_merchants.sass */
+/* line 84, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social .twitter .tweet_time a, #merchant-view .social .twitter .post_time a, #merchant-view .social .facebook .tweet_time a, #merchant-view .social .facebook .post_time a {
   color: #999999;
 }
@@ -1643,12 +1694,12 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #merchant-view .social .twitter .tweet_time a:hover, #merchant-view .social .twitter .post_time a:hover, #merchant-view .social .facebook .tweet_time a:hover, #merchant-view .social .facebook .post_time a:hover {
   color: #0066dd;
 }
-/* line 82, ../../../client/sass/_merchants.sass */
+/* line 86, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social .twitter {
   border-bottom: 1px solid #e3e3e3;
   margin-bottom: 10px;
 }
-/* line 86, ../../../client/sass/_merchants.sass */
+/* line 90, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social .twitter .latest-tweet .tweet_list {
   list-style: none;
   margin: 0;
@@ -1662,7 +1713,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   list-style-type: none;
   margin-left: 0px;
 }
-/* line 89, ../../../client/sass/_merchants.sass */
+/* line 93, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social p.security {
   border-top: 1px solid #e3e3e3;
   font-size: 10px;
@@ -1670,26 +1721,158 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   background: url(/images/icons/lock.png) no-repeat left 15px;
   padding: 10px 0 0 25px;
 }
-/* line 95, ../../../client/sass/_merchants.sass */
+/* line 99, ../../../frontend/sass/_merchants.sass */
 #merchant-view .feedback {
   padding: 15px 0 0;
 }
-/* line 97, ../../../client/sass/_merchants.sass */
+/* line 101, ../../../frontend/sass/_merchants.sass */
 #merchant-view .feedback p {
   margin: 0.5em 0.2em;
 }
+/* line 105, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search .branding {
+  position: absolute;
+  bottom: -17px;
+  right: 0;
+  font-size: 10px;
+  color: #333333;
+  line-height: 15px;
+}
+/* line 112, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search .branding img {
+  display: inline-block;
+  position: relative;
+  top: 5px;
+}
+/* line 116, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search h4 {
+  font-size: 13px;
+  line-height: 1.4em;
+  margin: 0 0 0.35em;
+}
+/* line 120, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search h4 em {
+  font-weight: bold;
+  font-style: normal;
+}
+/* line 123, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search .merchant-search-form {
+  overflow: hidden;
+  *zoom: 1;
+}
+/* line 125, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search .merchant-search-form .ui-button {
+  float: left;
+  margin: 0 !important;
+}
+/* line 128, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search .merchant-search-form .ui-button .ui-button-text {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+/* line 131, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search .merchant-search-form .search-field {
+  float: left;
+  width: 195px;
+  margin: 0 5px 0 0;
+}
+/* line 136, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search .merchant-search-results {
+  margin: 5px 0 0 0;
+  border: 1px solid #dddddd;
+  background: white;
+  max-height: 250px;
+  overflow: auto;
+}
+/* line 142, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search .merchant-search-results ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+}
+/* line 11, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_bullets.scss */
+#merchant-view .merchant-search .merchant-search-results ul li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0px;
+}
+/* line 9, ../../../frontend/sass/_ui_mixins.sass */
+#merchant-view .merchant-search .merchant-search-results ul li.result {
+  overflow: hidden;
+  *zoom: 1;
+  clear: both;
+  padding: 6px 5px;
+  border-bottom: 1px solid #e3eff7;
+}
+/* line 14, ../../../frontend/sass/_ui_mixins.sass */
+#merchant-view .merchant-search .merchant-search-results ul li.result:nth-child(odd) {
+  background: #f6fafd;
+}
+/* line 16, ../../../frontend/sass/_ui_mixins.sass */
+#merchant-view .merchant-search .merchant-search-results ul li.result h3 {
+  font-size: 13px;
+  margin: 0.2em 0 0.2em;
+}
+/* line 19, ../../../frontend/sass/_ui_mixins.sass */
+#merchant-view .merchant-search .merchant-search-results ul li.result p.meta {
+  margin: 0;
+  font-size: 0.83em;
+  line-height: 1.3em;
+  color: #999999;
+}
+/* line 24, ../../../frontend/sass/_ui_mixins.sass */
+#merchant-view .merchant-search .merchant-search-results ul li.result ul.buttons {
+  float: right;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  overflow: hidden;
+  *zoom: 1;
+}
+/* line 56, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_horizontal-list.scss */
+#merchant-view .merchant-search .merchant-search-results ul li.result ul.buttons li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0px;
+  white-space: nowrap;
+  display: inline;
+  float: left;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+/* line 45, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_horizontal-list.scss */
+#merchant-view .merchant-search .merchant-search-results ul li.result ul.buttons li:first-child, #merchant-view .merchant-search .merchant-search-results ul li.result ul.buttons li.first {
+  padding-left: 0;
+}
+/* line 46, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_horizontal-list.scss */
+#merchant-view .merchant-search .merchant-search-results ul li.result ul.buttons li:last-child, #merchant-view .merchant-search .merchant-search-results ul li.result ul.buttons li.last {
+  padding-right: 0;
+}
+/* line 3, ../../../frontend/sass/_ui_mixins.sass */
+#merchant-view .merchant-search .merchant-search-results ul li.result ul.buttons .ui-button .ui-button-text {
+  font-size: 10px;
+}
+/* line 144, ../../../frontend/sass/_merchants.sass */
+#merchant-view .merchant-search .merchant-search-results ul p {
+  font-size: 11px;
+  color: #333333;
+  margin: 0.2em 0;
+}
 
-/* line 101, ../../../client/sass/_merchants.sass */
+/* line 150, ../../../frontend/sass/_merchants.sass */
 #feedback h3, #sales-chart h3 {
   margin: 0 0 0.5em;
   font-size: 14px;
 }
 
-/* line 105, ../../../client/sass/_merchants.sass */
+/* line 154, ../../../frontend/sass/_merchants.sass */
 #feedback {
   padding: 10px 0 0 0;
 }
-/* line 107, ../../../client/sass/_merchants.sass */
+/* line 156, ../../../frontend/sass/_merchants.sass */
 #feedback #feedback-list {
   list-style: none;
   margin: 0;
@@ -1705,7 +1888,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   list-style-type: none;
   margin-left: 0px;
 }
-/* line 9, ../../../client/sass/_ui_mixins.sass */
+/* line 9, ../../../frontend/sass/_ui_mixins.sass */
 #feedback #feedback-list li.feedback {
   overflow: hidden;
   *zoom: 1;
@@ -1713,23 +1896,23 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   padding: 6px 5px;
   border-bottom: 1px solid #e3eff7;
 }
-/* line 14, ../../../client/sass/_ui_mixins.sass */
+/* line 14, ../../../frontend/sass/_ui_mixins.sass */
 #feedback #feedback-list li.feedback:nth-child(odd) {
   background: #f6fafd;
 }
-/* line 16, ../../../client/sass/_ui_mixins.sass */
+/* line 16, ../../../frontend/sass/_ui_mixins.sass */
 #feedback #feedback-list li.feedback h3 {
   font-size: 13px;
   margin: 0.2em 0 0.2em;
 }
-/* line 19, ../../../client/sass/_ui_mixins.sass */
+/* line 19, ../../../frontend/sass/_ui_mixins.sass */
 #feedback #feedback-list li.feedback p.meta {
   margin: 0;
   font-size: 0.83em;
-  line-height: 1em;
+  line-height: 1.3em;
   color: #999999;
 }
-/* line 24, ../../../client/sass/_ui_mixins.sass */
+/* line 24, ../../../frontend/sass/_ui_mixins.sass */
 #feedback #feedback-list li.feedback ul.buttons {
   float: right;
   margin: 0;
@@ -1758,34 +1941,34 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #feedback #feedback-list li.feedback ul.buttons li:last-child, #feedback #feedback-list li.feedback ul.buttons li.last {
   padding-right: 0;
 }
-/* line 3, ../../../client/sass/_ui_mixins.sass */
+/* line 3, ../../../frontend/sass/_ui_mixins.sass */
 #feedback #feedback-list li.feedback ul.buttons .ui-button .ui-button-text {
   font-size: 10px;
 }
-/* line 112, ../../../client/sass/_merchants.sass */
+/* line 161, ../../../frontend/sass/_merchants.sass */
 #feedback #feedback-list li p.comment {
   margin: 0 0 0.2em;
 }
 
-/* line 2, ../../../client/sass/_social.sass */
+/* line 2, ../../../frontend/sass/_social.sass */
 .tweet-form textarea {
   width: 96%;
   height: 58px;
   margin: 0 0 0;
 }
-/* line 6, ../../../client/sass/_social.sass */
+/* line 6, ../../../frontend/sass/_social.sass */
 .tweet-form p.note {
   font-size: 85%;
   float: left;
   width: 60%;
   margin: 0;
 }
-/* line 11, ../../../client/sass/_social.sass */
+/* line 11, ../../../frontend/sass/_social.sass */
 .tweet-form .count-and-button {
   text-align: right;
   margin: 6px 0 0 0;
 }
-/* line 14, ../../../client/sass/_social.sass */
+/* line 14, ../../../frontend/sass/_social.sass */
 .tweet-form .count-and-button .count {
   position: relative;
   top: 3px;
@@ -1793,28 +1976,28 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   font-size: 14px;
   font-weight: bold;
 }
-/* line 21, ../../../client/sass/_social.sass */
+/* line 21, ../../../frontend/sass/_social.sass */
 .tweet-form.over-limit .count {
   color: #990000;
 }
 
-/* line 2, ../../../client/sass/_demo.sass */
+/* line 2, ../../../frontend/sass/_demo.sass */
 #snapshot-dialog .form {
   margin-bottom: 0.5em;
 }
-/* line 4, ../../../client/sass/_demo.sass */
+/* line 4, ../../../frontend/sass/_demo.sass */
 #snapshot-dialog .form input.text {
   font-size: 14px;
   float: left;
   margin: 0 5px 0 0;
 }
-/* line 8, ../../../client/sass/_demo.sass */
+/* line 8, ../../../frontend/sass/_demo.sass */
 #snapshot-dialog .snapshots {
   clear: both;
   height: 250px;
   overflow: auto;
 }
-/* line 13, ../../../client/sass/_demo.sass */
+/* line 13, ../../../frontend/sass/_demo.sass */
 #snapshot-dialog .snapshots ul {
   list-style: none;
   margin: 0;
@@ -1828,7 +2011,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   list-style-type: none;
   margin-left: 0px;
 }
-/* line 9, ../../../client/sass/_ui_mixins.sass */
+/* line 9, ../../../frontend/sass/_ui_mixins.sass */
 #snapshot-dialog .snapshots ul li.snapshot {
   overflow: hidden;
   *zoom: 1;
@@ -1836,23 +2019,23 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   padding: 6px 5px;
   border-bottom: 1px solid #e3eff7;
 }
-/* line 14, ../../../client/sass/_ui_mixins.sass */
+/* line 14, ../../../frontend/sass/_ui_mixins.sass */
 #snapshot-dialog .snapshots ul li.snapshot:nth-child(odd) {
   background: #f6fafd;
 }
-/* line 16, ../../../client/sass/_ui_mixins.sass */
+/* line 16, ../../../frontend/sass/_ui_mixins.sass */
 #snapshot-dialog .snapshots ul li.snapshot h3 {
   font-size: 13px;
   margin: 0.2em 0 0.2em;
 }
-/* line 19, ../../../client/sass/_ui_mixins.sass */
+/* line 19, ../../../frontend/sass/_ui_mixins.sass */
 #snapshot-dialog .snapshots ul li.snapshot p.meta {
   margin: 0;
   font-size: 0.83em;
-  line-height: 1em;
+  line-height: 1.3em;
   color: #999999;
 }
-/* line 24, ../../../client/sass/_ui_mixins.sass */
+/* line 24, ../../../frontend/sass/_ui_mixins.sass */
 #snapshot-dialog .snapshots ul li.snapshot ul.buttons {
   float: right;
   margin: 0;
@@ -1881,23 +2064,23 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #snapshot-dialog .snapshots ul li.snapshot ul.buttons li:last-child, #snapshot-dialog .snapshots ul li.snapshot ul.buttons li.last {
   padding-right: 0;
 }
-/* line 3, ../../../client/sass/_ui_mixins.sass */
+/* line 3, ../../../frontend/sass/_ui_mixins.sass */
 #snapshot-dialog .snapshots ul li.snapshot ul.buttons .ui-button .ui-button-text {
   font-size: 10px;
 }
 
-/* line 19, ../../../client/sass/screen.sass */
+/* line 21, ../../../frontend/sass/screen.sass */
 #container {
   position: relative;
 }
 
-/* line 22, ../../../client/sass/screen.sass */
+/* line 24, ../../../frontend/sass/screen.sass */
 #global {
   position: absolute;
   top: 2px;
   right: 15px;
 }
-/* line 26, ../../../client/sass/screen.sass */
+/* line 28, ../../../frontend/sass/screen.sass */
 #global ul {
   margin: 0;
   padding: 0;
@@ -1925,7 +2108,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #global ul li:last-child, #global ul li.last {
   padding-right: 0;
 }
-/* line 28, ../../../client/sass/screen.sass */
+/* line 30, ../../../frontend/sass/screen.sass */
 #global ul a {
   text-decoration: none;
   color: white;

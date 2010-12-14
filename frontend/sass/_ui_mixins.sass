@@ -1,0 +1,27 @@
+=small-button
+  .ui-button
+    .ui-button-text
+      font-size: 10px
+
+=list-with-buttons($item_class)
+  +no-bullets
+  +reset-box-model
+  li.#{$item_class}
+    +clearfix
+    clear: both
+    padding: 6px 5px
+    border-bottom: 1px solid $timeline_row_border_color
+    &:nth-child(odd)
+      background: $timeline_row_stripe_color
+    h3
+      font-size: 13px
+      margin: 0.2em 0 0.2em
+    p.meta
+      margin: 0
+      font-size: 0.83em
+      line-height: 1.3em
+      color: $subtle_color
+    ul.buttons
+      float: right
+      +horizontal-list(5px)
+      +small-button

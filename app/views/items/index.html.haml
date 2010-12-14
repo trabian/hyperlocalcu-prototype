@@ -1,0 +1,71 @@
+#timeline-loading Loading...
+
+%table#timeline{:style => 'display: none;'}
+  %thead.ui-widget-header
+    %tr
+      %td.date Date
+      %td.name Name
+      %td.amount Amount
+  %tbody.ui-widget-content
+
+= content_for :sidebar do
+  #overview
+  #merchant-view{:style => "display: none;"}
+
+= content_for :javascript do
+
+  %script{:src => google_js_src, :type => 'text/javascript'}
+
+  :javascript
+    require({ baseUrl: "/javascripts/compiled" }, ["order!vendor/underscore", "order!vendor/backbone", "order!member-timeline/member_timeline_controller", "order!member-timeline/models/member", "order!demo/demo_controller"], function(underscore, backbone, MemberTimelineController, Member, DemoController) {
+
+      Backbone.emulateHTTP = true;
+    
+      // This will be pulled dynamically (eventually)
+      var member = new Member({
+        address: {
+          city: 'Fishers',
+          state: 'IN'
+        },
+        accounts: [
+          { name: "Checking", amount: "$1,234.56" },
+          { name: "Savings", amount: "$34,582.34" }
+        ],
+        rewards: {
+          earned: [
+            {
+              name: "Money back",
+              amount: "$13.75"
+            },
+            {
+              name: "Vantage Reward points",
+              amount: "485"
+            }
+          ],
+          toRedeem: [
+            {
+              name: "Cinema 16",
+              amount: "$.45"
+            },
+            {
+              name: "Nickle Plate",
+              amount: "10% off up to $50"
+            },
+            {
+              name: "Factory Card Outlet",
+              amount: "2% off"
+            }
+          ]
+        }
+      });
+
+      window.member = member;
+      
+      var controller = new MemberTimelineController({
+        fetchOnInit: true,
+        member: member
+      });
+
+      var demoController = new DemoController();
+    
+    });
