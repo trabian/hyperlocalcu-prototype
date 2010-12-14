@@ -1,3 +1,5 @@
+@import ui_mixins
+
 #merchant-view
   position: fixed
   color: #444
@@ -40,34 +42,9 @@
       float: right
       color: #090
       margin: 0.3em 0 0
-  
-  .social::before, .social::after
-    content: ''
-    display: block
-    height: 0px
-    width: 0px
-    position: absolute
-
-  .social::before
-    border: 14px solid transparent
-    border-bottom-color: #ddd
-    right: 14px
-    top: -28px
-
-  .social::after
-    border: 12px solid transparent
-    border-bottom-color: #fff
-    right: 16px
-    top: -24px
 
   .social
-    position: relative
-    margin: 10px 0 0 0
-    background: #fff
-    border: 1px solid #ddd
-    +border-radius(5px)
-    padding: 10px
-    font-size: 11px
+    +speech-bubble(16px)
     .twitter, .facebook
       clear: both
       padding: 0 0 10px

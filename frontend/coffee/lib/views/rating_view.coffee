@@ -1,4 +1,4 @@
-define ->
+define ['member-timeline/views/comment_view'], (CommentView) ->
 
   class RatingView extends Backbone.View
 
@@ -8,6 +8,7 @@ define ->
 
     events:
       'click .cancel': 'resetRating'
+      'click .commentLink': 'showCommentForm'
 
     render: ->
 
@@ -17,6 +18,15 @@ define ->
 
       for num in [1..5]
         this.addStar num, (num <= @rating)
+
+      commentLink = this.make "a", {
+        href: '#'
+        className: 'commentLink'
+      }, 'comment'
+
+      $(@el).append commentLink
+
+      this.$('.commentLink').addClass('active') if @model.get('comment')?
 
       $(@el).addClass('rated active') if @rating > 0
 
@@ -36,9 +46,8 @@ define ->
 
     resetRating: =>
 
-      @model.save {
+      @model.save
         rating: 0
-      }, silent: true
 
       @currentStar = null
 
@@ -65,9 +74,8 @@ define ->
 
       $(star).bind 'click', =>
 
-        @model.save {
+        @model.save
           rating: num
-        }, silent: true
 
         @currentStar = star
 
@@ -88,3 +96,21 @@ define ->
       else
         this.$('.star').removeClass 'on'
         $(@el).removeClass 'active'
+
+    showCommentForm: =>
+
+      $(@el).addClass('active')
+
+      if @commentView?
+        @commentView.show()
+      else
+        @commentView = new CommentView
+          model: @model
+
+        @commentView.bind 'show', =>
+          this.$('.commentLink').addClass('active')
+
+        @commentView.bind 'hide', =>
+          this.$('.commentLink').removeClass('active') unless @model.get('comment')?
+
+        @options.commentParent.append @commentView.render().el

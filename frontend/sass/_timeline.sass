@@ -1,10 +1,10 @@
-//$timeline_font_color = #0d2054
+@import ui_mixins
 
 $table_padding = 12px
 
 .rating
-  width: 80px !important
-  .star, .cancel
+  width: 105px !important
+  .star, .cancel, .commentLink
     display: inline-block
     width: 12px
     height: 12px
@@ -17,8 +17,23 @@ $table_padding = 12px
   .cancel
     background: url(/images/ratings/cancel-off.png) no-repeat left top
     display: none
+  .commentLink
+    background: url(/images/icons/comment.png) no-repeat right top
+    position: relative
+    top: -1px
+    margin-left: 3px
+    padding-left: 3px
+    border-left: 1px solid #eee
+    width: 16px
+    height: 16px
+    +opacity(0.3)
+    &:hover
+      +opacity(1.0)
+      background-image: url(/images/icons/comment_add.png)
+    &.active
+      +opacity(1.0)
   &.rated
-    width: 94px !important
+    width: 119px !important
     .cancel
       display: inline-block 
       background-image: url(/images/ratings/cancel-on.png)
@@ -30,12 +45,18 @@ table#timeline
       td.date
         width: 60px
   tbody
+    tr.twoLine
+      td.name
+        div.comment
+          margin-top: 7px
+        
     tr
       td, th
         border-top: 2px solid $timeline_row_date_border_color
         color: $timeline_font_color
         font-size: 13px
         padding: 8px 5px
+        vertical-align: top
         p
           margin: 0
           padding: 0
@@ -61,6 +82,24 @@ table#timeline
               color: #090
           .feedback
             color: #090
+
+          div.comment
+            +speech-bubble(6px)
+            margin-top: 12px
+            .cancel
+              line-height: 0
+              float: right
+              margin: 5px 0 0 0
+            h4
+              margin-bottom: 0
+            textarea
+              height: 50px
+              font-size: 12px
+            .buttons
+              button
+                float: right
+                margin: 0 0 0 10px
+              
 
       th
         font-weight: normal

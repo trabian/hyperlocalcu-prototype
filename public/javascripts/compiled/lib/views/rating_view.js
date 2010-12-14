@@ -8,11 +8,12 @@ var __bind = function(func, context) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(function() {
+define(['member-timeline/views/comment_view'], function(CommentView) {
   var RatingView;
   RatingView = function() {
     var _a;
     _a = this;
+    this.showCommentForm = function(){ return RatingView.prototype.showCommentForm.apply(_a, arguments); };
     this.fillStar = function(){ return RatingView.prototype.fillStar.apply(_a, arguments); };
     this.addStar = function(){ return RatingView.prototype.addStar.apply(_a, arguments); };
     this.resetRating = function(){ return RatingView.prototype.resetRating.apply(_a, arguments); };
@@ -23,14 +24,23 @@ define(function() {
   RatingView.prototype.tagName = 'div';
   RatingView.prototype.className = 'rating';
   RatingView.prototype.events = {
-    'click .cancel': 'resetRating'
+    'click .cancel': 'resetRating',
+    'click .commentLink': 'showCommentForm'
   };
   RatingView.prototype.render = function() {
-    var num;
+    var _a, commentLink, num;
     this.rating = this.model.get('rating') || 0;
     this.addCancel();
     for (num = 1; num <= 5; num++) {
       this.addStar(num, num <= this.rating);
+    }
+    commentLink = this.make("a", {
+      href: '#',
+      className: 'commentLink'
+    }, 'comment');
+    $(this.el).append(commentLink);
+    if (typeof (_a = this.model.get('comment')) !== "undefined" && _a !== null) {
+      this.$('.commentLink').addClass('active');
     }
     if (this.rating > 0) {
       $(this.el).addClass('rated active');
@@ -51,8 +61,6 @@ define(function() {
   RatingView.prototype.resetRating = function() {
     this.model.save({
       rating: 0
-    }, {
-      silent: true
     });
     this.currentStar = null;
     $(this.el).removeClass('rated');
@@ -77,8 +85,6 @@ define(function() {
     $(star).bind('click', __bind(function() {
       this.model.save({
         rating: num
-      }, {
-        silent: true
       });
       this.currentStar = star;
       this.fillStar(this.currentStar);
@@ -95,6 +101,27 @@ define(function() {
     } else {
       this.$('.star').removeClass('on');
       return $(this.el).removeClass('active');
+    }
+  };
+  RatingView.prototype.showCommentForm = function() {
+    var _a;
+    $(this.el).addClass('active');
+    if (typeof (_a = this.commentView) !== "undefined" && _a !== null) {
+      return this.commentView.show();
+    } else {
+      this.commentView = new CommentView({
+        model: this.model
+      });
+      this.commentView.bind('show', __bind(function() {
+        return this.$('.commentLink').addClass('active');
+      }, this));
+      this.commentView.bind('hide', __bind(function() {
+        var _b;
+        if (!(typeof (_b = this.model.get('comment')) !== "undefined" && _b !== null)) {
+          return this.$('.commentLink').removeClass('active');
+        }
+      }, this));
+      return this.options.commentParent.append(this.commentView.render().el);
     }
   };
   return RatingView;

@@ -25,7 +25,7 @@ define(["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=17"
   };
   MerchantView.prototype.template = Handlebars.compile(sidebarTemplate);
   MerchantView.prototype.initialize = function() {
-    this.model.bind('change', this.onChange);
+    this.model.bind('change:merchant', this.onChange);
     return _.extend(this, Backbone.Events);
   };
   MerchantView.prototype.onChange = function() {

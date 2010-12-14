@@ -13,7 +13,7 @@ define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=17"
 
     initialize: ->
 
-      @model.bind 'change', @onChange
+      @model.bind 'change:merchant', @onChange
 
       # Mix in the Events module for custom event support
       _.extend this, Backbone.Events

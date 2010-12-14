@@ -1,3 +1,32 @@
+=speech-bubble($right)
+  position: relative
+  margin: 10px 0 0 0
+  background: #fff
+  border: 1px solid #ddd
+  +border-radius(5px)
+  padding: 10px
+  font-size: 11px
+
+  &::before, &::after
+    content: ''
+    display: block
+    height: 0px
+    width: 0px
+    position: absolute
+
+  &::before
+    border: 14px solid transparent
+    border-bottom-color: #ddd
+    right: $right - 2px
+    top: -28px
+
+  &::after
+    border: 12px solid transparent
+    border-bottom-color: #fff
+    right: $right
+    top: -24px
+
+
 =small-button
   .ui-button
     .ui-button-text

@@ -23,25 +23,34 @@ define(['vendor/handlebars', 'lib/views/rating_view', 'text!views/member-timelin
   ItemView.prototype.template = Handlebars.compile(template);
   ItemView.prototype.initialize = function() {
     this.model.bind('change', this.onChange);
+    this.model.bind('change:selected', this.changeSelection);
     this.collection = this.options.collection;
     return this.render();
   };
   ItemView.prototype.render = function() {
-    var ratingView;
+    var _a, ratingView;
     $(this.el).html(this.template(this.model.toViewJSON()));
     ratingView = new RatingView({
-      model: this.model
+      model: this.model,
+      commentParent: this.$('td.name')
     });
     this.$('td.name').prepend(ratingView.render().el);
     if (this.model.get('amount') > 0) {
       $(this.el).addClass('reward');
     }
+    if (typeof (_a = this.model.get('merchant')) !== "undefined" && _a !== null) {
+      $(this.el).addClass('twoLine');
+    }
     return this;
   };
   ItemView.prototype.onChange = function() {
-    var onlySelectedChanged;
-    onlySelectedChanged = _.keys(this.model.changedAttributes()).join('') === 'selected';
-    return onlySelectedChanged ? this.changeSelection() : this.render();
+    var attributesToIgnore, changedKeys;
+    attributesToIgnore = ['rating', 'selected'];
+    changedKeys = _.keys(this.model.changedAttributes());
+    if (_.isEmpty(_.without.apply(_, [changedKeys].concat(attributesToIgnore)))) {
+      return null;
+    }
+    return this.render();
   };
   ItemView.prototype.changeSelection = function() {
     return $(this.el).toggleClass('selected', this.model.get('selected'));

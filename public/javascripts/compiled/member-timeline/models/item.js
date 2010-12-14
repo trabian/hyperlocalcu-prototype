@@ -8,7 +8,7 @@ var __bind = function(func, context) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(['lib/models/custom_sync'], function(CustomSync, Merchant) {
+define(['lib/models/custom_sync'], function(CustomSync) {
   var Item;
   Item = function() {
     var _a;
@@ -47,7 +47,8 @@ define(['lib/models/custom_sync'], function(CustomSync, Merchant) {
     return {
       item: {
         rating: this.get('rating'),
-        name: this.get('name')
+        name: this.get('name'),
+        comment: this.get('comment')
       }
     };
   };

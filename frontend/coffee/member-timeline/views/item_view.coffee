@@ -24,6 +24,8 @@ define ['vendor/handlebars', 'lib/views/rating_view', 'text!views/member-timelin
 
       @model.bind 'change', @onChange
 
+      @model.bind 'change:selected', @changeSelection
+
       @collection = @options.collection
 
       this.render()
@@ -35,23 +37,26 @@ define ['vendor/handlebars', 'lib/views/rating_view', 'text!views/member-timelin
 
       ratingView = new RatingView
         model: @model
+        commentParent: this.$('td.name')
 
       this.$('td.name').prepend ratingView.render().el
 
       if @model.get('amount') > 0
         $(@el).addClass('reward')
 
+      $(@el).addClass('twoLine') if @model.get('merchant')?
+
       return this
 
     onChange: =>
 
-      onlySelectedChanged = _.keys(@model.changedAttributes()).join('') is 'selected' 
+      attributesToIgnore = ['rating', 'selected']
 
-      # No need to re-render the whole item if the only thing changed is the 'selected' field
-      if onlySelectedChanged
-        this.changeSelection()
-      else
-        this.render()
+      changedKeys = _.keys(@model.changedAttributes())
+
+      return if _.isEmpty(_.without(changedKeys, attributesToIgnore...))
+
+      this.render()
 
     # Change the 'selected' class for the row without re-rendering.
     changeSelection: =>
@@ -65,3 +70,4 @@ define ['vendor/handlebars', 'lib/views/rating_view', 'text!views/member-timelin
         @collection.toggleOrSelectOne @model
       else
         @model.toggleSelected()
+

@@ -1363,10 +1363,10 @@ textarea {
 
 /* line 5, ../../../frontend/sass/_timeline.sass */
 .rating {
-  width: 80px !important;
+  width: 105px !important;
 }
 /* line 7, ../../../frontend/sass/_timeline.sass */
-.rating .star, .rating .cancel {
+.rating .star, .rating .cancel, .rating .commentLink {
   display: inline-block;
   width: 12px;
   height: 12px;
@@ -1387,45 +1387,77 @@ textarea {
   display: none;
 }
 /* line 20, ../../../frontend/sass/_timeline.sass */
-.rating.rated {
-  width: 94px !important;
+.rating .commentLink {
+  background: url(/images/icons/comment.png) no-repeat right top;
+  position: relative;
+  top: -1px;
+  margin-left: 3px;
+  padding-left: 3px;
+  border-left: 1px solid #eeeeee;
+  width: 16px;
+  height: 16px;
+  opacity: 0.3;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
 }
-/* line 22, ../../../frontend/sass/_timeline.sass */
+/* line 30, ../../../frontend/sass/_timeline.sass */
+.rating .commentLink:hover {
+  opacity: 1;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  background-image: url(/images/icons/comment_add.png);
+}
+/* line 33, ../../../frontend/sass/_timeline.sass */
+.rating .commentLink.active {
+  opacity: 1;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+}
+/* line 35, ../../../frontend/sass/_timeline.sass */
+.rating.rated {
+  width: 119px !important;
+}
+/* line 37, ../../../frontend/sass/_timeline.sass */
 .rating.rated .cancel {
   display: inline-block;
   background-image: url(/images/ratings/cancel-on.png);
 }
 
-/* line 26, ../../../frontend/sass/_timeline.sass */
+/* line 41, ../../../frontend/sass/_timeline.sass */
 table#timeline {
   margin: 0;
   padding: 0;
   border: 0;
   outline: 0;
 }
-/* line 30, ../../../frontend/sass/_timeline.sass */
+/* line 45, ../../../frontend/sass/_timeline.sass */
 table#timeline thead tr td.date {
   width: 60px;
 }
-/* line 34, ../../../frontend/sass/_timeline.sass */
+/* line 50, ../../../frontend/sass/_timeline.sass */
+table#timeline tbody tr.twoLine td.name div.comment {
+  margin-top: 7px;
+}
+/* line 54, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td, table#timeline tbody tr th {
   border-top: 2px solid #cfe5f1;
   color: #4d75b1;
   font-size: 13px;
   padding: 8px 5px;
+  vertical-align: top;
 }
-/* line 39, ../../../frontend/sass/_timeline.sass */
+/* line 60, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td p, table#timeline tbody tr th p {
   margin: 0;
   padding: 0;
 }
-/* line 43, ../../../frontend/sass/_timeline.sass */
+/* line 64, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.amount {
   width: 15%;
   text-align: right;
   padding-right: 10px;
 }
-/* line 48, ../../../frontend/sass/_timeline.sass */
+/* line 69, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name .rating {
   float: right;
   margin-top: 2px;
@@ -1434,57 +1466,115 @@ table#timeline tbody tr td.name .rating {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   line-height: 1em;
 }
-/* line 53, ../../../frontend/sass/_timeline.sass */
+/* line 74, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name .rating:hover, table#timeline tbody tr td.name .rating.active {
   opacity: 1;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
 }
-/* line 55, ../../../frontend/sass/_timeline.sass */
+/* line 76, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name .offer, table#timeline tbody tr td.name .feedback, table#timeline tbody tr td.name .meta {
   margin: 0;
   font-size: 10px;
   color: #999999;
 }
-/* line 59, ../../../frontend/sass/_timeline.sass */
+/* line 80, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name .offer em, table#timeline tbody tr td.name .feedback em, table#timeline tbody tr td.name .meta em {
   font-style: normal;
   color: #009900;
 }
-/* line 62, ../../../frontend/sass/_timeline.sass */
+/* line 83, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name .feedback {
   color: #009900;
 }
-/* line 65, ../../../frontend/sass/_timeline.sass */
+/* line 86, ../../../frontend/sass/_timeline.sass */
+table#timeline tbody tr td.name div.comment {
+  position: relative;
+  margin: 10px 0 0 0;
+  background: white;
+  border: 1px solid #dddddd;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 11px;
+  margin-top: 12px;
+}
+/* line 10, ../../../frontend/sass/_ui_mixins.sass */
+table#timeline tbody tr td.name div.comment::before, table#timeline tbody tr td.name div.comment::after {
+  content: "";
+  display: block;
+  height: 0px;
+  width: 0px;
+  position: absolute;
+}
+/* line 17, ../../../frontend/sass/_ui_mixins.sass */
+table#timeline tbody tr td.name div.comment::before {
+  border: 14px solid transparent;
+  border-bottom-color: #dddddd;
+  right: 4px;
+  top: -28px;
+}
+/* line 23, ../../../frontend/sass/_ui_mixins.sass */
+table#timeline tbody tr td.name div.comment::after {
+  border: 12px solid transparent;
+  border-bottom-color: white;
+  right: 6px;
+  top: -24px;
+}
+/* line 89, ../../../frontend/sass/_timeline.sass */
+table#timeline tbody tr td.name div.comment .cancel {
+  line-height: 0;
+  float: right;
+  margin: 5px 0 0 0;
+}
+/* line 93, ../../../frontend/sass/_timeline.sass */
+table#timeline tbody tr td.name div.comment h4 {
+  margin-bottom: 0;
+}
+/* line 95, ../../../frontend/sass/_timeline.sass */
+table#timeline tbody tr td.name div.comment textarea {
+  height: 50px;
+  font-size: 12px;
+}
+/* line 99, ../../../frontend/sass/_timeline.sass */
+table#timeline tbody tr td.name div.comment .buttons button {
+  float: right;
+  margin: 0 0 0 10px;
+}
+/* line 104, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr th {
   font-weight: normal;
 }
-/* line 68, ../../../frontend/sass/_timeline.sass */
+/* line 107, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.repeat-date td, table#timeline tbody tr.repeat-date th {
   border-top: 1px solid #e3eff7;
 }
-/* line 71, ../../../frontend/sass/_timeline.sass */
+/* line 110, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.repeat-date td.date span {
   display: none;
 }
-/* line 74, ../../../frontend/sass/_timeline.sass */
+/* line 113, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr:nth-child(odd) td, table#timeline tbody tr:nth-child(odd) th {
   background: #f6fafd;
 }
-/* line 77, ../../../frontend/sass/_timeline.sass */
+/* line 116, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr:first-child td, table#timeline tbody tr:first-child th {
   border-top: none;
 }
-/* line 80, ../../../frontend/sass/_timeline.sass */
+/* line 119, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.selected td, table#timeline tbody tr.selected th {
   border-top-color: #dddddd;
   background: #f1f1f1;
 }
-/* line 84, ../../../frontend/sass/_timeline.sass */
+/* line 123, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.reward td, table#timeline tbody tr.reward th {
   color: #009900;
 }
-/* line 87, ../../../frontend/sass/_timeline.sass */
+/* line 126, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr th {
   border-top-color: #e3e3e3;
 }
@@ -1551,7 +1641,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   border-top: 3px solid #e3eff7;
 }
 
-/* line 1, ../../../frontend/sass/_merchants.sass */
+/* line 3, ../../../frontend/sass/_merchants.sass */
 #merchant-view {
   position: fixed;
   color: #444444;
@@ -1575,20 +1665,20 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   width: 318px;
   min-height: 500px;
 }
-/* line 12, ../../../frontend/sass/_merchants.sass */
+/* line 14, ../../../frontend/sass/_merchants.sass */
 #merchant-view .close {
   display: none;
   float: right;
 }
-/* line 15, ../../../frontend/sass/_merchants.sass */
+/* line 17, ../../../frontend/sass/_merchants.sass */
 #merchant-view .close .ui-button-text {
   font-size: 11px;
 }
-/* line 17, ../../../frontend/sass/_merchants.sass */
+/* line 19, ../../../frontend/sass/_merchants.sass */
 #merchant-view .name-and-location {
   height: 58px;
 }
-/* line 19, ../../../frontend/sass/_merchants.sass */
+/* line 21, ../../../frontend/sass/_merchants.sass */
 #merchant-view .name-and-location .avatar {
   float: right;
   padding: 3px;
@@ -1596,59 +1686,37 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   border: 1px solid #dddddd;
   cursor: pointer;
 }
-/* line 25, ../../../frontend/sass/_merchants.sass */
+/* line 27, ../../../frontend/sass/_merchants.sass */
 #merchant-view .name-and-location h3 {
   font-size: 16px;
   margin: 0 0 0.5em 0;
 }
-/* line 28, ../../../frontend/sass/_merchants.sass */
+/* line 30, ../../../frontend/sass/_merchants.sass */
 #merchant-view .name-and-location p.address, #merchant-view .name-and-location p.phone {
   font-size: 11px;
   margin: 0.2em 0;
 }
-/* line 31, ../../../frontend/sass/_merchants.sass */
+/* line 33, ../../../frontend/sass/_merchants.sass */
 #merchant-view form.offer {
   margin: 2em 0.5em 0;
 }
-/* line 33, ../../../frontend/sass/_merchants.sass */
+/* line 35, ../../../frontend/sass/_merchants.sass */
 #merchant-view form.offer p.additional-question {
   margin: 0.5em 0;
   font-size: 93%;
 }
-/* line 36, ../../../frontend/sass/_merchants.sass */
+/* line 38, ../../../frontend/sass/_merchants.sass */
 #merchant-view form.offer textarea {
   width: 98%;
   height: 75px;
 }
-/* line 39, ../../../frontend/sass/_merchants.sass */
+/* line 41, ../../../frontend/sass/_merchants.sass */
 #merchant-view form.offer p.reward {
   float: right;
   color: #009900;
   margin: 0.3em 0 0;
 }
-/* line 44, ../../../frontend/sass/_merchants.sass */
-#merchant-view .social::before, #merchant-view .social::after {
-  content: "";
-  display: block;
-  height: 0px;
-  width: 0px;
-  position: absolute;
-}
-/* line 51, ../../../frontend/sass/_merchants.sass */
-#merchant-view .social::before {
-  border: 14px solid transparent;
-  border-bottom-color: #dddddd;
-  right: 14px;
-  top: -28px;
-}
-/* line 57, ../../../frontend/sass/_merchants.sass */
-#merchant-view .social::after {
-  border: 12px solid transparent;
-  border-bottom-color: white;
-  right: 16px;
-  top: -24px;
-}
-/* line 63, ../../../frontend/sass/_merchants.sass */
+/* line 46, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social {
   position: relative;
   margin: 10px 0 0 0;
@@ -1663,30 +1731,52 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   padding: 10px;
   font-size: 11px;
 }
-/* line 71, ../../../frontend/sass/_merchants.sass */
+/* line 10, ../../../frontend/sass/_ui_mixins.sass */
+#merchant-view .social::before, #merchant-view .social::after {
+  content: "";
+  display: block;
+  height: 0px;
+  width: 0px;
+  position: absolute;
+}
+/* line 17, ../../../frontend/sass/_ui_mixins.sass */
+#merchant-view .social::before {
+  border: 14px solid transparent;
+  border-bottom-color: #dddddd;
+  right: 14px;
+  top: -28px;
+}
+/* line 23, ../../../frontend/sass/_ui_mixins.sass */
+#merchant-view .social::after {
+  border: 12px solid transparent;
+  border-bottom-color: white;
+  right: 16px;
+  top: -24px;
+}
+/* line 48, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social .twitter, #merchant-view .social .facebook {
   clear: both;
   padding: 0 0 10px;
 }
-/* line 3, ../../../frontend/sass/_ui_mixins.sass */
+/* line 32, ../../../frontend/sass/_ui_mixins.sass */
 #merchant-view .social .twitter .form .ui-button .ui-button-text, #merchant-view .social .facebook .form .ui-button .ui-button-text {
   font-size: 10px;
 }
-/* line 76, ../../../frontend/sass/_merchants.sass */
+/* line 53, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social .twitter .form input.text, #merchant-view .social .facebook .form input.text {
   width: 220px;
 }
-/* line 78, ../../../frontend/sass/_merchants.sass */
+/* line 55, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social .twitter .view-profile, #merchant-view .social .facebook .view-profile {
   float: right;
   margin: 5px 5px 10px 10px;
 }
-/* line 81, ../../../frontend/sass/_merchants.sass */
+/* line 58, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social .twitter .tweet_time, #merchant-view .social .twitter .post_time, #merchant-view .social .facebook .tweet_time, #merchant-view .social .facebook .post_time {
   display: block;
   color: #999999;
 }
-/* line 84, ../../../frontend/sass/_merchants.sass */
+/* line 61, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social .twitter .tweet_time a, #merchant-view .social .twitter .post_time a, #merchant-view .social .facebook .tweet_time a, #merchant-view .social .facebook .post_time a {
   color: #999999;
 }
@@ -1694,12 +1784,12 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #merchant-view .social .twitter .tweet_time a:hover, #merchant-view .social .twitter .post_time a:hover, #merchant-view .social .facebook .tweet_time a:hover, #merchant-view .social .facebook .post_time a:hover {
   color: #0066dd;
 }
-/* line 86, ../../../frontend/sass/_merchants.sass */
+/* line 63, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social .twitter {
   border-bottom: 1px solid #e3e3e3;
   margin-bottom: 10px;
 }
-/* line 90, ../../../frontend/sass/_merchants.sass */
+/* line 67, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social .twitter .latest-tweet .tweet_list {
   list-style: none;
   margin: 0;
@@ -1713,7 +1803,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   list-style-type: none;
   margin-left: 0px;
 }
-/* line 93, ../../../frontend/sass/_merchants.sass */
+/* line 70, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social p.security {
   border-top: 1px solid #e3e3e3;
   font-size: 10px;
@@ -1721,15 +1811,15 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   background: url(/images/icons/lock.png) no-repeat left 15px;
   padding: 10px 0 0 25px;
 }
-/* line 99, ../../../frontend/sass/_merchants.sass */
+/* line 76, ../../../frontend/sass/_merchants.sass */
 #merchant-view .feedback {
   padding: 15px 0 0;
 }
-/* line 101, ../../../frontend/sass/_merchants.sass */
+/* line 78, ../../../frontend/sass/_merchants.sass */
 #merchant-view .feedback p {
   margin: 0.5em 0.2em;
 }
-/* line 105, ../../../frontend/sass/_merchants.sass */
+/* line 82, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .branding {
   position: absolute;
   bottom: -17px;
@@ -1738,45 +1828,45 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   color: #333333;
   line-height: 15px;
 }
-/* line 112, ../../../frontend/sass/_merchants.sass */
+/* line 89, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .branding img {
   display: inline-block;
   position: relative;
   top: 5px;
 }
-/* line 116, ../../../frontend/sass/_merchants.sass */
+/* line 93, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search h4 {
   font-size: 13px;
   line-height: 1.4em;
   margin: 0 0 0.35em;
 }
-/* line 120, ../../../frontend/sass/_merchants.sass */
+/* line 97, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search h4 em {
   font-weight: bold;
   font-style: normal;
 }
-/* line 123, ../../../frontend/sass/_merchants.sass */
+/* line 100, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-form {
   overflow: hidden;
   *zoom: 1;
 }
-/* line 125, ../../../frontend/sass/_merchants.sass */
+/* line 102, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-form .ui-button {
   float: left;
   margin: 0 !important;
 }
-/* line 128, ../../../frontend/sass/_merchants.sass */
+/* line 105, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-form .ui-button .ui-button-text {
   padding-top: 6px;
   padding-bottom: 6px;
 }
-/* line 131, ../../../frontend/sass/_merchants.sass */
+/* line 108, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-form .search-field {
   float: left;
   width: 195px;
   margin: 0 5px 0 0;
 }
-/* line 136, ../../../frontend/sass/_merchants.sass */
+/* line 113, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-results {
   margin: 5px 0 0 0;
   border: 1px solid #dddddd;
@@ -1784,7 +1874,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   max-height: 250px;
   overflow: auto;
 }
-/* line 142, ../../../frontend/sass/_merchants.sass */
+/* line 119, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-results ul {
   list-style: none;
   margin: 0;
@@ -1798,7 +1888,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   list-style-type: none;
   margin-left: 0px;
 }
-/* line 9, ../../../frontend/sass/_ui_mixins.sass */
+/* line 38, ../../../frontend/sass/_ui_mixins.sass */
 #merchant-view .merchant-search .merchant-search-results ul li.result {
   overflow: hidden;
   *zoom: 1;
@@ -1806,23 +1896,23 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   padding: 6px 5px;
   border-bottom: 1px solid #e3eff7;
 }
-/* line 14, ../../../frontend/sass/_ui_mixins.sass */
+/* line 43, ../../../frontend/sass/_ui_mixins.sass */
 #merchant-view .merchant-search .merchant-search-results ul li.result:nth-child(odd) {
   background: #f6fafd;
 }
-/* line 16, ../../../frontend/sass/_ui_mixins.sass */
+/* line 45, ../../../frontend/sass/_ui_mixins.sass */
 #merchant-view .merchant-search .merchant-search-results ul li.result h3 {
   font-size: 13px;
   margin: 0.2em 0 0.2em;
 }
-/* line 19, ../../../frontend/sass/_ui_mixins.sass */
+/* line 48, ../../../frontend/sass/_ui_mixins.sass */
 #merchant-view .merchant-search .merchant-search-results ul li.result p.meta {
   margin: 0;
   font-size: 0.83em;
   line-height: 1.3em;
   color: #999999;
 }
-/* line 24, ../../../frontend/sass/_ui_mixins.sass */
+/* line 53, ../../../frontend/sass/_ui_mixins.sass */
 #merchant-view .merchant-search .merchant-search-results ul li.result ul.buttons {
   float: right;
   margin: 0;
@@ -1851,28 +1941,28 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #merchant-view .merchant-search .merchant-search-results ul li.result ul.buttons li:last-child, #merchant-view .merchant-search .merchant-search-results ul li.result ul.buttons li.last {
   padding-right: 0;
 }
-/* line 3, ../../../frontend/sass/_ui_mixins.sass */
+/* line 32, ../../../frontend/sass/_ui_mixins.sass */
 #merchant-view .merchant-search .merchant-search-results ul li.result ul.buttons .ui-button .ui-button-text {
   font-size: 10px;
 }
-/* line 144, ../../../frontend/sass/_merchants.sass */
+/* line 121, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-results ul p {
   font-size: 11px;
   color: #333333;
   margin: 0.2em 0;
 }
 
-/* line 150, ../../../frontend/sass/_merchants.sass */
+/* line 127, ../../../frontend/sass/_merchants.sass */
 #feedback h3, #sales-chart h3 {
   margin: 0 0 0.5em;
   font-size: 14px;
 }
 
-/* line 154, ../../../frontend/sass/_merchants.sass */
+/* line 131, ../../../frontend/sass/_merchants.sass */
 #feedback {
   padding: 10px 0 0 0;
 }
-/* line 156, ../../../frontend/sass/_merchants.sass */
+/* line 133, ../../../frontend/sass/_merchants.sass */
 #feedback #feedback-list {
   list-style: none;
   margin: 0;
@@ -1888,7 +1978,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   list-style-type: none;
   margin-left: 0px;
 }
-/* line 9, ../../../frontend/sass/_ui_mixins.sass */
+/* line 38, ../../../frontend/sass/_ui_mixins.sass */
 #feedback #feedback-list li.feedback {
   overflow: hidden;
   *zoom: 1;
@@ -1896,23 +1986,23 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   padding: 6px 5px;
   border-bottom: 1px solid #e3eff7;
 }
-/* line 14, ../../../frontend/sass/_ui_mixins.sass */
+/* line 43, ../../../frontend/sass/_ui_mixins.sass */
 #feedback #feedback-list li.feedback:nth-child(odd) {
   background: #f6fafd;
 }
-/* line 16, ../../../frontend/sass/_ui_mixins.sass */
+/* line 45, ../../../frontend/sass/_ui_mixins.sass */
 #feedback #feedback-list li.feedback h3 {
   font-size: 13px;
   margin: 0.2em 0 0.2em;
 }
-/* line 19, ../../../frontend/sass/_ui_mixins.sass */
+/* line 48, ../../../frontend/sass/_ui_mixins.sass */
 #feedback #feedback-list li.feedback p.meta {
   margin: 0;
   font-size: 0.83em;
   line-height: 1.3em;
   color: #999999;
 }
-/* line 24, ../../../frontend/sass/_ui_mixins.sass */
+/* line 53, ../../../frontend/sass/_ui_mixins.sass */
 #feedback #feedback-list li.feedback ul.buttons {
   float: right;
   margin: 0;
@@ -1941,11 +2031,11 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #feedback #feedback-list li.feedback ul.buttons li:last-child, #feedback #feedback-list li.feedback ul.buttons li.last {
   padding-right: 0;
 }
-/* line 3, ../../../frontend/sass/_ui_mixins.sass */
+/* line 32, ../../../frontend/sass/_ui_mixins.sass */
 #feedback #feedback-list li.feedback ul.buttons .ui-button .ui-button-text {
   font-size: 10px;
 }
-/* line 161, ../../../frontend/sass/_merchants.sass */
+/* line 138, ../../../frontend/sass/_merchants.sass */
 #feedback #feedback-list li p.comment {
   margin: 0 0 0.2em;
 }
@@ -2011,7 +2101,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   list-style-type: none;
   margin-left: 0px;
 }
-/* line 9, ../../../frontend/sass/_ui_mixins.sass */
+/* line 38, ../../../frontend/sass/_ui_mixins.sass */
 #snapshot-dialog .snapshots ul li.snapshot {
   overflow: hidden;
   *zoom: 1;
@@ -2019,23 +2109,23 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   padding: 6px 5px;
   border-bottom: 1px solid #e3eff7;
 }
-/* line 14, ../../../frontend/sass/_ui_mixins.sass */
+/* line 43, ../../../frontend/sass/_ui_mixins.sass */
 #snapshot-dialog .snapshots ul li.snapshot:nth-child(odd) {
   background: #f6fafd;
 }
-/* line 16, ../../../frontend/sass/_ui_mixins.sass */
+/* line 45, ../../../frontend/sass/_ui_mixins.sass */
 #snapshot-dialog .snapshots ul li.snapshot h3 {
   font-size: 13px;
   margin: 0.2em 0 0.2em;
 }
-/* line 19, ../../../frontend/sass/_ui_mixins.sass */
+/* line 48, ../../../frontend/sass/_ui_mixins.sass */
 #snapshot-dialog .snapshots ul li.snapshot p.meta {
   margin: 0;
   font-size: 0.83em;
   line-height: 1.3em;
   color: #999999;
 }
-/* line 24, ../../../frontend/sass/_ui_mixins.sass */
+/* line 53, ../../../frontend/sass/_ui_mixins.sass */
 #snapshot-dialog .snapshots ul li.snapshot ul.buttons {
   float: right;
   margin: 0;
@@ -2064,7 +2154,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #snapshot-dialog .snapshots ul li.snapshot ul.buttons li:last-child, #snapshot-dialog .snapshots ul li.snapshot ul.buttons li.last {
   padding-right: 0;
 }
-/* line 3, ../../../frontend/sass/_ui_mixins.sass */
+/* line 32, ../../../frontend/sass/_ui_mixins.sass */
 #snapshot-dialog .snapshots ul li.snapshot ul.buttons .ui-button .ui-button-text {
   font-size: 10px;
 }

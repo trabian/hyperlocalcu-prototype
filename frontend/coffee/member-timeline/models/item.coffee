@@ -28,6 +28,7 @@ define ['lib/models/custom_sync'], (CustomSync) ->
       item:
         rating: this.get('rating')
         name: this.get('name')
+        comment: this.get('comment')
 
     # Toggle whether this item is selected in the timeline view.
     toggleSelected: ->
