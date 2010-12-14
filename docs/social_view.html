@@ -52,6 +52,10 @@
         <span class="nv">username: </span><span class="nx">username</span>
         <span class="nv">count: </span><span class="mi">1</span>
         <span class="nv">broadcast_only: </span><span class="kc">true</span>
+
+        <span class="nv">time_parser: </span><span class="p">(</span><span class="nx">time</span><span class="p">)</span> <span class="o">=&gt;</span>
+          <span class="nx">$</span><span class="p">.</span><span class="nx">timeago</span><span class="p">(</span><span class="nx">time</span><span class="p">)</span>
+
         <span class="nv">onLoad: </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span>
           <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.twitter .form&#39;</span><span class="p">).</span><span class="nx">remove</span><span class="p">()</span>
           <span class="nx">unless</span> <span class="err">@</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;avatar&#39;</span><span class="p">)</span><span class="o">?</span>

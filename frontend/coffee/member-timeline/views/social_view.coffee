@@ -52,6 +52,10 @@ define ["vendor/jquery-tweet", "vendor/jquery-timeago", "text!views/member-timel
         username: username
         count: 1
         broadcast_only: true
+
+        time_parser: (time) =>
+          $.timeago(time)
+
         onLoad: (data) =>
           this.$('.twitter .form').remove()
           unless @model.get('avatar')?

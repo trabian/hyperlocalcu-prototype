@@ -65,6 +65,9 @@ define(["vendor/jquery-tweet", "vendor/jquery-timeago", "text!views/member-timel
       username: username,
       count: 1,
       broadcast_only: true,
+      time_parser: __bind(function(time) {
+        return $.timeago(time);
+      }, this),
       onLoad: __bind(function(data) {
         var _a;
         this.$('.twitter .form').remove();

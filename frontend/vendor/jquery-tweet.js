@@ -17,7 +17,10 @@
       loading_text: null,                     // [string]   optional loading text, displayed while tweets load
       query: null,                            // [string]   optional search query
       refresh_interval: null,                 // [integer]  optional number of seconds after which to reload tweets
-      broadcast_only: false                   // [boolean]  optional - filters tweets sent to specific users
+      broadcast_only: false,                  // [boolean]  optional - filters tweets sent to specific users
+
+      time_parser: relative_time
+
     };
     
     if(o) $.extend(s, o);
@@ -181,7 +184,7 @@
             var join = ((s.join_text) ? join_template : ' ');
             var avatar_template = '<a class="tweet_avatar" href="http://twitter.com/'+from_user+'"><img src="'+profile_image_url+'" height="'+s.avatar_size+'" width="'+s.avatar_size+'" alt="'+from_user+'\'s avatar" title="'+from_user+'\'s avatar" border="0"/></a>';
             var avatar = (s.avatar_size ? avatar_template : '');
-            var date = '<span class="tweet_time"><a href="http://twitter.com/'+from_user+'/statuses/'+item.id_str+'" title="view tweet on twitter">'+relative_time(item.created_at)+'</a> on Twitter</span>';
+            var date = '<span class="tweet_time"><a href="http://twitter.com/'+from_user+'/statuses/'+item.id_str+'" title="view tweet on twitter">'+s.time_parser(item.created_at)+'</a> on Twitter</span>';
             var text = '<span class="tweet_text">' +$([item.text]).linkUrl().linkUser().linkHash().makeHeart().capAwesome().capEpic()[0]+ '</span>';
    
             // until we create a template option, arrange the items below to alter a tweet's display.
