@@ -47,6 +47,7 @@ define ["text!views/member-timeline/comment.handlebars?v=2"], (template) ->
     resetAndHide: =>
       this.$('textarea').val(@model.get('comment'))
       this.hide()
+      return false
 
     submitComment: =>
       unless this.$('button').button('option', 'disabled')

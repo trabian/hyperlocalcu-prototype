@@ -98,7 +98,9 @@ define ['member-timeline/views/comment_view'], (CommentView) ->
         $(@el).removeClass 'active'
 
     toggleCommentForm: =>
+
       if @commentView? && @commentView.isActive() then @commentView?.hide() else this.showCommentForm()
+      return false
 
     showCommentForm: =>
 

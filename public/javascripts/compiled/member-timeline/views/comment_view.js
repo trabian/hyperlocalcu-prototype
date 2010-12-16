@@ -56,7 +56,8 @@ define(["text!views/member-timeline/comment.handlebars?v=2"], function(template)
   };
   CommentView.prototype.resetAndHide = function() {
     this.$('textarea').val(this.model.get('comment'));
-    return this.hide();
+    this.hide();
+    return false;
   };
   CommentView.prototype.submitComment = function() {
     return !(this.$('button').button('option', 'disabled')) ? this.model.save({

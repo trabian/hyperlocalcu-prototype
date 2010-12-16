@@ -106,7 +106,12 @@ define(['member-timeline/views/comment_view'], function(CommentView) {
   };
   RatingView.prototype.toggleCommentForm = function() {
     var _a;
-    return (typeof (_a = this.commentView) !== "undefined" && _a !== null) && this.commentView.isActive() ? this.commentView == null ? undefined : this.commentView.hide() : this.showCommentForm();
+    if ((typeof (_a = this.commentView) !== "undefined" && _a !== null) && this.commentView.isActive()) {
+      this.commentView == null ? undefined : this.commentView.hide();
+    } else {
+      this.showCommentForm();
+    }
+    return false;
   };
   RatingView.prototype.showCommentForm = function() {
     var _a;
