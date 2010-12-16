@@ -41,6 +41,8 @@ define ["text!views/member-timeline/comment.handlebars?v=2"], (template) ->
       $(@el).hide()
       this.trigger('hide')
 
+    isActive: =>
+      $(@el).is(":visible")
 
     resetAndHide: =>
       this.$('textarea').val(@model.get('comment'))

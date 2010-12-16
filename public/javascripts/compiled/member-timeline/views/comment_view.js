@@ -13,6 +13,7 @@ define(["text!views/member-timeline/comment.handlebars?v=2"], function(template)
     _a = this;
     this.submitComment = function(){ return CommentView.prototype.submitComment.apply(_a, arguments); };
     this.resetAndHide = function(){ return CommentView.prototype.resetAndHide.apply(_a, arguments); };
+    this.isActive = function(){ return CommentView.prototype.isActive.apply(_a, arguments); };
     this.hide = function(){ return CommentView.prototype.hide.apply(_a, arguments); };
     this.show = function(){ return CommentView.prototype.show.apply(_a, arguments); };
     this.updateButton = function(){ return CommentView.prototype.updateButton.apply(_a, arguments); };
@@ -49,6 +50,9 @@ define(["text!views/member-timeline/comment.handlebars?v=2"], function(template)
   CommentView.prototype.hide = function() {
     $(this.el).hide();
     return this.trigger('hide');
+  };
+  CommentView.prototype.isActive = function() {
+    return $(this.el).is(":visible");
   };
   CommentView.prototype.resetAndHide = function() {
     this.$('textarea').val(this.model.get('comment'));

@@ -8,7 +8,7 @@ define ['member-timeline/views/comment_view'], (CommentView) ->
 
     events:
       'click .cancel': 'resetRating'
-      'click .commentLink': 'showCommentForm'
+      'click .commentLink': 'toggleCommentForm'
 
     render: ->
 
@@ -96,6 +96,9 @@ define ['member-timeline/views/comment_view'], (CommentView) ->
       else
         this.$('.star').removeClass 'on'
         $(@el).removeClass 'active'
+
+    toggleCommentForm: =>
+      if @commentView? && @commentView.isActive() then @commentView?.hide() else this.showCommentForm()
 
     showCommentForm: =>
 

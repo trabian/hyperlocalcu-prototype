@@ -14,6 +14,7 @@ define(['member-timeline/views/comment_view'], function(CommentView) {
     var _a;
     _a = this;
     this.showCommentForm = function(){ return RatingView.prototype.showCommentForm.apply(_a, arguments); };
+    this.toggleCommentForm = function(){ return RatingView.prototype.toggleCommentForm.apply(_a, arguments); };
     this.fillStar = function(){ return RatingView.prototype.fillStar.apply(_a, arguments); };
     this.addStar = function(){ return RatingView.prototype.addStar.apply(_a, arguments); };
     this.resetRating = function(){ return RatingView.prototype.resetRating.apply(_a, arguments); };
@@ -25,7 +26,7 @@ define(['member-timeline/views/comment_view'], function(CommentView) {
   RatingView.prototype.className = 'rating';
   RatingView.prototype.events = {
     'click .cancel': 'resetRating',
-    'click .commentLink': 'showCommentForm'
+    'click .commentLink': 'toggleCommentForm'
   };
   RatingView.prototype.render = function() {
     var _a, commentLink, num;
@@ -102,6 +103,10 @@ define(['member-timeline/views/comment_view'], function(CommentView) {
       this.$('.star').removeClass('on');
       return $(this.el).removeClass('active');
     }
+  };
+  RatingView.prototype.toggleCommentForm = function() {
+    var _a;
+    return (typeof (_a = this.commentView) !== "undefined" && _a !== null) && this.commentView.isActive() ? this.commentView == null ? undefined : this.commentView.hide() : this.showCommentForm();
   };
   RatingView.prototype.showCommentForm = function() {
     var _a;

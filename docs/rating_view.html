@@ -8,7 +8,7 @@
 
     <span class="nv">events:</span>
       <span class="s1">&#39;click .cancel&#39;</span><span class="o">:</span> <span class="s1">&#39;resetRating&#39;</span>
-      <span class="s1">&#39;click .commentLink&#39;</span><span class="o">:</span> <span class="s1">&#39;showCommentForm&#39;</span>
+      <span class="s1">&#39;click .commentLink&#39;</span><span class="o">:</span> <span class="s1">&#39;toggleCommentForm&#39;</span>
 
     <span class="nv">render: </span><span class="o">-&gt;</span>
 
@@ -96,6 +96,9 @@
       <span class="k">else</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.star&#39;</span><span class="p">).</span><span class="nx">removeClass</span> <span class="s1">&#39;on&#39;</span>
         <span class="nx">$</span><span class="p">(</span><span class="err">@</span><span class="nx">el</span><span class="p">).</span><span class="nx">removeClass</span> <span class="s1">&#39;active&#39;</span>
+
+    <span class="nv">toggleCommentForm: </span><span class="o">=&gt;</span>
+      <span class="k">if</span> <span class="err">@</span><span class="nx">commentView</span><span class="o">?</span> <span class="o">&amp;&amp;</span> <span class="err">@</span><span class="nx">commentView</span><span class="p">.</span><span class="nx">isActive</span><span class="p">()</span> <span class="k">then</span> <span class="err">@</span><span class="nx">commentView</span><span class="o">?</span><span class="p">.</span><span class="nx">hide</span><span class="p">()</span> <span class="k">else</span> <span class="k">this</span><span class="p">.</span><span class="nx">showCommentForm</span><span class="p">()</span>
 
     <span class="nv">showCommentForm: </span><span class="o">=&gt;</span>
 
