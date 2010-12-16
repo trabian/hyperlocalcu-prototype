@@ -81,6 +81,8 @@ define ['member-timeline/views/comment_view'], (CommentView) ->
 
         this.fillStar(@currentStar)
 
+        this.showCommentForm()
+
         $(@el).addClass 'rated'
 
         false

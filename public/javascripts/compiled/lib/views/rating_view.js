@@ -89,6 +89,7 @@ define(['member-timeline/views/comment_view'], function(CommentView) {
       });
       this.currentStar = star;
       this.fillStar(this.currentStar);
+      this.showCommentForm();
       $(this.el).addClass('rated');
       return false;
     }, this));
