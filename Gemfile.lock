@@ -68,9 +68,9 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
+    mysql (2.8.1)
     open_gem (1.4.2)
       launchy (~> 0.3.5)
-    pg (0.10.0)
     polyglot (0.3.1)
     qif (0.5)
     rack (1.2.1)
@@ -126,7 +126,7 @@ DEPENDENCIES
   haml
   has_scope
   inherited_resources (= 1.1.2)
-  pg
+  mysql
   qif
   rails (= 3.0.3)
   rb-fsevent

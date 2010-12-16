@@ -8,12 +8,13 @@ var __bind = function(func, context) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(["vendor/jquery-tweet", "vendor/jquery-timeago", "text!views/member-timeline/social.handlebars?v=4", "text!views/social/facebook/post.handlebars?v=1", "vendor/date", "member-timeline/views/social_username_form_view"], function(jquery_tweet, jquery_timeago, template, facebookPostTemplate, date, SocialUsernameFormView) {
+define(["vendor/jquery-tweet", "vendor/jquery-timeago", "text!views/member-timeline/social.handlebars?v=7", "text!views/social/facebook/post.handlebars?v=1", "vendor/date", "member-timeline/views/social_username_form_view"], function(jquery_tweet, jquery_timeago, template, facebookPostTemplate, date, SocialUsernameFormView) {
   var SocialView;
   SocialView = function() {
     var _a;
     _a = this;
     this.showSecurityMessage = function(){ return SocialView.prototype.showSecurityMessage.apply(_a, arguments); };
+    this.vote = function(){ return SocialView.prototype.vote.apply(_a, arguments); };
     this.renderFacebook = function(){ return SocialView.prototype.renderFacebook.apply(_a, arguments); };
     this.renderTwitter = function(){ return SocialView.prototype.renderTwitter.apply(_a, arguments); };
     this.render = function(){ return SocialView.prototype.render.apply(_a, arguments); };
@@ -24,7 +25,8 @@ define(["vendor/jquery-tweet", "vendor/jquery-timeago", "text!views/member-timel
   SocialView.prototype.tagName = 'div';
   SocialView.prototype.className = 'social';
   SocialView.prototype.events = {
-    'click .security a': 'showSecurityMessage'
+    'click .security a': 'showSecurityMessage',
+    'click a.vote': 'vote'
   };
   SocialView.prototype.initialize = function() {
     this.model.bind('change:twitter_username', this.renderTwitter);
@@ -87,6 +89,10 @@ define(["vendor/jquery-tweet", "vendor/jquery-timeago", "text!views/member-timel
       post.username = username;
       return this.$('.facebook .latest-post').html(this.facebookPostTemplate(post));
     }, this));
+  };
+  SocialView.prototype.vote = function() {
+    alert('Voting for a tweet or post will allow good deals to bubble to the top for other members');
+    return false;
   };
   SocialView.prototype.showSecurityMessage = function() {
     return alert("Eventually link to details about how we maintain privacy");

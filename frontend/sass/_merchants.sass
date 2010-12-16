@@ -48,13 +48,25 @@
     .twitter, .facebook
       clear: both
       padding: 0 0 10px
+      min-height: 50px
       .form
         +small-button
         input.text
           width: 220px
-      .view-profile
+      .icon-and-vote
         float: right
+        width: 32px
         margin: 5px 5px 10px 10px
+        .view-profile
+        .vote
+          display: block
+          background: url(/images/vote.png) no-repeat 50% 50%
+          height: 22px
+          width: 22px
+          text-indent: -5000px
+          +opacity(0.2)
+          &:hover
+            +opacity(0.6)
       .tweet_time, .post_time
         display: block
         color: $subtle_color

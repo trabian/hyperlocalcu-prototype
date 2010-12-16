@@ -1,4 +1,4 @@
-define ["vendor/jquery-tweet", "vendor/jquery-timeago", "text!views/member-timeline/social.handlebars?v=4", "text!views/social/facebook/post.handlebars?v=1", "vendor/date", "member-timeline/views/social_username_form_view"], (jquery_tweet, jquery_timeago, template, facebookPostTemplate, date, SocialUsernameFormView) ->
+define ["vendor/jquery-tweet", "vendor/jquery-timeago", "text!views/member-timeline/social.handlebars?v=7", "text!views/social/facebook/post.handlebars?v=1", "vendor/date", "member-timeline/views/social_username_form_view"], (jquery_tweet, jquery_timeago, template, facebookPostTemplate, date, SocialUsernameFormView) ->
 
   class SocialView extends Backbone.View
 
@@ -8,6 +8,7 @@ define ["vendor/jquery-tweet", "vendor/jquery-timeago", "text!views/member-timel
 
     events:
       'click .security a': 'showSecurityMessage'
+      'click a.vote': 'vote'
 
     initialize: =>
 
@@ -74,6 +75,10 @@ define ["vendor/jquery-tweet", "vendor/jquery-timeago", "text!views/member-timel
         post.username = username
 
         this.$('.facebook .latest-post').html @facebookPostTemplate(post)
+
+    vote: =>
+      alert('Voting for a tweet or post will allow good deals to bubble to the top for other members')
+      return false
 
     showSecurityMessage: =>
       alert "Eventually link to details about how we maintain privacy"
