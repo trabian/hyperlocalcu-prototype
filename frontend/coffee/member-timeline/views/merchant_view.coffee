@@ -33,8 +33,12 @@ define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=17"
       $(@el).html @template(@model.toMerchantJSON())
 
       if @model.get('merchant')?
-        @merchant = new Merchant(@model.get('merchant'))
-        @merchant.bind 'change:avatar', @updateAvatar
+
+        unless @model.merchant?
+          @model.merchant = new Merchant(@model.get('merchant'))
+          @model.merchant.bind 'change:avatar', @updateAvatar
+
+        @merchant = @model.merchant
 
       if @merchant?
         @socialView = new SocialView
