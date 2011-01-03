@@ -43,13 +43,16 @@ define(["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=17"
     return this.$('img.avatar').attr('src', this.merchant.get('avatar'));
   };
   MerchantView.prototype.render = function() {
-    var _a, _b, _c, merchantSearchView;
+    var _a, _b, _c, _d, merchantSearchView;
     $(this.el).html(this.template(this.model.toMerchantJSON()));
-    if (typeof (_a = this.model.get('merchant')) !== "undefined" && _a !== null) {
-      this.merchant = new Merchant(this.model.get('merchant'));
-      this.merchant.bind('change:avatar', this.updateAvatar);
+    if (typeof (_b = this.model.get('merchant')) !== "undefined" && _b !== null) {
+      if (!(typeof (_a = this.model.merchant) !== "undefined" && _a !== null)) {
+        this.model.merchant = new Merchant(this.model.get('merchant'));
+        this.model.merchant.bind('change:avatar', this.updateAvatar);
+      }
+      this.merchant = this.model.merchant;
     }
-    if (typeof (_b = this.merchant) !== "undefined" && _b !== null) {
+    if (typeof (_c = this.merchant) !== "undefined" && _c !== null) {
       this.socialView = new SocialView({
         model: this.merchant
       });
@@ -62,7 +65,7 @@ define(["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=17"
     });
     this.trigger('show');
     $(this.el).show();
-    if (!(typeof (_c = this.model.get('merchant')) !== "undefined" && _c !== null)) {
+    if (!(typeof (_d = this.model.get('merchant')) !== "undefined" && _d !== null)) {
       merchantSearchView = new MerchantSearchView({
         model: this.model
       });

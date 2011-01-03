@@ -1804,12 +1804,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #merchant-view .social .twitter .tweet_time a:hover, #merchant-view .social .twitter .post_time a:hover, #merchant-view .social .facebook .tweet_time a:hover, #merchant-view .social .facebook .post_time a:hover {
   color: #0066dd;
 }
-/* line 75, ../../../frontend/sass/_merchants.sass */
-#merchant-view .social .twitter {
-  border-bottom: 1px solid #e3e3e3;
-  margin-bottom: 10px;
-}
-/* line 79, ../../../frontend/sass/_merchants.sass */
+/* line 77, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social .twitter .latest-tweet .tweet_list {
   list-style: none;
   margin: 0;
@@ -1823,7 +1818,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   list-style-type: none;
   margin-left: 0px;
 }
-/* line 82, ../../../frontend/sass/_merchants.sass */
+/* line 80, ../../../frontend/sass/_merchants.sass */
 #merchant-view .social p.security {
   border-top: 1px solid #e3e3e3;
   font-size: 10px;
@@ -1831,15 +1826,15 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   background: url(/images/icons/lock.png) no-repeat left 15px;
   padding: 10px 0 0 25px;
 }
-/* line 88, ../../../frontend/sass/_merchants.sass */
+/* line 86, ../../../frontend/sass/_merchants.sass */
 #merchant-view .feedback {
   padding: 15px 0 0;
 }
-/* line 90, ../../../frontend/sass/_merchants.sass */
+/* line 88, ../../../frontend/sass/_merchants.sass */
 #merchant-view .feedback p {
   margin: 0.5em 0.2em;
 }
-/* line 94, ../../../frontend/sass/_merchants.sass */
+/* line 92, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .branding {
   position: absolute;
   bottom: -17px;
@@ -1848,45 +1843,45 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   color: #333333;
   line-height: 15px;
 }
-/* line 101, ../../../frontend/sass/_merchants.sass */
+/* line 99, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .branding img {
   display: inline-block;
   position: relative;
   top: 5px;
 }
-/* line 105, ../../../frontend/sass/_merchants.sass */
+/* line 103, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search h4 {
   font-size: 13px;
   line-height: 1.4em;
   margin: 0 0 0.35em;
 }
-/* line 109, ../../../frontend/sass/_merchants.sass */
+/* line 107, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search h4 em {
   font-weight: bold;
   font-style: normal;
 }
-/* line 112, ../../../frontend/sass/_merchants.sass */
+/* line 110, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-form {
   overflow: hidden;
   *zoom: 1;
 }
-/* line 114, ../../../frontend/sass/_merchants.sass */
+/* line 112, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-form .ui-button {
   float: left;
   margin: 0 !important;
 }
-/* line 117, ../../../frontend/sass/_merchants.sass */
+/* line 115, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-form .ui-button .ui-button-text {
   padding-top: 6px;
   padding-bottom: 6px;
 }
-/* line 120, ../../../frontend/sass/_merchants.sass */
+/* line 118, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-form .search-field {
   float: left;
   width: 195px;
   margin: 0 5px 0 0;
 }
-/* line 125, ../../../frontend/sass/_merchants.sass */
+/* line 123, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-results {
   margin: 5px 0 0 0;
   border: 1px solid #dddddd;
@@ -1894,7 +1889,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   max-height: 250px;
   overflow: auto;
 }
-/* line 131, ../../../frontend/sass/_merchants.sass */
+/* line 129, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-results ul {
   list-style: none;
   margin: 0;
@@ -1965,24 +1960,24 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #merchant-view .merchant-search .merchant-search-results ul li.result ul.buttons .ui-button .ui-button-text {
   font-size: 10px;
 }
-/* line 133, ../../../frontend/sass/_merchants.sass */
+/* line 131, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-results ul p {
   font-size: 11px;
   color: #333333;
   margin: 0.2em 0;
 }
 
-/* line 139, ../../../frontend/sass/_merchants.sass */
+/* line 137, ../../../frontend/sass/_merchants.sass */
 #feedback h3, #sales-chart h3 {
   margin: 0 0 0.5em;
   font-size: 14px;
 }
 
-/* line 143, ../../../frontend/sass/_merchants.sass */
+/* line 141, ../../../frontend/sass/_merchants.sass */
 #feedback {
   padding: 10px 0 0 0;
 }
-/* line 145, ../../../frontend/sass/_merchants.sass */
+/* line 143, ../../../frontend/sass/_merchants.sass */
 #feedback #feedback-list {
   list-style: none;
   margin: 0;
@@ -2055,7 +2050,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #feedback #feedback-list li.feedback ul.buttons .ui-button .ui-button-text {
   font-size: 10px;
 }
-/* line 150, ../../../frontend/sass/_merchants.sass */
+/* line 148, ../../../frontend/sass/_merchants.sass */
 #feedback #feedback-list li p.comment {
   margin: 0 0 0.2em;
 }

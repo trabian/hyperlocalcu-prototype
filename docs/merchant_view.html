@@ -21,8 +21,12 @@ such as the current offer.</p>             </td>             <td class="code">  
       <span class="nx">$</span><span class="p">(</span><span class="err">@</span><span class="nx">el</span><span class="p">).</span><span class="nx">html</span> <span class="err">@</span><span class="nx">template</span><span class="p">(</span><span class="err">@</span><span class="nx">model</span><span class="p">.</span><span class="nx">toMerchantJSON</span><span class="p">())</span>
 
       <span class="k">if</span> <span class="err">@</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;merchant&#39;</span><span class="p">)</span><span class="o">?</span>
-        <span class="err">@</span><span class="nx">merchant</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Merchant</span><span class="p">(</span><span class="err">@</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;merchant&#39;</span><span class="p">))</span>
-        <span class="err">@</span><span class="nx">merchant</span><span class="p">.</span><span class="nx">bind</span> <span class="s1">&#39;change:avatar&#39;</span><span class="p">,</span> <span class="err">@</span><span class="nx">updateAvatar</span>
+
+        <span class="nx">unless</span> <span class="err">@</span><span class="nx">model</span><span class="p">.</span><span class="nx">merchant</span><span class="o">?</span>
+          <span class="err">@</span><span class="nx">model</span><span class="p">.</span><span class="nx">merchant</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Merchant</span><span class="p">(</span><span class="err">@</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;merchant&#39;</span><span class="p">))</span>
+          <span class="err">@</span><span class="nx">model</span><span class="p">.</span><span class="nx">merchant</span><span class="p">.</span><span class="nx">bind</span> <span class="s1">&#39;change:avatar&#39;</span><span class="p">,</span> <span class="err">@</span><span class="nx">updateAvatar</span>
+
+        <span class="err">@</span><span class="nx">merchant</span> <span class="o">=</span> <span class="err">@</span><span class="nx">model</span><span class="p">.</span><span class="nx">merchant</span>
 
       <span class="k">if</span> <span class="err">@</span><span class="nx">merchant</span><span class="o">?</span>
         <span class="err">@</span><span class="nx">socialView</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SocialView</span>

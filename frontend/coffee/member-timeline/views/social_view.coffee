@@ -1,4 +1,4 @@
-define ["vendor/jquery-tweet", "vendor/jquery-timeago", "text!views/member-timeline/social.handlebars?v=7", "text!views/social/facebook/post.handlebars?v=1", "vendor/date", "member-timeline/views/social_username_form_view"], (jquery_tweet, jquery_timeago, template, facebookPostTemplate, date, SocialUsernameFormView) ->
+define ["vendor/jquery-tweet", "vendor/jquery-timeago", "text!views/member-timeline/social.handlebars?v=8", "vendor/date", "member-timeline/views/social_username_form_view"], (jquery_tweet, jquery_timeago, template, date, SocialUsernameFormView) ->
 
   class SocialView extends Backbone.View
 
@@ -13,13 +13,12 @@ define ["vendor/jquery-tweet", "vendor/jquery-timeago", "text!views/member-timel
     initialize: =>
 
       @model.bind 'change:twitter_username', @renderTwitter
-      @model.bind 'change:facebook_username', @renderFacebook
     
     template: Handlebars.compile(template)
 
-    facebookPostTemplate: Handlebars.compile(facebookPostTemplate)
-
     render: =>
+
+      console.log('render model', @model)
 
       $(@el).html @template(@model.toJSON())
 
@@ -28,16 +27,8 @@ define ["vendor/jquery-tweet", "vendor/jquery-timeago", "text!views/member-timel
         fieldname: 'twitter_username'
         el: this.$('.twitter')
 
-      facebookForm = new SocialUsernameFormView
-        model: @model
-        fieldname: 'facebook_username'
-        el: this.$('.facebook')
-
       if @model.get('twitter_username')
         this.renderTwitter()
-
-      if @model.get('facebook_username')
-        this.renderFacebook()
 
       this.$('button').button
         icons:
@@ -61,20 +52,6 @@ define ["vendor/jquery-tweet", "vendor/jquery-timeago", "text!views/member-timel
           this.$('.twitter .form').remove()
           unless @model.get('avatar')?
             @model.save 'avatar': data[0]?.user?.profile_image_url 
-
-    renderFacebook: =>
-
-      username = @model.get('facebook_username')
-
-      $.getJSON "https://graph.facebook.com/#{username}/posts?limit=1&callback=?", (response) =>
-
-        post = response.data[0]
-       
-        post.date = $.timeago(post.created_time)
-
-        post.username = username
-
-        this.$('.facebook .latest-post').html @facebookPostTemplate(post)
 
     vote: =>
       alert('Voting for a tweet or post will allow good deals to bubble to the top for other members')
