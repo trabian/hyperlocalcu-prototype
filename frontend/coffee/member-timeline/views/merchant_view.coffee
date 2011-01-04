@@ -1,4 +1,4 @@
-define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=17", "member-timeline/views/offer_view", "member-timeline/views/social_view", "member-timeline/views/merchant_search_view", "merchants/models/merchant"], (jqueryUI, sidebarTemplate, OfferView, SocialView, MerchantSearchView, Merchant) ->
+define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=18", "member-timeline/views/offer_view", "member-timeline/views/social_view", "member-timeline/views/merchant_search_view", "merchants/models/merchant"], (jqueryUI, sidebarTemplate, OfferView, SocialView, MerchantSearchView, Merchant) ->
 
   # The MerchantView is used to show merchant-specific information
   # such as the current offer.
@@ -58,11 +58,6 @@ define ["vendor/jquery-ui", "text!views/merchants/sidebar.handlebars?version=17"
 
       #else
         #this.renderMerchantForm()
-
-      # Turn 'close' button into jQuery UI button
-      this.$('.close').button
-        icons:
-          primary: 'ui-icon-close'
 
       # Advertise the fact that the merchant view is about to be shown.
       this.trigger('show')
