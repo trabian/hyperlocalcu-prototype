@@ -1,0 +1,10 @@
+<td class="date">
+  <span>{{ formatted_timestamp }}<span>
+</td>
+<td class="name">
+  <p class="name">{{ description }}</p>
+  {{#meta}}
+    <p class="meta">{{ . }}</p>
+  {{/meta}}
+</td>
+<td class="amount">{{{ formatted_amount }}}</td>

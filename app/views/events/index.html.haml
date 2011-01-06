@@ -1,0 +1,28 @@
+#timeline-loading Loading...
+
+%table#timeline{:style => 'display: none;'}
+  %thead.ui-widget-header
+    %tr
+      %td.date Date
+      %td.name Description
+      %td.amount Amount
+  %tbody.ui-widget-content
+
+= content_for :sidebar do
+  #overview
+  #merchant-view{:style => "display: none;"}
+
+= content_for :javascript do
+
+  %script{:src => google_js_src, :type => 'text/javascript'}
+
+  :javascript
+    require({ baseUrl: "/javascripts/compiled" }, ["order!vendor/underscore", "order!vendor/backbone", "order!app/controllers/member_timeline_controller"], function(underscore, backbone, MemberTimelineController) {
+
+      Backbone.emulateHTTP = true;
+
+      var controller = new MemberTimelineController({
+        fetchOnInit: true
+      });
+
+    });

@@ -1,8 +1,8 @@
 # More info at http://github.com/guard/guard#readme
 
 # Compile client coffeescripts to public/javascripts/compiled.
-guard 'coffeescript', :output => 'public/javascripts/compiled', :strip_leading_path => 'frontend/coffee', :nowrap => true do
-  watch('^frontend/coffee/(.*)\.coffee')
+guard 'coffeescript', :output => 'public/javascripts/compiled/app', :strip_leading_path => 'frontend/app', :nowrap => true do
+  watch('^frontend/app/(.*)\.coffee')
 end
 
 # Compile spec coffeescripts to client/spec/compiled.
@@ -36,8 +36,8 @@ guard 'shell' do
   # Regenerate the documentation when the coffeescript files are updated. We're
   # globbing the files via Ruby instead of the shell for the sake of
   # consistency.
-  watch('^frontend/coffee/(.*)\.coffee') do
-    `docco #{Dir.glob('frontend/coffee/**/*.coffee').join(' ')}`
+  watch('^frontend/app/(.*)\.coffee') do
+    `docco #{Dir.glob('frontend/app/**/*.coffee').join(' ')}`
   end
 
 end

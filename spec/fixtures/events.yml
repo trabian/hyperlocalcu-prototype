@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  id: 1
+  amount: 1.5
+  type: MyString
+  atm_id: 1
+  posted_at: 2011-01-05 23:53:32
+  account_id: 1
+
+two:
+  id: 1
+  amount: 1.5
+  type: MyString
+  atm_id: 1
+  posted_at: 2011-01-05 23:53:32
+  account_id: 1

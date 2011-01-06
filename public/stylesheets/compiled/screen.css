@@ -1572,7 +1572,7 @@ table#timeline tbody tr.selected td, table#timeline tbody tr.selected th {
   background: #f1f1f1;
 }
 /* line 124, ../../../frontend/sass/_timeline.sass */
-table#timeline tbody tr.reward td, table#timeline tbody tr.reward th {
+table#timeline tbody tr.reward td, table#timeline tbody tr.reward th, table#timeline tbody tr.deposit td, table#timeline tbody tr.deposit th {
   color: #009900;
 }
 /* line 127, ../../../frontend/sass/_timeline.sass */

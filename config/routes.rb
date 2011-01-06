@@ -1,13 +1,19 @@
 Hyperlocalcu::Application.routes.draw do
 
+  devise_for :users
+
   resources :merchants
 
   resources :accounts do
+
+    resources :events
+
     resources :items do
       member do
         post 'add_merchant'
       end
     end
+
   end
 
   root :to => "items#index", :account_id => 1
