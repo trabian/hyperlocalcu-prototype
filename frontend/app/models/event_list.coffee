@@ -1,16 +1,13 @@
 # The collection of [events](event.html) is backed by a JSON store.
-define ['app/models/event', 'app/models/atm_event'], (Event, AtmEvent) ->
+define ['app/models/event_factory'], (factory) ->
 
   class EventList extends Backbone.Collection
 
     # This will likely change in the future
     url: '/accounts/1/events'
 
-    event_types:
-      atm: AtmEvent
-
     _add: (model) ->
-      super new @event_types[model.event_type](model)
+      super factory.getEvent(model)
 
     # Remove all events from the event list. This does not destroy the events on
     # the backend.

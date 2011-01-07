@@ -6,31 +6,53 @@ define ['lib/models/custom_sync'], (CustomSync) ->
     initialize: ->
       this.sync = CustomSync
 
+    splitPostedAt: =>
+
+      [date, time] = this.get('posted_at').split('T')
+      date.split('-')
+
     # Convert timestamps from 2010-10-28 to 10/28.
     formatted_timestamp: =>
 
-      [date, time] = this.get('posted_at').split('T')
-      [year, month, day] = date.split('-')
+      [year, month, day] = this.splitPostedAt()
 
       [month, day].join('/')
+
+    day: =>
+
+      [year, month, day] = this.splitPostedAt()
+      [year, month, day].join('-')
+
+    formatCurrency: (amount) =>
+
+      sign = if amount < 0 then '<span class="sign">-</span>' else ''
+      "#{sign}<span class='currency'>$</span>#{Math.abs(amount).toFixed(2)}"
 
     # Move the negative sign in front of the dollar sign for negative amounts and wrap the dollar
     # sign in <span class="currency"> to allow font customization.
     formatted_amount: =>
+      this.formatCurrency(this.get('amount'))
 
-      sign = if this.get('amount') < 0 then '<span class="sign">-</span>' else ''
-      "#{sign}<span class='currency'>$</span>#{Math.abs(this.get('amount')).toFixed(2)}"
+    depositOrWithdrawal: ->
+      if this.isDeposit() then "Deposit" else "Withdrawal"
+
+    isDeposit: ->
+      this.get('amount') > 0
 
     description: =>
-      "Test Description"
+      this.depositOrWithdrawal()
 
     meta: =>
-      "Test Meta"
+      ''
+
+    className: =>
+      this.depositOrWithdrawal().toLowerCase()
 
     # Add the formatted timestamp and amount to the json for the view
     toViewJSON: ->
       _.extend this.toJSON(),
         description: @description
         meta: @meta
+        html_class: @html_class
         formatted_timestamp: @formatted_timestamp
         formatted_amount: @formatted_amount

@@ -6,18 +6,15 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(['app/models/event', 'app/models/atm_event'], function(Event, AtmEvent) {
+define(['app/models/event_factory'], function(factory) {
   var EventList;
   EventList = function() {
     return Backbone.Collection.apply(this, arguments);
   };
   __extends(EventList, Backbone.Collection);
   EventList.prototype.url = '/accounts/1/events';
-  EventList.prototype.event_types = {
-    atm: AtmEvent
-  };
   EventList.prototype._add = function(model) {
-    return EventList.__super__._add.call(this, new this.event_types[model.event_type](model));
+    return EventList.__super__._add.call(this, factory.getEvent(model));
   };
   EventList.prototype.clear = function() {
     return this.remove(this.models);

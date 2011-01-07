@@ -100,7 +100,6 @@ table#timeline
               button
                 float: right
                 margin: 0 0 0 10px
-              
 
       th
         font-weight: normal
@@ -123,6 +122,15 @@ table#timeline
       &.reward, &.deposit
         td, th
           color: #090
+      &.penalty
+        td, th
+          color: #900
+      &.statement
+        background: #f7f2d8
+        td, th
+          color: darken(#f7f2d8, 70)
+          border-top-color: darken(#f7f2d8, 10)
+          
     tr.selected + tr
       td, th
         border-top-color: #e3e3e3

@@ -13,14 +13,9 @@ define(['app/models/event'], function(Event) {
   };
   __extends(AtmEvent, Event);
   AtmEvent.prototype.initialize = function() {
-    var atm_event_type;
     AtmEvent.__super__.initialize.call(this);
-    atm_event_type = this.isDeposit() ? "Deposit" : "Withdrawal";
-    this.description = ("ATM " + (atm_event_type));
+    this.description = ("ATM " + (this.depositOrWithdrawal()));
     return (this.meta = this.get('atm').name);
-  };
-  AtmEvent.prototype.isDeposit = function() {
-    return this.get('amount') > 0;
   };
   return AtmEvent;
 });

@@ -6,6 +6,7 @@ define ['text!views/timeline/members/row.handlebars?v=3', 'vendor/handlebars'], 
       click: "toggleSelectOne"
 
     tagName: 'tr'
+    className: 'withdrawal'
 
     template: Handlebars.compile(template)
 
@@ -13,16 +14,11 @@ define ['text!views/timeline/members/row.handlebars?v=3', 'vendor/handlebars'], 
 
       @model.bind 'change:selected', @changeSelection
 
-      @collection = @options.collection
-
       this.render()
 
     render: ->
 
       $(@el).html @template(@model.toViewJSON())
-
-      if @model.get('amount') > 0
-        $(@el).addClass('deposit')
 
       return this
 

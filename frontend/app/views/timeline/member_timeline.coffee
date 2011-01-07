@@ -1,4 +1,4 @@
-define ['app/views/timeline/event', 'app/views/timeline/events/atm/row'], (EventView, AtmRow) ->
+define ['app/views/timeline/event', 'app/views/timeline/events/atm/row', 'app/views/timeline/events/statement/row'], (EventView, AtmRow, StatementRow) ->
 
   class MemberTimeline extends Backbone.View
 
@@ -11,13 +11,18 @@ define ['app/views/timeline/event', 'app/views/timeline/events/atm/row'], (Event
 
       @row_views =
         atm: AtmRow
+        statement: StatementRow
 
     addOne: (event) =>
 
-      view = new @row_views[event.get('event_type')]
+      row_view_class = @row_views[event.get('event_type')]
+      row_view_class = EventView unless row_view_class?
+
+      view = new row_view_class
         model: event
         collection: @events
         id: event.id
+        className: event.className
 
       #view = new EventView
         #model: event
@@ -34,5 +39,5 @@ define ['app/views/timeline/event', 'app/views/timeline/events/atm/row'], (Event
     # Add a "repeat-date' class to rows whose preceding row had the same timestamp.
     # This allows us to hide them in order to clean up the interface.
     addTimestampClass: (view, event) ->
-      $(view.el).addClass('repeat-date') if event.get('posted_at') is @lastTimestamp
-      @lastTimestamp = event.get('posted_at')
+      $(view.el).addClass('repeat-date') if event.day() is @lastEventDay
+      @lastEventDay = event.day()

@@ -19,17 +19,14 @@ define(['text!views/timeline/members/row.handlebars?v=3', 'vendor/handlebars'], 
     click: "toggleSelectOne"
   };
   EventView.prototype.tagName = 'tr';
+  EventView.prototype.className = 'withdrawal';
   EventView.prototype.template = Handlebars.compile(template);
   EventView.prototype.initialize = function() {
     this.model.bind('change:selected', this.changeSelection);
-    this.collection = this.options.collection;
     return this.render();
   };
   EventView.prototype.render = function() {
     $(this.el).html(this.template(this.model.toViewJSON()));
-    if (this.model.get('amount') > 0) {
-      $(this.el).addClass('deposit');
-    }
     return this;
   };
   EventView.prototype.changeSelection = function() {

@@ -11,42 +11,71 @@ define(['lib/models/custom_sync'], function(CustomSync) {
   Event = function() {
     var _a;
     _a = this;
+    this.className = function(){ return Event.prototype.className.apply(_a, arguments); };
     this.meta = function(){ return Event.prototype.meta.apply(_a, arguments); };
     this.description = function(){ return Event.prototype.description.apply(_a, arguments); };
     this.formatted_amount = function(){ return Event.prototype.formatted_amount.apply(_a, arguments); };
+    this.formatCurrency = function(){ return Event.prototype.formatCurrency.apply(_a, arguments); };
+    this.day = function(){ return Event.prototype.day.apply(_a, arguments); };
     this.formatted_timestamp = function(){ return Event.prototype.formatted_timestamp.apply(_a, arguments); };
+    this.splitPostedAt = function(){ return Event.prototype.splitPostedAt.apply(_a, arguments); };
     return Backbone.Model.apply(this, arguments);
   };
   __extends(Event, Backbone.Model);
   Event.prototype.initialize = function() {
     return (this.sync = CustomSync);
   };
-  Event.prototype.formatted_timestamp = function() {
-    var _a, _b, date, day, month, time, year;
+  Event.prototype.splitPostedAt = function() {
+    var _a, date, time;
     _a = this.get('posted_at').split('T');
     date = _a[0];
     time = _a[1];
-    _b = date.split('-');
-    year = _b[0];
-    month = _b[1];
-    day = _b[2];
+    return date.split('-');
+  };
+  Event.prototype.formatted_timestamp = function() {
+    var _a, day, month, year;
+    _a = this.splitPostedAt();
+    year = _a[0];
+    month = _a[1];
+    day = _a[2];
     return [month, day].join('/');
   };
-  Event.prototype.formatted_amount = function() {
+  Event.prototype.day = function() {
+    var _a, day, month, year;
+    _a = this.splitPostedAt();
+    year = _a[0];
+    month = _a[1];
+    day = _a[2];
+    return [year, month, day].join('-');
+  };
+  Event.prototype.formatCurrency = function(amount) {
     var sign;
-    sign = this.get('amount') < 0 ? '<span class="sign">-</span>' : '';
-    return "" + (sign) + "<span class='currency'>$</span>" + (Math.abs(this.get('amount')).toFixed(2));
+    sign = amount < 0 ? '<span class="sign">-</span>' : '';
+    return "" + (sign) + "<span class='currency'>$</span>" + (Math.abs(amount).toFixed(2));
+  };
+  Event.prototype.formatted_amount = function() {
+    return this.formatCurrency(this.get('amount'));
+  };
+  Event.prototype.depositOrWithdrawal = function() {
+    return this.isDeposit() ? "Deposit" : "Withdrawal";
+  };
+  Event.prototype.isDeposit = function() {
+    return this.get('amount') > 0;
   };
   Event.prototype.description = function() {
-    return "Test Description";
+    return this.depositOrWithdrawal();
   };
   Event.prototype.meta = function() {
-    return "Test Meta";
+    return '';
+  };
+  Event.prototype.className = function() {
+    return this.depositOrWithdrawal().toLowerCase();
   };
   Event.prototype.toViewJSON = function() {
     return _.extend(this.toJSON(), {
       description: this.description,
       meta: this.meta,
+      html_class: this.html_class,
       formatted_timestamp: this.formatted_timestamp,
       formatted_amount: this.formatted_amount
     });

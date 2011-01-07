@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110106051112) do
+ActiveRecord::Schema.define(:version => 20110107065019) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -27,12 +27,32 @@ ActiveRecord::Schema.define(:version => 20110106051112) do
     t.string "postal_code"
   end
 
+  create_table "branches", :force => true do |t|
+    t.string   "name"
+    t.string   "street1"
+    t.string   "city"
+    t.string   "region"
+    t.string   "postal_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "events", :force => true do |t|
     t.float    "amount"
     t.string   "type"
     t.integer  "atm_id"
     t.datetime "posted_at"
     t.integer  "account_id"
+    t.integer  "branch_id"
+    t.integer  "teller_id"
+    t.integer  "merchant_id"
+    t.integer  "check_number"
+    t.string   "rewards"
+    t.string   "name"
+    t.float    "opening_balance"
+    t.float    "deposits"
+    t.float    "withdrawals"
+    t.float    "ending_balance"
   end
 
   create_table "histories", :force => true do |t|
@@ -75,6 +95,13 @@ ActiveRecord::Schema.define(:version => 20110106051112) do
     t.string   "twitter_username"
     t.string   "facebook_username"
     t.string   "avatar"
+  end
+
+  create_table "tellers", :force => true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|

@@ -2,7 +2,6 @@ class Event < ActiveRecord::Base
 
   belongs_to :account
 
-  validates :amount, :presence => true
   validates :account_id, :presence => true
   validates :posted_at, :presence => true
 
@@ -11,7 +10,7 @@ class Event < ActiveRecord::Base
   def as_json(options = {})
 
     if options.key?(:methods)
-      options[:methods] << :event_type
+      options[:methods] = [options[:methods], :event_type].uniq.flatten
     else
       options[:methods] = :event_type
     end

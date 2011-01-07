@@ -1546,36 +1546,49 @@ table#timeline tbody tr td.name div.comment .buttons button {
   float: right;
   margin: 0 0 0 10px;
 }
-/* line 105, ../../../frontend/sass/_timeline.sass */
+/* line 104, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr th {
   font-weight: normal;
 }
-/* line 108, ../../../frontend/sass/_timeline.sass */
+/* line 107, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.repeat-date td, table#timeline tbody tr.repeat-date th {
   border-top: 1px solid #e3eff7;
 }
-/* line 111, ../../../frontend/sass/_timeline.sass */
+/* line 110, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.repeat-date td.date span {
   display: none;
 }
-/* line 114, ../../../frontend/sass/_timeline.sass */
+/* line 113, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr:nth-child(odd) td, table#timeline tbody tr:nth-child(odd) th {
   background: #f6fafd;
 }
-/* line 117, ../../../frontend/sass/_timeline.sass */
+/* line 116, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr:first-child td, table#timeline tbody tr:first-child th {
   border-top: none;
 }
-/* line 120, ../../../frontend/sass/_timeline.sass */
+/* line 119, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.selected td, table#timeline tbody tr.selected th {
   border-top-color: #dddddd;
   background: #f1f1f1;
 }
-/* line 124, ../../../frontend/sass/_timeline.sass */
+/* line 123, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.reward td, table#timeline tbody tr.reward th, table#timeline tbody tr.deposit td, table#timeline tbody tr.deposit th {
   color: #009900;
 }
-/* line 127, ../../../frontend/sass/_timeline.sass */
+/* line 126, ../../../frontend/sass/_timeline.sass */
+table#timeline tbody tr.penalty td, table#timeline tbody tr.penalty th {
+  color: #990000;
+}
+/* line 128, ../../../frontend/sass/_timeline.sass */
+table#timeline tbody tr.statement {
+  background: #f7f2d8;
+}
+/* line 130, ../../../frontend/sass/_timeline.sass */
+table#timeline tbody tr.statement td, table#timeline tbody tr.statement th {
+  color: #584d12;
+  border-top-color: #eee4ae;
+}
+/* line 135, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr th {
   border-top-color: #e3e3e3;
 }

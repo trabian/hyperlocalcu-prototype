@@ -6,7 +6,7 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(['app/views/timeline/event', 'app/views/timeline/events/atm/row'], function(EventView, AtmRow) {
+define(['app/views/timeline/event', 'app/views/timeline/events/atm/row', 'app/views/timeline/events/statement/row'], function(EventView, AtmRow, StatementRow) {
   var MemberTimeline;
   MemberTimeline = function() {
     var _a;
@@ -21,15 +21,21 @@ define(['app/views/timeline/event', 'app/views/timeline/events/atm/row'], functi
     this.events = events;
     this.events.bind('refresh', this.addAll);
     return (this.row_views = {
-      atm: AtmRow
+      atm: AtmRow,
+      statement: StatementRow
     });
   };
   MemberTimeline.prototype.addOne = function(event) {
-    var view;
-    view = new this.row_views[event.get('event_type')]({
+    var row_view_class, view;
+    row_view_class = this.row_views[event.get('event_type')];
+    if (!(typeof row_view_class !== "undefined" && row_view_class !== null)) {
+      row_view_class = EventView;
+    }
+    view = new row_view_class({
       model: event,
       collection: this.events,
-      id: event.id
+      id: event.id,
+      className: event.className
     });
     $(this.el).append(view.render().el);
     return this.addTimestampClass(view, event);
@@ -38,10 +44,10 @@ define(['app/views/timeline/event', 'app/views/timeline/events/atm/row'], functi
     return this.events.each(this.addOne);
   };
   MemberTimeline.prototype.addTimestampClass = function(view, event) {
-    if (event.get('posted_at') === this.lastTimestamp) {
+    if (event.day() === this.lastEventDay) {
       $(view.el).addClass('repeat-date');
     }
-    return (this.lastTimestamp = event.get('posted_at'));
+    return (this.lastEventDay = event.day());
   };
   return MemberTimeline;
 });
