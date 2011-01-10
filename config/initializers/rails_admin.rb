@@ -33,6 +33,17 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model CardEvent do
+    label_for_navigation "Card Transactions"
+    edit do
+      field :account_id
+      field :posted_at
+      field :merchant_id
+      field :name
+      field :amount
+    end
+  end
+
   config.model CheckEvent do
     label_for_navigation "Check Transactions"
     edit do

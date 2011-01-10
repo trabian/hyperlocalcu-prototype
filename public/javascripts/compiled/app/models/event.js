@@ -80,5 +80,8 @@ define(['lib/models/custom_sync'], function(CustomSync) {
       formatted_amount: this.formatted_amount
     });
   };
+  Event.prototype.toDetailJSON = function() {
+    return this.toViewJSON();
+  };
   return Event;
 });

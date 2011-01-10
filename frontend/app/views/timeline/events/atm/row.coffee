@@ -1,3 +1,3 @@
-define ['app/views/timeline/event'], (EventView) ->
+define ['app/views/timeline/events/row'], (EventRowView) ->
 
-  class AtmRow extends EventView
+  class AtmRow extends EventRowView

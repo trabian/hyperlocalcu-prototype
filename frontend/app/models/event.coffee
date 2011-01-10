@@ -56,3 +56,7 @@ define ['lib/models/custom_sync'], (CustomSync) ->
         html_class: @html_class
         formatted_timestamp: @formatted_timestamp
         formatted_amount: @formatted_amount
+
+    toDetailJSON: ->
+      this.toViewJSON()
+

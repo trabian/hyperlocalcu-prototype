@@ -1,6 +1,6 @@
-define ['text!views/timeline/members/row.handlebars?v=3', 'vendor/handlebars'], (template) ->
+define ['text!views/timeline/events/row.handlebars?v=3', 'vendor/handlebars'], (template) ->
 
-  class EventView extends Backbone.View
+  class EventRowView extends Backbone.View
 
     events:
       click: "toggleSelectOne"

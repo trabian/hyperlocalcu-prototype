@@ -1,6 +1,6 @@
 var EventTypeDefinitions, EventTypes;
 var __slice = Array.prototype.slice;
-EventTypes = ['atm', 'branch', 'billpay', 'check', 'nsf', 'reward', 'statement'];
+EventTypes = ['atm', 'branch', 'billpay', 'card', 'check', 'nsf', 'reward', 'statement'];
 EventTypeDefinitions = _.map(EventTypes, function(event_type) {
   return "app/models/events/" + (event_type) + "_event";
 });

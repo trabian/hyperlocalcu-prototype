@@ -6,12 +6,12 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(['text!views/timeline/members/statement/row.handlebars?v=1', 'app/views/timeline/event'], function(template, EventView) {
+define(['text!views/timeline/events/statement/row.handlebars?v=1', 'app/views/timeline/events/row'], function(template, EventRowView) {
   var StatementRow;
   StatementRow = function() {
-    return EventView.apply(this, arguments);
+    return EventRowView.apply(this, arguments);
   };
-  __extends(StatementRow, EventView);
+  __extends(StatementRow, EventRowView);
   StatementRow.prototype.template = Handlebars.compile(template);
   return StatementRow;
 });

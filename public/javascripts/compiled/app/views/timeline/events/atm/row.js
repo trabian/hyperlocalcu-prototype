@@ -6,11 +6,11 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(['app/views/timeline/event'], function(EventView) {
+define(['app/views/timeline/events/row'], function(EventRowView) {
   var AtmRow;
   AtmRow = function() {
-    return EventView.apply(this, arguments);
+    return EventRowView.apply(this, arguments);
   };
-  __extends(AtmRow, EventView);
+  __extends(AtmRow, EventRowView);
   return AtmRow;
 });

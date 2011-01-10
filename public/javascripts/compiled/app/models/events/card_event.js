@@ -7,22 +7,23 @@ var __extends = function(child, parent) {
     child.__super__ = parent.prototype;
   };
 define(['app/models/event'], function(Event) {
-  var CheckEvent;
-  CheckEvent = function() {
+  var CardEvent;
+  CardEvent = function() {
     return Event.apply(this, arguments);
   };
-  __extends(CheckEvent, Event);
-  CheckEvent.prototype.initialize = function() {
-    var check_name, merchant;
-    CheckEvent.__super__.initialize.call(this);
+  __extends(CardEvent, Event);
+  CardEvent.prototype.initialize = function() {
+    var check_name, merchant, name;
+    CardEvent.__super__.initialize.call(this);
     merchant = this.get('merchant');
+    name = this.get('name');
     check_name = ("Check #" + (this.get('check_number')));
     if (typeof merchant !== "undefined" && merchant !== null) {
       this.description = this.get('merchant').name;
-      return (this.meta = check_name);
+      return (this.meta = name);
     } else {
-      return (this.description = check_name);
+      return (this.description = name);
     }
   };
-  return CheckEvent;
+  return CardEvent;
 });

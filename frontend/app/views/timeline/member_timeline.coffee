@@ -1,4 +1,4 @@
-define ['app/views/timeline/event', 'app/views/timeline/events/atm/row', 'app/views/timeline/events/statement/row'], (EventView, AtmRow, StatementRow) ->
+define ['app/views/timeline/events/row', 'app/views/timeline/events/atm/row', 'app/views/timeline/events/statement/row'], (EventRowView, AtmRow, StatementRow) ->
 
   class MemberTimeline extends Backbone.View
 
@@ -16,7 +16,7 @@ define ['app/views/timeline/event', 'app/views/timeline/events/atm/row', 'app/vi
     addOne: (event) =>
 
       row_view_class = @row_views[event.get('event_type')]
-      row_view_class = EventView unless row_view_class?
+      row_view_class = EventRowView unless row_view_class?
 
       view = new row_view_class
         model: event

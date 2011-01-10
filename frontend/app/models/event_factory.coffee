@@ -1,4 +1,4 @@
-EventTypes = ['atm', 'branch', 'billpay', 'check', 'nsf', 'reward', 'statement']
+EventTypes = ['atm', 'branch', 'billpay', 'card', 'check', 'nsf', 'reward', 'statement']
 
 EventTypeDefinitions = _.map EventTypes, (event_type) ->
   "app/models/events/#{event_type}_event"

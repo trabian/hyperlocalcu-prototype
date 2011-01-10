@@ -6,7 +6,7 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(['app/views/timeline/event', 'app/views/timeline/events/atm/row', 'app/views/timeline/events/statement/row'], function(EventView, AtmRow, StatementRow) {
+define(['app/views/timeline/events/row', 'app/views/timeline/events/atm/row', 'app/views/timeline/events/statement/row'], function(EventRowView, AtmRow, StatementRow) {
   var MemberTimeline;
   MemberTimeline = function() {
     var _a;
@@ -29,7 +29,7 @@ define(['app/views/timeline/event', 'app/views/timeline/events/atm/row', 'app/vi
     var row_view_class, view;
     row_view_class = this.row_views[event.get('event_type')];
     if (!(typeof row_view_class !== "undefined" && row_view_class !== null)) {
-      row_view_class = EventView;
+      row_view_class = EventRowView;
     }
     view = new row_view_class({
       model: event,
