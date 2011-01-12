@@ -27,10 +27,7 @@ define(['app/views/timeline/events/row', 'app/views/timeline/events/atm/row', 'a
   };
   MemberTimeline.prototype.addOne = function(event) {
     var row_view_class, view;
-    row_view_class = this.row_views[event.get('event_type')];
-    if (!(typeof row_view_class !== "undefined" && row_view_class !== null)) {
-      row_view_class = EventRowView;
-    }
+    row_view_class = this.row_views[event.get('event_type')] || EventRowView;
     view = new row_view_class({
       model: event,
       collection: this.events,

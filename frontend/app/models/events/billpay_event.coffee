@@ -1,11 +1,15 @@
-define ['app/models/event'], (Event) ->
+define ['app/models/events/merchant_event'], (MerchantEvent) ->
 
-  class BillpayEvent extends Event
+  class BillpayEvent extends MerchantEvent
 
     initialize: ->
 
       super()
 
-      @description = this.get('merchant').name
-
       @meta = "Billpay ##{this.id}"
+
+    toDetailJSON: ->
+      detailJSON = super()
+      _.extend detailJSON,
+        bill_payment_processing_days: this.get('bill_payment_processing_days')
+        bill_payment_submitted_date: this.formatDate(this.get('bill_payment_submitted_date'))

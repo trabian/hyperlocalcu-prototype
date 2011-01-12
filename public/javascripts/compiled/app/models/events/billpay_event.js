@@ -6,16 +6,23 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(['app/models/event'], function(Event) {
+define(['app/models/events/merchant_event'], function(MerchantEvent) {
   var BillpayEvent;
   BillpayEvent = function() {
-    return Event.apply(this, arguments);
+    return MerchantEvent.apply(this, arguments);
   };
-  __extends(BillpayEvent, Event);
+  __extends(BillpayEvent, MerchantEvent);
   BillpayEvent.prototype.initialize = function() {
     BillpayEvent.__super__.initialize.call(this);
-    this.description = this.get('merchant').name;
     return (this.meta = ("Billpay #" + (this.id)));
+  };
+  BillpayEvent.prototype.toDetailJSON = function() {
+    var detailJSON;
+    detailJSON = BillpayEvent.__super__.toDetailJSON.call(this);
+    return _.extend(detailJSON, {
+      bill_payment_processing_days: this.get('bill_payment_processing_days'),
+      bill_payment_submitted_date: this.formatDate(this.get('bill_payment_submitted_date'))
+    });
   };
   return BillpayEvent;
 });

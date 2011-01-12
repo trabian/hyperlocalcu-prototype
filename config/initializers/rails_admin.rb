@@ -30,6 +30,8 @@ RailsAdmin.config do |config|
       field :posted_at
       field :merchant_id
       field :amount
+      field :bill_payment_processing_days
+      field :bill_payment_submitted_date
     end
   end
 

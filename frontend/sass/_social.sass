@@ -20,3 +20,49 @@
   &.over-limit
     .count
       color: #900
+
+.social
+  +speech-bubble(16px)
+  .twitter, .facebook
+    clear: both
+    padding: 0 0 0px
+    min-height: 50px
+    .form
+      +small-button
+      input.text
+        width: 220px
+    .icon-and-vote
+      float: right
+      width: 22px
+      margin: 5px 0 10px 10px
+      .view-profile
+      .vote
+        display: block
+        background: url(/images/vote.png) no-repeat 50% 50%
+        height: 22px
+        width: 22px
+        text-indent: -5000px
+        +opacity(0.2)
+        &:hover
+          +opacity(0.6)
+    .tweet_time, .post_time
+      display: block
+      color: $subtle_color
+      a
+        +link-colors($subtle_color, $link_color)
+  .twitter
+    .latest-tweet
+      .tweet_list
+        +no-bullets
+        +reset-box-model
+  p.security
+    display: none
+    border-top: 1px solid #e3e3e3
+    font-size: 10px
+    margin: 0
+    background: url(/images/icons/lock.png) no-repeat left 15px
+    padding: 10px 0 0 25px
+.feedback
+  padding: 15px 0 0
+  p
+    margin: 0.5em 0.2em

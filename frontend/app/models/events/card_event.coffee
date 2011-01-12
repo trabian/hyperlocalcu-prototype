@@ -1,17 +1,14 @@
-define ['app/models/event'], (Event) ->
+define ['app/models/events/merchant_event'], (MerchantEvent) ->
 
-  class CardEvent extends Event
+  class CardEvent extends MerchantEvent
 
     initialize: ->
 
       super()
 
-      merchant = this.get('merchant')
       name = this.get('name')
-      check_name = "Check ##{this.get('check_number')}"
 
-      if merchant?
-        @description = this.get('merchant').name
+      if @merchant?
         @meta = name
       else
         @description = name

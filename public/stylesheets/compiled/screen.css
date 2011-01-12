@@ -1730,125 +1730,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   color: #009900;
   margin: 0.3em 0 0;
 }
-/* line 48, ../../../frontend/sass/_merchants.sass */
-#merchant-view .social {
-  position: relative;
-  margin: 10px 0 0 0;
-  background: white;
-  border: 1px solid #dddddd;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -o-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -khtml-border-radius: 5px;
-  border-radius: 5px;
-  padding: 10px;
-  font-size: 11px;
-}
-/* line 10, ../../../frontend/sass/_ui_mixins.sass */
-#merchant-view .social::before, #merchant-view .social::after {
-  content: "";
-  display: block;
-  height: 0px;
-  width: 0px;
-  position: absolute;
-}
-/* line 17, ../../../frontend/sass/_ui_mixins.sass */
-#merchant-view .social::before {
-  border: 14px solid transparent;
-  border-bottom-color: #dddddd;
-  right: 14px;
-  top: -28px;
-}
-/* line 23, ../../../frontend/sass/_ui_mixins.sass */
-#merchant-view .social::after {
-  border: 12px solid transparent;
-  border-bottom-color: white;
-  right: 16px;
-  top: -24px;
-}
 /* line 50, ../../../frontend/sass/_merchants.sass */
-#merchant-view .social .twitter, #merchant-view .social .facebook {
-  clear: both;
-  padding: 0 0 0px;
-  min-height: 50px;
-}
-/* line 32, ../../../frontend/sass/_ui_mixins.sass */
-#merchant-view .social .twitter .form .ui-button .ui-button-text, #merchant-view .social .facebook .form .ui-button .ui-button-text {
-  font-size: 10px;
-}
-/* line 56, ../../../frontend/sass/_merchants.sass */
-#merchant-view .social .twitter .form input.text, #merchant-view .social .facebook .form input.text {
-  width: 220px;
-}
-/* line 58, ../../../frontend/sass/_merchants.sass */
-#merchant-view .social .twitter .icon-and-vote, #merchant-view .social .facebook .icon-and-vote {
-  float: right;
-  width: 22px;
-  margin: 5px 0 10px 10px;
-}
-/* line 63, ../../../frontend/sass/_merchants.sass */
-#merchant-view .social .twitter .icon-and-vote .vote, #merchant-view .social .facebook .icon-and-vote .vote {
-  display: block;
-  background: url(/images/vote.png) no-repeat 50% 50%;
-  height: 22px;
-  width: 22px;
-  text-indent: -5000px;
-  opacity: 0.2;
-  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=20);
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=20);
-}
-/* line 70, ../../../frontend/sass/_merchants.sass */
-#merchant-view .social .twitter .icon-and-vote .vote:hover, #merchant-view .social .facebook .icon-and-vote .vote:hover {
-  opacity: 0.6;
-  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
-}
-/* line 72, ../../../frontend/sass/_merchants.sass */
-#merchant-view .social .twitter .tweet_time, #merchant-view .social .twitter .post_time, #merchant-view .social .facebook .tweet_time, #merchant-view .social .facebook .post_time {
-  display: block;
-  color: #999999;
-}
-/* line 75, ../../../frontend/sass/_merchants.sass */
-#merchant-view .social .twitter .tweet_time a, #merchant-view .social .twitter .post_time a, #merchant-view .social .facebook .tweet_time a, #merchant-view .social .facebook .post_time a {
-  color: #999999;
-}
-/* line 24, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_link-colors.scss */
-#merchant-view .social .twitter .tweet_time a:hover, #merchant-view .social .twitter .post_time a:hover, #merchant-view .social .facebook .tweet_time a:hover, #merchant-view .social .facebook .post_time a:hover {
-  color: #0066dd;
-}
-/* line 79, ../../../frontend/sass/_merchants.sass */
-#merchant-view .social .twitter .latest-tweet .tweet_list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: 0;
-}
-/* line 11, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_bullets.scss */
-#merchant-view .social .twitter .latest-tweet .tweet_list li {
-  list-style-image: none;
-  list-style-type: none;
-  margin-left: 0px;
-}
-/* line 82, ../../../frontend/sass/_merchants.sass */
-#merchant-view .social p.security {
-  display: none;
-  border-top: 1px solid #e3e3e3;
-  font-size: 10px;
-  margin: 0;
-  background: url(/images/icons/lock.png) no-repeat left 15px;
-  padding: 10px 0 0 25px;
-}
-/* line 89, ../../../frontend/sass/_merchants.sass */
-#merchant-view .feedback {
-  padding: 15px 0 0;
-}
-/* line 91, ../../../frontend/sass/_merchants.sass */
-#merchant-view .feedback p {
-  margin: 0.5em 0.2em;
-}
-/* line 95, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .branding {
   position: absolute;
   bottom: -17px;
@@ -1857,45 +1739,45 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   color: #333333;
   line-height: 15px;
 }
-/* line 102, ../../../frontend/sass/_merchants.sass */
+/* line 57, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .branding img {
   display: inline-block;
   position: relative;
   top: 5px;
 }
-/* line 106, ../../../frontend/sass/_merchants.sass */
+/* line 61, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search h4 {
   font-size: 13px;
   line-height: 1.4em;
   margin: 0 0 0.35em;
 }
-/* line 110, ../../../frontend/sass/_merchants.sass */
+/* line 65, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search h4 em {
   font-weight: bold;
   font-style: normal;
 }
-/* line 113, ../../../frontend/sass/_merchants.sass */
+/* line 68, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-form {
   overflow: hidden;
   *zoom: 1;
 }
-/* line 115, ../../../frontend/sass/_merchants.sass */
+/* line 70, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-form .ui-button {
   float: left;
   margin: 0 !important;
 }
-/* line 118, ../../../frontend/sass/_merchants.sass */
+/* line 73, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-form .ui-button .ui-button-text {
   padding-top: 6px;
   padding-bottom: 6px;
 }
-/* line 121, ../../../frontend/sass/_merchants.sass */
+/* line 76, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-form .search-field {
   float: left;
   width: 195px;
   margin: 0 5px 0 0;
 }
-/* line 126, ../../../frontend/sass/_merchants.sass */
+/* line 81, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-results {
   margin: 5px 0 0 0;
   border: 1px solid #dddddd;
@@ -1903,7 +1785,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   max-height: 250px;
   overflow: auto;
 }
-/* line 132, ../../../frontend/sass/_merchants.sass */
+/* line 87, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-results ul {
   list-style: none;
   margin: 0;
@@ -1974,24 +1856,24 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #merchant-view .merchant-search .merchant-search-results ul li.result ul.buttons .ui-button .ui-button-text {
   font-size: 10px;
 }
-/* line 134, ../../../frontend/sass/_merchants.sass */
+/* line 89, ../../../frontend/sass/_merchants.sass */
 #merchant-view .merchant-search .merchant-search-results ul p {
   font-size: 11px;
   color: #333333;
   margin: 0.2em 0;
 }
 
-/* line 140, ../../../frontend/sass/_merchants.sass */
+/* line 95, ../../../frontend/sass/_merchants.sass */
 #feedback h3, #sales-chart h3 {
   margin: 0 0 0.5em;
   font-size: 14px;
 }
 
-/* line 144, ../../../frontend/sass/_merchants.sass */
+/* line 99, ../../../frontend/sass/_merchants.sass */
 #feedback {
   padding: 10px 0 0 0;
 }
-/* line 146, ../../../frontend/sass/_merchants.sass */
+/* line 101, ../../../frontend/sass/_merchants.sass */
 #feedback #feedback-list {
   list-style: none;
   margin: 0;
@@ -2064,7 +1946,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #feedback #feedback-list li.feedback ul.buttons .ui-button .ui-button-text {
   font-size: 10px;
 }
-/* line 151, ../../../frontend/sass/_merchants.sass */
+/* line 106, ../../../frontend/sass/_merchants.sass */
 #feedback #feedback-list li p.comment {
   margin: 0 0 0.2em;
 }
@@ -2098,6 +1980,126 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 /* line 21, ../../../frontend/sass/_social.sass */
 .tweet-form.over-limit .count {
   color: #990000;
+}
+
+/* line 24, ../../../frontend/sass/_social.sass */
+.social {
+  position: relative;
+  margin: 10px 0 0 0;
+  background: white;
+  border: 1px solid #dddddd;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 11px;
+}
+/* line 10, ../../../frontend/sass/_ui_mixins.sass */
+.social::before, .social::after {
+  content: "";
+  display: block;
+  height: 0px;
+  width: 0px;
+  position: absolute;
+}
+/* line 17, ../../../frontend/sass/_ui_mixins.sass */
+.social::before {
+  border: 14px solid transparent;
+  border-bottom-color: #dddddd;
+  right: 14px;
+  top: -28px;
+}
+/* line 23, ../../../frontend/sass/_ui_mixins.sass */
+.social::after {
+  border: 12px solid transparent;
+  border-bottom-color: white;
+  right: 16px;
+  top: -24px;
+}
+/* line 26, ../../../frontend/sass/_social.sass */
+.social .twitter, .social .facebook {
+  clear: both;
+  padding: 0 0 0px;
+  min-height: 50px;
+}
+/* line 32, ../../../frontend/sass/_ui_mixins.sass */
+.social .twitter .form .ui-button .ui-button-text, .social .facebook .form .ui-button .ui-button-text {
+  font-size: 10px;
+}
+/* line 32, ../../../frontend/sass/_social.sass */
+.social .twitter .form input.text, .social .facebook .form input.text {
+  width: 220px;
+}
+/* line 34, ../../../frontend/sass/_social.sass */
+.social .twitter .icon-and-vote, .social .facebook .icon-and-vote {
+  float: right;
+  width: 22px;
+  margin: 5px 0 10px 10px;
+}
+/* line 39, ../../../frontend/sass/_social.sass */
+.social .twitter .icon-and-vote .vote, .social .facebook .icon-and-vote .vote {
+  display: block;
+  background: url(/images/vote.png) no-repeat 50% 50%;
+  height: 22px;
+  width: 22px;
+  text-indent: -5000px;
+  opacity: 0.2;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=20);
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=20);
+}
+/* line 46, ../../../frontend/sass/_social.sass */
+.social .twitter .icon-and-vote .vote:hover, .social .facebook .icon-and-vote .vote:hover {
+  opacity: 0.6;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+}
+/* line 48, ../../../frontend/sass/_social.sass */
+.social .twitter .tweet_time, .social .twitter .post_time, .social .facebook .tweet_time, .social .facebook .post_time {
+  display: block;
+  color: #999999;
+}
+/* line 51, ../../../frontend/sass/_social.sass */
+.social .twitter .tweet_time a, .social .twitter .post_time a, .social .facebook .tweet_time a, .social .facebook .post_time a {
+  color: #999999;
+}
+/* line 24, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_link-colors.scss */
+.social .twitter .tweet_time a:hover, .social .twitter .post_time a:hover, .social .facebook .tweet_time a:hover, .social .facebook .post_time a:hover {
+  color: #0066dd;
+}
+/* line 55, ../../../frontend/sass/_social.sass */
+.social .twitter .latest-tweet .tweet_list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+}
+/* line 11, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_bullets.scss */
+.social .twitter .latest-tweet .tweet_list li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0px;
+}
+/* line 58, ../../../frontend/sass/_social.sass */
+.social p.security {
+  display: none;
+  border-top: 1px solid #e3e3e3;
+  font-size: 10px;
+  margin: 0;
+  background: url(/images/icons/lock.png) no-repeat left 15px;
+  padding: 10px 0 0 25px;
+}
+
+/* line 65, ../../../frontend/sass/_social.sass */
+.feedback {
+  padding: 15px 0 0;
+}
+/* line 67, ../../../frontend/sass/_social.sass */
+.feedback p {
+  margin: 0.5em 0.2em;
 }
 
 /* line 2, ../../../frontend/sass/_demo.sass */
@@ -2188,7 +2190,117 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   font-size: 10px;
 }
 
-/* line 3, ../../../frontend/sass/events/_detail.sass */
+/* line 1, ../../../frontend/sass/_feedback.sass */
+.feedback {
+  border-top: 1px solid #d4d4d4;
+  margin: 12px 0 0;
+  padding: 14px 0 0;
+}
+/* line 5, ../../../frontend/sass/_feedback.sass */
+.feedback .avatar-and-question {
+  display: inline;
+  float: left;
+  overflow: hidden;
+  *zoom: 1;
+}
+/* line 8, ../../../frontend/sass/_feedback.sass */
+.feedback .avatar-and-question .avatar {
+  display: inline;
+  float: left;
+  width: 48px;
+  height: 48px;
+  padding: 3px;
+  background: white;
+  border: 1px solid #dddddd;
+  margin: 0 7px 0 0;
+}
+/* line 16, ../../../frontend/sass/_feedback.sass */
+.feedback .avatar-and-question .question-and-rating {
+  display: inline;
+  float: left;
+  overflow: hidden;
+  *zoom: 1;
+  width: 255px;
+}
+/* line 20, ../../../frontend/sass/_feedback.sass */
+.feedback .avatar-and-question .question-and-rating .question {
+  margin: 0 0 7px;
+  font-size: 11px;
+}
+/* line 25, ../../../frontend/sass/_feedback.sass */
+.feedback div.comment {
+  clear: both;
+  position: relative;
+  margin: 10px 0 0 0;
+  background: white;
+  border: 1px solid #dddddd;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 11px;
+  margin-top: 12px;
+  position: relative;
+  top: 10px;
+}
+/* line 10, ../../../frontend/sass/_ui_mixins.sass */
+.feedback div.comment::before, .feedback div.comment::after {
+  content: "";
+  display: block;
+  height: 0px;
+  width: 0px;
+  position: absolute;
+}
+/* line 17, ../../../frontend/sass/_ui_mixins.sass */
+.feedback div.comment::before {
+  border: 14px solid transparent;
+  border-bottom-color: #dddddd;
+  right: 140px;
+  top: -28px;
+}
+/* line 23, ../../../frontend/sass/_ui_mixins.sass */
+.feedback div.comment::after {
+  border: 12px solid transparent;
+  border-bottom-color: white;
+  right: 142px;
+  top: -24px;
+}
+/* line 31, ../../../frontend/sass/_feedback.sass */
+.feedback div.comment .cancel {
+  line-height: 0;
+  float: right;
+  margin: 5px 0 0 0;
+}
+/* line 35, ../../../frontend/sass/_feedback.sass */
+.feedback div.comment h4 {
+  margin-bottom: 0;
+}
+/* line 37, ../../../frontend/sass/_feedback.sass */
+.feedback div.comment textarea {
+  height: 70px;
+  font-size: 12px;
+  width: 282px;
+}
+/* line 41, ../../../frontend/sass/_feedback.sass */
+.feedback div.comment .buttons {
+  overflow: hidden;
+  *zoom: 1;
+}
+/* line 43, ../../../frontend/sass/_feedback.sass */
+.feedback div.comment .buttons button {
+  display: inline;
+  float: right;
+  margin: 0 0 0 10px;
+}
+/* line 46, ../../../frontend/sass/_feedback.sass */
+.feedback div.comment .buttons p {
+  display: none;
+}
+
+/* line 5, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view {
   position: fixed;
   color: #444444;
@@ -2213,13 +2325,69 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   width: 318px;
   min-height: 500px;
 }
-/* line 15, ../../../frontend/sass/events/_detail.sass */
+/* line 2, ../../../frontend/sass/events/billpay/_detail.sass */
+#event-detail-view .processing-summary {
+  margin: 1.5em 0 0;
+}
+/* line 4, ../../../frontend/sass/events/billpay/_detail.sass */
+#event-detail-view .processing-summary p {
+  text-align: center;
+  margin: 0.3em 0;
+}
+/* line 7, ../../../frontend/sass/events/billpay/_detail.sass */
+#event-detail-view .processing-summary p.processing-days {
+  font-size: 13px;
+  font-weight: normal;
+}
+/* line 10, ../../../frontend/sass/events/billpay/_detail.sass */
+#event-detail-view .processing-summary p.processing-days strong {
+  font-weight: bold;
+}
+/* line 12, ../../../frontend/sass/events/billpay/_detail.sass */
+#event-detail-view .processing-summary p.submitted-date {
+  color: #999999;
+}
+/* line 18, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .close {
   float: right;
   position: absolute;
   top: 4px;
   right: 10px;
   font-size: 10px;
+}
+/* line 24, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .name-and-location {
+  min-height: 60px;
+  position: relative;
+  padding-right: 30px;
+}
+/* line 28, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .name-and-location .avatar {
+  position: absolute;
+  bottom: 3px;
+  right: 0;
+  padding: 3px;
+  background: white;
+  border: 1px solid #dddddd;
+  cursor: pointer;
+}
+/* line 36, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .name-and-location h3 {
+  font-size: 16px;
+  margin: 0 0 0.5em 0;
+}
+/* line 39, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .name-and-location h3 em {
+  color: #666666;
+  display: block;
+  font-style: normal;
+  font-size: 0.7em;
+  margin: 5px 0 0 0;
+}
+/* line 45, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .name-and-location p.address, #event-detail-view .name-and-location p.phone {
+  font-size: 11px;
+  margin: 0.2em 0;
 }
 
 /* line 23, ../../../frontend/sass/screen.sass */

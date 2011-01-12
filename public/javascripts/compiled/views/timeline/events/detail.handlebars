@@ -1,2 +1,21 @@
 <a href="#" class="close">Close</a>
 
+<div class="name-and-location">
+
+  {{#avatar}}
+  <img src="{{ . }}" class="avatar" />
+  {{/avatar}}
+  {{^avatar}}
+  <img src="/images/avatar.png" class="avatar" />
+  {{/avatar}}
+  <h3>
+    {{ description }}
+    {{#meta}}
+      <em>{{ . }}</em>
+    {{/meta}}
+  </h3>
+  {{#address}}
+    <p class="address">{{{ . }}}</p>
+  {{/address}}
+
+</div>

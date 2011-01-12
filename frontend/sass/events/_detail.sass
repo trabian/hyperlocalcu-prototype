@@ -1,6 +1,9 @@
 @import ui_mixins
+@import feedback
+@import events/billpay/detail
 
 #event-detail-view
+  +billpay-detail-view
   position: fixed
   color: #444
   top: 32px
@@ -18,3 +21,28 @@
     top: 4px
     right: 10px
     font-size: 10px
+  .name-and-location
+    min-height: 60px
+    position: relative
+    padding-right: 30px
+    .avatar
+      position: absolute
+      bottom: 3px
+      right: 0
+      padding: 3px
+      background: #fff
+      border: 1px solid #ddd
+      cursor: pointer
+    h3
+      font-size: 16px
+      margin: 0 0 0.5em 0
+      em
+        color: #666
+        display: block
+        font-style: normal
+        font-size: 0.70em
+        margin: 5px 0 0 0
+    p.address, p.phone
+      font-size: 11px
+      margin: 0.2em 0
+

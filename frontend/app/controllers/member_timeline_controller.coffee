@@ -1,5 +1,5 @@
 # The Member Timeline Controller is the main controller for the member timeline
-define ["app/views/timeline/member_timeline", "app/views/timeline/events/detail", "app/models/event_list"], (MemberTimeline, EventDetailView, EventList) ->
+define ["app/views/timeline/member_timeline", "app/views/timeline/events/detail", "app/views/timeline/events/billpay/detail", "app/models/event_list"], (MemberTimeline, EventDetailView, BillpayDetailView, EventList) ->
 
   class MemberTimelineController extends Backbone.Controller
 
@@ -8,11 +8,17 @@ define ["app/views/timeline/member_timeline", "app/views/timeline/events/detail"
       this.setupEventList()
       this.setupTimeline()
 
+      @detail_views =
+        billpay: BillpayDetailView
+
       # Optionally fetch as the final step of initialization
       this.fetch() if options.fetchOnInit == true
 
     routes:
       "events/:event_id": 'selectEvent'
+
+    selectEvent: (eventId) =>
+      @events.selectOne @events.get(eventId)
 
     setupEventList: =>
       @events = new EventList
@@ -47,7 +53,9 @@ define ["app/views/timeline/member_timeline", "app/views/timeline/events/detail"
 
     showEventDetail: (event) =>
 
-      @detailView = new EventDetailView
+      detail_view_class = @detail_views[event.get('event_type')] || EventDetailView
+
+      @detailView = new detail_view_class
         model: event
         el: $('#event-detail-view')
 

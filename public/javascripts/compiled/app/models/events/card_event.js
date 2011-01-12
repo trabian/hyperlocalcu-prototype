@@ -6,24 +6,17 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(['app/models/event'], function(Event) {
+define(['app/models/events/merchant_event'], function(MerchantEvent) {
   var CardEvent;
   CardEvent = function() {
-    return Event.apply(this, arguments);
+    return MerchantEvent.apply(this, arguments);
   };
-  __extends(CardEvent, Event);
+  __extends(CardEvent, MerchantEvent);
   CardEvent.prototype.initialize = function() {
-    var check_name, merchant, name;
+    var _a, name;
     CardEvent.__super__.initialize.call(this);
-    merchant = this.get('merchant');
     name = this.get('name');
-    check_name = ("Check #" + (this.get('check_number')));
-    if (typeof merchant !== "undefined" && merchant !== null) {
-      this.description = this.get('merchant').name;
-      return (this.meta = name);
-    } else {
-      return (this.description = name);
-    }
+    return (typeof (_a = this.merchant) !== "undefined" && _a !== null) ? (this.meta = name) : (this.description = name);
   };
   return CardEvent;
 });

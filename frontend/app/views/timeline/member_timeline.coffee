@@ -15,19 +15,13 @@ define ['app/views/timeline/events/row', 'app/views/timeline/events/atm/row', 'a
 
     addOne: (event) =>
 
-      row_view_class = @row_views[event.get('event_type')]
-      row_view_class = EventRowView unless row_view_class?
+      row_view_class = @row_views[event.get('event_type')] || EventRowView
 
       view = new row_view_class
         model: event
         collection: @events
         id: event.id
         className: event.className
-
-      #view = new EventView
-        #model: event
-        #collection: @events
-        #id: event.id
 
       $(@el).append view.render().el
 

@@ -6,11 +6,12 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(['lib/models/custom_sync'], function(CustomSync) {
+define(['lib/models/custom_sync', 'vendor/jquery-ui'], function(CustomSync) {
   var Event;
   Event = function() {
     var _a;
     _a = this;
+    this.toUpdateJSON = function(){ return Event.prototype.toUpdateJSON.apply(_a, arguments); };
     this.className = function(){ return Event.prototype.className.apply(_a, arguments); };
     this.meta = function(){ return Event.prototype.meta.apply(_a, arguments); };
     this.description = function(){ return Event.prototype.description.apply(_a, arguments); };
@@ -53,6 +54,9 @@ define(['lib/models/custom_sync'], function(CustomSync) {
     sign = amount < 0 ? '<span class="sign">-</span>' : '';
     return "" + (sign) + "<span class='currency'>$</span>" + (Math.abs(amount).toFixed(2));
   };
+  Event.prototype.formatDate = function(date) {
+    return $.datepicker.formatDate('m/d/yy', $.datepicker.parseDate('yy-m-d', date));
+  };
   Event.prototype.formatted_amount = function() {
     return this.formatCurrency(this.get('amount'));
   };
@@ -61,6 +65,9 @@ define(['lib/models/custom_sync'], function(CustomSync) {
   };
   Event.prototype.isDeposit = function() {
     return this.get('amount') > 0;
+  };
+  Event.prototype.isSocial = function() {
+    return false;
   };
   Event.prototype.description = function() {
     return this.depositOrWithdrawal();
@@ -82,6 +89,14 @@ define(['lib/models/custom_sync'], function(CustomSync) {
   };
   Event.prototype.toDetailJSON = function() {
     return this.toViewJSON();
+  };
+  Event.prototype.toUpdateJSON = function() {
+    return {
+      event: {
+        vendor_rating: this.get('vendor_rating'),
+        vendor_comment: this.get('vendor_comment')
+      }
+    };
   };
   return Event;
 });

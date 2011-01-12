@@ -1,4 +1,4 @@
-define ["text!views/timeline/events/detail.handlebars?v=3", "vendor/handlebars"], (template) ->
+define ["text!views/timeline/events/detail.handlebars?v=3", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "vendor/handlebars"], (template, SocialView, FeedbackView) ->
 
   class EventDetailView extends Backbone.View
 
@@ -7,12 +7,32 @@ define ["text!views/timeline/events/detail.handlebars?v=3", "vendor/handlebars"]
 
     template: Handlebars.compile(template)
 
+    eventTypeTemplate: null
+
     close: =>
       @model.set 'selected': false
 
     render: =>
 
-      $(@el).html @template(@model.toDetailJSON())
+      detailJSON = @model.toDetailJSON()
+
+      $(@el).html @template(detailJSON)
+
+      if @model.isSocial()
+        @socialView = new SocialView
+          model: @model
+
+        $(@el).append @socialView.render().el
+
+      if @eventTypeTemplate?
+        $(@el).append @eventTypeTemplate(detailJSON)
+
+      if @model.get('vendor')?
+        @feedbackView = new FeedbackView
+          model: @model
+          subject: @model.get('vendor')
+
+        $(@el).append @feedbackView.render().el
 
       this.show()
 

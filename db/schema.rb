@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110107065019) do
+ActiveRecord::Schema.define(:version => 20110112055829) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -53,6 +53,10 @@ ActiveRecord::Schema.define(:version => 20110107065019) do
     t.float    "deposits"
     t.float    "withdrawals"
     t.float    "ending_balance"
+    t.integer  "bill_payment_processing_days"
+    t.datetime "bill_payment_submitted_date"
+    t.integer  "vendor_rating",                :default => 0
+    t.text     "vendor_comment"
   end
 
   create_table "histories", :force => true do |t|
@@ -122,5 +126,14 @@ ActiveRecord::Schema.define(:version => 20110107065019) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "vendors", :force => true do |t|
+    t.string   "name"
+    t.string   "event_type"
+    t.text     "question"
+    t.string   "avatar"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

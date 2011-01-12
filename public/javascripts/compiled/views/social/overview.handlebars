@@ -1,0 +1,21 @@
+<div class="twitter">
+  {{#twitter_username}}
+    <div class="icon-and-vote">
+      <a href="http://twitter.com/{{.}}" class="view-profile" target="_blank"><img src="/images/twitter-button.png" /></a>
+      <a href="#" class="vote">Vote</a>
+    </div>
+  {{/twitter_username}}
+  <div class="latest-tweet">
+  {{^twitter_username}}
+    <div class="form">
+      <input type="text" placeholder="Twitter username for {{name}}" class="text" />
+      <button>Add</button>
+    </div>
+  {{/twitter_username}}
+  </div>
+</div>
+
+<p class="security">
+  Don't trust Twitter with your financial information? That's ok -- <a href="#">neither do we</a>.
+</p>
+

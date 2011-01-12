@@ -1,5 +1,5 @@
 # An Event is a timeline event such as a transaction or other non-transactional event to be presented on the timeline.
-define ['lib/models/custom_sync'], (CustomSync) ->
+define ['lib/models/custom_sync', 'vendor/jquery-ui'], (CustomSync) ->
 
   class Event extends Backbone.Model
 
@@ -28,6 +28,9 @@ define ['lib/models/custom_sync'], (CustomSync) ->
       sign = if amount < 0 then '<span class="sign">-</span>' else ''
       "#{sign}<span class='currency'>$</span>#{Math.abs(amount).toFixed(2)}"
 
+    formatDate: (date) ->
+      $.datepicker.formatDate('m/d/yy', $.datepicker.parseDate('yy-m-d', date))
+
     # Move the negative sign in front of the dollar sign for negative amounts and wrap the dollar
     # sign in <span class="currency"> to allow font customization.
     formatted_amount: =>
@@ -38,6 +41,9 @@ define ['lib/models/custom_sync'], (CustomSync) ->
 
     isDeposit: ->
       this.get('amount') > 0
+
+    isSocial: ->
+      false
 
     description: =>
       this.depositOrWithdrawal()
@@ -59,4 +65,11 @@ define ['lib/models/custom_sync'], (CustomSync) ->
 
     toDetailJSON: ->
       this.toViewJSON()
+
+    toUpdateJSON: =>
+      event:
+        vendor_rating: this.get('vendor_rating')
+        vendor_comment: this.get('vendor_comment')
+
+      
 

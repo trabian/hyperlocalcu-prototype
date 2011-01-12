@@ -1,0 +1,47 @@
+.feedback
+  border-top: 1px solid #d4d4d4
+  margin: 12px 0 0
+  padding: 14px 0 0
+  .avatar-and-question
+    +float(left)
+    +clearfix
+    .avatar
+      +float(left)
+      width: 48px
+      height: 48px
+      padding: 3px
+      background: #fff
+      border: 1px solid #ddd
+      margin: 0 7px 0 0
+    .question-and-rating
+      +float(left)
+      +clearfix
+      width: 255px
+      .question
+        margin: 0 0 7px
+        font-size: 11px
+
+
+  div.comment
+    clear: both
+    +speech-bubble(142px)
+    margin-top: 12px
+    position: relative
+    top: 10px
+    .cancel
+      line-height: 0
+      float: right
+      margin: 5px 0 0 0
+    h4
+      margin-bottom: 0
+    textarea
+      height: 70px
+      font-size: 12px
+      width: 282px
+    .buttons
+      +clearfix
+      button
+        +float(right)
+        margin: 0 0 0 10px
+      p
+        display: none
