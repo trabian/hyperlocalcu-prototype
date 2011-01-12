@@ -2299,6 +2299,14 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 .feedback div.comment .buttons p {
   display: none;
 }
+/* line 48, ../../../frontend/sass/_feedback.sass */
+.feedback p.thanks {
+  clear: both;
+  text-align: center;
+  padding: 1em 0;
+  color: #009900;
+  font-weight: bold;
+}
 
 /* line 5, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view {

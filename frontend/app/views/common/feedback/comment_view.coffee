@@ -60,4 +60,14 @@ define ["text!views/feedback/comment.handlebars?v=2"], (template) ->
         commentAttributes = {}
         commentAttributes[@commentField] = this.$('textarea').val()
         @model.save commentAttributes
+        this.showThanks()
 
+    showThanks: =>
+      this.hide()
+      parent = $(@el).parent()
+      parent.append('<p class="thanks">Thank you for your feedback!</p>')
+
+      hideThanks = =>
+        parent.find('.thanks').fadeOut()
+
+      _.delay hideThanks, 1000

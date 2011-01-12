@@ -1,4 +1,6 @@
-var __extends = function(child, parent) {
+var __bind = function(func, context) {
+    return function(){ return func.apply(context, arguments); };
+  }, __extends = function(child, parent) {
     var ctor = function(){};
     ctor.prototype = parent.prototype;
     child.prototype = new ctor();
@@ -11,6 +13,7 @@ define(["text!views/feedback/comment.handlebars?v=2"], function(template) {
   CommentView = function() {
     var _a;
     _a = this;
+    this.showThanks = function(){ return CommentView.prototype.showThanks.apply(_a, arguments); };
     this.submitComment = function(){ return CommentView.prototype.submitComment.apply(_a, arguments); };
     this.resetAndHide = function(){ return CommentView.prototype.resetAndHide.apply(_a, arguments); };
     this.isActive = function(){ return CommentView.prototype.isActive.apply(_a, arguments); };
@@ -70,8 +73,19 @@ define(["text!views/feedback/comment.handlebars?v=2"], function(template) {
     if (!(this.$('button').button('option', 'disabled'))) {
       commentAttributes = {};
       commentAttributes[this.commentField] = this.$('textarea').val();
-      return this.model.save(commentAttributes);
+      this.model.save(commentAttributes);
+      return this.showThanks();
     }
+  };
+  CommentView.prototype.showThanks = function() {
+    var hideThanks, parent;
+    this.hide();
+    parent = $(this.el).parent();
+    parent.append('<p class="thanks">Thank you for your feedback!</p>');
+    hideThanks = __bind(function() {
+      return parent.find('.thanks').fadeOut();
+    }, this);
+    return _.delay(hideThanks, 1000);
   };
   return CommentView;
 });

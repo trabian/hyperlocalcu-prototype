@@ -133,7 +133,7 @@ define(['app/views/common/feedback/comment_view'], function(CommentView) {
       }, this));
       this.commentView.bind('hide', __bind(function() {
         var _b;
-        if (!(typeof (_b = this.model.get('comment')) !== "undefined" && _b !== null)) {
+        if (!(typeof (_b = this.model.get(this.options.commentField)) !== "undefined" && _b !== null)) {
           return this.$('.commentLink').removeClass('active');
         }
       }, this));
