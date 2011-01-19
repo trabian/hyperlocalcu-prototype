@@ -5,6 +5,7 @@ define ['lib/models/custom_sync', 'vendor/jquery-ui'], (CustomSync) ->
 
     initialize: ->
       this.sync = CustomSync
+      @updateFields = ['vendor_rating', 'vendor_comment']
 
     splitPostedAt: =>
 
@@ -67,9 +68,8 @@ define ['lib/models/custom_sync', 'vendor/jquery-ui'], (CustomSync) ->
       this.toViewJSON()
 
     toUpdateJSON: =>
+      eventFields = {}
+      _.each @updateFields, (field) =>
+        eventFields[field] = this.get(field)
       event:
-        vendor_rating: this.get('vendor_rating')
-        vendor_comment: this.get('vendor_comment')
-
-      
-
+        eventFields

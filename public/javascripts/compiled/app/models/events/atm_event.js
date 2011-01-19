@@ -6,12 +6,12 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(['app/models/event'], function(Event) {
+define(['app/models/events/cu_event'], function(CUEvent) {
   var AtmEvent;
   AtmEvent = function() {
-    return Event.apply(this, arguments);
+    return CUEvent.apply(this, arguments);
   };
-  __extends(AtmEvent, Event);
+  __extends(AtmEvent, CUEvent);
   AtmEvent.prototype.initialize = function() {
     AtmEvent.__super__.initialize.call(this);
     this.description = ("ATM " + (this.depositOrWithdrawal()));

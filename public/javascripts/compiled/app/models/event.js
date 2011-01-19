@@ -1,4 +1,6 @@
-var __extends = function(child, parent) {
+var __bind = function(func, context) {
+    return function(){ return func.apply(context, arguments); };
+  }, __extends = function(child, parent) {
     var ctor = function(){};
     ctor.prototype = parent.prototype;
     child.prototype = new ctor();
@@ -24,7 +26,8 @@ define(['lib/models/custom_sync', 'vendor/jquery-ui'], function(CustomSync) {
   };
   __extends(Event, Backbone.Model);
   Event.prototype.initialize = function() {
-    return (this.sync = CustomSync);
+    this.sync = CustomSync;
+    return (this.updateFields = ['vendor_rating', 'vendor_comment']);
   };
   Event.prototype.splitPostedAt = function() {
     var _a, date, time;
@@ -91,11 +94,13 @@ define(['lib/models/custom_sync', 'vendor/jquery-ui'], function(CustomSync) {
     return this.toViewJSON();
   };
   Event.prototype.toUpdateJSON = function() {
+    var eventFields;
+    eventFields = {};
+    _.each(this.updateFields, __bind(function(field) {
+      return (eventFields[field] = this.get(field));
+    }, this));
     return {
-      event: {
-        vendor_rating: this.get('vendor_rating'),
-        vendor_comment: this.get('vendor_comment')
-      }
+      event: eventFields
     };
   };
   return Event;

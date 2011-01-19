@@ -19,13 +19,13 @@ define(["text!views/feedback/form.handlebars?v=4", "app/views/common/feedback/ra
     var ratingView;
     $(this.el).html(this.template({
       avatar: this.options.subject.avatar,
-      question: this.options.subject.question
+      question: this.model.feedbackQuestion || this.options.subject.question
     }));
     ratingView = new RatingView({
       model: this.model,
       commentParent: $(this.el),
-      ratingField: "vendor_rating",
-      commentField: "vendor_comment",
+      ratingField: ("" + (this.options.fieldPrefix) + "_rating"),
+      commentField: ("" + (this.options.fieldPrefix) + "_comment"),
       commentFormTitle: "Care to elaborate?"
     });
     this.$('.question').after(ratingView.render().el);

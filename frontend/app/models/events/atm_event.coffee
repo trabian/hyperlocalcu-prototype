@@ -1,6 +1,6 @@
-define ['app/models/event'], (Event) ->
+define ['app/models/events/cu_event'], (CUEvent) ->
 
-  class AtmEvent extends Event
+  class AtmEvent extends CUEvent
 
     initialize: ->
 

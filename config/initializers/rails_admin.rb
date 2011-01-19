@@ -54,6 +54,7 @@ RailsAdmin.config do |config|
       field :merchant_id
       field :amount
       field :check_number
+      field :check_image
     end
   end
 

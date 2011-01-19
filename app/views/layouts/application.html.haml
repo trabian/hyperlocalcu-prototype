@@ -6,6 +6,10 @@
 %body
   #container
     #global
+      %ul
+        %li.available-services
+          = link_to "Available Services", '#'
+        
     #main
       .content
         .ui-widget= yield

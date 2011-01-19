@@ -7,7 +7,9 @@ define ["text!views/timeline/events/detail.handlebars?v=3", "app/views/common/so
 
     template: Handlebars.compile(template)
 
-    eventTypeTemplate: null
+    initialize: ->
+      if @eventTypeOptions? and @eventTypeOptions.events?
+        this.delegateEvents(@eventTypeOptions.events)
 
     close: =>
       @model.set 'selected': false
@@ -24,15 +26,13 @@ define ["text!views/timeline/events/detail.handlebars?v=3", "app/views/common/so
 
         $(@el).append @socialView.render().el
 
-      if @eventTypeTemplate?
-        $(@el).append @eventTypeTemplate(detailJSON)
+      if @eventTypeOptions? and @eventTypeOptions.template?
+        $(@el).append @eventTypeOptions.template(detailJSON)
 
-      if @model.get('vendor')?
-        @feedbackView = new FeedbackView
-          model: @model
-          subject: @model.get('vendor')
+      this.addFeedbackView 'vendor', 'teller'
 
-        $(@el).append @feedbackView.render().el
+      if @renderDetail?
+        this.renderDetail()
 
       this.show()
 
@@ -47,3 +47,15 @@ define ["text!views/timeline/events/detail.handlebars?v=3", "app/views/common/so
       this.trigger('hide')
 
       $(@el).empty().hide()
+
+    addFeedbackView: (fields...) =>
+      _.each fields, (field) =>
+        if @model.get(field)?
+          @feedbackView = new FeedbackView
+            model: @model
+            subject: @model.get(field)
+            fieldPrefix: field
+
+          $(@el).append @feedbackView.render().el
+
+          return false

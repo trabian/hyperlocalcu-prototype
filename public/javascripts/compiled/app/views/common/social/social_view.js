@@ -1,6 +1,4 @@
-var __bind = function(func, context) {
-    return function(){ return func.apply(context, arguments); };
-  }, __extends = function(child, parent) {
+var __extends = function(child, parent) {
     var ctor = function(){};
     ctor.prototype = parent.prototype;
     child.prototype = new ctor();
@@ -33,10 +31,7 @@ define(["text!views/social/overview.handlebars", "vendor/jquery-tweet", "vendor/
     return this.$('.twitter .latest-tweet').tweet({
       username: this.model.twitter_username,
       count: 1,
-      broadcast_only: true,
-      time_parser: __bind(function(time) {
-        return $.timeago(time);
-      }, this)
+      broadcast_only: true
     });
   };
   return SocialView;

@@ -25,6 +25,3 @@ define ["text!views/social/overview.handlebars", "vendor/jquery-tweet", "vendor/
         username: @model.twitter_username
         count: 1
         broadcast_only: true
-
-        time_parser: (time) =>
-          $.timeago(time)

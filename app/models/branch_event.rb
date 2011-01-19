@@ -8,7 +8,7 @@ class BranchEvent < Event
   validates :amount, :presence => true
 
   def as_json(options = {})
-    super :include => [:branch, :teller]
+    super :include => {:branch => { :methods => :address_summary }, :teller => {}}
   end
 
 end

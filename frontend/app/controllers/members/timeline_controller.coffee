@@ -1,5 +1,5 @@
 # The Member Timeline Controller is the main controller for the member timeline
-define ["app/views/timeline/member_timeline", "app/views/timeline/events/detail", "app/views/timeline/events/billpay/detail", "app/models/event_list"], (MemberTimeline, EventDetailView, BillpayDetailView, EventList) ->
+define ["app/views/timeline/member_timeline", "app/views/timeline/events/detail", "app/views/timeline/events/billpay/detail", "app/views/timeline/events/check/detail", "app/models/event_list"], (MemberTimeline, EventDetailView, BillpayDetailView, CheckDetailView, EventList) ->
 
   class MemberTimelineController extends Backbone.Controller
 
@@ -10,6 +10,7 @@ define ["app/views/timeline/member_timeline", "app/views/timeline/events/detail"
 
       @detail_views =
         billpay: BillpayDetailView
+        check: CheckDetailView
 
       # Optionally fetch as the final step of initialization
       this.fetch() if options.fetchOnInit == true

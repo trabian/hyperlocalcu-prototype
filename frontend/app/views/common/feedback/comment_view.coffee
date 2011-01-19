@@ -1,4 +1,4 @@
-define ["text!views/feedback/comment.handlebars?v=2"], (template) ->
+define ["text!views/feedback/comment.handlebars?v=3"], (template) ->
 
   class CommentView extends Backbone.View
 
@@ -21,6 +21,7 @@ define ["text!views/feedback/comment.handlebars?v=2"], (template) ->
       $(@el).html @template(
         comment: @model.get(@commentField)
         title: @options.title
+        buttonText: @options.buttonText || 'Share'
       )
 
       this.$('button').button
@@ -70,4 +71,4 @@ define ["text!views/feedback/comment.handlebars?v=2"], (template) ->
       hideThanks = =>
         parent.find('.thanks').fadeOut()
 
-      _.delay hideThanks, 1000
+      _.delay hideThanks, 3000

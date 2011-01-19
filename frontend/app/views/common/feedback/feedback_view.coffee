@@ -12,14 +12,14 @@ define ["text!views/feedback/form.handlebars?v=4", "app/views/common/feedback/ra
 
       $(@el).html @template(
         avatar: @options.subject.avatar
-        question: @options.subject.question
+        question: @model.feedbackQuestion || @options.subject.question
       )
 
       ratingView = new RatingView
         model: @model
         commentParent: $(@el)
-        ratingField: "vendor_rating"
-        commentField: "vendor_comment"
+        ratingField: "#{@options.fieldPrefix}_rating"
+        commentField: "#{@options.fieldPrefix}_comment"
         commentFormTitle: "Care to elaborate?"
 
       this.$('.question').after ratingView.render().el

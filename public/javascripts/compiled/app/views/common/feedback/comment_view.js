@@ -8,7 +8,7 @@ var __bind = function(func, context) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(["text!views/feedback/comment.handlebars?v=2"], function(template) {
+define(["text!views/feedback/comment.handlebars?v=3"], function(template) {
   var CommentView;
   CommentView = function() {
     var _a;
@@ -38,7 +38,8 @@ define(["text!views/feedback/comment.handlebars?v=2"], function(template) {
   CommentView.prototype.render = function() {
     $(this.el).html(this.template({
       comment: this.model.get(this.commentField),
-      title: this.options.title
+      title: this.options.title,
+      buttonText: this.options.buttonText || 'Share'
     }));
     this.$('button').button({
       icons: {
@@ -85,7 +86,7 @@ define(["text!views/feedback/comment.handlebars?v=2"], function(template) {
     hideThanks = __bind(function() {
       return parent.find('.thanks').fadeOut();
     }, this);
-    return _.delay(hideThanks, 1000);
+    return _.delay(hideThanks, 3000);
   };
   return CommentView;
 });

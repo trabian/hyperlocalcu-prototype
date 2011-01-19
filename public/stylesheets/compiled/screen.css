@@ -2190,20 +2190,20 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   font-size: 10px;
 }
 
-/* line 1, ../../../frontend/sass/_feedback.sass */
+/* line 3, ../../../frontend/sass/_feedback.sass */
 .feedback {
   border-top: 1px solid #d4d4d4;
   margin: 12px 0 0;
   padding: 14px 0 0;
 }
-/* line 5, ../../../frontend/sass/_feedback.sass */
+/* line 7, ../../../frontend/sass/_feedback.sass */
 .feedback .avatar-and-question {
   display: inline;
   float: left;
   overflow: hidden;
   *zoom: 1;
 }
-/* line 8, ../../../frontend/sass/_feedback.sass */
+/* line 10, ../../../frontend/sass/_feedback.sass */
 .feedback .avatar-and-question .avatar {
   display: inline;
   float: left;
@@ -2214,7 +2214,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   border: 1px solid #dddddd;
   margin: 0 7px 0 0;
 }
-/* line 16, ../../../frontend/sass/_feedback.sass */
+/* line 18, ../../../frontend/sass/_feedback.sass */
 .feedback .avatar-and-question .question-and-rating {
   display: inline;
   float: left;
@@ -2222,14 +2222,15 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   *zoom: 1;
   width: 255px;
 }
-/* line 20, ../../../frontend/sass/_feedback.sass */
+/* line 22, ../../../frontend/sass/_feedback.sass */
 .feedback .avatar-and-question .question-and-rating .question {
   margin: 0 0 7px;
   font-size: 11px;
 }
-/* line 25, ../../../frontend/sass/_feedback.sass */
+/* line 2, ../../../frontend/sass/feedback/_comment_form.sass */
 .feedback div.comment {
   clear: both;
+  text-align: left;
   position: relative;
   margin: 10px 0 0 0;
   background: white;
@@ -2268,38 +2269,34 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   right: 142px;
   top: -24px;
 }
-/* line 31, ../../../frontend/sass/_feedback.sass */
+/* line 9, ../../../frontend/sass/feedback/_comment_form.sass */
 .feedback div.comment .cancel {
   line-height: 0;
   float: right;
   margin: 5px 0 0 0;
 }
-/* line 35, ../../../frontend/sass/_feedback.sass */
+/* line 13, ../../../frontend/sass/feedback/_comment_form.sass */
 .feedback div.comment h4 {
   margin-bottom: 0;
 }
-/* line 37, ../../../frontend/sass/_feedback.sass */
+/* line 15, ../../../frontend/sass/feedback/_comment_form.sass */
 .feedback div.comment textarea {
   height: 70px;
   font-size: 12px;
   width: 282px;
 }
-/* line 41, ../../../frontend/sass/_feedback.sass */
+/* line 19, ../../../frontend/sass/feedback/_comment_form.sass */
 .feedback div.comment .buttons {
   overflow: hidden;
   *zoom: 1;
 }
-/* line 43, ../../../frontend/sass/_feedback.sass */
+/* line 21, ../../../frontend/sass/feedback/_comment_form.sass */
 .feedback div.comment .buttons button {
   display: inline;
   float: right;
   margin: 0 0 0 10px;
 }
-/* line 46, ../../../frontend/sass/_feedback.sass */
-.feedback div.comment .buttons p {
-  display: none;
-}
-/* line 48, ../../../frontend/sass/_feedback.sass */
+/* line 24, ../../../frontend/sass/feedback/_comment_form.sass */
 .feedback p.thanks {
   clear: both;
   text-align: center;
@@ -2307,12 +2304,16 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   color: #009900;
   font-weight: bold;
 }
+/* line 29, ../../../frontend/sass/_feedback.sass */
+.feedback div.comment .buttons p {
+  display: none;
+}
 
-/* line 5, ../../../frontend/sass/events/_detail.sass */
+/* line 6, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view {
   position: fixed;
   color: #444444;
-  top: 32px;
+  top: 42px;
   left: 630px;
   padding: 25px 10px 20px 15px;
   border: 1px solid #cccccc;
@@ -2355,7 +2356,98 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #event-detail-view .processing-summary p.submitted-date {
   color: #999999;
 }
-/* line 18, ../../../frontend/sass/events/_detail.sass */
+/* line 4, ../../../frontend/sass/events/check/_detail.sass */
+#event-detail-view .check-image {
+  line-height: 1.2em;
+  padding: 10px 0;
+  text-align: right;
+}
+/* line 8, ../../../frontend/sass/events/check/_detail.sass */
+#event-detail-view .check-image .report-problems {
+  font-size: 11px;
+}
+/* line 2, ../../../frontend/sass/feedback/_comment_form.sass */
+#event-detail-view .check-image div.comment {
+  clear: both;
+  text-align: left;
+  position: relative;
+  margin: 10px 0 0 0;
+  background: white;
+  border: 1px solid #dddddd;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 11px;
+  margin-top: 12px;
+  position: relative;
+  top: 10px;
+}
+/* line 10, ../../../frontend/sass/_ui_mixins.sass */
+#event-detail-view .check-image div.comment::before, #event-detail-view .check-image div.comment::after {
+  content: "";
+  display: block;
+  height: 0px;
+  width: 0px;
+  position: absolute;
+}
+/* line 17, ../../../frontend/sass/_ui_mixins.sass */
+#event-detail-view .check-image div.comment::before {
+  border: 14px solid transparent;
+  border-bottom-color: #dddddd;
+  right: 66px;
+  top: -28px;
+}
+/* line 23, ../../../frontend/sass/_ui_mixins.sass */
+#event-detail-view .check-image div.comment::after {
+  border: 12px solid transparent;
+  border-bottom-color: white;
+  right: 68px;
+  top: -24px;
+}
+/* line 9, ../../../frontend/sass/feedback/_comment_form.sass */
+#event-detail-view .check-image div.comment .cancel {
+  line-height: 0;
+  float: right;
+  margin: 5px 0 0 0;
+}
+/* line 13, ../../../frontend/sass/feedback/_comment_form.sass */
+#event-detail-view .check-image div.comment h4 {
+  margin-bottom: 0;
+}
+/* line 15, ../../../frontend/sass/feedback/_comment_form.sass */
+#event-detail-view .check-image div.comment textarea {
+  height: 70px;
+  font-size: 12px;
+  width: 282px;
+}
+/* line 19, ../../../frontend/sass/feedback/_comment_form.sass */
+#event-detail-view .check-image div.comment .buttons {
+  overflow: hidden;
+  *zoom: 1;
+}
+/* line 21, ../../../frontend/sass/feedback/_comment_form.sass */
+#event-detail-view .check-image div.comment .buttons button {
+  display: inline;
+  float: right;
+  margin: 0 0 0 10px;
+}
+/* line 24, ../../../frontend/sass/feedback/_comment_form.sass */
+#event-detail-view .check-image p.thanks {
+  clear: both;
+  text-align: center;
+  padding: 1em 0;
+  color: #009900;
+  font-weight: bold;
+}
+/* line 13, ../../../frontend/sass/events/check/_detail.sass */
+#event-detail-view .check-image div.comment .buttons p {
+  display: none;
+}
+/* line 20, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .close {
   float: right;
   position: absolute;
@@ -2363,13 +2455,13 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   right: 10px;
   font-size: 10px;
 }
-/* line 24, ../../../frontend/sass/events/_detail.sass */
+/* line 26, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .name-and-location {
   min-height: 60px;
   position: relative;
   padding-right: 30px;
 }
-/* line 28, ../../../frontend/sass/events/_detail.sass */
+/* line 30, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .name-and-location .avatar {
   position: absolute;
   bottom: 3px;
@@ -2379,12 +2471,12 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   border: 1px solid #dddddd;
   cursor: pointer;
 }
-/* line 36, ../../../frontend/sass/events/_detail.sass */
+/* line 38, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .name-and-location h3 {
   font-size: 16px;
   margin: 0 0 0.5em 0;
 }
-/* line 39, ../../../frontend/sass/events/_detail.sass */
+/* line 41, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .name-and-location h3 em {
   color: #666666;
   display: block;
@@ -2392,24 +2484,70 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   font-size: 0.7em;
   margin: 5px 0 0 0;
 }
-/* line 45, ../../../frontend/sass/events/_detail.sass */
+/* line 47, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .name-and-location p.address, #event-detail-view .name-and-location p.phone {
   font-size: 11px;
   margin: 0.2em 0;
+}
+/* line 51, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .available-service {
+  margin: 10px 0 0;
+  border: 1px solid #92c5e0;
+  background: white url(/images/vcu/avatar.png) no-repeat 7px 12px;
+  padding: 7px 5px 7px 55px;
+  font-size: 11px;
+}
+/* line 57, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .available-service h2 {
+  font-size: 14px;
+  margin: 0;
+}
+/* line 60, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .available-service p {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  margin: 0.2em 0 0.5em;
+}
+/* line 63, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .available-service ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+}
+/* line 11, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_bullets.scss */
+#event-detail-view .available-service ul li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0px;
+}
+/* line 66, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .available-service ul li {
+  margin: 0 0 0.5em;
+}
+/* line 68, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .available-service ul li .yes {
+  font-weight: bold;
 }
 
 /* line 23, ../../../frontend/sass/screen.sass */
 #container {
   position: relative;
+  padding-top: 20px;
 }
 
-/* line 26, ../../../frontend/sass/screen.sass */
+/* line 27, ../../../frontend/sass/screen.sass */
 #global {
+  float: right;
   position: absolute;
   top: 2px;
   right: 15px;
+  display: none;
 }
-/* line 30, ../../../frontend/sass/screen.sass */
+/* line 33, ../../../frontend/sass/screen.sass */
 #global ul {
   margin: 0;
   padding: 0;
@@ -2437,7 +2575,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #global ul li:last-child, #global ul li.last {
   padding-right: 0;
 }
-/* line 32, ../../../frontend/sass/screen.sass */
+/* line 35, ../../../frontend/sass/screen.sass */
 #global ul a {
   text-decoration: none;
   color: white;

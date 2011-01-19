@@ -1,4 +1,6 @@
-var __extends = function(child, parent) {
+var __slice = Array.prototype.slice, __bind = function(func, context) {
+    return function(){ return func.apply(context, arguments); };
+  }, __extends = function(child, parent) {
     var ctor = function(){};
     ctor.prototype = parent.prototype;
     child.prototype = new ctor();
@@ -11,6 +13,7 @@ define(["text!views/timeline/events/detail.handlebars?v=3", "app/views/common/so
   EventDetailView = function() {
     var _a;
     _a = this;
+    this.addFeedbackView = function(){ return EventDetailView.prototype.addFeedbackView.apply(_a, arguments); };
     this.render = function(){ return EventDetailView.prototype.render.apply(_a, arguments); };
     this.close = function(){ return EventDetailView.prototype.close.apply(_a, arguments); };
     return Backbone.View.apply(this, arguments);
@@ -20,14 +23,17 @@ define(["text!views/timeline/events/detail.handlebars?v=3", "app/views/common/so
     "click .close": "close"
   };
   EventDetailView.prototype.template = Handlebars.compile(template);
-  EventDetailView.prototype.eventTypeTemplate = null;
+  EventDetailView.prototype.initialize = function() {
+    var _a, _b;
+    return (typeof (_a = this.eventTypeOptions) !== "undefined" && _a !== null) && (typeof (_b = this.eventTypeOptions.events) !== "undefined" && _b !== null) ? this.delegateEvents(this.eventTypeOptions.events) : null;
+  };
   EventDetailView.prototype.close = function() {
     return this.model.set({
       'selected': false
     });
   };
   EventDetailView.prototype.render = function() {
-    var _a, _b, detailJSON;
+    var _a, _b, _c, detailJSON;
     detailJSON = this.model.toDetailJSON();
     $(this.el).html(this.template(detailJSON));
     if (this.model.isSocial()) {
@@ -36,15 +42,12 @@ define(["text!views/timeline/events/detail.handlebars?v=3", "app/views/common/so
       });
       $(this.el).append(this.socialView.render().el);
     }
-    if (typeof (_a = this.eventTypeTemplate) !== "undefined" && _a !== null) {
-      $(this.el).append(this.eventTypeTemplate(detailJSON));
+    if ((typeof (_a = this.eventTypeOptions) !== "undefined" && _a !== null) && (typeof (_b = this.eventTypeOptions.template) !== "undefined" && _b !== null)) {
+      $(this.el).append(this.eventTypeOptions.template(detailJSON));
     }
-    if (typeof (_b = this.model.get('vendor')) !== "undefined" && _b !== null) {
-      this.feedbackView = new FeedbackView({
-        model: this.model,
-        subject: this.model.get('vendor')
-      });
-      $(this.el).append(this.feedbackView.render().el);
+    this.addFeedbackView('vendor', 'teller');
+    if (typeof (_c = this.renderDetail) !== "undefined" && _c !== null) {
+      this.renderDetail();
     }
     return this.show();
   };
@@ -55,6 +58,22 @@ define(["text!views/timeline/events/detail.handlebars?v=3", "app/views/common/so
   EventDetailView.prototype.hide = function() {
     this.trigger('hide');
     return $(this.el).empty().hide();
+  };
+  EventDetailView.prototype.addFeedbackView = function() {
+    var fields;
+    fields = __slice.call(arguments, 0);
+    return _.each(fields, __bind(function(field) {
+      var _a;
+      if (typeof (_a = this.model.get(field)) !== "undefined" && _a !== null) {
+        this.feedbackView = new FeedbackView({
+          model: this.model,
+          subject: this.model.get(field),
+          fieldPrefix: field
+        });
+        $(this.el).append(this.feedbackView.render().el);
+        return false;
+      }
+    }, this));
   };
   return EventDetailView;
 });

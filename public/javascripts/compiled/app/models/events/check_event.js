@@ -16,7 +16,12 @@ define(['app/models/events/merchant_event'], function(MerchantEvent) {
     var _a, check_name;
     CheckEvent.__super__.initialize.call(this);
     check_name = ("Check #" + (this.get('check_number')));
-    return (typeof (_a = this.merchant) !== "undefined" && _a !== null) ? (this.meta = check_name) : (this.description = check_name);
+    if (typeof (_a = this.merchant) !== "undefined" && _a !== null) {
+      this.meta = check_name;
+    } else {
+      this.description = check_name;
+    }
+    return this.updateFields.push('check_image_comment');
   };
   return CheckEvent;
 });

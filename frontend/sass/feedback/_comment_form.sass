@@ -1,0 +1,29 @@
+= comment-form($right = 20px)
+  div.comment
+    clear: both
+    text-align: left
+    +speech-bubble($right)
+    margin-top: 12px
+    position: relative
+    top: 10px
+    .cancel
+      line-height: 0
+      float: right
+      margin: 5px 0 0 0
+    h4
+      margin-bottom: 0
+    textarea
+      height: 70px
+      font-size: 12px
+      width: 282px
+    .buttons
+      +clearfix
+      button
+        +float(right)
+        margin: 0 0 0 10px
+  p.thanks
+    clear: both
+    text-align: center
+    padding: 1em 0
+    color: #090
+    font-weight: bold

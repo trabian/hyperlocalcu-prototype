@@ -12,3 +12,6 @@ define ['app/models/events/merchant_event'], (MerchantEvent) ->
         @meta = check_name
       else
         @description = check_name
+
+      @updateFields.push 'check_image_comment'
+
