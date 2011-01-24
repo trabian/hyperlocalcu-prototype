@@ -2570,42 +2570,43 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 /* line 1, ../../../frontend/sass/_tellers.sass */
 #teller-overview {
   height: 75px;
+  padding: 5px 0;
 }
-/* line 3, ../../../frontend/sass/_tellers.sass */
+/* line 4, ../../../frontend/sass/_tellers.sass */
 #teller-overview p.meta {
   color: #999999;
   font-size: 0.83em;
 }
-/* line 6, ../../../frontend/sass/_tellers.sass */
+/* line 7, ../../../frontend/sass/_tellers.sass */
 #teller-overview .teller-info {
   float: left;
   width: 40%;
 }
-/* line 9, ../../../frontend/sass/_tellers.sass */
+/* line 10, ../../../frontend/sass/_tellers.sass */
 #teller-overview .teller-info .avatar {
   border: 1px solid #cccccc;
   margin: 0 1em 0 0;
   float: left;
 }
-/* line 14, ../../../frontend/sass/_tellers.sass */
+/* line 15, ../../../frontend/sass/_tellers.sass */
 #teller-overview .teller-info .name h2 {
   font-size: 18px;
   margin: 0 0 0.3em;
   line-height: 1em;
 }
-/* line 19, ../../../frontend/sass/_tellers.sass */
+/* line 20, ../../../frontend/sass/_tellers.sass */
 #teller-overview .averages .average {
   text-align: center;
   width: 160px;
   float: left;
 }
-/* line 23, ../../../frontend/sass/_tellers.sass */
+/* line 24, ../../../frontend/sass/_tellers.sass */
 #teller-overview .averages .average h2 {
   font-size: 18px;
   line-height: 1em;
   margin: 0 0 0.3em;
 }
-/* line 27, ../../../frontend/sass/_tellers.sass */
+/* line 28, ../../../frontend/sass/_tellers.sass */
 #teller-overview .averages .average div.rating {
   margin: 0.2em auto;
 }
