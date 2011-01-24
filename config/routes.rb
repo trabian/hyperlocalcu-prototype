@@ -6,6 +6,8 @@ Hyperlocalcu::Application.routes.draw do
 
   resources :merchants
 
+  resources :tellers
+
   resources :accounts do
 
     resources :events

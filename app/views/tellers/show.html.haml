@@ -1,0 +1,26 @@
+#teller-overview
+
+#timeline-loading Loading...
+
+%table#timeline{:style => 'display: none;'}
+  %tbody.ui-widget-content
+
+= content_for :sidebar do
+  #overview
+  #event-detail-view{:style => "display: none;"}
+
+= content_for :javascript do
+
+  %script{:src => google_js_src, :type => 'text/javascript'}
+
+  :javascript
+    require({ baseUrl: "/javascripts/compiled" }, ["order!vendor/underscore", "order!vendor/backbone", "order!app/controllers/tellers/dashboard_controller", "order!app/models/event_list"], function(underscore, backbone, TellerDashboardController, EventList) {
+
+      Backbone.emulateHTTP = true;
+
+      var tellerDashboardController = new TellerDashboardController({
+        fetchOnInit: true,
+        events: new EventList()
+      });
+
+    });
