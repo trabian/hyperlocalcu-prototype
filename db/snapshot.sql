@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.1.51, for apple-darwin10.4.0 (i386)
 --
--- Host: localhost    Database: hyperlocalcu_development
+-- Host: localhost    Database: hyperlocalcu_dev
 -- ------------------------------------------------------
 -- Server version	5.1.51
 
@@ -124,6 +124,14 @@ CREATE TABLE `events` (
   `deposits` float DEFAULT NULL,
   `withdrawals` float DEFAULT NULL,
   `ending_balance` float DEFAULT NULL,
+  `bill_payment_processing_days` int(11) DEFAULT NULL,
+  `bill_payment_submitted_date` datetime DEFAULT NULL,
+  `vendor_rating` int(11) DEFAULT '0',
+  `vendor_comment` text COLLATE utf8_unicode_ci,
+  `check_image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `check_image_comment` text COLLATE utf8_unicode_ci,
+  `teller_rating` int(11) DEFAULT NULL,
+  `teller_comment` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -134,7 +142,7 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
-INSERT INTO `events` VALUES (2,35.47,'AtmEvent',2,'2011-01-06 00:00:00',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(3,-20,'AtmEvent',3,'2011-01-05 00:00:00',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,-40,'AtmEvent',5,'2011-01-05 00:00:00',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(5,-250,'BranchEvent',NULL,'2011-01-06 00:00:00',1,2,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6,1349.83,'BranchEvent',NULL,'2011-01-05 00:00:00',1,4,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(7,-208.81,'BillpayEvent',NULL,'2011-01-07 00:00:00',1,NULL,NULL,27,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(8,-98.24,'CheckEvent',NULL,'2011-01-04 00:00:00',1,NULL,NULL,NULL,3450,NULL,NULL,NULL,NULL,NULL,NULL),(9,-483.25,'CheckEvent',NULL,'2011-01-07 00:00:00',1,NULL,NULL,25,3451,NULL,NULL,NULL,NULL,NULL,NULL),(10,-30,'NsfEvent',NULL,'2011-01-04 00:00:00',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(11,3.25,'RewardEvent',NULL,'2010-12-31 00:00:00',1,NULL,NULL,NULL,NULL,'10 pin-based debit card transactions',NULL,NULL,NULL,NULL,NULL),(12,NULL,'StatementEvent',NULL,'2010-12-31 23:59:00',1,NULL,NULL,NULL,NULL,NULL,'December Statement',9847.32,4302.89,3450.23,10700),(13,-95.57,'CardEvent',NULL,'2011-01-07 00:00:00',1,NULL,NULL,19,NULL,NULL,'MARSH SUPKMT 5134',NULL,NULL,NULL,NULL),(14,-34.28,'CardEvent',NULL,'2011-01-07 00:00:00',1,NULL,NULL,NULL,NULL,NULL,'THE RAM #1234',NULL,NULL,NULL,NULL);
+INSERT INTO `events` VALUES (2,35.47,'AtmEvent',2,'2011-01-06 00:00:00',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL),(3,-20,'AtmEvent',3,'2011-01-05 00:00:00',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL),(4,-40,'AtmEvent',5,'2011-01-05 00:00:00',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL),(5,-250,'BranchEvent',NULL,'2011-01-06 00:00:00',1,2,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL),(6,1349.83,'BranchEvent',NULL,'2011-01-08 00:00:00',1,4,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,4,'Matt was friendly and took care of my deposit quickly.'),(7,-208.81,'BillpayEvent',NULL,'2011-01-07 00:00:00',1,NULL,NULL,27,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,'2011-01-03 00:00:00',0,NULL,NULL,NULL,NULL,NULL),(8,-98.24,'CheckEvent',NULL,'2011-01-04 00:00:00',1,NULL,NULL,NULL,3450,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL),(9,-483.25,'CheckEvent',NULL,'2011-01-07 00:00:00',1,NULL,NULL,25,3451,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL),(10,-30,'NsfEvent',NULL,'2011-01-04 00:00:00',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL),(11,3.25,'RewardEvent',NULL,'2010-12-31 00:00:00',1,NULL,NULL,NULL,NULL,'10 pin-based debit card transactions',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL),(12,NULL,'StatementEvent',NULL,'2010-12-31 23:59:00',1,NULL,NULL,NULL,NULL,NULL,'December Statement',9847.32,4302.89,3450.23,10700,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL),(13,-95.57,'CardEvent',NULL,'2011-01-07 00:00:00',1,NULL,NULL,19,NULL,NULL,'MARSH SUPKMT 5134',NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL),(14,-34.28,'CardEvent',NULL,'2011-01-07 00:00:00',1,NULL,NULL,NULL,NULL,NULL,'THE RAM #1234',NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -157,7 +165,7 @@ CREATE TABLE `histories` (
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_histories_on_item_and_table_and_month_and_year` (`item`,`table`,`month`,`year`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -166,7 +174,7 @@ CREATE TABLE `histories` (
 
 LOCK TABLES `histories` WRITE;
 /*!40000 ALTER TABLE `histories` DISABLE KEYS */;
-INSERT INTO `histories` VALUES (1,'Created Arnold','matt@trabian.com',1,'Atm',1,2011,'2011-01-06 05:14:24','2011-01-06 05:14:24'),(2,'Created Bridgeton Branch','matt@trabian.com',2,'Atm',1,2011,'2011-01-06 05:15:07','2011-01-06 05:15:07'),(3,'Created Cave Springs Branch','matt@trabian.com',3,'Atm',1,2011,'2011-01-06 05:15:36','2011-01-06 05:15:36'),(4,'Created Des Peres','matt@trabian.com',4,'Atm',1,2011,'2011-01-06 05:16:05','2011-01-06 05:16:05'),(5,'Created East St. Louis Branch','matt@trabian.com',5,'Atm',1,2011,'2011-01-06 05:16:30','2011-01-06 05:16:30'),(6,'Created Eureka','matt@trabian.com',6,'Atm',1,2011,'2011-01-06 05:17:39','2011-01-06 05:17:39'),(7,'Created Event #1','matt@trabian.com',1,'Event',1,2011,'2011-01-06 05:20:08','2011-01-06 05:20:08'),(8,'Created AtmEvent #2','matt@trabian.com',2,'AtmEvent',1,2011,'2011-01-06 05:35:28','2011-01-06 05:35:28'),(9,'Created AtmEvent #3','matt@trabian.com',3,'AtmEvent',1,2011,'2011-01-06 05:35:43','2011-01-06 05:35:43'),(10,'Created AtmEvent #4','matt@trabian.com',4,'AtmEvent',1,2011,'2011-01-06 07:20:08','2011-01-06 07:20:08'),(11,'Changed associated Atm','matt@trabian.com',4,'AtmEvent',1,2011,'2011-01-06 07:20:25','2011-01-06 07:20:25'),(12,'Destroyed American Express','matt@trabian.com',2,'Account',1,2011,'2011-01-06 07:29:55','2011-01-06 07:29:55'),(13,'Created Administration/Bridgeton','matt@trabian.com',1,'Branch',1,2011,'2011-01-07 04:16:58','2011-01-07 04:16:58'),(14,'Created Cave Springs','matt@trabian.com',2,'Branch',1,2011,'2011-01-07 04:17:20','2011-01-07 04:17:20'),(15,'Created Des Peres','matt@trabian.com',3,'Branch',1,2011,'2011-01-07 04:18:12','2011-01-07 04:18:12'),(16,'Created East St. Louis','matt@trabian.com',4,'Branch',1,2011,'2011-01-07 04:18:25','2011-01-07 04:18:25'),(17,'Created Teller #1','matt@trabian.com',1,'Teller',1,2011,'2011-01-07 04:19:05','2011-01-07 04:19:05'),(18,'Created Teller #2','matt@trabian.com',2,'Teller',1,2011,'2011-01-07 04:19:09','2011-01-07 04:19:09'),(19,'Created Teller #3','matt@trabian.com',3,'Teller',1,2011,'2011-01-07 04:19:13','2011-01-07 04:19:13'),(20,'Created BranchEvent #5','matt@trabian.com',5,'BranchEvent',1,2011,'2011-01-07 04:19:54','2011-01-07 04:19:54'),(21,'Created BranchEvent #6','matt@trabian.com',6,'BranchEvent',1,2011,'2011-01-07 04:21:10','2011-01-07 04:21:10'),(22,'Changed posted_at','matt@trabian.com',5,'BranchEvent',1,2011,'2011-01-07 04:40:34','2011-01-07 04:40:34'),(23,'Changed posted_at','matt@trabian.com',6,'BranchEvent',1,2011,'2011-01-07 04:40:57','2011-01-07 04:40:57'),(24,'Created BillpayEvent #7','matt@trabian.com',7,'BillpayEvent',1,2011,'2011-01-07 04:47:32','2011-01-07 04:47:32'),(25,'Changed amount','matt@trabian.com',7,'BillpayEvent',1,2011,'2011-01-07 04:47:49','2011-01-07 04:47:49'),(26,'Created CheckEvent #8','matt@trabian.com',8,'CheckEvent',1,2011,'2011-01-07 05:21:26','2011-01-07 05:21:26'),(27,'Created CheckEvent #9','matt@trabian.com',9,'CheckEvent',1,2011,'2011-01-07 05:22:02','2011-01-07 05:22:02'),(28,'Changed amount','matt@trabian.com',9,'CheckEvent',1,2011,'2011-01-07 05:22:19','2011-01-07 05:22:19'),(29,'Changed amount','matt@trabian.com',8,'CheckEvent',1,2011,'2011-01-07 05:22:24','2011-01-07 05:22:24'),(30,'Created NsfEvent #10','matt@trabian.com',10,'NsfEvent',1,2011,'2011-01-07 05:37:55','2011-01-07 05:37:55'),(31,'Created RewardEvent #11','matt@trabian.com',11,'RewardEvent',1,2011,'2011-01-07 06:05:58','2011-01-07 06:05:58'),(32,'Created December Statement','matt@trabian.com',12,'StatementEvent',1,2011,'2011-01-07 06:28:30','2011-01-07 06:28:30'),(33,'Changed posted_at','matt@trabian.com',12,'StatementEvent',1,2011,'2011-01-07 06:28:51','2011-01-07 06:28:51'),(34,'Changed opening_balance, deposits, withdrawals, ending_balance','matt@trabian.com',12,'StatementEvent',1,2011,'2011-01-07 06:54:51','2011-01-07 06:54:51'),(35,'Created CardEvent #13','matt@trabian.com',13,'CardEvent',1,2011,'2011-01-10 12:40:47','2011-01-10 12:40:47'),(36,'Changed amount','matt@trabian.com',13,'CardEvent',1,2011,'2011-01-10 12:41:06','2011-01-10 12:41:06'),(37,'Created THE RAM #1234','matt@trabian.com',14,'CardEvent',1,2011,'2011-01-10 12:44:08','2011-01-10 12:44:08'),(38,'Changed name','matt@trabian.com',13,'CardEvent',1,2011,'2011-01-10 12:49:55','2011-01-10 12:49:55');
+INSERT INTO `histories` VALUES (1,'Created Arnold','matt@trabian.com',1,'Atm',1,2011,'2011-01-06 05:14:24','2011-01-06 05:14:24'),(2,'Created Bridgeton Branch','matt@trabian.com',2,'Atm',1,2011,'2011-01-06 05:15:07','2011-01-06 05:15:07'),(3,'Created Cave Springs Branch','matt@trabian.com',3,'Atm',1,2011,'2011-01-06 05:15:36','2011-01-06 05:15:36'),(4,'Created Des Peres','matt@trabian.com',4,'Atm',1,2011,'2011-01-06 05:16:05','2011-01-06 05:16:05'),(5,'Created East St. Louis Branch','matt@trabian.com',5,'Atm',1,2011,'2011-01-06 05:16:30','2011-01-06 05:16:30'),(6,'Created Eureka','matt@trabian.com',6,'Atm',1,2011,'2011-01-06 05:17:39','2011-01-06 05:17:39'),(7,'Created Event #1','matt@trabian.com',1,'Event',1,2011,'2011-01-06 05:20:08','2011-01-06 05:20:08'),(8,'Created AtmEvent #2','matt@trabian.com',2,'AtmEvent',1,2011,'2011-01-06 05:35:28','2011-01-06 05:35:28'),(9,'Created AtmEvent #3','matt@trabian.com',3,'AtmEvent',1,2011,'2011-01-06 05:35:43','2011-01-06 05:35:43'),(10,'Created AtmEvent #4','matt@trabian.com',4,'AtmEvent',1,2011,'2011-01-06 07:20:08','2011-01-06 07:20:08'),(11,'Changed associated Atm','matt@trabian.com',4,'AtmEvent',1,2011,'2011-01-06 07:20:25','2011-01-06 07:20:25'),(12,'Destroyed American Express','matt@trabian.com',2,'Account',1,2011,'2011-01-06 07:29:55','2011-01-06 07:29:55'),(13,'Created Administration/Bridgeton','matt@trabian.com',1,'Branch',1,2011,'2011-01-07 04:16:58','2011-01-07 04:16:58'),(14,'Created Cave Springs','matt@trabian.com',2,'Branch',1,2011,'2011-01-07 04:17:20','2011-01-07 04:17:20'),(15,'Created Des Peres','matt@trabian.com',3,'Branch',1,2011,'2011-01-07 04:18:12','2011-01-07 04:18:12'),(16,'Created East St. Louis','matt@trabian.com',4,'Branch',1,2011,'2011-01-07 04:18:25','2011-01-07 04:18:25'),(17,'Created Teller #1','matt@trabian.com',1,'Teller',1,2011,'2011-01-07 04:19:05','2011-01-07 04:19:05'),(18,'Created Teller #2','matt@trabian.com',2,'Teller',1,2011,'2011-01-07 04:19:09','2011-01-07 04:19:09'),(19,'Created Teller #3','matt@trabian.com',3,'Teller',1,2011,'2011-01-07 04:19:13','2011-01-07 04:19:13'),(20,'Created BranchEvent #5','matt@trabian.com',5,'BranchEvent',1,2011,'2011-01-07 04:19:54','2011-01-07 04:19:54'),(21,'Created BranchEvent #6','matt@trabian.com',6,'BranchEvent',1,2011,'2011-01-07 04:21:10','2011-01-07 04:21:10'),(22,'Changed posted_at','matt@trabian.com',5,'BranchEvent',1,2011,'2011-01-07 04:40:34','2011-01-07 04:40:34'),(23,'Changed posted_at','matt@trabian.com',6,'BranchEvent',1,2011,'2011-01-07 04:40:57','2011-01-07 04:40:57'),(24,'Created BillpayEvent #7','matt@trabian.com',7,'BillpayEvent',1,2011,'2011-01-07 04:47:32','2011-01-07 04:47:32'),(25,'Changed amount','matt@trabian.com',7,'BillpayEvent',1,2011,'2011-01-07 04:47:49','2011-01-07 04:47:49'),(26,'Created CheckEvent #8','matt@trabian.com',8,'CheckEvent',1,2011,'2011-01-07 05:21:26','2011-01-07 05:21:26'),(27,'Created CheckEvent #9','matt@trabian.com',9,'CheckEvent',1,2011,'2011-01-07 05:22:02','2011-01-07 05:22:02'),(28,'Changed amount','matt@trabian.com',9,'CheckEvent',1,2011,'2011-01-07 05:22:19','2011-01-07 05:22:19'),(29,'Changed amount','matt@trabian.com',8,'CheckEvent',1,2011,'2011-01-07 05:22:24','2011-01-07 05:22:24'),(30,'Created NsfEvent #10','matt@trabian.com',10,'NsfEvent',1,2011,'2011-01-07 05:37:55','2011-01-07 05:37:55'),(31,'Created RewardEvent #11','matt@trabian.com',11,'RewardEvent',1,2011,'2011-01-07 06:05:58','2011-01-07 06:05:58'),(32,'Created December Statement','matt@trabian.com',12,'StatementEvent',1,2011,'2011-01-07 06:28:30','2011-01-07 06:28:30'),(33,'Changed posted_at','matt@trabian.com',12,'StatementEvent',1,2011,'2011-01-07 06:28:51','2011-01-07 06:28:51'),(34,'Changed opening_balance, deposits, withdrawals, ending_balance','matt@trabian.com',12,'StatementEvent',1,2011,'2011-01-07 06:54:51','2011-01-07 06:54:51'),(35,'Created CardEvent #13','matt@trabian.com',13,'CardEvent',1,2011,'2011-01-10 12:40:47','2011-01-10 12:40:47'),(36,'Changed amount','matt@trabian.com',13,'CardEvent',1,2011,'2011-01-10 12:41:06','2011-01-10 12:41:06'),(37,'Created THE RAM #1234','matt@trabian.com',14,'CardEvent',1,2011,'2011-01-10 12:44:08','2011-01-10 12:44:08'),(38,'Changed name','matt@trabian.com',13,'CardEvent',1,2011,'2011-01-10 12:49:55','2011-01-10 12:49:55'),(39,'Changed last_name, avatar','matt@trabian.com',1,'Teller',1,2011,'2011-01-24 03:40:54','2011-01-24 03:40:54'),(40,'Changed associated Teller','matt@trabian.com',5,'BranchEvent',1,2011,'2011-01-24 03:41:18','2011-01-24 03:41:18'),(41,'Changed posted_at','matt@trabian.com',6,'BranchEvent',1,2011,'2011-01-24 03:42:48','2011-01-24 03:42:48'),(42,'Changed bill_payment_processing_days, bill_payment_submitted_date','matt@trabian.com',7,'BillpayEvent',1,2011,'2011-01-24 04:22:32','2011-01-24 04:22:32'),(43,'Created iPay Technologies','matt@trabian.com',1,'Vendor',1,2011,'2011-01-24 04:24:00','2011-01-24 04:24:00');
 /*!40000 ALTER TABLE `histories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -258,7 +266,7 @@ CREATE TABLE `schema_migrations` (
 
 LOCK TABLES `schema_migrations` WRITE;
 /*!40000 ALTER TABLE `schema_migrations` DISABLE KEYS */;
-INSERT INTO `schema_migrations` VALUES ('20101209043035'),('20101209054600'),('20101210205323'),('20101213040616'),('20101213054051'),('20110106045332'),('20110106050216'),('20110106051111'),('20110106051112'),('20110107041004'),('20110107041019'),('20110107041204'),('20110107044406'),('20110107051947'),('20110107060008'),('20110107062414'),('20110107065019');
+INSERT INTO `schema_migrations` VALUES ('20101209043035'),('20101209054600'),('20101210205323'),('20101213040616'),('20101213054051'),('20110106045332'),('20110106050216'),('20110106051111'),('20110106051112'),('20110107041004'),('20110107041019'),('20110107041204'),('20110107044406'),('20110107051947'),('20110107060008'),('20110107062414'),('20110107065019'),('20110111155225'),('20110112042503'),('20110112055829'),('20110112134616'),('20110117154358'),('20110119055243'),('20110119061238');
 /*!40000 ALTER TABLE `schema_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,6 +283,7 @@ CREATE TABLE `tellers` (
   `last_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
+  `avatar` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -285,7 +294,7 @@ CREATE TABLE `tellers` (
 
 LOCK TABLES `tellers` WRITE;
 /*!40000 ALTER TABLE `tellers` DISABLE KEYS */;
-INSERT INTO `tellers` VALUES (1,'Matt','Dean','2011-01-07 04:19:05','2011-01-07 04:19:05'),(2,'Cam','Minges','2011-01-07 04:19:09','2011-01-07 04:19:09'),(3,'Eric','Acree','2011-01-07 04:19:13','2011-01-07 04:19:13');
+INSERT INTO `tellers` VALUES (1,'Matt','Fagala','2011-01-07 04:19:05','2011-01-24 03:40:54','/images/sample/tellers/matt_fagala.png'),(2,'Cam','Minges','2011-01-07 04:19:09','2011-01-07 04:19:09',NULL),(3,'Eric','Acree','2011-01-07 04:19:13','2011-01-07 04:19:13',NULL);
 /*!40000 ALTER TABLE `tellers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -323,8 +332,37 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'matt@trabian.com','$2a$10$9WcpAdonXDkUQGfSFVm6FuR8AfHJLZucrb0yCTduYQ4LFDTMjvpEy','$2a$10$9WcpAdonXDkUQGfSFVm6Fu',NULL,'en0LuonuoQjMkMVnebtL','2011-01-07 04:15:33',3,'2011-01-10 12:36:26','2011-01-07 04:15:34','127.0.0.1','127.0.0.1','2011-01-06 05:12:40','2011-01-10 12:36:26');
+INSERT INTO `users` VALUES (1,'matt@trabian.com','$2a$10$9WcpAdonXDkUQGfSFVm6FuR8AfHJLZucrb0yCTduYQ4LFDTMjvpEy','$2a$10$9WcpAdonXDkUQGfSFVm6Fu',NULL,'mohV7am5afX1gcuAuoVq','2011-01-24 03:40:18',4,'2011-01-24 03:40:18','2011-01-10 12:36:26','127.0.0.1','127.0.0.1','2011-01-06 05:12:40','2011-01-24 03:40:18');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `vendors`
+--
+
+DROP TABLE IF EXISTS `vendors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vendors` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `event_type` varchar(255) DEFAULT NULL,
+  `question` text,
+  `avatar` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vendors`
+--
+
+LOCK TABLES `vendors` WRITE;
+/*!40000 ALTER TABLE `vendors` DISABLE KEYS */;
+INSERT INTO `vendors` VALUES (1,'iPay Technologies','billpay','We partner with <strong>iPay Technologies</strong> for bill payment services.  How would you rate this service?','/images/sample/vendors/ipay.jpg','2011-01-24 04:24:00','2011-01-24 04:24:00');
+/*!40000 ALTER TABLE `vendors` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -336,4 +374,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-01-10 14:26:16
+-- Dump completed on 2011-01-24  0:23:30
