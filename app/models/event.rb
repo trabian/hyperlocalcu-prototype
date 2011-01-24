@@ -7,6 +7,8 @@ class Event < ActiveRecord::Base
 
   scope :ordered, :order => 'posted_at DESC, id'
 
+  scope :since, lambda { |time| where('posted_at >= ?', time) }
+
   def as_json(options = {})
 
     if options.key?(:methods)
@@ -25,6 +27,10 @@ class Event < ActiveRecord::Base
 
   def vendor
     Vendor.find_by_event_type(event_type)
+  end
+
+  def member_name
+    self.try(:account).try(:member).short_name
   end
 
 end

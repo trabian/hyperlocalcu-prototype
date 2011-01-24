@@ -32,20 +32,27 @@ define(['app/views/common/feedback/comment_view'], function(CommentView) {
   RatingView.prototype.render = function() {
     var _a, commentLink, num;
     this.rating = this.model.get(this.options.ratingField) || 0;
-    this.addCancel();
+    this.readOnly = (this.options.readOnly === true);
+    if (!(this.readOnly)) {
+      this.addCancel();
+    }
     for (num = 1; num <= 5; num++) {
-      this.addStar(num, num <= this.rating);
+      this.addStar(num, num <= this.rating, this.readOnly);
     }
-    commentLink = this.make("a", {
-      href: '#',
-      className: 'commentLink'
-    }, 'comment');
-    $(this.el).append(commentLink);
-    if (typeof (_a = this.model.get(this.options.commentField)) !== "undefined" && _a !== null) {
-      this.$('.commentLink').addClass('active');
-    }
-    if (this.rating > 0) {
-      $(this.el).addClass('rated active');
+    if (!(this.readOnly)) {
+      commentLink = this.make("a", {
+        href: '#',
+        className: 'commentLink'
+      }, 'comment');
+      $(this.el).append(commentLink);
+      if (typeof (_a = this.model.get(this.options.commentField)) !== "undefined" && _a !== null) {
+        this.$('.commentLink').addClass('active');
+      }
+      if (this.rating > 0) {
+        $(this.el).addClass('rated active');
+      }
+    } else {
+      $(this.el).addClass('readonly active');
     }
     return this;
   };
@@ -73,29 +80,32 @@ define(['app/views/common/feedback/comment_view'], function(CommentView) {
     ratingAttributes[this.options.ratingField] = num;
     return this.model.save(ratingAttributes);
   };
-  RatingView.prototype.addStar = function(num, starOn) {
-    var star;
-    star = this.make("a", {
-      href: '#',
+  RatingView.prototype.addStar = function(num, starOn, readOnly) {
+    var star, starTag;
+    starTag = readOnly ? "span" : "a";
+    star = this.make(starTag, {
       className: ("star" + (starOn ? ' on' : ''))
     }, num);
     if (starOn) {
       this.currentStar = star;
     }
-    $(star).bind('mouseenter', __bind(function() {
-      return this.fillStar(star);
-    }, this));
-    $(star).bind('mouseleave', __bind(function() {
-      return this.fillStar(this.currentStar);
-    }, this));
-    $(star).bind('click', __bind(function() {
-      this.updateRating(num);
-      this.currentStar = star;
-      this.fillStar(this.currentStar);
-      this.showCommentForm();
-      $(this.el).addClass('rated');
-      return false;
-    }, this));
+    if (!(readOnly)) {
+      $(star).attr('href', '#');
+      $(star).bind('mouseenter', __bind(function() {
+        return this.fillStar(star);
+      }, this));
+      $(star).bind('mouseleave', __bind(function() {
+        return this.fillStar(this.currentStar);
+      }, this));
+      $(star).bind('click', __bind(function() {
+        this.updateRating(num);
+        this.currentStar = star;
+        this.fillStar(this.currentStar);
+        this.showCommentForm();
+        $(this.el).addClass('rated');
+        return false;
+      }, this));
+    }
     return $(this.el).append(star);
   };
   RatingView.prototype.fillStar = function(star) {

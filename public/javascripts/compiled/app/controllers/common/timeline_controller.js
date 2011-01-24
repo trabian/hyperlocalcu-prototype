@@ -25,6 +25,11 @@ define(function() {
     this.events.bind('unselect', __bind(function() {
       return this.saveLocation('');
     }, this));
+    this.events.bind('load', __bind(function() {
+      $('#timeline-loading').hide();
+      $('#timeline').show();
+      return Backbone.history.start();
+    }, this));
     if (options.fetchOnInit === true) {
       return this.fetch();
     }
@@ -37,11 +42,9 @@ define(function() {
   };
   TimelineController.prototype.fetch = function() {
     return this.events.fetch({
-      success: function() {
-        $('#timeline-loading').hide();
-        $('#timeline').show();
-        return Backbone.history.start();
-      }
+      success: __bind(function() {
+        return this.events.trigger('load');
+      }, this)
     });
   };
   TimelineController.prototype.changeSelected = function(event) {

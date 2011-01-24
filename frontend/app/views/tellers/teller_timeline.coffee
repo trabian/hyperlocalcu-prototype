@@ -3,7 +3,7 @@ define ["app/views/common/timeline/timeline_view", "app/views/common/feedback/ti
   class TellerTimelineView extends TimelineView
 
     initialize: (options) ->
-       
+
       options.rowFactory = new FeedbackRowFactory
 
       super(options)

@@ -11,6 +11,13 @@ define ->
       @events.bind 'unselect', =>
         this.saveLocation ''
 
+      @events.bind 'load', =>
+
+        $('#timeline-loading').hide()
+        $('#timeline').show()
+
+        Backbone.history.start()
+
       # Optionally fetch as the final step of initialization
       this.fetch() if options.fetchOnInit == true
 
@@ -23,12 +30,8 @@ define ->
     fetch: =>
 
       @events.fetch
-        success: ->
-
-          $('#timeline-loading').hide()
-          $('#timeline').show()
-
-          Backbone.history.start()
+        success: =>
+          @events.trigger 'load'
 
     # Change the selected event and either show or hide the Detail view
     # based on whether the event is selected.

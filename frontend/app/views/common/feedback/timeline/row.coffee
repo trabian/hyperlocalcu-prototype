@@ -1,4 +1,4 @@
-define ["text!views/common/feedback/timeline/row.handlebars?v=2", 'vendor/handlebars'], (template) ->
+define ["text!views/common/feedback/timeline/row.handlebars?v=3", "app/views/common/feedback/rating_view", 'vendor/handlebars'], (template, RatingView) ->
 
   class FeedbackRowView extends Backbone.View
 
@@ -13,5 +13,12 @@ define ["text!views/common/feedback/timeline/row.handlebars?v=2", 'vendor/handle
     render: ->
 
       $(@el).html @template(@model.toViewJSON())
+
+      ratingView = new RatingView
+        model: @model
+        ratingField: "teller_rating"
+        readOnly: true
+
+      this.$('.rating').append ratingView.render().el
 
       return this

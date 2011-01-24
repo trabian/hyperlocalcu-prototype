@@ -14,13 +14,12 @@
   %script{:src => google_js_src, :type => 'text/javascript'}
 
   :javascript
-    require({ baseUrl: "/javascripts/compiled" }, ["order!vendor/underscore", "order!vendor/backbone", "order!app/controllers/tellers/dashboard_controller", "order!app/models/event_list"], function(underscore, backbone, TellerDashboardController, EventList) {
+    require({ baseUrl: "/javascripts/compiled" }, ["order!vendor/underscore", "order!vendor/backbone", "order!app/controllers/tellers/dashboard_controller", "order!app/models/teller"], function(underscore, backbone, TellerDashboardController, Teller) {
 
       Backbone.emulateHTTP = true;
 
       var tellerDashboardController = new TellerDashboardController({
-        fetchOnInit: true,
-        events: new EventList()
+        teller: new Teller(#{@teller.to_json})
       });
 
     });

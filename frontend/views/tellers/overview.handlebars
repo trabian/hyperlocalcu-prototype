@@ -1,0 +1,23 @@
+<div class="teller-info">
+  <img src="{{ avatar }}" class="avatar" />
+  <div class="name">
+    <h2>{{ name }}</h2>
+    <p class="meta">Teller #{{ id }}</p>
+  </div>
+</div>
+
+<div class="averages">
+  
+  <div class="month average">
+    <h2>This Month</h2>
+    <div class="rating"></div>
+    <p class="meta">{{ average_feedback_this_month }} based on {{ count_feedback_this_month }} reviews</p>
+  </div>
+
+  <div class="year average">
+    <h2>This Year</h2>
+    <div class="rating"></div>
+    <p class="meta">{{ average_feedback_this_year }} based on {{ count_feedback_this_year }} reviews</p>
+  </div>
+
+</div>

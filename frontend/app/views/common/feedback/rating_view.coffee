@@ -13,22 +13,27 @@ define ['app/views/common/feedback/comment_view'], (CommentView) ->
     render: ->
 
       @rating = @model.get(@options.ratingField) || 0
+      @readOnly = (@options.readOnly == true)
 
-      this.addCancel()
+      this.addCancel() unless @readOnly
 
       for num in [1..5]
-        this.addStar num, (num <= @rating)
+        this.addStar num, (num <= @rating), @readOnly
 
-      commentLink = this.make "a", {
-        href: '#'
-        className: 'commentLink'
-      }, 'comment'
+      unless @readOnly
+        commentLink = this.make "a", {
+          href: '#'
+          className: 'commentLink'
+        }, 'comment'
 
-      $(@el).append commentLink
+        $(@el).append commentLink
 
-      this.$('.commentLink').addClass('active') if @model.get(@options.commentField)?
+        this.$('.commentLink').addClass('active') if @model.get(@options.commentField)?
 
-      $(@el).addClass('rated active') if @rating > 0
+        $(@el).addClass('rated active') if @rating > 0
+
+      else
+        $(@el).addClass('readonly active')
 
       this
 
@@ -64,34 +69,39 @@ define ['app/views/common/feedback/comment_view'], (CommentView) ->
       @model.save ratingAttributes
 
 
-    addStar: (num, starOn)=>
+    addStar: (num, starOn, readOnly)=>
 
-      star = this.make "a", {
-        href: '#'
+      starTag = if readOnly then "span" else "a"
+
+      star = this.make starTag, {
         className: "star#{if starOn then ' on' else ''}"
       }, num
 
       @currentStar = star if starOn
 
-      $(star).bind 'mouseenter', =>
-        this.fillStar(star)
+      unless readOnly
 
-      $(star).bind 'mouseleave', =>
-        this.fillStar(@currentStar)
+        $(star).attr('href', '#')
 
-      $(star).bind 'click', =>
+        $(star).bind 'mouseenter', =>
+          this.fillStar(star)
 
-        this.updateRating num
+        $(star).bind 'mouseleave', =>
+          this.fillStar(@currentStar)
 
-        @currentStar = star
+        $(star).bind 'click', =>
 
-        this.fillStar(@currentStar)
+          this.updateRating num
 
-        this.showCommentForm()
+          @currentStar = star
 
-        $(@el).addClass 'rated'
+          this.fillStar(@currentStar)
 
-        false
+          this.showCommentForm()
+
+          $(@el).addClass 'rated'
+
+          false
 
       $(@el).append star
 

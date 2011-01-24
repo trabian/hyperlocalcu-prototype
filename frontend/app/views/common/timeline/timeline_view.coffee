@@ -8,6 +8,10 @@ define ->
 
       @collection.bind 'refresh', @addAll
 
+      unless @collection.isEmpty()
+        this.addAll()
+        @collection.trigger 'load'
+
     addAll: =>
       @collection.each @addOne
 
@@ -24,5 +28,3 @@ define ->
     addTimestampClass: (view, event) ->
       $(view.el).addClass('repeat-date') if event.day() is @lastEventDay
       @lastEventDay = event.day()
-
-    

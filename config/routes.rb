@@ -1,5 +1,7 @@
 Hyperlocalcu::Application.routes.draw do
 
+  resources :members
+
   resources :vendors
 
   devise_for :users

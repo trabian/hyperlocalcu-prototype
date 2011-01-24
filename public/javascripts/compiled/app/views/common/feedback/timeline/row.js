@@ -6,7 +6,7 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(["text!views/common/feedback/timeline/row.handlebars?v=2", 'vendor/handlebars'], function(template) {
+define(["text!views/common/feedback/timeline/row.handlebars?v=3", "app/views/common/feedback/rating_view", 'vendor/handlebars'], function(template, RatingView) {
   var FeedbackRowView;
   FeedbackRowView = function() {
     return Backbone.View.apply(this, arguments);
@@ -18,7 +18,14 @@ define(["text!views/common/feedback/timeline/row.handlebars?v=2", 'vendor/handle
     return this.render();
   };
   FeedbackRowView.prototype.render = function() {
+    var ratingView;
     $(this.el).html(this.template(this.model.toViewJSON()));
+    ratingView = new RatingView({
+      model: this.model,
+      ratingField: "teller_rating",
+      readOnly: true
+    });
+    this.$('.rating').append(ratingView.render().el);
     return this;
   };
   return FeedbackRowView;

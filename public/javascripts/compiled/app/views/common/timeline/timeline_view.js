@@ -18,7 +18,11 @@ define(function() {
   __extends(TimelineView, Backbone.View);
   TimelineView.prototype.el = $('#timeline tbody');
   TimelineView.prototype.initialize = function(options) {
-    return this.collection.bind('refresh', this.addAll);
+    this.collection.bind('refresh', this.addAll);
+    if (!(this.collection.isEmpty())) {
+      this.addAll();
+      return this.collection.trigger('load');
+    }
   };
   TimelineView.prototype.addAll = function() {
     return this.collection.each(this.addOne);

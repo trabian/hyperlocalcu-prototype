@@ -1361,33 +1361,62 @@ textarea {
   margin: 0.1em 0;
 }
 
-/* line 5, ../../../frontend/sass/_timeline.sass */
-.rating {
+/* line 4, ../../../frontend/sass/feedback/_row.sass */
+table#timeline tbody tr.feedback td.date {
+  width: 10%;
+}
+/* line 6, ../../../frontend/sass/feedback/_row.sass */
+table#timeline tbody tr.feedback td.comment {
+  color: #333333;
+}
+/* line 8, ../../../frontend/sass/feedback/_row.sass */
+table#timeline tbody tr.feedback td.comment p.description {
+  margin-bottom: 0.5em;
+  font-size: 0.9em;
+}
+/* line 11, ../../../frontend/sass/feedback/_row.sass */
+table#timeline tbody tr.feedback td.comment p.meta {
+  margin: 0.2em 0 0;
+  font-size: 0.83em;
+  color: #999999;
+}
+/* line 15, ../../../frontend/sass/feedback/_row.sass */
+table#timeline tbody tr.feedback td.rating {
+  padding-top: 8px;
+  width: 5%;
+}
+/* line 18, ../../../frontend/sass/feedback/_row.sass */
+table#timeline tbody tr.feedback td.rating .rating {
+  width: 80px !important;
+}
+
+/* line 6, ../../../frontend/sass/_timeline.sass */
+div.rating {
   width: 105px !important;
 }
-/* line 7, ../../../frontend/sass/_timeline.sass */
-.rating .star, .rating .cancel, .rating .commentLink {
+/* line 8, ../../../frontend/sass/_timeline.sass */
+div.rating .star, div.rating .cancel, div.rating .commentLink {
   display: inline-block;
   width: 12px;
   height: 12px;
   text-indent: -5000px;
   padding-left: 2px;
 }
-/* line 13, ../../../frontend/sass/_timeline.sass */
-.rating .star {
+/* line 14, ../../../frontend/sass/_timeline.sass */
+div.rating .star {
   background: url(/images/ratings/star-off.png) no-repeat left top;
 }
-/* line 15, ../../../frontend/sass/_timeline.sass */
-.rating .star.on {
+/* line 16, ../../../frontend/sass/_timeline.sass */
+div.rating .star.on {
   background-image: url(/images/ratings/star-on.png);
 }
-/* line 17, ../../../frontend/sass/_timeline.sass */
-.rating .cancel {
+/* line 18, ../../../frontend/sass/_timeline.sass */
+div.rating .cancel {
   background: url(/images/ratings/cancel-off.png) no-repeat left top;
   display: none;
 }
-/* line 20, ../../../frontend/sass/_timeline.sass */
-.rating .commentLink {
+/* line 21, ../../../frontend/sass/_timeline.sass */
+div.rating .commentLink {
   background: url(/images/icons/comment.png) no-repeat right top;
   position: relative;
   top: -1px;
@@ -1400,45 +1429,45 @@ textarea {
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
 }
-/* line 30, ../../../frontend/sass/_timeline.sass */
-.rating .commentLink:hover {
+/* line 31, ../../../frontend/sass/_timeline.sass */
+div.rating .commentLink:hover {
   opacity: 1;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   background-image: url(/images/icons/comment_add.png);
 }
-/* line 33, ../../../frontend/sass/_timeline.sass */
-.rating .commentLink.active {
+/* line 34, ../../../frontend/sass/_timeline.sass */
+div.rating .commentLink.active {
   opacity: 1;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
 }
-/* line 35, ../../../frontend/sass/_timeline.sass */
-.rating.rated {
+/* line 36, ../../../frontend/sass/_timeline.sass */
+div.rating.rated {
   width: 119px !important;
 }
-/* line 37, ../../../frontend/sass/_timeline.sass */
-.rating.rated .cancel {
+/* line 38, ../../../frontend/sass/_timeline.sass */
+div.rating.rated .cancel {
   display: inline-block;
   background-image: url(/images/ratings/cancel-on.png);
 }
 
-/* line 41, ../../../frontend/sass/_timeline.sass */
+/* line 42, ../../../frontend/sass/_timeline.sass */
 table#timeline {
   margin: 0;
   padding: 0;
   border: 0;
   outline: 0;
 }
-/* line 45, ../../../frontend/sass/_timeline.sass */
+/* line 46, ../../../frontend/sass/_timeline.sass */
 table#timeline thead tr td.date {
   width: 60px;
 }
-/* line 50, ../../../frontend/sass/_timeline.sass */
+/* line 51, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.twoLine td.name div.comment {
   margin-top: 7px;
 }
-/* line 54, ../../../frontend/sass/_timeline.sass */
+/* line 55, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td, table#timeline tbody tr th {
   border-top: 2px solid #cfe5f1;
   color: #4d75b1;
@@ -1446,18 +1475,18 @@ table#timeline tbody tr td, table#timeline tbody tr th {
   padding: 8px 5px;
   vertical-align: top;
 }
-/* line 60, ../../../frontend/sass/_timeline.sass */
+/* line 61, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td p, table#timeline tbody tr th p {
   margin: 0;
   padding: 0;
 }
-/* line 64, ../../../frontend/sass/_timeline.sass */
+/* line 65, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.amount {
   width: 15%;
   text-align: right;
   padding-right: 10px;
 }
-/* line 69, ../../../frontend/sass/_timeline.sass */
+/* line 70, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name .rating {
   float: right;
   margin-top: 2px;
@@ -1466,28 +1495,28 @@ table#timeline tbody tr td.name .rating {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   line-height: 1em;
 }
-/* line 74, ../../../frontend/sass/_timeline.sass */
+/* line 75, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name .rating:hover, table#timeline tbody tr td.name .rating.active {
   opacity: 1;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
 }
-/* line 76, ../../../frontend/sass/_timeline.sass */
+/* line 77, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name .offer, table#timeline tbody tr td.name .feedback, table#timeline tbody tr td.name .meta {
   margin: 0;
   font-size: 10px;
   color: #999999;
 }
-/* line 80, ../../../frontend/sass/_timeline.sass */
+/* line 81, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name .offer em, table#timeline tbody tr td.name .feedback em, table#timeline tbody tr td.name .meta em {
   font-style: normal;
   color: #009900;
 }
-/* line 83, ../../../frontend/sass/_timeline.sass */
+/* line 84, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name .feedback {
   color: #009900;
 }
-/* line 86, ../../../frontend/sass/_timeline.sass */
+/* line 87, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name div.comment {
   position: relative;
   margin: 10px 0 0 0;
@@ -1525,70 +1554,70 @@ table#timeline tbody tr td.name div.comment::after {
   right: 6px;
   top: -24px;
 }
-/* line 89, ../../../frontend/sass/_timeline.sass */
+/* line 90, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name div.comment .cancel {
   line-height: 0;
   float: right;
   margin: 5px 0 0 0;
 }
-/* line 93, ../../../frontend/sass/_timeline.sass */
+/* line 94, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name div.comment h4 {
   margin-bottom: 0;
 }
-/* line 95, ../../../frontend/sass/_timeline.sass */
+/* line 96, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name div.comment textarea {
   height: 70px;
   font-size: 12px;
   width: 362px;
 }
-/* line 100, ../../../frontend/sass/_timeline.sass */
+/* line 101, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name div.comment .buttons button {
   float: right;
   margin: 0 0 0 10px;
 }
-/* line 104, ../../../frontend/sass/_timeline.sass */
+/* line 105, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr th {
   font-weight: normal;
 }
-/* line 107, ../../../frontend/sass/_timeline.sass */
+/* line 108, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.repeat-date td, table#timeline tbody tr.repeat-date th {
   border-top: 1px solid #e3eff7;
 }
-/* line 110, ../../../frontend/sass/_timeline.sass */
+/* line 111, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.repeat-date td.date span {
   display: none;
 }
-/* line 113, ../../../frontend/sass/_timeline.sass */
+/* line 114, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr:nth-child(odd) td, table#timeline tbody tr:nth-child(odd) th {
   background: #f6fafd;
 }
-/* line 116, ../../../frontend/sass/_timeline.sass */
+/* line 117, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr:first-child td, table#timeline tbody tr:first-child th {
   border-top: none;
 }
-/* line 119, ../../../frontend/sass/_timeline.sass */
+/* line 120, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.selected td, table#timeline tbody tr.selected th {
   border-top-color: #dddddd;
   background: #f1f1f1;
 }
-/* line 123, ../../../frontend/sass/_timeline.sass */
+/* line 124, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.reward td, table#timeline tbody tr.reward th, table#timeline tbody tr.deposit td, table#timeline tbody tr.deposit th {
   color: #009900;
 }
-/* line 126, ../../../frontend/sass/_timeline.sass */
+/* line 127, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.penalty td, table#timeline tbody tr.penalty th {
   color: #990000;
 }
-/* line 128, ../../../frontend/sass/_timeline.sass */
+/* line 129, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.statement {
   background: #f7f2d8;
 }
-/* line 130, ../../../frontend/sass/_timeline.sass */
+/* line 131, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.statement td, table#timeline tbody tr.statement th {
   color: #584d12;
   border-top-color: #eee4ae;
 }
-/* line 135, ../../../frontend/sass/_timeline.sass */
+/* line 136, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr th {
   border-top-color: #e3e3e3;
 }
@@ -2533,13 +2562,56 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   font-weight: bold;
 }
 
-/* line 23, ../../../frontend/sass/screen.sass */
+/* line 1, ../../../frontend/sass/_tellers.sass */
+#teller-overview {
+  height: 75px;
+}
+/* line 3, ../../../frontend/sass/_tellers.sass */
+#teller-overview p.meta {
+  color: #999999;
+  font-size: 0.83em;
+}
+/* line 6, ../../../frontend/sass/_tellers.sass */
+#teller-overview .teller-info {
+  float: left;
+  width: 40%;
+}
+/* line 9, ../../../frontend/sass/_tellers.sass */
+#teller-overview .teller-info .avatar {
+  border: 1px solid #cccccc;
+  margin: 0 1em 0 0;
+  float: left;
+}
+/* line 14, ../../../frontend/sass/_tellers.sass */
+#teller-overview .teller-info .name h2 {
+  font-size: 18px;
+  margin: 0 0 0.3em;
+  line-height: 1em;
+}
+/* line 19, ../../../frontend/sass/_tellers.sass */
+#teller-overview .averages .average {
+  text-align: center;
+  width: 160px;
+  float: left;
+}
+/* line 23, ../../../frontend/sass/_tellers.sass */
+#teller-overview .averages .average h2 {
+  font-size: 18px;
+  line-height: 1em;
+  margin: 0 0 0.3em;
+}
+/* line 27, ../../../frontend/sass/_tellers.sass */
+#teller-overview .averages .average div.rating {
+  margin: 0.2em auto;
+}
+
+/* line 25, ../../../frontend/sass/screen.sass */
 #container {
   position: relative;
   padding-top: 20px;
 }
 
-/* line 27, ../../../frontend/sass/screen.sass */
+/* line 29, ../../../frontend/sass/screen.sass */
 #global {
   float: right;
   position: absolute;
@@ -2547,7 +2619,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   right: 15px;
   display: none;
 }
-/* line 33, ../../../frontend/sass/screen.sass */
+/* line 35, ../../../frontend/sass/screen.sass */
 #global ul {
   margin: 0;
   padding: 0;
@@ -2575,7 +2647,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #global ul li:last-child, #global ul li.last {
   padding-right: 0;
 }
-/* line 35, ../../../frontend/sass/screen.sass */
+/* line 37, ../../../frontend/sass/screen.sass */
 #global ul a {
   text-decoration: none;
   color: white;
