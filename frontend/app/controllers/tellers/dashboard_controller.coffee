@@ -1,4 +1,4 @@
-define ["app/controllers/common/timeline_controller", "app/views/tellers/teller_timeline", "app/views/tellers/teller_overview"], (TimelineController, TellerTimeline, TellerOverviewView) ->
+define ["app/controllers/common/timeline_controller", "app/views/common/feedback/feedback_timeline_view", "app/views/tellers/teller_overview"], (TimelineController, FeedbackTimelineView, TellerOverviewView) ->
 
   class TellerDashboardController extends TimelineController
 
@@ -6,14 +6,14 @@ define ["app/controllers/common/timeline_controller", "app/views/tellers/teller_
 
       @teller = options.teller
 
-      options.events = @teller.feedbacks()
+      options.events = @teller.feedbacks
 
       super(options)
-
-      @timeline = new TellerTimeline
-        collection: options.events
 
       @overview = new TellerOverviewView
         model: @teller
 
       $('#teller-overview').append @overview.render().el
+
+      @timeline = new FeedbackTimelineView
+        collection: @teller.feedbacks

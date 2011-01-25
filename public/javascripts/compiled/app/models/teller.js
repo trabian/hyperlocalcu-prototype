@@ -13,17 +13,16 @@ define(['app/models/feedback_list', 'app/models/feedback'], function(FeedbackLis
       Teller.__super__.constructor.apply(this, arguments);
     }
     __extends(Teller, Backbone.Model);
-    Teller.prototype.initialize = function() {};
+    Teller.prototype.initialize = function(options) {
+      Teller.__super__.initialize.call(this, options);
+      this.feedbacks = new FeedbackList(this.get('feedbacks'));
+      return this.feedbacks.url = "/tellers/" + this.id + "/feedbacks";
+    };
     Teller.prototype.toViewJSON = function() {
       return _.extend(this.toJSON());
     };
     Teller.prototype.toDetailJSON = function() {
       return this.toViewJSON();
-    };
-    Teller.prototype.feedbacks = function() {
-      return new FeedbackList(this.get('feedbacks'), {
-        model: Feedback
-      });
     };
     return Teller;
   })();

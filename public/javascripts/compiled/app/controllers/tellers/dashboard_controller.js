@@ -6,7 +6,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 };
-define(["app/controllers/common/timeline_controller", "app/views/tellers/teller_timeline", "app/views/tellers/teller_overview"], function(TimelineController, TellerTimeline, TellerOverviewView) {
+define(["app/controllers/common/timeline_controller", "app/views/common/feedback/feedback_timeline_view", "app/views/tellers/teller_overview"], function(TimelineController, FeedbackTimelineView, TellerOverviewView) {
   var TellerDashboardController;
   return TellerDashboardController = (function() {
     function TellerDashboardController() {
@@ -15,15 +15,15 @@ define(["app/controllers/common/timeline_controller", "app/views/tellers/teller_
     __extends(TellerDashboardController, TimelineController);
     TellerDashboardController.prototype.initialize = function(options) {
       this.teller = options.teller;
-      options.events = this.teller.feedbacks();
+      options.events = this.teller.feedbacks;
       TellerDashboardController.__super__.initialize.call(this, options);
-      this.timeline = new TellerTimeline({
-        collection: options.events
-      });
       this.overview = new TellerOverviewView({
         model: this.teller
       });
-      return $('#teller-overview').append(this.overview.render().el);
+      $('#teller-overview').append(this.overview.render().el);
+      return this.timeline = new FeedbackTimelineView({
+        collection: this.teller.feedbacks
+      });
     };
     return TellerDashboardController;
   })();

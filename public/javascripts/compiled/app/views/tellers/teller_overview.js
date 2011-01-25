@@ -6,7 +6,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(["text!views/tellers/overview.handlebars?v=1", "app/views/common/feedback/rating_view", "vendor/handlebars"], function(template, RatingView) {
+define(["text!views/tellers/overview.handlebars?v=2", "app/views/common/feedback/rating_view", "vendor/handlebars"], function(template, RatingView) {
   var TellerOverviewView;
   return TellerOverviewView = (function() {
     function TellerOverviewView() {
@@ -21,7 +21,7 @@ define(["text!views/tellers/overview.handlebars?v=1", "app/views/common/feedback
         var ratingView;
         ratingView = new RatingView({
           model: this.model,
-          ratingField: "average_feedback_this_" + timespan,
+          rating: this.model.get('feedback_totals')[timespan].average,
           readOnly: true
         });
         return this.$("." + timespan + " .rating").append(ratingView.render().el);

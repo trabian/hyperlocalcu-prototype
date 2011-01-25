@@ -2,7 +2,13 @@ define ['app/models/feedback_list', 'app/models/feedback'], (FeedbackList, Feedb
 
   class Teller extends Backbone.Model
 
-    initialize: ->
+    initialize: (options) ->
+
+      super(options)
+
+      @feedbacks = new FeedbackList this.get('feedbacks')
+
+      @feedbacks.url = "/tellers/#{@id}/feedbacks"
 
     # Add the formatted timestamp and amount to the json for the view
     toViewJSON: ->
@@ -10,7 +16,3 @@ define ['app/models/feedback_list', 'app/models/feedback'], (FeedbackList, Feedb
 
     toDetailJSON: ->
       this.toViewJSON()
-
-    feedbacks: ->
-      new FeedbackList this.get('feedbacks'),
-        model: Feedback

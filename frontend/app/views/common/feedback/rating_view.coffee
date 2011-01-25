@@ -15,7 +15,7 @@ define ['app/views/common/feedback/comment_view'], (CommentView) ->
 
     render: ->
 
-      @rating = @model.get('rating') || 0
+      @rating = @options.rating || @model.get('rating') || 0
 
       @readOnly = (@options.readOnly == true)
 

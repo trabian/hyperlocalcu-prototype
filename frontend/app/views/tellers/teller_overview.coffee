@@ -1,4 +1,4 @@
-define ["text!views/tellers/overview.handlebars?v=1", "app/views/common/feedback/rating_view", "vendor/handlebars"], (template, RatingView) ->
+define ["text!views/tellers/overview.handlebars?v=2", "app/views/common/feedback/rating_view", "vendor/handlebars"], (template, RatingView) ->
 
   class TellerOverviewView extends Backbone.View
 
@@ -14,7 +14,7 @@ define ["text!views/tellers/overview.handlebars?v=1", "app/views/common/feedback
 
         ratingView = new RatingView
           model: @model
-          ratingField: "average_feedback_this_#{timespan}"
+          rating: @model.get('feedback_totals')[timespan].average
           readOnly: true
 
         this.$(".#{timespan} .rating").append ratingView.render().el

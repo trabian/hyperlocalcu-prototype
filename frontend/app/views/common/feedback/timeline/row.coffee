@@ -4,6 +4,8 @@ define ["text!views/common/feedback/timeline/row.handlebars?v=3", "app/views/com
 
     tagName: 'tr'
 
+    className: 'feedback'
+
     template: Handlebars.compile(template)
 
     initialize: ->
@@ -16,7 +18,7 @@ define ["text!views/common/feedback/timeline/row.handlebars?v=3", "app/views/com
 
       ratingView = new RatingView
         model: @model
-        ratingField: "teller_rating"
+        rating: @model.get('rating')
         readOnly: true
 
       this.$('.rating').append ratingView.render().el

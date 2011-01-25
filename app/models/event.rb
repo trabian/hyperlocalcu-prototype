@@ -9,8 +9,6 @@ class Event < ActiveRecord::Base
 
   scope :ordered, :order => 'posted_at DESC, id'
 
-  scope :since, lambda { |time| where('posted_at >= ?', time) }
-
   def as_json(options = {})
 
     if options.key?(:methods)

@@ -30,7 +30,7 @@ define(['app/views/common/feedback/comment_view'], function(CommentView) {
     };
     RatingView.prototype.render = function() {
       var commentLink, num;
-      this.rating = this.model.get('rating') || 0;
+      this.rating = this.options.rating || this.model.get('rating') || 0;
       this.readOnly = this.options.readOnly === true;
       if (!this.readOnly) {
         this.addCancel();

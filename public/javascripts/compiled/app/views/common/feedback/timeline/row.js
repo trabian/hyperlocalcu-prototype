@@ -14,6 +14,7 @@ define(["text!views/common/feedback/timeline/row.handlebars?v=3", "app/views/com
     }
     __extends(FeedbackRowView, Backbone.View);
     FeedbackRowView.prototype.tagName = 'tr';
+    FeedbackRowView.prototype.className = 'feedback';
     FeedbackRowView.prototype.template = Handlebars.compile(template);
     FeedbackRowView.prototype.initialize = function() {
       return this.render();
@@ -23,7 +24,7 @@ define(["text!views/common/feedback/timeline/row.handlebars?v=3", "app/views/com
       $(this.el).html(this.template(this.model.toViewJSON()));
       ratingView = new RatingView({
         model: this.model,
-        ratingField: "teller_rating",
+        rating: this.model.get('rating'),
         readOnly: true
       });
       this.$('.rating').append(ratingView.render().el);
