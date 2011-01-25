@@ -6,15 +6,20 @@ $font_color = darken(#5F83B9, 5)
 $subtle_color = #999
 $link_color = #06d
 
-$timeline_row_border_color = lighten(#A7CFE6, 15)
 $timeline_row_date_border_color = lighten(#A7CFE6, 10)
-$timeline_row_stripe_color = lighten(#A7CFE6, 20)
+$timeline_row_stripe_color = #f6f3e9
 
-$timeline_row_selected_color = #f1f1f1
+$timeline_row_selected_color = #F7F2D8
 
-$timeline_row_selected_border_color = #ddd
+$timeline_row_border_color = lighten(#A7CFE6, 15)
 
-$timeline_font_color = $font_color
+$timeline_row_selected_border_color = darken($timeline_row_selected_color, 10)
+
+$timeline_row_border_color = $timeline_row_selected_border_color
+
+$timeline_row_date_border_color = $timeline_row_selected_border_color
+
+$timeline_font_color = #666
 
 @import compass/reset
 @import compass/utilities
@@ -53,7 +58,7 @@ textarea
     float: none
     display: block
     z-index: 1
-    background: #F6FAFD
+    //background: #F6FAFD
     margin: 15px 0 0 592px
     +border-right-radius(8px)
     height: 100%

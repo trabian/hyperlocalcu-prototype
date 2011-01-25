@@ -16,6 +16,11 @@ define ["text!views/timeline/events/detail.handlebars?v=3", "app/views/common/so
 
     render: =>
 
+      mpq.push ["track", "View event detail", {
+        event_type: @model.get('event_type')
+        id: @model.id
+      }]
+
       detailJSON = @model.toDetailJSON()
 
       $(@el).html @template(detailJSON)

@@ -43,6 +43,8 @@ table#timeline
   +reset-box-model
   thead
     tr
+      th, td
+        background: #007B82
       td.date
         width: 60px
   tbody
@@ -113,6 +115,7 @@ table#timeline
       &:nth-child(odd)
         td, th
           background: $timeline_row_stripe_color
+          background: url(/images/background.png) repeat-x left -300px
       &:first-child
         td, th
           border-top: none
@@ -126,11 +129,6 @@ table#timeline
       &.penalty
         td, th
           color: #900
-      &.statement
-        background: #f7f2d8
-        td, th
-          color: darken(#f7f2d8, 70)
-          border-top-color: darken(#f7f2d8, 10)
           
     tr.selected + tr
       td, th

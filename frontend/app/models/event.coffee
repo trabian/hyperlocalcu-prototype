@@ -6,6 +6,7 @@ define ['lib/models/custom_sync', 'vendor/jquery-ui'], (CustomSync) ->
     initialize: ->
       this.sync = CustomSync
       @updateFields = ['vendor_rating', 'vendor_comment']
+      this.bind 'change', @trackEventActivity
 
     splitPostedAt: =>
 
@@ -73,3 +74,15 @@ define ['lib/models/custom_sync', 'vendor/jquery-ui'], (CustomSync) ->
         eventFields[field] = this.get(field)
       event:
         eventFields
+
+    trackEventActivity: =>
+      if this.hasChanged('teller_rating') || this.hasChanged('vendor_rating')
+        mpq.push ['track', 'Provide event rating', {
+          event_type: this.get('event_type')
+          id: event.id
+        }]
+      if this.hasChanged('teller_comment') || this.hasChanged('vendor_comment')
+        mpq.push ['track', 'Provide event comment', {
+          event_type: this.get('event_type')
+          id: event.id
+        }]
