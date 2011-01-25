@@ -6,6 +6,9 @@ define ["text!views/tellers/overview.handlebars?v=2", "app/views/common/feedback
 
     initialize: (options) ->
 
+      @model.bind 'change', =>
+        this.render()
+
     render: =>
 
       $(@el).html @template(@model.toJSON())

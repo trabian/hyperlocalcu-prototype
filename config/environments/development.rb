@@ -1,3 +1,9 @@
+require 'pusher'
+
+Pusher.app_id = 3014
+Pusher.key = '458ecea51903933ff9fb'
+Pusher.secret = '9454fffb7dc81026b35b'
+
 Hyperlocalcu::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 

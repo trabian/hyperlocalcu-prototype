@@ -6,7 +6,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 };
-define(["app/controllers/common/timeline_controller", "app/views/common/feedback/feedback_timeline_view", "app/views/tellers/teller_overview"], function(TimelineController, FeedbackTimelineView, TellerOverviewView) {
+define(["app/controllers/common/timeline_controller", "app/views/common/feedback/feedback_timeline_view", "app/views/tellers/teller_overview", "app/lib/socket"], function(TimelineController, FeedbackTimelineView, TellerOverviewView, socket) {
   var TellerDashboardController;
   return TellerDashboardController = (function() {
     function TellerDashboardController() {
@@ -21,9 +21,10 @@ define(["app/controllers/common/timeline_controller", "app/views/common/feedback
         model: this.teller
       });
       $('#teller-overview').append(this.overview.render().el);
-      return this.timeline = new FeedbackTimelineView({
+      this.timeline = new FeedbackTimelineView({
         collection: this.teller.feedbacks
       });
+      return socket.listenTo(this.teller);
     };
     return TellerDashboardController;
   })();

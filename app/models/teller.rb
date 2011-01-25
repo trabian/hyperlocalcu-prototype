@@ -1,4 +1,8 @@
+require 'model_extensions/publication'
+
 class Teller < ActiveRecord::Base
+
+  include ModelExtensions::Publication
 
   validates :first_name, :presence => true
   validates :last_name, :presence => true
@@ -26,20 +30,6 @@ class Teller < ActiveRecord::Base
       :count => feedbacks_since.count,
       :average => feedbacks_since.average(:rating)
     }
-  end
-
-  def count_feedback_this_month
-  end
-
-  def average_feedback_this_month
-  end
-
-  def average_feedback_this_year
-    self.feedbacks.since(Time.now.beginning_of_year).average(:rating)
-  end
-
-  def count_feedback_this_year
-    self.feedbacks.since(Time.now.beginning_of_year).count
   end
 
 end

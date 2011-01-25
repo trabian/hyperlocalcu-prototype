@@ -10,6 +10,9 @@ define ["text!views/common/feedback/timeline/row.handlebars?v=3", "app/views/com
 
     initialize: ->
 
+      @model.bind 'change', =>
+        this.render()
+
       this.render()
 
     render: ->

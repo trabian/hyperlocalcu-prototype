@@ -1,4 +1,4 @@
-define ["app/controllers/common/timeline_controller", "app/views/common/feedback/feedback_timeline_view", "app/views/tellers/teller_overview"], (TimelineController, FeedbackTimelineView, TellerOverviewView) ->
+define ["app/controllers/common/timeline_controller", "app/views/common/feedback/feedback_timeline_view", "app/views/tellers/teller_overview", "app/lib/socket"], (TimelineController, FeedbackTimelineView, TellerOverviewView, socket) ->
 
   class TellerDashboardController extends TimelineController
 
@@ -17,3 +17,5 @@ define ["app/controllers/common/timeline_controller", "app/views/common/feedback
 
       @timeline = new FeedbackTimelineView
         collection: @teller.feedbacks
+
+      socket.listenTo @teller

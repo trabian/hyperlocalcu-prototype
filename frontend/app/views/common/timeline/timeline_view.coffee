@@ -7,6 +7,7 @@ define ->
     initialize: (options) ->
 
       @collection.bind 'refresh', @addAll
+      @collection.bind 'add', @addOne
 
       unless @collection.isEmpty()
         this.addAll()

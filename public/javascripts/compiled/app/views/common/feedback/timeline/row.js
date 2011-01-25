@@ -5,7 +5,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.prototype = new ctor;
   child.__super__ = parent.prototype;
   return child;
-};
+}, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 define(["text!views/common/feedback/timeline/row.handlebars?v=3", "app/views/common/feedback/rating_view", 'vendor/handlebars'], function(template, RatingView) {
   var FeedbackRowView;
   return FeedbackRowView = (function() {
@@ -17,6 +17,9 @@ define(["text!views/common/feedback/timeline/row.handlebars?v=3", "app/views/com
     FeedbackRowView.prototype.className = 'feedback';
     FeedbackRowView.prototype.template = Handlebars.compile(template);
     FeedbackRowView.prototype.initialize = function() {
+      this.model.bind('change', __bind(function() {
+        return this.render();
+      }, this));
       return this.render();
     };
     FeedbackRowView.prototype.render = function() {

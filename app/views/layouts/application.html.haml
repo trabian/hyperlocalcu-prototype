@@ -21,4 +21,8 @@
 
   %script{:src => '/javascripts/compiled/vendor/require-jquery.js?v=1'}
 
+  :javascript
+
+    PUSHER_KEY = '#{Pusher.key}';
+
   = yield(:javascript)

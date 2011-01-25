@@ -16,6 +16,8 @@ gem 'haml'
 gem 'devise'
 gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 
+gem 'pusher', '0.7.0'
+
 group :development, :test do
 
   gem 'qif'

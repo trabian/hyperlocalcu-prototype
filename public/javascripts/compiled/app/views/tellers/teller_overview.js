@@ -14,7 +14,11 @@ define(["text!views/tellers/overview.handlebars?v=2", "app/views/common/feedback
     }
     __extends(TellerOverviewView, Backbone.View);
     TellerOverviewView.prototype.template = Handlebars.compile(template);
-    TellerOverviewView.prototype.initialize = function(options) {};
+    TellerOverviewView.prototype.initialize = function(options) {
+      return this.model.bind('change', __bind(function() {
+        return this.render();
+      }, this));
+    };
     TellerOverviewView.prototype.render = function() {
       $(this.el).html(this.template(this.model.toJSON()));
       _.each(['month', 'year'], __bind(function(timespan) {

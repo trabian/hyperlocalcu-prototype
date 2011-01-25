@@ -17,6 +17,7 @@ define(function() {
     TimelineView.prototype.el = $('#timeline tbody');
     TimelineView.prototype.initialize = function(options) {
       this.collection.bind('refresh', this.addAll);
+      this.collection.bind('add', this.addOne);
       if (!this.collection.isEmpty()) {
         this.addAll();
         return this.collection.trigger('load');
