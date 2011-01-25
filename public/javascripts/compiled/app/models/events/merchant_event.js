@@ -1,37 +1,40 @@
-var __extends = function(child, parent) {
-    var ctor = function(){};
-    ctor.prototype = parent.prototype;
-    child.prototype = new ctor();
-    child.prototype.constructor = child;
-    if (typeof parent.extended === "function") parent.extended(child);
-    child.__super__ = parent.prototype;
-  };
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
 define(['app/models/event'], function(Event) {
   var MerchantEvent;
-  MerchantEvent = function() {
-    return Event.apply(this, arguments);
-  };
-  __extends(MerchantEvent, Event);
-  MerchantEvent.prototype.initialize = function() {
-    var _a;
-    MerchantEvent.__super__.initialize.call(this);
-    this.merchant = this.get('merchant');
-    if (typeof (_a = this.merchant) !== "undefined" && _a !== null) {
-      this.description = this.merchant.name;
-      return (this.twitter_username = this.merchant.twitter_username);
+  return MerchantEvent = (function() {
+    function MerchantEvent() {
+      MerchantEvent.__super__.constructor.apply(this, arguments);
     }
-  };
-  MerchantEvent.prototype.isSocial = function() {
-    var _a;
-    return (typeof (_a = this.twitter_username) !== "undefined" && _a !== null);
-  };
-  MerchantEvent.prototype.toDetailJSON = function() {
-    var _a;
-    return (typeof (_a = this.merchant) !== "undefined" && _a !== null) ? _.extend(this.toViewJSON(), {
-      address: this.merchant.address_summary,
-      avatar: this.merchant.avatar,
-      twitter_username: this.merchant.twitter_username
-    }) : MerchantEvent.__super__.toDetailJSON.call(this);
-  };
-  return MerchantEvent;
+    __extends(MerchantEvent, Event);
+    MerchantEvent.prototype.initialize = function() {
+      MerchantEvent.__super__.initialize.call(this);
+      this.merchant = this.get('merchant');
+      if (this.merchant != null) {
+        this.description = this.merchant.name;
+        return this.twitter_username = this.merchant.twitter_username;
+      }
+    };
+    MerchantEvent.prototype.isSocial = function() {
+      return this.twitter_username != null;
+    };
+    MerchantEvent.prototype.toDetailJSON = function() {
+      if (this.merchant != null) {
+        return _.extend(this.toViewJSON(), {
+          address: this.merchant.address_summary,
+          avatar: this.merchant.avatar,
+          twitter_username: this.merchant.twitter_username
+        });
+      } else {
+        return MerchantEvent.__super__.toDetailJSON.call(this);
+      }
+    };
+    return MerchantEvent;
+  })();
 });

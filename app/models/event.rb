@@ -5,16 +5,16 @@ class Event < ActiveRecord::Base
   validates :account_id, :presence => true
   validates :posted_at, :presence => true
 
-  scope :ordered, :order => 'posted_at DESC, id'
+  has_many :feedbacks
 
-  scope :since, lambda { |time| where('posted_at >= ?', time) }
+  scope :ordered, :order => 'posted_at DESC, id'
 
   def as_json(options = {})
 
     if options.key?(:methods)
-      options[:methods] = [options[:methods], :event_type, :vendor].uniq.flatten
+      options[:methods] = [options[:methods], :event_type, :vendor, :feedbacks].uniq.flatten
     else
-      options[:methods] = [:event_type, :vendor]
+      options[:methods] = [:event_type, :vendor, :feedbacks]
     end
 
     super options
@@ -31,6 +31,15 @@ class Event < ActiveRecord::Base
 
   def member_name
     self.try(:account).try(:member).short_name
+  end
+
+  def self.inherited(child)
+    child.instance_eval do
+      def model_name
+        Event.model_name
+      end
+    end
+    super
   end
 
 end

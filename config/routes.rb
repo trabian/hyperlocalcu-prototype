@@ -1,5 +1,7 @@
 Hyperlocalcu::Application.routes.draw do
 
+  resources :feedbacks
+
   resources :members
 
   resources :vendors
@@ -9,6 +11,10 @@ Hyperlocalcu::Application.routes.draw do
   resources :merchants
 
   resources :tellers
+
+  resources :events do
+    resources :feedbacks
+  end
 
   resources :accounts do
 

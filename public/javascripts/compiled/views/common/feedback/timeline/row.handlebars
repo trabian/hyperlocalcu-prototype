@@ -2,10 +2,9 @@
   <span>{{ formatted_timestamp }}<span>
 </td>
 <td class="comment">
-  {{#teller_comment}}
+  {{#comment}}
   <p class="description">{{ . }}</p>
-  {{/teller_comment}}
-  <p class="meta">Feedback provided by {{ member_name }} on 1/21 | <a href="#">Create a service request</a></p>
+  {{/comment}}
+  <p class="meta">Feedback provided by {{ member_name }} for service on {{ formatted_service_timestamp }} | <a href="#">Create a service request</a></p>
 </td>
 <td class="rating"></td>
-

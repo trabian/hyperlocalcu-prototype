@@ -8,7 +8,8 @@ GIT
 
 GIT
   remote: git://github.com/trabian/guard-coffeescript.git
-  revision: accf25b5f1c50dd61716f729739d1096c75abc42
+  revision: a126fd57c74a8fd44ce49f8f0076ecb4340764b8
+  ref: a126fd57c74a8fd44ce4
   specs:
     guard-coffeescript (0.1.3)
       guard (~> 0.2.2)
