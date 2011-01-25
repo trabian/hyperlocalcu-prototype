@@ -59,12 +59,12 @@ a img {
   border: none;
 }
 
-/* line 25, ../../../frontend/sass/_base.sass */
+/* line 30, ../../../frontend/sass/_base.sass */
 body {
   background: white url(/images/background.png) repeat-x left top;
 }
 
-/* line 28, ../../../frontend/sass/_base.sass */
+/* line 33, ../../../frontend/sass/_base.sass */
 textarea {
   font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-size: 13px;
@@ -72,7 +72,7 @@ textarea {
   line-height: 1.4em;
 }
 
-/* line 35, ../../../frontend/sass/_base.sass */
+/* line 40, ../../../frontend/sass/_base.sass */
 #container {
   display: inline;
   float: left;
@@ -85,7 +85,7 @@ textarea {
 * html #container {
   overflow-x: hidden;
 }
-/* line 39, ../../../frontend/sass/_base.sass */
+/* line 44, ../../../frontend/sass/_base.sass */
 #container a {
   color: #0066dd;
 }
@@ -93,7 +93,7 @@ textarea {
 #container a:hover {
   color: #0066dd;
 }
-/* line 41, ../../../frontend/sass/_base.sass */
+/* line 46, ../../../frontend/sass/_base.sass */
 #container #main {
   display: inline;
   float: left;
@@ -112,11 +112,11 @@ textarea {
 * html #container #main {
   overflow-x: hidden;
 }
-/* line 48, ../../../frontend/sass/_base.sass */
+/* line 53, ../../../frontend/sass/_base.sass */
 #container #main .content {
   padding: 12px;
 }
-/* line 50, ../../../frontend/sass/_base.sass */
+/* line 55, ../../../frontend/sass/_base.sass */
 #container #sidebar {
   display: inline;
   float: left;
@@ -126,7 +126,6 @@ textarea {
   float: none;
   display: block;
   z-index: 1;
-  background: #f6fafd;
   margin: 15px 0 0 592px;
   -moz-border-radius-topright: 8px;
   -webkit-border-top-right-radius: 8px;
@@ -148,9 +147,9 @@ textarea {
 * html #container #sidebar {
   overflow-x: hidden;
 }
-/* line 62, ../../../frontend/sass/_base.sass */
+/* line 67, ../../../frontend/sass/_base.sass */
 #container #sidebar.selected {
-  background: #f1f1f1;
+  background: #f7f2d8;
 }
 
 /* line 39, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_typography.scss */
@@ -1460,33 +1459,37 @@ table#timeline {
   outline: 0;
 }
 /* line 46, ../../../frontend/sass/_timeline.sass */
+table#timeline thead tr th, table#timeline thead tr td {
+  background: #007b82;
+}
+/* line 48, ../../../frontend/sass/_timeline.sass */
 table#timeline thead tr td.date {
   width: 60px;
 }
-/* line 51, ../../../frontend/sass/_timeline.sass */
+/* line 53, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.twoLine td.name div.comment {
   margin-top: 7px;
 }
-/* line 55, ../../../frontend/sass/_timeline.sass */
+/* line 57, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td, table#timeline tbody tr th {
-  border-top: 2px solid #cfe5f1;
-  color: #4d75b1;
+  border-top: 2px solid #eee4ae;
+  color: #666666;
   font-size: 13px;
   padding: 8px 5px;
   vertical-align: top;
 }
-/* line 61, ../../../frontend/sass/_timeline.sass */
+/* line 63, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td p, table#timeline tbody tr th p {
   margin: 0;
   padding: 0;
 }
-/* line 65, ../../../frontend/sass/_timeline.sass */
+/* line 67, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.amount {
   width: 15%;
   text-align: right;
   padding-right: 10px;
 }
-/* line 70, ../../../frontend/sass/_timeline.sass */
+/* line 72, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name .rating {
   float: right;
   margin-top: 2px;
@@ -1495,28 +1498,28 @@ table#timeline tbody tr td.name .rating {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   line-height: 1em;
 }
-/* line 75, ../../../frontend/sass/_timeline.sass */
+/* line 77, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name .rating:hover, table#timeline tbody tr td.name .rating.active {
   opacity: 1;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
 }
-/* line 77, ../../../frontend/sass/_timeline.sass */
+/* line 79, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name .offer, table#timeline tbody tr td.name .feedback, table#timeline tbody tr td.name .meta {
   margin: 0;
   font-size: 10px;
   color: #999999;
 }
-/* line 81, ../../../frontend/sass/_timeline.sass */
+/* line 83, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name .offer em, table#timeline tbody tr td.name .feedback em, table#timeline tbody tr td.name .meta em {
   font-style: normal;
   color: #009900;
 }
-/* line 84, ../../../frontend/sass/_timeline.sass */
+/* line 86, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name .feedback {
   color: #009900;
 }
-/* line 87, ../../../frontend/sass/_timeline.sass */
+/* line 89, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name div.comment {
   position: relative;
   margin: 10px 0 0 0;
@@ -1554,70 +1557,62 @@ table#timeline tbody tr td.name div.comment::after {
   right: 6px;
   top: -24px;
 }
-/* line 90, ../../../frontend/sass/_timeline.sass */
+/* line 92, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name div.comment .cancel {
   line-height: 0;
   float: right;
   margin: 5px 0 0 0;
 }
-/* line 94, ../../../frontend/sass/_timeline.sass */
+/* line 96, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name div.comment h4 {
   margin-bottom: 0;
 }
-/* line 96, ../../../frontend/sass/_timeline.sass */
+/* line 98, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name div.comment textarea {
   height: 70px;
   font-size: 12px;
   width: 362px;
 }
-/* line 101, ../../../frontend/sass/_timeline.sass */
+/* line 103, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr td.name div.comment .buttons button {
   float: right;
   margin: 0 0 0 10px;
 }
-/* line 105, ../../../frontend/sass/_timeline.sass */
+/* line 107, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr th {
   font-weight: normal;
 }
-/* line 108, ../../../frontend/sass/_timeline.sass */
+/* line 110, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.repeat-date td, table#timeline tbody tr.repeat-date th {
-  border-top: 1px solid #e3eff7;
+  border-top: 1px solid #eee4ae;
 }
-/* line 111, ../../../frontend/sass/_timeline.sass */
+/* line 113, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.repeat-date td.date span {
   display: none;
 }
-/* line 114, ../../../frontend/sass/_timeline.sass */
+/* line 116, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr:nth-child(odd) td, table#timeline tbody tr:nth-child(odd) th {
-  background: #f6fafd;
+  background: #f6f3e9;
+  background: url(/images/background.png) repeat-x left -300px;
 }
-/* line 117, ../../../frontend/sass/_timeline.sass */
+/* line 120, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr:first-child td, table#timeline tbody tr:first-child th {
   border-top: none;
 }
-/* line 120, ../../../frontend/sass/_timeline.sass */
+/* line 123, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.selected td, table#timeline tbody tr.selected th {
-  border-top-color: #dddddd;
-  background: #f1f1f1;
+  border-top-color: #eee4ae;
+  background: #f7f2d8;
 }
-/* line 124, ../../../frontend/sass/_timeline.sass */
+/* line 127, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.reward td, table#timeline tbody tr.reward th, table#timeline tbody tr.deposit td, table#timeline tbody tr.deposit th {
   color: #009900;
 }
-/* line 127, ../../../frontend/sass/_timeline.sass */
+/* line 130, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.penalty td, table#timeline tbody tr.penalty th {
   color: #990000;
 }
-/* line 129, ../../../frontend/sass/_timeline.sass */
-table#timeline tbody tr.statement {
-  background: #f7f2d8;
-}
-/* line 131, ../../../frontend/sass/_timeline.sass */
-table#timeline tbody tr.statement td, table#timeline tbody tr.statement th {
-  color: #584d12;
-  border-top-color: #eee4ae;
-}
-/* line 136, ../../../frontend/sass/_timeline.sass */
+/* line 134, ../../../frontend/sass/_timeline.sass */
 table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr th {
   border-top-color: #e3e3e3;
 }
@@ -1667,7 +1662,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   font-weight: bold;
   font-size: 14px;
   padding-top: 20px;
-  border-bottom: 1px solid #e3eff7;
+  border-bottom: 1px solid #eee4ae;
 }
 /* line 33, ../../../frontend/sass/_rewards.sass */
 #rewards-summary table tbody tr.title:first-child th, #accounts table tbody tr.title:first-child th {
@@ -1681,7 +1676,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 
 /* line 38, ../../../frontend/sass/_rewards.sass */
 #rewards-summary {
-  border-top: 3px solid #e3eff7;
+  border-top: 3px solid #eee4ae;
 }
 
 /* line 3, ../../../frontend/sass/_merchants.sass */
@@ -1834,11 +1829,11 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   *zoom: 1;
   clear: both;
   padding: 6px 5px;
-  border-bottom: 1px solid #e3eff7;
+  border-bottom: 1px solid #eee4ae;
 }
 /* line 43, ../../../frontend/sass/_ui_mixins.sass */
 #merchant-view .merchant-search .merchant-search-results ul li.result:nth-child(odd) {
-  background: #f6fafd;
+  background: #f6f3e9;
 }
 /* line 45, ../../../frontend/sass/_ui_mixins.sass */
 #merchant-view .merchant-search .merchant-search-results ul li.result h3 {
@@ -1924,11 +1919,11 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   *zoom: 1;
   clear: both;
   padding: 6px 5px;
-  border-bottom: 1px solid #e3eff7;
+  border-bottom: 1px solid #eee4ae;
 }
 /* line 43, ../../../frontend/sass/_ui_mixins.sass */
 #feedback #feedback-list li.feedback:nth-child(odd) {
-  background: #f6fafd;
+  background: #f6f3e9;
 }
 /* line 45, ../../../frontend/sass/_ui_mixins.sass */
 #feedback #feedback-list li.feedback h3 {
@@ -2167,11 +2162,11 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   *zoom: 1;
   clear: both;
   padding: 6px 5px;
-  border-bottom: 1px solid #e3eff7;
+  border-bottom: 1px solid #eee4ae;
 }
 /* line 43, ../../../frontend/sass/_ui_mixins.sass */
 #snapshot-dialog .snapshots ul li.snapshot:nth-child(odd) {
-  background: #f6fafd;
+  background: #f6f3e9;
 }
 /* line 45, ../../../frontend/sass/_ui_mixins.sass */
 #snapshot-dialog .snapshots ul li.snapshot h3 {
@@ -2611,13 +2606,27 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   margin: 0.2em auto;
 }
 
-/* line 25, ../../../frontend/sass/screen.sass */
+/* line 2, ../../../frontend/sass/members/_billpay_signup.sass */
+#billpay-signup-dialog .signup-form {
+  text-align: center;
+  border: 1px solid #dddddd;
+  background: #eeeeee;
+  line-height: 200px;
+  margin: 1em 0;
+  font-size: 10px;
+}
+/* line 10, ../../../frontend/sass/members/_billpay_signup.sass */
+#billpay-signup-dialog .buttons {
+  text-align: right;
+}
+
+/* line 27, ../../../frontend/sass/screen.sass */
 #container {
   position: relative;
   padding-top: 20px;
 }
 
-/* line 29, ../../../frontend/sass/screen.sass */
+/* line 31, ../../../frontend/sass/screen.sass */
 #global {
   float: right;
   position: absolute;
@@ -2625,7 +2634,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   right: 15px;
   display: none;
 }
-/* line 35, ../../../frontend/sass/screen.sass */
+/* line 37, ../../../frontend/sass/screen.sass */
 #global ul {
   margin: 0;
   padding: 0;
@@ -2653,7 +2662,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #global ul li:last-child, #global ul li.last {
   padding-right: 0;
 }
-/* line 37, ../../../frontend/sass/screen.sass */
+/* line 39, ../../../frontend/sass/screen.sass */
 #global ul a {
   text-decoration: none;
   color: white;

@@ -34,6 +34,12 @@ define(["text!views/timeline/events/detail.handlebars?v=3", "app/views/common/so
   };
   EventDetailView.prototype.render = function() {
     var _a, _b, _c, detailJSON;
+    mpq.push([
+      "track", "View event detail", {
+        event_type: this.model.get('event_type'),
+        id: this.model.id
+      }
+    ]);
     detailJSON = this.model.toDetailJSON();
     $(this.el).html(this.template(detailJSON));
     if (this.model.isSocial()) {

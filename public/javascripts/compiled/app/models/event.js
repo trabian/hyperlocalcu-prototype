@@ -13,6 +13,7 @@ define(['lib/models/custom_sync', 'vendor/jquery-ui'], function(CustomSync) {
   Event = function() {
     var _a;
     _a = this;
+    this.trackEventActivity = function(){ return Event.prototype.trackEventActivity.apply(_a, arguments); };
     this.toUpdateJSON = function(){ return Event.prototype.toUpdateJSON.apply(_a, arguments); };
     this.className = function(){ return Event.prototype.className.apply(_a, arguments); };
     this.meta = function(){ return Event.prototype.meta.apply(_a, arguments); };
@@ -27,7 +28,8 @@ define(['lib/models/custom_sync', 'vendor/jquery-ui'], function(CustomSync) {
   __extends(Event, Backbone.Model);
   Event.prototype.initialize = function() {
     this.sync = CustomSync;
-    return (this.updateFields = ['vendor_rating', 'vendor_comment']);
+    this.updateFields = ['vendor_rating', 'vendor_comment'];
+    return this.bind('change', this.trackEventActivity);
   };
   Event.prototype.splitPostedAt = function() {
     var _a, date, time;
@@ -102,6 +104,22 @@ define(['lib/models/custom_sync', 'vendor/jquery-ui'], function(CustomSync) {
     return {
       event: eventFields
     };
+  };
+  Event.prototype.trackEventActivity = function() {
+    if (this.hasChanged('teller_rating') || this.hasChanged('vendor_rating')) {
+      mpq.push([
+        'track', 'Provide event rating', {
+          event_type: this.get('event_type'),
+          id: event.id
+        }
+      ]);
+    }
+    return this.hasChanged('teller_comment') || this.hasChanged('vendor_comment') ? mpq.push([
+      'track', 'Provide event comment', {
+        event_type: this.get('event_type'),
+        id: event.id
+      }
+    ]) : null;
   };
   return Event;
 });

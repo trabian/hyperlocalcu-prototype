@@ -6,7 +6,7 @@ var __extends = function(child, parent) {
     if (typeof parent.extended === "function") parent.extended(child);
     child.__super__ = parent.prototype;
   };
-define(function() {
+define(["app/views/members/billpay_signup_view"], function(BillpaySignupView) {
   var AvailableServicesController;
   AvailableServicesController = function() {
     var _a;
@@ -22,7 +22,8 @@ define(function() {
     "billpay/no": 'rejectBillpay'
   };
   AvailableServicesController.prototype.signupForBillpay = function() {
-    return alert('sign up for billpay');
+    this.billpaySignupView || (this.billpaySignupView = new BillpaySignupView());
+    return this.billpaySignupView.render();
   };
   AvailableServicesController.prototype.rejectBillpay = function() {
     return $('.available-service.billpay').hide();
