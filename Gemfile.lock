@@ -1,6 +1,7 @@
 GIT
   remote: git://github.com/sferik/rails_admin.git
-  revision: 24660a5d6b8d4c17e6977ab191879842039b3f80
+  revision: e1a9542a599314b1fb13a7ae5d2ce78aa9160514
+  ref: e1a9542a599314b1fb13
   specs:
     rails_admin (0.0.1)
       builder (~> 2.1.0)
