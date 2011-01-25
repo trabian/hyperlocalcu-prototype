@@ -2,6 +2,12 @@ define ['text!views/timeline/events/check/detail.handlebars?v=2', 'app/views/mem
 
   class CheckDetailView extends EventDetailView
 
+    initialize: ->
+
+      mpq.push ["track", "View billpay offer"]
+
+      super()
+
     eventTypeOptions:
 
       events: 

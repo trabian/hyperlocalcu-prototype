@@ -16,6 +16,10 @@ define(['text!views/timeline/events/check/detail.handlebars?v=2', 'app/views/mem
     return EventDetailView.apply(this, arguments);
   };
   __extends(CheckDetailView, EventDetailView);
+  CheckDetailView.prototype.initialize = function() {
+    mpq.push(["track", "View billpay offer"]);
+    return CheckDetailView.__super__.initialize.call(this);
+  };
   CheckDetailView.prototype.eventTypeOptions = {
     events: {
       "click .report-problems": 'toggleCheckCommentView'

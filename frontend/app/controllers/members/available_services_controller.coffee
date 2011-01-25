@@ -1,4 +1,4 @@
-define ->
+define ["app/views/members/billpay_signup_view"], (BillpaySignupView) ->
 
   class AvailableServicesController extends Backbone.Controller
 
@@ -9,7 +9,8 @@ define ->
       "billpay/no": 'rejectBillpay'
 
     signupForBillpay: =>
-      alert('sign up for billpay')
+      @billpaySignupView or= new BillpaySignupView
+      @billpaySignupView.render()
 
     rejectBillpay: =>
       $('.available-service.billpay').hide()
