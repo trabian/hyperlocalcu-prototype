@@ -10,6 +10,7 @@ define(function() {
   var TimelineView;
   return TimelineView = (function() {
     function TimelineView() {
+      this.refreshTimestamps = __bind(this.refreshTimestamps, this);;
       this.addOne = __bind(this.addOne, this);;
       this.addAll = __bind(this.addAll, this);;      TimelineView.__super__.constructor.apply(this, arguments);
     }
@@ -17,20 +18,38 @@ define(function() {
     TimelineView.prototype.el = $('#timeline tbody');
     TimelineView.prototype.initialize = function(options) {
       this.collection.bind('refresh', this.addAll);
-      this.collection.bind('add', this.addOne);
       if (!this.collection.isEmpty()) {
         this.addAll();
-        return this.collection.trigger('load');
       }
+      return this.collection.trigger('load');
     };
     TimelineView.prototype.addAll = function() {
       return this.collection.each(this.addOne);
     };
-    TimelineView.prototype.addOne = function(model) {
-      var view;
+    TimelineView.prototype.addOne = function(model, position) {
+      var rendered, view;
       view = this.options.rowFactory.build(model, this.collection);
-      $(this.el).append(view.render().el);
+      rendered = view.render().el;
+      if (position === 'top') {
+        $(this.el).prepend(rendered);
+      } else {
+        $(this.el).append(rendered);
+      }
       return this.addTimestampClass(view, model);
+    };
+    TimelineView.prototype.refreshTimestamps = function() {
+      var previousDay;
+      previousDay = null;
+      return this.$('tr').each(__bind(function(index, row) {
+        var day;
+        day = $(row).find('>td:first-child').text();
+        if (day === previousDay) {
+          $(row).addClass('repeat-date');
+        } else {
+          $(row).removeClass('repeat-date');
+        }
+        return previousDay = day;
+      }, this));
     };
     TimelineView.prototype.addTimestampClass = function(view, event) {
       if (event.day() === this.lastEventDay) {

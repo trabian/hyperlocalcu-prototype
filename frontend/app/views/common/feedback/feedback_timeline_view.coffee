@@ -8,3 +8,8 @@ define ["app/views/common/timeline/timeline_view", "app/views/common/feedback/ti
 
       super(options)
 
+      @collection.bind 'add', (model) =>
+        this.addOne(model, 'top')
+        this.refreshTimestamps()
+
+
