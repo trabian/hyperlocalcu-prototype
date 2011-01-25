@@ -22,7 +22,7 @@ Hyperlocalcu::Application.routes.draw do
 
   end
 
-  root :to => "items#index", :account_id => 1
+  root :to => "events#index", :account_id => 1
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

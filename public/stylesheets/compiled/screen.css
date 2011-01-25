@@ -61,7 +61,7 @@ a img {
 
 /* line 25, ../../../frontend/sass/_base.sass */
 body {
-  background: #d3dadf url(/images/background.png) repeat-x left top;
+  background: white url(/images/background.png) repeat-x left top;
 }
 
 /* line 28, ../../../frontend/sass/_base.sass */
@@ -2364,7 +2364,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   -ms-border-bottom-right-radius: 5px;
   -khtml-border-bottom-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  background: #f6f6f6;
+  background: white;
   width: 318px;
   min-height: 500px;
 }
