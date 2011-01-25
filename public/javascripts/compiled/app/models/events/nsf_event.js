@@ -1,21 +1,23 @@
-var __extends = function(child, parent) {
-    var ctor = function(){};
-    ctor.prototype = parent.prototype;
-    child.prototype = new ctor();
-    child.prototype.constructor = child;
-    if (typeof parent.extended === "function") parent.extended(child);
-    child.__super__ = parent.prototype;
-  };
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
 define(['app/models/event'], function(Event) {
   var NsfEvent;
-  NsfEvent = function() {
-    return Event.apply(this, arguments);
-  };
-  __extends(NsfEvent, Event);
-  NsfEvent.prototype.initialize = function() {
-    NsfEvent.__super__.initialize.call(this);
-    this.description = "NSF Fee";
-    return (this.className = "penalty");
-  };
-  return NsfEvent;
+  return NsfEvent = (function() {
+    function NsfEvent() {
+      NsfEvent.__super__.constructor.apply(this, arguments);
+    }
+    __extends(NsfEvent, Event);
+    NsfEvent.prototype.initialize = function() {
+      NsfEvent.__super__.initialize.call(this);
+      this.description = "NSF Fee";
+      return this.className = "penalty";
+    };
+    return NsfEvent;
+  })();
 });

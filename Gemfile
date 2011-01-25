@@ -28,7 +28,7 @@ group :development, :test do
   gem "guard"
   gem "guard-compass"
   gem "guard-shell"
-  gem "guard-coffeescript", :git => "git://github.com/trabian/guard-coffeescript.git"
+  gem "guard-coffeescript", :git => "git://github.com/trabian/guard-coffeescript.git", :ref => 'a126fd57c74a8fd44ce4'
 
   gem 'compass'
 

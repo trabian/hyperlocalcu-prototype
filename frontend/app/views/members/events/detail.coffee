@@ -34,8 +34,6 @@ define ["text!views/timeline/events/detail.handlebars?v=3", "app/views/common/so
       if @eventTypeOptions? and @eventTypeOptions.template?
         $(@el).append @eventTypeOptions.template(detailJSON)
 
-      this.addFeedbackView 'vendor', 'teller'
-
       if @renderDetail?
         this.renderDetail()
 
@@ -53,14 +51,15 @@ define ["text!views/timeline/events/detail.handlebars?v=3", "app/views/common/so
 
       $(@el).empty().hide()
 
-    addFeedbackView: (fields...) =>
-      _.each fields, (field) =>
-        if @model.get(field)?
+    addFeedbackView: (subject_types...) =>
+      _.each subject_types, (subject_type) =>
+
+        feedback = @model.feedback_for_subject(subject_type)
+
+        console.log feedback
+
+        if feedback?
           @feedbackView = new FeedbackView
-            model: @model
-            subject: @model.get(field)
-            fieldPrefix: field
+            model: feedback
 
           $(@el).append @feedbackView.render().el
-
-          return false

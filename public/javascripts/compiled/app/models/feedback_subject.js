@@ -6,14 +6,13 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 };
-define(['app/models/feedback'], function(Feedback) {
-  var FeedbackList;
-  return FeedbackList = (function() {
-    function FeedbackList() {
-      FeedbackList.__super__.constructor.apply(this, arguments);
+define(function() {
+  var FeedbackSubject;
+  return FeedbackSubject = (function() {
+    function FeedbackSubject() {
+      FeedbackSubject.__super__.constructor.apply(this, arguments);
     }
-    __extends(FeedbackList, Backbone.Collection);
-    FeedbackList.prototype.model = Feedback;
-    return FeedbackList;
+    __extends(FeedbackSubject, Backbone.Model);
+    return FeedbackSubject;
   })();
 });

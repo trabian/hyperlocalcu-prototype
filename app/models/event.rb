@@ -5,6 +5,8 @@ class Event < ActiveRecord::Base
   validates :account_id, :presence => true
   validates :posted_at, :presence => true
 
+  has_many :feedbacks
+
   scope :ordered, :order => 'posted_at DESC, id'
 
   scope :since, lambda { |time| where('posted_at >= ?', time) }
@@ -12,12 +14,22 @@ class Event < ActiveRecord::Base
   def as_json(options = {})
 
     if options.key?(:methods)
-      options[:methods] = [options[:methods], :event_type, :vendor].uniq.flatten
+      options[:methods] = [options[:methods], :event_type, :vendor, :subject_feedbacks].uniq.flatten
     else
-      options[:methods] = [:event_type, :vendor]
+      options[:methods] = [:event_type, :vendor, :subject_feedbacks]
     end
 
     super options
+
+  end
+
+  def subject_feedbacks
+
+    {}.tap do |feedbacks_by_subject|
+      feedbacks.all.each do |feedback|
+        feedbacks_by_subject[feedback.subject_type.underscore] = feedback
+      end
+    end
 
   end
 

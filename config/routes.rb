@@ -1,5 +1,7 @@
 Hyperlocalcu::Application.routes.draw do
 
+  resources :feedbacks
+
   resources :members
 
   resources :vendors

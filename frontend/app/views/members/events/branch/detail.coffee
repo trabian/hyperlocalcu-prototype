@@ -4,3 +4,6 @@ define ['text!views/timeline/events/branch/detail.handlebars?v=2', 'app/views/me
 
     eventTypeTemplate: Handlebars.compile(template)
 
+    renderDetail: =>
+      this.addFeedbackView 'teller'
+

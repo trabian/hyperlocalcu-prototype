@@ -12,7 +12,8 @@ define ['app/views/common/feedback/comment_view'], (CommentView) ->
 
     render: ->
 
-      @rating = @model.get(@options.ratingField) || 0
+      @rating = @model.get('rating') || 0
+
       @readOnly = (@options.readOnly == true)
 
       this.addCancel() unless @readOnly
@@ -63,11 +64,7 @@ define ['app/views/common/feedback/comment_view'], (CommentView) ->
 
     updateRating: (num) =>
 
-      ratingAttributes = {}
-      ratingAttributes[@options.ratingField] = num
-
-      @model.save ratingAttributes
-
+      @model.save 'rating': num
 
     addStar: (num, starOn, readOnly)=>
 
