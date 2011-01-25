@@ -12,6 +12,10 @@ Hyperlocalcu::Application.routes.draw do
 
   resources :tellers
 
+  resources :events do
+    resources :feedbacks
+  end
+
   resources :accounts do
 
     resources :events

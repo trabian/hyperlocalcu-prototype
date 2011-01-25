@@ -25,6 +25,9 @@ define(['app/views/common/feedback/comment_view'], function(CommentView) {
       'click .cancel': 'resetRating',
       'click .commentLink': 'toggleCommentForm'
     };
+    RatingView.prototype.initialize = function(options) {
+      return options.commentField = 'comment';
+    };
     RatingView.prototype.render = function() {
       var commentLink, num;
       this.rating = this.model.get('rating') || 0;
@@ -41,8 +44,9 @@ define(['app/views/common/feedback/comment_view'], function(CommentView) {
           className: 'commentLink'
         }, 'comment');
         $(this.el).append(commentLink);
-        if (this.model.get(this.options.commentField) != null) {
+        if (this.model.get(this.options.commentField)) {
           this.$('.commentLink').addClass('active');
+          this.showCommentForm();
         }
         if (this.rating > 0) {
           $(this.el).addClass('rated active');

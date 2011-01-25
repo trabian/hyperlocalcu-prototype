@@ -1,5 +1,5 @@
 # An Event is a timeline event such as a transaction or other non-transactional event to be presented on the timeline.
-define ['lib/models/custom_sync', 'app/models/feedback', 'app/models/feedback_subject', 'vendor/jquery-ui'], (CustomSync, Feedback, FeedbackSubject) ->
+define ['app/lib/models/custom_sync', 'app/models/feedback', 'app/models/feedback_list', 'vendor/jquery-ui'], (CustomSync, Feedback, FeedbackList) ->
 
   class Event extends Backbone.Model
 
@@ -7,9 +7,16 @@ define ['lib/models/custom_sync', 'app/models/feedback', 'app/models/feedback_su
 
       this.sync = CustomSync
 
-      @updateFields = ['vendor_rating', 'vendor_comment']
+      @updateFields = []
 
       this.bind 'change', @trackEventActivity
+
+    initializeDetails: =>
+
+      @feedbacks = new FeedbackList this.get('feedbacks'),
+        event: this
+    
+      @feedbacks.url = "/events/#{@id}/feedbacks"
 
     splitPostedAt: =>
 
@@ -77,14 +84,6 @@ define ['lib/models/custom_sync', 'app/models/feedback', 'app/models/feedback_su
         eventFields[field] = this.get(field)
       event:
         eventFields
-
-    feedback_for_subject: (subject_type) =>
-
-      feedback = new Feedback this.get('subject_feedbacks')[subject_type]
-
-      feedback.subject = new FeedbackSubject(this.get(subject_type))
-
-      feedback
 
     trackEventActivity: =>
       if this.hasChanged('teller_rating') || this.hasChanged('vendor_rating')

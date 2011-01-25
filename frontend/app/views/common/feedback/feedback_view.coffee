@@ -13,12 +13,13 @@ define ["text!views/feedback/form.handlebars?v=4", "app/views/common/feedback/ra
       super(options)
 
       @subject = @model.subject
+      @question = options.question || @subject.get('question')
 
     render: ->
 
       $(@el).html @template(
         avatar: @subject.get('avatar')
-        question: @model.feedbackQuestion || @subject.question
+        question: @question
       )
 
       ratingView = new RatingView

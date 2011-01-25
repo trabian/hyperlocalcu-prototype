@@ -6,12 +6,11 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(['lib/models/custom_sync', 'app/models/feedback', 'app/models/feedback_subject', 'vendor/jquery-ui'], function(CustomSync, Feedback, FeedbackSubject) {
+define(['app/lib/models/custom_sync', 'app/models/feedback', 'app/models/feedback_list', 'vendor/jquery-ui'], function(CustomSync, Feedback, FeedbackList) {
   var Event;
   return Event = (function() {
     function Event() {
       this.trackEventActivity = __bind(this.trackEventActivity, this);;
-      this.feedback_for_subject = __bind(this.feedback_for_subject, this);;
       this.toUpdateJSON = __bind(this.toUpdateJSON, this);;
       this.className = __bind(this.className, this);;
       this.meta = __bind(this.meta, this);;
@@ -20,13 +19,20 @@ define(['lib/models/custom_sync', 'app/models/feedback', 'app/models/feedback_su
       this.formatCurrency = __bind(this.formatCurrency, this);;
       this.day = __bind(this.day, this);;
       this.formatted_timestamp = __bind(this.formatted_timestamp, this);;
-      this.splitPostedAt = __bind(this.splitPostedAt, this);;      Event.__super__.constructor.apply(this, arguments);
+      this.splitPostedAt = __bind(this.splitPostedAt, this);;
+      this.initializeDetails = __bind(this.initializeDetails, this);;      Event.__super__.constructor.apply(this, arguments);
     }
     __extends(Event, Backbone.Model);
     Event.prototype.initialize = function() {
       this.sync = CustomSync;
-      this.updateFields = ['vendor_rating', 'vendor_comment'];
+      this.updateFields = [];
       return this.bind('change', this.trackEventActivity);
+    };
+    Event.prototype.initializeDetails = function() {
+      this.feedbacks = new FeedbackList(this.get('feedbacks'), {
+        event: this
+      });
+      return this.feedbacks.url = "/events/" + this.id + "/feedbacks";
     };
     Event.prototype.splitPostedAt = function() {
       var date, time, _ref;
@@ -97,12 +103,6 @@ define(['lib/models/custom_sync', 'app/models/feedback', 'app/models/feedback_su
       return {
         event: eventFields
       };
-    };
-    Event.prototype.feedback_for_subject = function(subject_type) {
-      var feedback;
-      feedback = new Feedback(this.get('subject_feedbacks')[subject_type]);
-      feedback.subject = new FeedbackSubject(this.get(subject_type));
-      return feedback;
     };
     Event.prototype.trackEventActivity = function() {
       if (this.hasChanged('teller_rating') || this.hasChanged('vendor_rating')) {

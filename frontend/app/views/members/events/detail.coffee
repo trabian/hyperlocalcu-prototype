@@ -21,6 +21,8 @@ define ["text!views/timeline/events/detail.handlebars?v=3", "app/views/common/so
         id: @model.id
       }]
 
+      @model.initializeDetails()
+
       detailJSON = @model.toDetailJSON()
 
       $(@el).html @template(detailJSON)
@@ -54,12 +56,11 @@ define ["text!views/timeline/events/detail.handlebars?v=3", "app/views/common/so
     addFeedbackView: (subject_types...) =>
       _.each subject_types, (subject_type) =>
 
-        feedback = @model.feedback_for_subject(subject_type)
-
-        console.log feedback
+        feedback = @model.feedbacks.for_subject(subject_type)
 
         if feedback?
           @feedbackView = new FeedbackView
             model: feedback
+            question: @model.feedbackQuestion
 
           $(@el).append @feedbackView.render().el

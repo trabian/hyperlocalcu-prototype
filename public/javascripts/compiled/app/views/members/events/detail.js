@@ -37,6 +37,7 @@ define(["text!views/timeline/events/detail.handlebars?v=3", "app/views/common/so
           id: this.model.id
         }
       ]);
+      this.model.initializeDetails();
       detailJSON = this.model.toDetailJSON();
       $(this.el).html(this.template(detailJSON));
       if (this.model.isSocial()) {
@@ -66,11 +67,11 @@ define(["text!views/timeline/events/detail.handlebars?v=3", "app/views/common/so
       subject_types = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
       return _.each(subject_types, __bind(function(subject_type) {
         var feedback;
-        feedback = this.model.feedback_for_subject(subject_type);
-        console.log(feedback);
+        feedback = this.model.feedbacks.for_subject(subject_type);
         if (feedback != null) {
           this.feedbackView = new FeedbackView({
-            model: feedback
+            model: feedback,
+            question: this.model.feedbackQuestion
           });
           return $(this.el).append(this.feedbackView.render().el);
         }

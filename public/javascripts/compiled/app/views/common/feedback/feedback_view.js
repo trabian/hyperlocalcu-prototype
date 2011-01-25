@@ -18,13 +18,14 @@ define(["text!views/feedback/form.handlebars?v=4", "app/views/common/feedback/ra
     FeedbackView.prototype.template = Handlebars.compile(template);
     FeedbackView.prototype.initialize = function(options) {
       FeedbackView.__super__.initialize.call(this, options);
-      return this.subject = this.model.subject;
+      this.subject = this.model.subject;
+      return this.question = options.question || this.subject.get('question');
     };
     FeedbackView.prototype.render = function() {
       var ratingView;
       $(this.el).html(this.template({
         avatar: this.subject.get('avatar'),
-        question: this.model.feedbackQuestion || this.subject.question
+        question: this.question
       }));
       ratingView = new RatingView({
         model: this.model,
