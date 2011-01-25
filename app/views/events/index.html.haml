@@ -12,6 +12,9 @@
   #overview
   #event-detail-view{:style => "display: none;"}
 
+= content_for :head do
+  = render "layouts/mixpanel"
+
 = content_for :javascript do
 
   %script{:src => google_js_src, :type => 'text/javascript'}
