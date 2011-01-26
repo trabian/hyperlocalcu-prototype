@@ -6,7 +6,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(['app/models/feedback', 'app/models/feedback_subject'], function(Feedback, FeedbackSubject) {
+define(['app/models/feedback', 'app/models/feedback_subject_factory'], function(Feedback, FeedbackSubjectFactory) {
   var FeedbackList;
   return FeedbackList = (function() {
     function FeedbackList() {
@@ -29,7 +29,7 @@ define(['app/models/feedback', 'app/models/feedback_subject'], function(Feedback
           collection: this
         });
       }
-      feedback.subject = new FeedbackSubject(this.event.get(subject_key));
+      feedback.subject = FeedbackSubjectFactory.getSubject(this.event.get(subject_key));
       return feedback;
     };
     return FeedbackList;

@@ -1,5 +1,5 @@
 # The collection of [events](event.html) is backed by a JSON store.
-define ['app/models/feedback', 'app/models/feedback_subject'], (Feedback, FeedbackSubject) ->
+define ['app/models/feedback', 'app/models/feedback_subject_factory'], (Feedback, FeedbackSubjectFactory) ->
 
   class FeedbackList extends Backbone.Collection
 
@@ -19,6 +19,6 @@ define ['app/models/feedback', 'app/models/feedback_subject'], (Feedback, Feedba
           },
           collection: this
 
-      feedback.subject = new FeedbackSubject(@event.get(subject_key))
+      feedback.subject = FeedbackSubjectFactory.getSubject(@event.get(subject_key))
 
       feedback

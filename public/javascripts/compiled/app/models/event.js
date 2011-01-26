@@ -6,18 +6,20 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(['app/lib/models/custom_sync', 'app/models/feedback', 'app/models/feedback_list', 'vendor/jquery-ui'], function(CustomSync, Feedback, FeedbackList) {
+define(['app/lib/models/custom_sync', 'app/models/feedback', 'app/models/feedback_list', 'vendor/jquery-ui', 'vendor/jquery-currency'], function(CustomSync, Feedback, FeedbackList) {
   var Event;
   return Event = (function() {
     function Event() {
       this.trackEventActivity = __bind(this.trackEventActivity, this);;
       this.toUpdateJSON = __bind(this.toUpdateJSON, this);;
       this.className = __bind(this.className, this);;
+      this.map = __bind(this.map, this);;
       this.meta = __bind(this.meta, this);;
       this.description = __bind(this.description, this);;
       this.formatted_amount = __bind(this.formatted_amount, this);;
       this.formatCurrency = __bind(this.formatCurrency, this);;
       this.day = __bind(this.day, this);;
+      this.formatted_date = __bind(this.formatted_date, this);;
       this.formatted_timestamp = __bind(this.formatted_timestamp, this);;
       this.splitPostedAt = __bind(this.splitPostedAt, this);;
       this.initializeDetails = __bind(this.initializeDetails, this);;      Event.__super__.constructor.apply(this, arguments);
@@ -44,6 +46,9 @@ define(['app/lib/models/custom_sync', 'app/models/feedback', 'app/models/feedbac
       _ref = this.splitPostedAt(), year = _ref[0], month = _ref[1], day = _ref[2];
       return [month, day].join('/');
     };
+    Event.prototype.formatted_date = function() {
+      return this.formatDate(this.get('posted_at'), 'DD, MM d, yy');
+    };
     Event.prototype.day = function() {
       var day, month, year, _ref;
       _ref = this.splitPostedAt(), year = _ref[0], month = _ref[1], day = _ref[2];
@@ -52,10 +57,11 @@ define(['app/lib/models/custom_sync', 'app/models/feedback', 'app/models/feedbac
     Event.prototype.formatCurrency = function(amount) {
       var sign;
       sign = amount < 0 ? '<span class="sign">-</span>' : '';
-      return "" + sign + "<span class='currency'>$</span>" + (Math.abs(amount).toFixed(2));
+      return "" + sign + "<span class='currency'>$</span>" + ($.currency(Math.abs(amount)));
     };
-    Event.prototype.formatDate = function(date) {
-      return $.datepicker.formatDate('m/d/yy', $.datepicker.parseDate('yy-m-d', date));
+    Event.prototype.formatDate = function(date, format) {
+      format || (format = 'm/d/yy');
+      return $.datepicker.formatDate(format, $.datepicker.parseDate('yy-m-d', date));
     };
     Event.prototype.formatted_amount = function() {
       return this.formatCurrency(this.get('amount'));
@@ -79,6 +85,9 @@ define(['app/lib/models/custom_sync', 'app/models/feedback', 'app/models/feedbac
     Event.prototype.meta = function() {
       return '';
     };
+    Event.prototype.map = function() {
+      return "http://www.google.com/maps/vt/data=LtgX-e3f8ctI3U5dJtbt7EJ1ZfRneYme,xr1VycLGhw6JTyXHga0_5_rOcUkmBglaDj54UK1Pl3Q61KqxI7PKrPOitiqBc3I6vhIGdvPSpmb2yZN3Xv4RQ09i_YMotqFsn2SrqspXx-0c8v2Xkw";
+    };
     Event.prototype.className = function() {
       return this.depositOrWithdrawal().toLowerCase();
     };
@@ -88,7 +97,9 @@ define(['app/lib/models/custom_sync', 'app/models/feedback', 'app/models/feedbac
         meta: this.meta,
         html_class: this.html_class,
         formatted_timestamp: this.formatted_timestamp,
-        formatted_amount: this.formatted_amount
+        formatted_date: this.formatted_date,
+        formatted_amount: this.formatted_amount,
+        map: this.map
       });
     };
     Event.prototype.toDetailJSON = function() {

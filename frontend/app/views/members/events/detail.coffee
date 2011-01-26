@@ -1,4 +1,4 @@
-define ["text!views/timeline/events/detail.handlebars?v=3", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "vendor/handlebars"], (template, SocialView, FeedbackView) ->
+define ["text!views/timeline/events/detail.handlebars?v=5", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "vendor/handlebars"], (template, SocialView, FeedbackView) ->
 
   class EventDetailView extends Backbone.View
 

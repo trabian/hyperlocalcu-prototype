@@ -1,0 +1,26 @@
+#subject-overview
+
+#timeline-loading Loading...
+
+%table#timeline{:style => 'display: none;'}
+  %tbody.ui-widget-content
+
+= content_for :sidebar do
+  #overview
+  #event-detail-view{:style => "display: none;"}
+
+= content_for :javascript do
+
+  %script{:src => google_js_src, :type => 'text/javascript'}
+
+  :javascript
+    require({ baseUrl: "/javascripts/compiled" }, ["order!vendor/underscore", "order!vendor/backbone", "order!app/controllers/feedbacks/dashboard_controller", "order!app/models/feedback_subject_factory"], function(underscore, backbone, FeedbackDashboardController, FeedbackSubjectFactory) {
+
+      Backbone.emulateHTTP = true;
+
+      var feedbackDashboardController = new FeedbackDashboardController({
+        subject: FeedbackSubjectFactory.getSubject(#{subject.to_feedback_subject_json})
+      });
+
+    });
+

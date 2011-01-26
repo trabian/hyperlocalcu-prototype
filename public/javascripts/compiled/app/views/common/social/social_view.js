@@ -6,7 +6,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(["text!views/social/overview.handlebars", "vendor/jquery-tweet", "vendor/jquery-timeago", "vendor/date", "vendor/handlebars"], function(template) {
+define(["text!views/social/overview.handlebars?v=1", "vendor/jquery-tweet", "vendor/jquery-timeago", "vendor/date", "vendor/handlebars"], function(template) {
   var SocialView;
   return SocialView = (function() {
     function SocialView() {

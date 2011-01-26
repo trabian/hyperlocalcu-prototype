@@ -20,7 +20,7 @@ define(["app/controllers/common/timeline_controller", "app/views/common/feedback
       this.overview = new TellerOverviewView({
         model: this.teller
       });
-      $('#teller-overview').append(this.overview.render().el);
+      $('#subject-overview').append(this.overview.render().el);
       this.timeline = new FeedbackTimelineView({
         collection: this.teller.feedbacks
       });

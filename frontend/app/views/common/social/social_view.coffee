@@ -1,4 +1,4 @@
-define ["text!views/social/overview.handlebars", "vendor/jquery-tweet", "vendor/jquery-timeago", "vendor/date", "vendor/handlebars"], (template) ->
+define ["text!views/social/overview.handlebars?v=1", "vendor/jquery-tweet", "vendor/jquery-timeago", "vendor/date", "vendor/handlebars"], (template) ->
 
   class SocialView extends Backbone.View
 

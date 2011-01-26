@@ -10,6 +10,7 @@ define(['app/models/events/cu_event'], function(CUEvent) {
   var BranchEvent;
   return BranchEvent = (function() {
     function BranchEvent() {
+      this.nameAndAddress = __bind(this.nameAndAddress, this);;
       this.feedbackQuestion = __bind(this.feedbackQuestion, this);;      BranchEvent.__super__.constructor.apply(this, arguments);
     }
     __extends(BranchEvent, CUEvent);
@@ -22,11 +23,14 @@ define(['app/models/events/cu_event'], function(CUEvent) {
     BranchEvent.prototype.feedbackQuestion = function() {
       return "" + (this.get('teller').first_name) + " served as your teller for this " + (this.depositOrWithdrawal().toLowerCase()) + ". <br /><strong>How was his service?</strong>";
     };
+    BranchEvent.prototype.nameAndAddress = function() {
+      return "<h2>Vantage Credit Union</h2><h3>" + (this.get('branch').name) + " Branch</h3><p>" + (this.get('branch')['address_summary']) + "</p>";
+    };
     BranchEvent.prototype.toDetailJSON = function() {
       var detailJSON;
       detailJSON = BranchEvent.__super__.toDetailJSON.call(this);
       return _.extend(detailJSON, {
-        address: this.get('branch')['address_summary']
+        address: this.nameAndAddress
       });
     };
     return BranchEvent;

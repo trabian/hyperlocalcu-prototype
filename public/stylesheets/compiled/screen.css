@@ -2007,48 +2007,12 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   color: #990000;
 }
 
-/* line 24, ../../../frontend/sass/_social.sass */
-.social {
-  position: relative;
-  margin: 10px 0 0 0;
-  background: white;
-  border: 1px solid #dddddd;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -o-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -khtml-border-radius: 5px;
-  border-radius: 5px;
-  padding: 10px;
-  font-size: 11px;
-}
-/* line 10, ../../../frontend/sass/_ui_mixins.sass */
-.social::before, .social::after {
-  content: "";
-  display: block;
-  height: 0px;
-  width: 0px;
-  position: absolute;
-}
-/* line 17, ../../../frontend/sass/_ui_mixins.sass */
-.social::before {
-  border: 14px solid transparent;
-  border-bottom-color: #dddddd;
-  right: 14px;
-  top: -28px;
-}
-/* line 23, ../../../frontend/sass/_ui_mixins.sass */
-.social::after {
-  border: 12px solid transparent;
-  border-bottom-color: white;
-  right: 16px;
-  top: -24px;
-}
-/* line 26, ../../../frontend/sass/_social.sass */
+/* line 25, ../../../frontend/sass/_social.sass */
 .social .twitter, .social .facebook {
   clear: both;
   padding: 0 0 0px;
   min-height: 50px;
+  font-size: 0.9em;
 }
 /* line 32, ../../../frontend/sass/_ui_mixins.sass */
 .social .twitter .form .ui-button .ui-button-text, .social .facebook .form .ui-button .ui-button-text {
@@ -2059,12 +2023,17 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   width: 220px;
 }
 /* line 34, ../../../frontend/sass/_social.sass */
+.social .twitter .avatar, .social .facebook .avatar {
+  float: left;
+  margin: 2px 10px 0 0;
+}
+/* line 37, ../../../frontend/sass/_social.sass */
 .social .twitter .icon-and-vote, .social .facebook .icon-and-vote {
   float: right;
   width: 22px;
   margin: 5px 0 10px 10px;
 }
-/* line 39, ../../../frontend/sass/_social.sass */
+/* line 42, ../../../frontend/sass/_social.sass */
 .social .twitter .icon-and-vote .vote, .social .facebook .icon-and-vote .vote {
   display: block;
   background: url(/images/vote.png) no-repeat 50% 50%;
@@ -2075,18 +2044,18 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=20);
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=20);
 }
-/* line 46, ../../../frontend/sass/_social.sass */
+/* line 49, ../../../frontend/sass/_social.sass */
 .social .twitter .icon-and-vote .vote:hover, .social .facebook .icon-and-vote .vote:hover {
   opacity: 0.6;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
 }
-/* line 48, ../../../frontend/sass/_social.sass */
+/* line 51, ../../../frontend/sass/_social.sass */
 .social .twitter .tweet_time, .social .twitter .post_time, .social .facebook .tweet_time, .social .facebook .post_time {
   display: block;
   color: #999999;
 }
-/* line 51, ../../../frontend/sass/_social.sass */
+/* line 54, ../../../frontend/sass/_social.sass */
 .social .twitter .tweet_time a, .social .twitter .post_time a, .social .facebook .tweet_time a, .social .facebook .post_time a {
   color: #999999;
 }
@@ -2094,7 +2063,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 .social .twitter .tweet_time a:hover, .social .twitter .post_time a:hover, .social .facebook .tweet_time a:hover, .social .facebook .post_time a:hover {
   color: #0066dd;
 }
-/* line 55, ../../../frontend/sass/_social.sass */
+/* line 58, ../../../frontend/sass/_social.sass */
 .social .twitter .latest-tweet .tweet_list {
   list-style: none;
   margin: 0;
@@ -2108,7 +2077,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   list-style-type: none;
   margin-left: 0px;
 }
-/* line 58, ../../../frontend/sass/_social.sass */
+/* line 61, ../../../frontend/sass/_social.sass */
 .social p.security {
   display: none;
   border-top: 1px solid #e3e3e3;
@@ -2118,11 +2087,11 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   padding: 10px 0 0 25px;
 }
 
-/* line 65, ../../../frontend/sass/_social.sass */
+/* line 68, ../../../frontend/sass/_social.sass */
 .feedback {
   padding: 15px 0 0;
 }
-/* line 67, ../../../frontend/sass/_social.sass */
+/* line 70, ../../../frontend/sass/_social.sass */
 .feedback p {
   margin: 0.5em 0.2em;
 }
@@ -2215,20 +2184,64 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   font-size: 10px;
 }
 
-/* line 3, ../../../frontend/sass/_feedback.sass */
+/* line 1, ../../../frontend/sass/feedback/_dashboard.sass */
+#subject-overview {
+  height: 75px;
+  padding: 5px 0;
+}
+/* line 4, ../../../frontend/sass/feedback/_dashboard.sass */
+#subject-overview p.meta {
+  color: #999999;
+  font-size: 0.83em;
+}
+/* line 7, ../../../frontend/sass/feedback/_dashboard.sass */
+#subject-overview .subject-info {
+  float: left;
+  width: 40%;
+}
+/* line 10, ../../../frontend/sass/feedback/_dashboard.sass */
+#subject-overview .subject-info .avatar {
+  border: 1px solid #cccccc;
+  margin: 0 1em 0 0;
+  float: left;
+}
+/* line 15, ../../../frontend/sass/feedback/_dashboard.sass */
+#subject-overview .subject-info .name h2 {
+  font-size: 18px;
+  margin: 0 0 0.3em;
+  line-height: 1em;
+}
+/* line 20, ../../../frontend/sass/feedback/_dashboard.sass */
+#subject-overview .averages .average {
+  text-align: center;
+  width: 160px;
+  float: left;
+}
+/* line 24, ../../../frontend/sass/feedback/_dashboard.sass */
+#subject-overview .averages .average h2 {
+  font-size: 18px;
+  line-height: 1em;
+  margin: 0 0 0.3em;
+}
+/* line 28, ../../../frontend/sass/feedback/_dashboard.sass */
+#subject-overview .averages .average div.rating {
+  margin: 0.2em auto;
+}
+
+/* line 4, ../../../frontend/sass/_feedback.sass */
 .feedback {
   border-top: 1px solid #d4d4d4;
   margin: 12px 0 0;
   padding: 14px 0 0;
 }
-/* line 7, ../../../frontend/sass/_feedback.sass */
+/* line 8, ../../../frontend/sass/_feedback.sass */
 .feedback .avatar-and-question {
   display: inline;
   float: left;
   overflow: hidden;
   *zoom: 1;
 }
-/* line 10, ../../../frontend/sass/_feedback.sass */
+/* line 11, ../../../frontend/sass/_feedback.sass */
 .feedback .avatar-and-question .avatar {
   display: inline;
   float: left;
@@ -2239,12 +2252,12 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   border: 1px solid #dddddd;
   margin: 0 7px 0 0;
 }
-/* line 18, ../../../frontend/sass/_feedback.sass */
+/* line 19, ../../../frontend/sass/_feedback.sass */
 .feedback .avatar-and-question .avatar img {
   width: 48px;
   height: 48px;
 }
-/* line 21, ../../../frontend/sass/_feedback.sass */
+/* line 22, ../../../frontend/sass/_feedback.sass */
 .feedback .avatar-and-question .question-and-rating {
   display: inline;
   float: left;
@@ -2252,7 +2265,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   *zoom: 1;
   width: 255px;
 }
-/* line 25, ../../../frontend/sass/_feedback.sass */
+/* line 26, ../../../frontend/sass/_feedback.sass */
 .feedback .avatar-and-question .question-and-rating .question {
   margin: 0 0 7px;
   font-size: 11px;
@@ -2334,7 +2347,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   color: #009900;
   font-weight: bold;
 }
-/* line 32, ../../../frontend/sass/_feedback.sass */
+/* line 33, ../../../frontend/sass/_feedback.sass */
 .feedback div.comment .buttons p {
   display: none;
 }
@@ -2345,7 +2358,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   color: #444444;
   top: 42px;
   left: 630px;
-  padding: 25px 10px 20px 15px;
+  padding: 5px 10px 20px 15px;
   border: 1px solid #cccccc;
   border-width: 1px 1px 1px 0;
   -moz-border-radius-topright: 5px;
@@ -2478,48 +2491,87 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   display: none;
 }
 /* line 20, ../../../frontend/sass/events/_detail.sass */
-#event-detail-view .close {
+#event-detail-view .top {
+  overflow: hidden;
+  *zoom: 1;
+  margin: 0 0 15px;
+}
+/* line 23, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .top .date {
+  float: left;
+  color: #999999;
+  font-size: 10px;
+}
+/* line 27, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .top .close {
   float: right;
   position: absolute;
   top: 4px;
   right: 10px;
   font-size: 10px;
 }
-/* line 26, ../../../frontend/sass/events/_detail.sass */
-#event-detail-view .name-and-location {
-  min-height: 60px;
-  position: relative;
-  padding-right: 30px;
-}
-/* line 30, ../../../frontend/sass/events/_detail.sass */
-#event-detail-view .name-and-location .avatar {
-  position: absolute;
-  bottom: 3px;
-  right: 0;
-  padding: 3px;
-  background: white;
-  border: 1px solid #dddddd;
-  cursor: pointer;
-}
-/* line 38, ../../../frontend/sass/events/_detail.sass */
-#event-detail-view .name-and-location h3 {
-  font-size: 16px;
+/* line 33, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .name-and-amount {
   margin: 0 0 0.5em 0;
 }
-/* line 41, ../../../frontend/sass/events/_detail.sass */
-#event-detail-view .name-and-location h3 em {
-  color: #666666;
-  display: block;
-  font-style: normal;
-  font-size: 0.7em;
-  margin: 5px 0 0 0;
+/* line 35, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .name-and-amount .amount {
+  font-size: 16px;
+  float: right;
+  line-height: 1em;
+}
+/* line 39, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .name-and-amount h3 {
+  font-size: 16px;
+  line-height: 1em;
+}
+/* line 43, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .location {
+  padding: 5px 0 12px 0;
+  font-size: 11px;
+  overflow: hidden;
+  *zoom: 1;
 }
 /* line 47, ../../../frontend/sass/events/_detail.sass */
-#event-detail-view .name-and-location p.address, #event-detail-view .name-and-location p.phone {
-  font-size: 11px;
-  margin: 0.2em 0;
+#event-detail-view .location .map {
+  margin: 0 13px 0 0;
+  float: left;
 }
-/* line 51, ../../../frontend/sass/events/_detail.sass */
+/* line 50, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .location .map img {
+  width: 130px;
+  border: 1px solid #cccccc;
+}
+/* line 54, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .location .address h2, #event-detail-view .location .address h3 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  line-height: 1.2em;
+  color: #444444;
+  font-weight: bold;
+  margin: 0 0 0.3em;
+}
+/* line 60, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .location .address h2 {
+  font-size: 15px;
+}
+/* line 62, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .location .address h3 {
+  font-size: 11px;
+}
+/* line 64, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .location .address p {
+  line-height: 1.2em;
+  margin: 0 0 0.25em;
+}
+/* line 68, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .social {
+  position: absolute;
+  bottom: 15px;
+}
+/* line 72, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service {
   margin: 10px 0 0;
   border: 1px solid #92c5e0;
@@ -2527,12 +2579,12 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   padding: 7px 5px 7px 55px;
   font-size: 11px;
 }
-/* line 57, ../../../frontend/sass/events/_detail.sass */
+/* line 78, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service h2 {
   font-size: 14px;
   margin: 0;
 }
-/* line 60, ../../../frontend/sass/events/_detail.sass */
+/* line 81, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service p {
   margin: 0;
   padding: 0;
@@ -2540,7 +2592,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   outline: 0;
   margin: 0.2em 0 0.5em;
 }
-/* line 63, ../../../frontend/sass/events/_detail.sass */
+/* line 84, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service ul {
   list-style: none;
   margin: 0;
@@ -2554,59 +2606,16 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   list-style-type: none;
   margin-left: 0px;
 }
-/* line 66, ../../../frontend/sass/events/_detail.sass */
+/* line 87, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service ul li {
   margin: 0 0 0.5em;
 }
-/* line 68, ../../../frontend/sass/events/_detail.sass */
+/* line 89, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service ul li .yes {
   font-weight: bold;
 }
 
-/* line 1, ../../../frontend/sass/_tellers.sass */
-#teller-overview {
-  height: 75px;
-  padding: 5px 0;
-}
-/* line 4, ../../../frontend/sass/_tellers.sass */
-#teller-overview p.meta {
-  color: #999999;
-  font-size: 0.83em;
-}
-/* line 7, ../../../frontend/sass/_tellers.sass */
-#teller-overview .teller-info {
-  float: left;
-  width: 40%;
-}
-/* line 10, ../../../frontend/sass/_tellers.sass */
-#teller-overview .teller-info .avatar {
-  border: 1px solid #cccccc;
-  margin: 0 1em 0 0;
-  float: left;
-}
-/* line 15, ../../../frontend/sass/_tellers.sass */
-#teller-overview .teller-info .name h2 {
-  font-size: 18px;
-  margin: 0 0 0.3em;
-  line-height: 1em;
-}
-/* line 20, ../../../frontend/sass/_tellers.sass */
-#teller-overview .averages .average {
-  text-align: center;
-  width: 160px;
-  float: left;
-}
-/* line 24, ../../../frontend/sass/_tellers.sass */
-#teller-overview .averages .average h2 {
-  font-size: 18px;
-  line-height: 1em;
-  margin: 0 0 0.3em;
-}
-/* line 28, ../../../frontend/sass/_tellers.sass */
-#teller-overview .averages .average div.rating {
-  margin: 0.2em auto;
-}
-
+@import url(tellers.css);
 /* line 2, ../../../frontend/sass/members/_billpay_signup.sass */
 #billpay-signup-dialog .signup-form {
   text-align: center;

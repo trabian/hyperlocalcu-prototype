@@ -7,19 +7,19 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   return child;
 };
 define(["text!views/feedback/subject_overview.handlebars?v=2", "app/views/common/feedback/rating_view", "vendor/handlebars"], function(template, RatingView) {
-  var TellerOverviewView;
-  return TellerOverviewView = (function() {
-    function TellerOverviewView() {
-      this.render = __bind(this.render, this);;      TellerOverviewView.__super__.constructor.apply(this, arguments);
+  var FeedbackSubjectOverviewView;
+  return FeedbackSubjectOverviewView = (function() {
+    function FeedbackSubjectOverviewView() {
+      this.render = __bind(this.render, this);;      FeedbackSubjectOverviewView.__super__.constructor.apply(this, arguments);
     }
-    __extends(TellerOverviewView, Backbone.View);
-    TellerOverviewView.prototype.template = Handlebars.compile(template);
-    TellerOverviewView.prototype.initialize = function(options) {
+    __extends(FeedbackSubjectOverviewView, Backbone.View);
+    FeedbackSubjectOverviewView.prototype.template = Handlebars.compile(template);
+    FeedbackSubjectOverviewView.prototype.initialize = function(options) {
       return this.model.bind('change', __bind(function() {
         return this.render();
       }, this));
     };
-    TellerOverviewView.prototype.render = function() {
+    FeedbackSubjectOverviewView.prototype.render = function() {
       $(this.el).html(this.template(this.model.toViewJSON()));
       _.each(['month', 'year'], __bind(function(timespan) {
         var ratingView;
@@ -32,6 +32,6 @@ define(["text!views/feedback/subject_overview.handlebars?v=2", "app/views/common
       }, this));
       return this;
     };
-    return TellerOverviewView;
+    return FeedbackSubjectOverviewView;
   })();
 });

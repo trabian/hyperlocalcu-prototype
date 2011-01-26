@@ -7,20 +7,20 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   return child;
 };
 define(['app/models/feedback_subject'], function(FeedbackSubject) {
-  var Teller;
-  return Teller = (function() {
-    function Teller() {
-      this.url = __bind(this.url, this);;      Teller.__super__.constructor.apply(this, arguments);
+  var Vendor;
+  return Vendor = (function() {
+    function Vendor() {
+      this.url = __bind(this.url, this);;      Vendor.__super__.constructor.apply(this, arguments);
     }
-    __extends(Teller, FeedbackSubject);
-    Teller.prototype.initialize = function(options) {
-      options.list_url = "/tellers/" + this.id + "/feedbacks";
-      this.meta = "Teller #" + this.id;
-      return Teller.__super__.initialize.call(this, options);
+    __extends(Vendor, FeedbackSubject);
+    Vendor.prototype.initialize = function(options) {
+      options.list_url = "/vendors/" + this.id + "/feedbacks";
+      this.meta = "Vendor #" + this.id;
+      return Vendor.__super__.initialize.call(this, options);
     };
-    Teller.prototype.url = function() {
-      return "/tellers/" + this.id;
+    Vendor.prototype.url = function() {
+      return "/vendors/" + this.id;
     };
-    return Teller;
+    return Vendor;
   })();
 });

@@ -1,4 +1,4 @@
-var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
   ctor.prototype = parent.prototype;
@@ -10,10 +10,15 @@ define(['text!views/timeline/events/billpay/detail.handlebars?v=2', 'app/views/m
   var BillpayDetailView;
   return BillpayDetailView = (function() {
     function BillpayDetailView() {
-      BillpayDetailView.__super__.constructor.apply(this, arguments);
+      this.renderDetail = __bind(this.renderDetail, this);;      BillpayDetailView.__super__.constructor.apply(this, arguments);
     }
     __extends(BillpayDetailView, EventDetailView);
-    BillpayDetailView.prototype.eventTypeTemplate = Handlebars.compile(template);
+    BillpayDetailView.prototype.eventTypeOptions = {
+      template: Handlebars.compile(template)
+    };
+    BillpayDetailView.prototype.renderDetail = function() {
+      return this.addFeedbackView('vendor');
+    };
     return BillpayDetailView;
   })();
 });
