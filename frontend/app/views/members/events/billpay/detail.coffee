@@ -2,4 +2,9 @@ define ['text!views/timeline/events/billpay/detail.handlebars?v=2', 'app/views/m
 
   class BillpayDetailView extends EventDetailView
 
-    eventTypeTemplate: Handlebars.compile(template)
+    eventTypeOptions:
+      template: Handlebars.compile(template)
+
+    renderDetail: =>
+      this.addFeedbackView 'vendor'
+

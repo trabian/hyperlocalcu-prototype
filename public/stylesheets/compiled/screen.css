@@ -2215,20 +2215,64 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   font-size: 10px;
 }
 
-/* line 3, ../../../frontend/sass/_feedback.sass */
+/* line 1, ../../../frontend/sass/feedback/_dashboard.sass */
+#subject-overview {
+  height: 75px;
+  padding: 5px 0;
+}
+/* line 4, ../../../frontend/sass/feedback/_dashboard.sass */
+#subject-overview p.meta {
+  color: #999999;
+  font-size: 0.83em;
+}
+/* line 7, ../../../frontend/sass/feedback/_dashboard.sass */
+#subject-overview .subject-info {
+  float: left;
+  width: 40%;
+}
+/* line 10, ../../../frontend/sass/feedback/_dashboard.sass */
+#subject-overview .subject-info .avatar {
+  border: 1px solid #cccccc;
+  margin: 0 1em 0 0;
+  float: left;
+}
+/* line 15, ../../../frontend/sass/feedback/_dashboard.sass */
+#subject-overview .subject-info .name h2 {
+  font-size: 18px;
+  margin: 0 0 0.3em;
+  line-height: 1em;
+}
+/* line 20, ../../../frontend/sass/feedback/_dashboard.sass */
+#subject-overview .averages .average {
+  text-align: center;
+  width: 160px;
+  float: left;
+}
+/* line 24, ../../../frontend/sass/feedback/_dashboard.sass */
+#subject-overview .averages .average h2 {
+  font-size: 18px;
+  line-height: 1em;
+  margin: 0 0 0.3em;
+}
+/* line 28, ../../../frontend/sass/feedback/_dashboard.sass */
+#subject-overview .averages .average div.rating {
+  margin: 0.2em auto;
+}
+
+/* line 4, ../../../frontend/sass/_feedback.sass */
 .feedback {
   border-top: 1px solid #d4d4d4;
   margin: 12px 0 0;
   padding: 14px 0 0;
 }
-/* line 7, ../../../frontend/sass/_feedback.sass */
+/* line 8, ../../../frontend/sass/_feedback.sass */
 .feedback .avatar-and-question {
   display: inline;
   float: left;
   overflow: hidden;
   *zoom: 1;
 }
-/* line 10, ../../../frontend/sass/_feedback.sass */
+/* line 11, ../../../frontend/sass/_feedback.sass */
 .feedback .avatar-and-question .avatar {
   display: inline;
   float: left;
@@ -2239,12 +2283,12 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   border: 1px solid #dddddd;
   margin: 0 7px 0 0;
 }
-/* line 18, ../../../frontend/sass/_feedback.sass */
+/* line 19, ../../../frontend/sass/_feedback.sass */
 .feedback .avatar-and-question .avatar img {
   width: 48px;
   height: 48px;
 }
-/* line 21, ../../../frontend/sass/_feedback.sass */
+/* line 22, ../../../frontend/sass/_feedback.sass */
 .feedback .avatar-and-question .question-and-rating {
   display: inline;
   float: left;
@@ -2252,7 +2296,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   *zoom: 1;
   width: 255px;
 }
-/* line 25, ../../../frontend/sass/_feedback.sass */
+/* line 26, ../../../frontend/sass/_feedback.sass */
 .feedback .avatar-and-question .question-and-rating .question {
   margin: 0 0 7px;
   font-size: 11px;
@@ -2334,7 +2378,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   color: #009900;
   font-weight: bold;
 }
-/* line 32, ../../../frontend/sass/_feedback.sass */
+/* line 33, ../../../frontend/sass/_feedback.sass */
 .feedback div.comment .buttons p {
   display: none;
 }
@@ -2563,50 +2607,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   font-weight: bold;
 }
 
-/* line 1, ../../../frontend/sass/_tellers.sass */
-#teller-overview {
-  height: 75px;
-  padding: 5px 0;
-}
-/* line 4, ../../../frontend/sass/_tellers.sass */
-#teller-overview p.meta {
-  color: #999999;
-  font-size: 0.83em;
-}
-/* line 7, ../../../frontend/sass/_tellers.sass */
-#teller-overview .teller-info {
-  float: left;
-  width: 40%;
-}
-/* line 10, ../../../frontend/sass/_tellers.sass */
-#teller-overview .teller-info .avatar {
-  border: 1px solid #cccccc;
-  margin: 0 1em 0 0;
-  float: left;
-}
-/* line 15, ../../../frontend/sass/_tellers.sass */
-#teller-overview .teller-info .name h2 {
-  font-size: 18px;
-  margin: 0 0 0.3em;
-  line-height: 1em;
-}
-/* line 20, ../../../frontend/sass/_tellers.sass */
-#teller-overview .averages .average {
-  text-align: center;
-  width: 160px;
-  float: left;
-}
-/* line 24, ../../../frontend/sass/_tellers.sass */
-#teller-overview .averages .average h2 {
-  font-size: 18px;
-  line-height: 1em;
-  margin: 0 0 0.3em;
-}
-/* line 28, ../../../frontend/sass/_tellers.sass */
-#teller-overview .averages .average div.rating {
-  margin: 0.2em auto;
-}
-
+@import url(tellers.css);
 /* line 2, ../../../frontend/sass/members/_billpay_signup.sass */
 #billpay-signup-dialog .signup-form {
   text-align: center;

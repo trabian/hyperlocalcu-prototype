@@ -1,6 +1,6 @@
-define ["text!views/tellers/overview.handlebars?v=2", "app/views/common/feedback/rating_view", "vendor/handlebars"], (template, RatingView) ->
+define ["text!views/feedback/subject_overview.handlebars?v=2", "app/views/common/feedback/rating_view", "vendor/handlebars"], (template, RatingView) ->
 
-  class TellerOverviewView extends Backbone.View
+  class FeedbackSubjectOverviewView extends Backbone.View
 
     template: Handlebars.compile(template)
 
@@ -11,7 +11,7 @@ define ["text!views/tellers/overview.handlebars?v=2", "app/views/common/feedback
 
     render: =>
 
-      $(@el).html @template(@model.toJSON())
+      $(@el).html @template(@model.toViewJSON())
 
       _.each ['month', 'year'], (timespan) =>
 
