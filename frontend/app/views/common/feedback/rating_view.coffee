@@ -34,7 +34,6 @@ define ['app/views/common/feedback/comment_view'], (CommentView) ->
 
         if @model.get(@options.commentField)
           this.$('.commentLink').addClass('active')
-          this.showCommentForm()
 
         $(@el).addClass('rated active') if @rating > 0
 

@@ -46,7 +46,6 @@ define(['app/views/common/feedback/comment_view'], function(CommentView) {
         $(this.el).append(commentLink);
         if (this.model.get(this.options.commentField)) {
           this.$('.commentLink').addClass('active');
-          this.showCommentForm();
         }
         if (this.rating > 0) {
           $(this.el).addClass('rated active');

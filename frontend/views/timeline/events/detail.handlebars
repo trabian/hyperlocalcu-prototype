@@ -1,21 +1,17 @@
-<a href="#" class="close">Close</a>
+<div class="top">
+  <div class="date">{{ formatted_date }}</div>
+  <a href="#" class="close">Close</a>
+</div>
 
-<div class="name-and-location">
+<div class="name-and-amount">
 
-  {{#avatar}}
-  <img src="{{ . }}" class="avatar" />
-  {{/avatar}}
-  {{^avatar}}
-  <img src="/images/avatar.png" class="avatar" />
-  {{/avatar}}
-  <h3>
-    {{ description }}
-    {{#meta}}
-      <em>{{ . }}</em>
-    {{/meta}}
-  </h3>
-  {{#address}}
-    <p class="address">{{{ . }}}</p>
-  {{/address}}
+  <div class="amount">{{{ formatted_amount }}}</div>
 
+  <h3>{{ description }}</h3>
+
+</div>
+
+<div class="location">
+  <div class="map"><img src="{{ map }}" /></div>
+  <div class="address">{{{ address }}}</div>
 </div>
