@@ -1,4 +1,4 @@
-define ["text!views/timeline/events/detail.handlebars?v=5", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "vendor/handlebars"], (template, SocialView, FeedbackView) ->
+define ["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "app/views/common/feedback/rating_view", "vendor/handlebars", "vendor/jquery-mousewheel", "vendor/jquery-jscrollpane"], (template, SocialView, FeedbackView, RatingView) ->
 
   class EventDetailView extends Backbone.View
 
@@ -27,19 +27,55 @@ define ["text!views/timeline/events/detail.handlebars?v=5", "app/views/common/so
 
       $(@el).html @template(detailJSON)
 
+      @header = this.$('#event-header')
+      @detail = this.$('#event-detail')
+      @wrapper = this.$('#event-detail-wrapper')
+      @footer = this.$('#event-footer')
+
       if @model.isSocial()
         @socialView = new SocialView
           model: @model
 
-        $(@el).append @socialView.render().el
+        @footer.append @socialView.render().el
 
       if @eventTypeOptions? and @eventTypeOptions.template?
-        $(@el).append @eventTypeOptions.template(detailJSON)
+        @detail.append @eventTypeOptions.template(detailJSON)
 
       if @renderDetail?
         this.renderDetail()
 
+      if @model.isDeposit()
+        @header.addClass('deposit')
+
+      if @model.get('merchant')?
+        this.addMerchantFeedbackView()
+
       this.show()
+
+      @wrapper.jScrollPane()
+
+      @scroll = @wrapper.data('jsp')
+
+      @heightOffset = parseInt($(@el).css('top')) + @header.height() + 130
+
+      $(window).resize =>
+
+        height = $(window).height()
+
+        @wrapper.height(height - @heightOffset)
+
+        if $.browser.ie
+
+          if !throttleTimeout
+            setTimeout =>
+              @scroll.reinitialise()
+              throttleTimeout = null
+            , 50
+
+        else
+          @scroll.reinitialise()
+
+      $(window).trigger 'resize'
 
     show: ->
 
@@ -53,6 +89,22 @@ define ["text!views/timeline/events/detail.handlebars?v=5", "app/views/common/so
 
       $(@el).empty().hide()
 
+    addMerchantFeedbackView: =>
+
+      feedback = @model.feedbacks.for_subject('merchant')
+
+      if feedback?
+
+        @merchantDetails = @detail.find('.address')
+
+        @merchantRatingView = new RatingView
+          model: feedback
+          commentParent: @merchantDetails
+          commentFormTitle: "Care to elaborate?"
+
+
+        @merchantDetails.append @merchantRatingView.render().el
+
     addFeedbackView: (subject_types...) =>
       _.each subject_types, (subject_type) =>
 
@@ -63,4 +115,4 @@ define ["text!views/timeline/events/detail.handlebars?v=5", "app/views/common/so
             model: feedback
             question: @model.feedbackQuestion
 
-          $(@el).append @feedbackView.render().el
+          @detail.append @feedbackView.render().el

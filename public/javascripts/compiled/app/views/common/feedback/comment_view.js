@@ -6,7 +6,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(["text!views/feedback/comment.handlebars?v=3"], function(template) {
+define(["text!views/feedback/comment.handlebars?v=4"], function(template) {
   var CommentView;
   return CommentView = (function() {
     function CommentView() {

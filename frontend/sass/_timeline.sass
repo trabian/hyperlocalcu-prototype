@@ -114,7 +114,6 @@ table#timeline
             display: none
       &:nth-child(odd)
         td, th
-          background: $timeline_row_stripe_color
           background: url(/images/background.png) repeat-x left -300px
       &:first-child
         td, th
@@ -125,7 +124,7 @@ table#timeline
           background: $timeline_row_selected_color
       &.reward, &.deposit
         td, th
-          color: #090
+          color: $deposit_color
       &.penalty
         td, th
           color: #900

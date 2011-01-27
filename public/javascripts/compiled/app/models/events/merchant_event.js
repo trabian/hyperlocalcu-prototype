@@ -18,7 +18,8 @@ define(['app/models/event'], function(Event) {
       this.merchant = this.get('merchant');
       if (this.merchant != null) {
         this.description = this.merchant.name;
-        return this.twitter_username = this.merchant.twitter_username;
+        this.twitter_username = this.merchant.twitter_username;
+        return this.address_summary = "<h2>" + this.merchant.name + "</h2><p>" + this.merchant.address_summary + "</p>";
       }
     };
     MerchantEvent.prototype.isSocial = function() {
@@ -27,7 +28,7 @@ define(['app/models/event'], function(Event) {
     MerchantEvent.prototype.toDetailJSON = function() {
       if (this.merchant != null) {
         return _.extend(this.toViewJSON(), {
-          address: this.merchant.address_summary,
+          address: this.address_summary,
           avatar: this.merchant.avatar,
           twitter_username: this.merchant.twitter_username
         });

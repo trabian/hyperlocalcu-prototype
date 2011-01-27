@@ -31,9 +31,11 @@ define(['app/models/event_factory'], function(factory) {
           'selected': false
         });
       });
-      return event.set({
-        'selected': true
-      });
+      if (event != null) {
+        return event.set({
+          'selected': true
+        });
+      }
     };
     EventList.prototype.toggleOrSelectOne = function(event) {
       if (event.get('selected')) {

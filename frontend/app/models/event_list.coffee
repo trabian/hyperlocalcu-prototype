@@ -24,7 +24,8 @@ define ['app/models/event_factory'], (factory) ->
       _.each this.selected(), (selectedevent) ->
         selectedevent.set 'selected': false
 
-      event.set 'selected': true
+      if event?
+        event.set 'selected': true
 
     # If the event is already selected then unselect it. Otherwise make sure
     # it's the only one selected.

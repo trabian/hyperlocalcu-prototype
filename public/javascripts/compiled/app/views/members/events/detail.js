@@ -6,11 +6,12 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 }, __slice = Array.prototype.slice;
-define(["text!views/timeline/events/detail.handlebars?v=5", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "vendor/handlebars"], function(template, SocialView, FeedbackView) {
+define(["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "app/views/common/feedback/rating_view", "vendor/handlebars", "vendor/jquery-mousewheel", "vendor/jquery-jscrollpane"], function(template, SocialView, FeedbackView, RatingView) {
   var EventDetailView;
   return EventDetailView = (function() {
     function EventDetailView() {
       this.addFeedbackView = __bind(this.addFeedbackView, this);;
+      this.addMerchantFeedbackView = __bind(this.addMerchantFeedbackView, this);;
       this.render = __bind(this.render, this);;
       this.close = __bind(this.close, this);;      EventDetailView.__super__.constructor.apply(this, arguments);
     }
@@ -40,19 +41,49 @@ define(["text!views/timeline/events/detail.handlebars?v=5", "app/views/common/so
       this.model.initializeDetails();
       detailJSON = this.model.toDetailJSON();
       $(this.el).html(this.template(detailJSON));
+      this.header = this.$('#event-header');
+      this.detail = this.$('#event-detail');
+      this.wrapper = this.$('#event-detail-wrapper');
+      this.footer = this.$('#event-footer');
       if (this.model.isSocial()) {
         this.socialView = new SocialView({
           model: this.model
         });
-        $(this.el).append(this.socialView.render().el);
+        this.footer.append(this.socialView.render().el);
       }
       if ((this.eventTypeOptions != null) && (this.eventTypeOptions.template != null)) {
-        $(this.el).append(this.eventTypeOptions.template(detailJSON));
+        this.detail.append(this.eventTypeOptions.template(detailJSON));
       }
       if (this.renderDetail != null) {
         this.renderDetail();
       }
-      return this.show();
+      if (this.model.isDeposit()) {
+        this.header.addClass('deposit');
+      }
+      if (this.model.get('merchant') != null) {
+        this.addMerchantFeedbackView();
+      }
+      this.show();
+      this.wrapper.jScrollPane();
+      this.scroll = this.wrapper.data('jsp');
+      this.heightOffset = parseInt($(this.el).css('top')) + this.header.height() + 130;
+      $(window).resize(__bind(function() {
+        var height;
+        height = $(window).height();
+        this.wrapper.height(height - this.heightOffset);
+        if ($.browser.ie) {
+          if (!throttleTimeout) {
+            return setTimeout(__bind(function() {
+              var throttleTimeout;
+              this.scroll.reinitialise();
+              return throttleTimeout = null;
+            }, this), 50);
+          }
+        } else {
+          return this.scroll.reinitialise();
+        }
+      }, this));
+      return $(window).trigger('resize');
     };
     EventDetailView.prototype.show = function() {
       this.trigger('show');
@@ -61,6 +92,19 @@ define(["text!views/timeline/events/detail.handlebars?v=5", "app/views/common/so
     EventDetailView.prototype.hide = function() {
       this.trigger('hide');
       return $(this.el).empty().hide();
+    };
+    EventDetailView.prototype.addMerchantFeedbackView = function() {
+      var feedback;
+      feedback = this.model.feedbacks.for_subject('merchant');
+      if (feedback != null) {
+        this.merchantDetails = this.detail.find('.address');
+        this.merchantRatingView = new RatingView({
+          model: feedback,
+          commentParent: this.merchantDetails,
+          commentFormTitle: "Care to elaborate?"
+        });
+        return this.merchantDetails.append(this.merchantRatingView.render().el);
+      }
     };
     EventDetailView.prototype.addFeedbackView = function() {
       var subject_types;
@@ -73,7 +117,7 @@ define(["text!views/timeline/events/detail.handlebars?v=5", "app/views/common/so
             model: feedback,
             question: this.model.feedbackQuestion
           });
-          return $(this.el).append(this.feedbackView.render().el);
+          return this.detail.append(this.feedbackView.render().el);
         }
       }, this));
     };

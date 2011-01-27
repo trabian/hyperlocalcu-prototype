@@ -55,6 +55,7 @@ RailsAdmin.config do |config|
       field :amount
       field :check_number
       field :check_image
+      field :check_image_back
     end
   end
 
@@ -87,6 +88,14 @@ RailsAdmin.config do |config|
       field :withdrawals
       field :deposits
       field :ending_balance
+    end
+  end
+
+  config.model Feedback do
+    edit do
+      field :rating
+      field :comment
+      field :teller
     end
   end
 

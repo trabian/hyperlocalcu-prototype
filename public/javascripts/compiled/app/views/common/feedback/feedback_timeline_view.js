@@ -5,7 +5,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.prototype = new ctor;
   child.__super__ = parent.prototype;
   return child;
-};
+}, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 define(["app/views/common/timeline/timeline_view", "app/views/common/feedback/timeline/row_factory"], function(TimelineView, FeedbackRowFactory) {
   var FeedbackTimelineView;
   return FeedbackTimelineView = (function() {
@@ -15,7 +15,11 @@ define(["app/views/common/timeline/timeline_view", "app/views/common/feedback/ti
     __extends(FeedbackTimelineView, TimelineView);
     FeedbackTimelineView.prototype.initialize = function(options) {
       options.rowFactory = new FeedbackRowFactory;
-      return FeedbackTimelineView.__super__.initialize.call(this, options);
+      FeedbackTimelineView.__super__.initialize.call(this, options);
+      return this.collection.bind('add', __bind(function(model) {
+        this.addOne(model, 'top');
+        return this.refreshTimestamps();
+      }, this));
     };
     return FeedbackTimelineView;
   })();

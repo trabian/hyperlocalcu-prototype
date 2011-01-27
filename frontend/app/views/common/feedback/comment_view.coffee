@@ -1,4 +1,4 @@
-define ["text!views/feedback/comment.handlebars?v=3"], (template) ->
+define ["text!views/feedback/comment.handlebars?v=4"], (template) ->
 
   class CommentView extends Backbone.View
 

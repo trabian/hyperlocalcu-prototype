@@ -1,4 +1,4 @@
-FeedbackSubjectTypes = ['teller', 'vendor']
+FeedbackSubjectTypes = ['merchant', 'teller', 'vendor']
 
 FeedbackSubjectTypeDefinitions = _.map FeedbackSubjectTypes, (feedback_subject_type) ->
   "app/models/#{feedback_subject_type}"

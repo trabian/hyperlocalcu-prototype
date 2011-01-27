@@ -15,3 +15,7 @@ define ['app/models/events/merchant_event'], (MerchantEvent) ->
 
       @updateFields.push 'check_image_comment'
 
+    toDetailJSON: ->
+      detailJSON = super()
+      _.extend detailJSON,
+        description: "Check ##{this.id}"
