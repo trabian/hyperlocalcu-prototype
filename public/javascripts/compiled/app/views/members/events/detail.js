@@ -6,11 +6,12 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 }, __slice = Array.prototype.slice;
-define(["text!views/timeline/events/detail.handlebars?v=7", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "vendor/handlebars"], function(template, SocialView, FeedbackView) {
+define(["text!views/timeline/events/detail.handlebars?v=8", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "app/views/common/feedback/rating_view", "vendor/handlebars"], function(template, SocialView, FeedbackView, RatingView) {
   var EventDetailView;
   return EventDetailView = (function() {
     function EventDetailView() {
       this.addFeedbackView = __bind(this.addFeedbackView, this);;
+      this.addMerchantFeedbackView = __bind(this.addMerchantFeedbackView, this);;
       this.render = __bind(this.render, this);;
       this.close = __bind(this.close, this);;      EventDetailView.__super__.constructor.apply(this, arguments);
     }
@@ -56,6 +57,9 @@ define(["text!views/timeline/events/detail.handlebars?v=7", "app/views/common/so
       if (this.model.isDeposit()) {
         this.detail.addClass('deposit');
       }
+      if (this.model.get('merchant') != null) {
+        this.addMerchantFeedbackView();
+      }
       return this.show();
     };
     EventDetailView.prototype.show = function() {
@@ -65,6 +69,19 @@ define(["text!views/timeline/events/detail.handlebars?v=7", "app/views/common/so
     EventDetailView.prototype.hide = function() {
       this.trigger('hide');
       return $(this.el).empty().hide();
+    };
+    EventDetailView.prototype.addMerchantFeedbackView = function() {
+      var feedback;
+      feedback = this.model.feedbacks.for_subject('merchant');
+      if (feedback != null) {
+        this.merchantDetails = this.detail.find('.address');
+        this.merchantRatingView = new RatingView({
+          model: feedback,
+          commentParent: this.merchantDetails,
+          commentFormTitle: "Care to elaborate?"
+        });
+        return this.merchantDetails.append(this.merchantRatingView.render().el);
+      }
     };
     EventDetailView.prototype.addFeedbackView = function() {
       var subject_types;

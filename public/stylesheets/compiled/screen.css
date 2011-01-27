@@ -2605,15 +2605,100 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 }
 /* line 69, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address p {
-  line-height: 1.2em;
-  margin: 0 0 0.25em;
+  margin: 0;
 }
-/* line 73, ../../../frontend/sass/events/_detail.sass */
+/* line 71, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .location .address .rating {
+  margin-top: 10px;
+  display: inline-block;
+}
+/* line 2, ../../../frontend/sass/feedback/_comment_form.sass */
+#event-detail-view .location .address div.comment {
+  clear: both;
+  text-align: left;
+  position: relative;
+  margin: 10px 0 0 0;
+  background: white;
+  border: 1px solid #dddddd;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 11px;
+  margin-top: 12px;
+  position: relative;
+  top: 10px;
+}
+/* line 10, ../../../frontend/sass/_ui_mixins.sass */
+#event-detail-view .location .address div.comment::before, #event-detail-view .location .address div.comment::after {
+  content: "";
+  display: block;
+  height: 0px;
+  width: 0px;
+  position: absolute;
+}
+/* line 17, ../../../frontend/sass/_ui_mixins.sass */
+#event-detail-view .location .address div.comment::before {
+  border: 14px solid transparent;
+  border-bottom-color: #dddddd;
+  right: 56px;
+  top: -28px;
+}
+/* line 23, ../../../frontend/sass/_ui_mixins.sass */
+#event-detail-view .location .address div.comment::after {
+  border: 12px solid transparent;
+  border-bottom-color: white;
+  right: 58px;
+  top: -24px;
+}
+/* line 9, ../../../frontend/sass/feedback/_comment_form.sass */
+#event-detail-view .location .address div.comment .cancel {
+  line-height: 0;
+  float: right;
+  margin: 5px 0 0 0;
+}
+/* line 13, ../../../frontend/sass/feedback/_comment_form.sass */
+#event-detail-view .location .address div.comment h4 {
+  margin-bottom: 0;
+}
+/* line 15, ../../../frontend/sass/feedback/_comment_form.sass */
+#event-detail-view .location .address div.comment textarea {
+  height: 70px;
+  font-size: 12px;
+  width: 282px;
+}
+/* line 19, ../../../frontend/sass/feedback/_comment_form.sass */
+#event-detail-view .location .address div.comment .buttons {
+  overflow: hidden;
+  *zoom: 1;
+}
+/* line 21, ../../../frontend/sass/feedback/_comment_form.sass */
+#event-detail-view .location .address div.comment .buttons button {
+  display: inline;
+  float: right;
+  margin: 0 0 0 10px;
+}
+/* line 24, ../../../frontend/sass/feedback/_comment_form.sass */
+#event-detail-view .location .address p.thanks {
+  clear: both;
+  text-align: center;
+  padding: 1em 0;
+  color: #009900;
+  font-weight: bold;
+}
+/* line 77, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view .location .address div.comment .buttons p {
+  font-size: 10px;
+}
+/* line 81, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .social {
   position: absolute;
   bottom: 15px;
 }
-/* line 77, ../../../frontend/sass/events/_detail.sass */
+/* line 85, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service {
   margin: 10px 0 0;
   border: 1px solid #92c5e0;
@@ -2623,12 +2708,12 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   border-width: 1px 0;
   background: url(/images/background.png) repeat-x left -250px;
 }
-/* line 85, ../../../frontend/sass/events/_detail.sass */
+/* line 93, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service h2 {
   font-size: 14px;
   margin: 0;
 }
-/* line 88, ../../../frontend/sass/events/_detail.sass */
+/* line 96, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service p {
   margin: 0;
   padding: 0;
@@ -2636,7 +2721,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   outline: 0;
   margin: 0.2em 0 0.5em;
 }
-/* line 91, ../../../frontend/sass/events/_detail.sass */
+/* line 99, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service ul {
   list-style: none;
   margin: 0;
@@ -2676,7 +2761,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #event-detail-view .available-service ul li:last-child, #event-detail-view .available-service ul li.last {
   padding-right: 0;
 }
-/* line 96, ../../../frontend/sass/events/_detail.sass */
+/* line 104, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service ul li {
   margin: 0 0 0.5em;
 }

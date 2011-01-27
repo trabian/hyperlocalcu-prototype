@@ -1,6 +1,6 @@
 var FeedbackSubjectTypeDefinitions, FeedbackSubjectTypes;
 var __slice = Array.prototype.slice;
-FeedbackSubjectTypes = ['teller', 'vendor'];
+FeedbackSubjectTypes = ['merchant', 'teller', 'vendor'];
 FeedbackSubjectTypeDefinitions = _.map(FeedbackSubjectTypes, function(feedback_subject_type) {
   return "app/models/" + feedback_subject_type;
 });

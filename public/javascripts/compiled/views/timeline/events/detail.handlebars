@@ -12,8 +12,10 @@
 
   </div>
 
+{{#address}}
   <div class="location">
-    <div class="map"><img src="{{ map }}" /></div>
-    <div class="address">{{{ address }}}</div>
+    <div class="map"><img src="{{ ../map }}" /></div>
+    <div class="address">{{{ . }}}</div>
   </div>
+{{/address}}
 </div>

@@ -1,4 +1,4 @@
-define ["text!views/timeline/events/detail.handlebars?v=7", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "vendor/handlebars"], (template, SocialView, FeedbackView) ->
+define ["text!views/timeline/events/detail.handlebars?v=8", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "app/views/common/feedback/rating_view", "vendor/handlebars"], (template, SocialView, FeedbackView, RatingView) ->
 
   class EventDetailView extends Backbone.View
 
@@ -45,6 +45,9 @@ define ["text!views/timeline/events/detail.handlebars?v=7", "app/views/common/so
       if @model.isDeposit()
         @detail.addClass('deposit')
 
+      if @model.get('merchant')?
+        this.addMerchantFeedbackView()
+
       this.show()
 
     show: ->
@@ -58,6 +61,22 @@ define ["text!views/timeline/events/detail.handlebars?v=7", "app/views/common/so
       this.trigger('hide')
 
       $(@el).empty().hide()
+
+    addMerchantFeedbackView: =>
+
+      feedback = @model.feedbacks.for_subject('merchant')
+
+      if feedback?
+
+        @merchantDetails = @detail.find('.address')
+
+        @merchantRatingView = new RatingView
+          model: feedback
+          commentParent: @merchantDetails
+          commentFormTitle: "Care to elaborate?"
+
+
+        @merchantDetails.append @merchantRatingView.render().el
 
     addFeedbackView: (subject_types...) =>
       _.each subject_types, (subject_type) =>
