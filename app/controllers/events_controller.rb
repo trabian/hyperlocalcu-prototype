@@ -12,7 +12,7 @@ class EventsController < ApplicationController
 
   def add_expires_header
     expires_in 0
-    @response.headers['Last-Modified'] = Time.now.httpdate
+    response.last_modified = Time.now.utc
   end
 
 end
