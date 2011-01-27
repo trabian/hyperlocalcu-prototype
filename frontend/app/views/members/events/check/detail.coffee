@@ -1,4 +1,4 @@
-define ['text!views/timeline/events/check/detail.handlebars?v=2', 'app/views/members/events/detail', 'app/views/common/feedback/comment_view', 'vendor/handlebars'], (template, EventDetailView, CommentView) ->
+define ['text!views/timeline/events/check/detail.handlebars?v=3', 'app/views/members/events/detail', 'app/views/common/feedback/comment_view', 'vendor/handlebars'], (template, EventDetailView, CommentView) ->
 
   class CheckDetailView extends EventDetailView
 
@@ -19,6 +19,9 @@ define ['text!views/timeline/events/check/detail.handlebars?v=2', 'app/views/mem
       if @checkCommentView? && @checkCommentView.isActive() then @checkCommentView.hide() else this.showCheckCommentView()
 
       return false
+
+    renderDetail: =>
+      this.$('.available-service li a').button()
 
     showCheckCommentView: =>
 

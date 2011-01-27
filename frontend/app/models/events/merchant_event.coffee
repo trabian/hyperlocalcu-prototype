@@ -11,6 +11,7 @@ define ['app/models/event'], (Event) ->
       if @merchant?
         @description = @merchant.name
         @twitter_username = @merchant.twitter_username
+        @address_summary = "<h2>#{@merchant.name}</h2><p>#{@merchant.address_summary}</p>"
 
     isSocial: ->
       @twitter_username?
@@ -18,7 +19,7 @@ define ['app/models/event'], (Event) ->
     toDetailJSON: ->
       if @merchant?
         _.extend this.toViewJSON(),
-          address: @merchant.address_summary
+          address: @address_summary
           avatar: @merchant.avatar
           twitter_username: @merchant.twitter_username
       else

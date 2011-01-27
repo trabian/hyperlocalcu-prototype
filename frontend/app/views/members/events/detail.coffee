@@ -1,4 +1,4 @@
-define ["text!views/timeline/events/detail.handlebars?v=5", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "vendor/handlebars"], (template, SocialView, FeedbackView) ->
+define ["text!views/timeline/events/detail.handlebars?v=7", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "vendor/handlebars"], (template, SocialView, FeedbackView) ->
 
   class EventDetailView extends Backbone.View
 
@@ -10,6 +10,7 @@ define ["text!views/timeline/events/detail.handlebars?v=5", "app/views/common/so
     initialize: ->
       if @eventTypeOptions? and @eventTypeOptions.events?
         this.delegateEvents(@eventTypeOptions.events)
+
 
     close: =>
       @model.set 'selected': false
@@ -27,17 +28,22 @@ define ["text!views/timeline/events/detail.handlebars?v=5", "app/views/common/so
 
       $(@el).html @template(detailJSON)
 
+      @detail = this.$('#event-detail')
+
       if @model.isSocial()
         @socialView = new SocialView
           model: @model
 
-        $(@el).append @socialView.render().el
+        @detail.append @socialView.render().el
 
       if @eventTypeOptions? and @eventTypeOptions.template?
-        $(@el).append @eventTypeOptions.template(detailJSON)
+        @detail.append @eventTypeOptions.template(detailJSON)
 
       if @renderDetail?
         this.renderDetail()
+
+      if @model.isDeposit()
+        @detail.addClass('deposit')
 
       this.show()
 
@@ -63,4 +69,4 @@ define ["text!views/timeline/events/detail.handlebars?v=5", "app/views/common/so
             model: feedback
             question: @model.feedbackQuestion
 
-          $(@el).append @feedbackView.render().el
+          @detail.append @feedbackView.render().el

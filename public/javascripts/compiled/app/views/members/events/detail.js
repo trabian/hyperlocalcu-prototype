@@ -6,7 +6,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 }, __slice = Array.prototype.slice;
-define(["text!views/timeline/events/detail.handlebars?v=5", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "vendor/handlebars"], function(template, SocialView, FeedbackView) {
+define(["text!views/timeline/events/detail.handlebars?v=7", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "vendor/handlebars"], function(template, SocialView, FeedbackView) {
   var EventDetailView;
   return EventDetailView = (function() {
     function EventDetailView() {
@@ -40,17 +40,21 @@ define(["text!views/timeline/events/detail.handlebars?v=5", "app/views/common/so
       this.model.initializeDetails();
       detailJSON = this.model.toDetailJSON();
       $(this.el).html(this.template(detailJSON));
+      this.detail = this.$('#event-detail');
       if (this.model.isSocial()) {
         this.socialView = new SocialView({
           model: this.model
         });
-        $(this.el).append(this.socialView.render().el);
+        this.detail.append(this.socialView.render().el);
       }
       if ((this.eventTypeOptions != null) && (this.eventTypeOptions.template != null)) {
-        $(this.el).append(this.eventTypeOptions.template(detailJSON));
+        this.detail.append(this.eventTypeOptions.template(detailJSON));
       }
       if (this.renderDetail != null) {
         this.renderDetail();
+      }
+      if (this.model.isDeposit()) {
+        this.detail.addClass('deposit');
       }
       return this.show();
     };
@@ -73,7 +77,7 @@ define(["text!views/timeline/events/detail.handlebars?v=5", "app/views/common/so
             model: feedback,
             question: this.model.feedbackQuestion
           });
-          return $(this.el).append(this.feedbackView.render().el);
+          return this.detail.append(this.feedbackView.render().el);
         }
       }, this));
     };

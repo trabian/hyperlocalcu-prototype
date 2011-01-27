@@ -1,17 +1,19 @@
-<div class="top">
-  <div class="date">{{ formatted_date }}</div>
-  <a href="#" class="close">Close</a>
-</div>
+<div class="{{ event_type }}" id="event-detail">
+  <div class="top">
+    <div class="date">{{ formatted_date }}</div>
+    <a href="#" class="close">Close</a>
+  </div>
 
-<div class="name-and-amount">
+  <div class="name-and-amount">
 
-  <div class="amount">{{{ formatted_amount }}}</div>
+    <div class="amount">{{{ formatted_amount }}}</div>
 
-  <h3>{{ description }}</h3>
+    <h3>{{ description }}</h3>
 
-</div>
+  </div>
 
-<div class="location">
-  <div class="map"><img src="{{ map }}" /></div>
-  <div class="address">{{{ address }}}</div>
+  <div class="location">
+    <div class="map"><img src="{{ map }}" /></div>
+    <div class="address">{{{ address }}}</div>
+  </div>
 </div>

@@ -24,6 +24,13 @@ define(['app/models/events/merchant_event'], function(MerchantEvent) {
       }
       return this.updateFields.push('check_image_comment');
     };
+    CheckEvent.prototype.toDetailJSON = function() {
+      var detailJSON;
+      detailJSON = CheckEvent.__super__.toDetailJSON.call(this);
+      return _.extend(detailJSON, {
+        description: "Check #" + this.id
+      });
+    };
     return CheckEvent;
   })();
 });

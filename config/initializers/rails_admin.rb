@@ -55,6 +55,7 @@ RailsAdmin.config do |config|
       field :amount
       field :check_number
       field :check_image
+      field :check_image_back
     end
   end
 

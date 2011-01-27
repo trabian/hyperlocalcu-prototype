@@ -54,3 +54,13 @@
       float: right
       +horizontal-list(5px)
       +small-button
+
+@import compass/utilities/lists.sass
+
+=divided_horizontal_list($padding: 4px, $divider_color: #ccc)
+  +horizontal_list($padding)
+  li
+    border-right: 1px solid $divider_color
+    line-height: 1em
+    &:last-child, &.last
+      border-right: none !important

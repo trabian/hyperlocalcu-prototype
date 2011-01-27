@@ -6,11 +6,12 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(['text!views/timeline/events/check/detail.handlebars?v=2', 'app/views/members/events/detail', 'app/views/common/feedback/comment_view', 'vendor/handlebars'], function(template, EventDetailView, CommentView) {
+define(['text!views/timeline/events/check/detail.handlebars?v=3', 'app/views/members/events/detail', 'app/views/common/feedback/comment_view', 'vendor/handlebars'], function(template, EventDetailView, CommentView) {
   var CheckDetailView;
   return CheckDetailView = (function() {
     function CheckDetailView() {
       this.showCheckCommentView = __bind(this.showCheckCommentView, this);;
+      this.renderDetail = __bind(this.renderDetail, this);;
       this.toggleCheckCommentView = __bind(this.toggleCheckCommentView, this);;      CheckDetailView.__super__.constructor.apply(this, arguments);
     }
     __extends(CheckDetailView, EventDetailView);
@@ -31,6 +32,9 @@ define(['text!views/timeline/events/check/detail.handlebars?v=2', 'app/views/mem
         this.showCheckCommentView();
       }
       return false;
+    };
+    CheckDetailView.prototype.renderDetail = function() {
+      return this.$('.available-service li a').button();
     };
     CheckDetailView.prototype.showCheckCommentView = function() {
       if (this.checkCommentView != null) {

@@ -22,7 +22,8 @@ define(['app/models/events/merchant_event'], function(MerchantEvent) {
       detailJSON = BillpayEvent.__super__.toDetailJSON.call(this);
       return _.extend(detailJSON, {
         bill_payment_processing_days: this.get('bill_payment_processing_days'),
-        bill_payment_submitted_date: this.formatDate(this.get('bill_payment_submitted_date'))
+        bill_payment_submitted_date: this.formatDate(this.get('bill_payment_submitted_date')),
+        description: "Billpay #" + this.id
       });
     };
     return BillpayEvent;
