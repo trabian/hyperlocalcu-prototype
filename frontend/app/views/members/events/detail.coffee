@@ -1,4 +1,4 @@
-define ["text!views/timeline/events/detail.handlebars?v=8", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "app/views/common/feedback/rating_view", "vendor/handlebars"], (template, SocialView, FeedbackView, RatingView) ->
+define ["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "app/views/common/feedback/rating_view", "vendor/handlebars", "vendor/jquery-mousewheel", "vendor/jquery-jscrollpane"], (template, SocialView, FeedbackView, RatingView) ->
 
   class EventDetailView extends Backbone.View
 
@@ -10,7 +10,6 @@ define ["text!views/timeline/events/detail.handlebars?v=8", "app/views/common/so
     initialize: ->
       if @eventTypeOptions? and @eventTypeOptions.events?
         this.delegateEvents(@eventTypeOptions.events)
-
 
     close: =>
       @model.set 'selected': false
@@ -28,13 +27,16 @@ define ["text!views/timeline/events/detail.handlebars?v=8", "app/views/common/so
 
       $(@el).html @template(detailJSON)
 
+      @header = this.$('#event-header')
       @detail = this.$('#event-detail')
+      @wrapper = this.$('#event-detail-wrapper')
+      @footer = this.$('#event-footer')
 
       if @model.isSocial()
         @socialView = new SocialView
           model: @model
 
-        @detail.append @socialView.render().el
+        @footer.append @socialView.render().el
 
       if @eventTypeOptions? and @eventTypeOptions.template?
         @detail.append @eventTypeOptions.template(detailJSON)
@@ -43,12 +45,37 @@ define ["text!views/timeline/events/detail.handlebars?v=8", "app/views/common/so
         this.renderDetail()
 
       if @model.isDeposit()
-        @detail.addClass('deposit')
+        @header.addClass('deposit')
 
       if @model.get('merchant')?
         this.addMerchantFeedbackView()
 
       this.show()
+
+      @wrapper.jScrollPane()
+
+      @scroll = @wrapper.data('jsp')
+
+      @heightOffset = parseInt($(@el).css('top')) + @header.height() + 130
+
+      $(window).resize =>
+
+        height = $(window).height()
+
+        @wrapper.height(height - @heightOffset)
+
+        if $.browser.ie
+
+          if !throttleTimeout
+            setTimeout =>
+              @scroll.reinitialise()
+              throttleTimeout = null
+            , 50
+
+        else
+          @scroll.reinitialise()
+
+      $(window).trigger 'resize'
 
     show: ->
 

@@ -6,7 +6,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 }, __slice = Array.prototype.slice;
-define(["text!views/timeline/events/detail.handlebars?v=8", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "app/views/common/feedback/rating_view", "vendor/handlebars"], function(template, SocialView, FeedbackView, RatingView) {
+define(["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "app/views/common/feedback/rating_view", "vendor/handlebars", "vendor/jquery-mousewheel", "vendor/jquery-jscrollpane"], function(template, SocialView, FeedbackView, RatingView) {
   var EventDetailView;
   return EventDetailView = (function() {
     function EventDetailView() {
@@ -41,12 +41,15 @@ define(["text!views/timeline/events/detail.handlebars?v=8", "app/views/common/so
       this.model.initializeDetails();
       detailJSON = this.model.toDetailJSON();
       $(this.el).html(this.template(detailJSON));
+      this.header = this.$('#event-header');
       this.detail = this.$('#event-detail');
+      this.wrapper = this.$('#event-detail-wrapper');
+      this.footer = this.$('#event-footer');
       if (this.model.isSocial()) {
         this.socialView = new SocialView({
           model: this.model
         });
-        this.detail.append(this.socialView.render().el);
+        this.footer.append(this.socialView.render().el);
       }
       if ((this.eventTypeOptions != null) && (this.eventTypeOptions.template != null)) {
         this.detail.append(this.eventTypeOptions.template(detailJSON));
@@ -55,12 +58,32 @@ define(["text!views/timeline/events/detail.handlebars?v=8", "app/views/common/so
         this.renderDetail();
       }
       if (this.model.isDeposit()) {
-        this.detail.addClass('deposit');
+        this.header.addClass('deposit');
       }
       if (this.model.get('merchant') != null) {
         this.addMerchantFeedbackView();
       }
-      return this.show();
+      this.show();
+      this.wrapper.jScrollPane();
+      this.scroll = this.wrapper.data('jsp');
+      this.heightOffset = parseInt($(this.el).css('top')) + this.header.height() + 130;
+      $(window).resize(__bind(function() {
+        var height;
+        height = $(window).height();
+        this.wrapper.height(height - this.heightOffset);
+        if ($.browser.ie) {
+          if (!throttleTimeout) {
+            return setTimeout(__bind(function() {
+              var throttleTimeout;
+              this.scroll.reinitialise();
+              return throttleTimeout = null;
+            }, this), 50);
+          }
+        } else {
+          return this.scroll.reinitialise();
+        }
+      }, this));
+      return $(window).trigger('resize');
     };
     EventDetailView.prototype.show = function() {
       this.trigger('show');

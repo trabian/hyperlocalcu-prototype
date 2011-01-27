@@ -4,6 +4,10 @@
 @import events/branch/detail
 @import events/check/detail
 
+#event-detail
+  width: 318px
+  padding-right: 5px
+
 #event-detail-view
   +billpay-detail-view
   +branch-detail-view
@@ -12,13 +16,15 @@
   color: #444
   top: 42px
   left: 630px
-  padding: 5px 10px 20px 15px
+  padding: 5px 10px 5px 15px
   border: 1px solid #ccc
   border-width: 1px 1px 1px 0
   +border-right-radius(5px)
   background: #fff
   width: 318px
-  min-height: 500px
+  #event-detail-wrapper
+    min-height: 110px
+    width: 323px
   .top
     +clearfix
     margin: 0 0 15px
@@ -79,8 +85,6 @@
           
 
   .social
-    position: absolute
-    bottom: 15px
 
   .available-service
     margin: 10px 0 0

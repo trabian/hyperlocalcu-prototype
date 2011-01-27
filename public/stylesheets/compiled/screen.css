@@ -2350,12 +2350,18 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 }
 
 /* line 7, ../../../frontend/sass/events/_detail.sass */
+#event-detail {
+  width: 318px;
+  padding-right: 5px;
+}
+
+/* line 11, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view {
   position: fixed;
   color: #444444;
   top: 42px;
   left: 630px;
-  padding: 5px 10px 20px 15px;
+  padding: 5px 10px 5px 15px;
   border: 1px solid #cccccc;
   border-width: 1px 1px 1px 0;
   -moz-border-radius-topright: 5px;
@@ -2372,7 +2378,6 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   border-bottom-right-radius: 5px;
   background: white;
   width: 318px;
-  min-height: 500px;
 }
 /* line 2, ../../../frontend/sass/events/billpay/_detail.sass */
 #event-detail-view .processing-summary {
@@ -2528,19 +2533,24 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #event-detail-view .check-image ul li img {
   width: 155px;
 }
-/* line 22, ../../../frontend/sass/events/_detail.sass */
+/* line 25, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view #event-detail-wrapper {
+  min-height: 110px;
+  width: 323px;
+}
+/* line 28, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .top {
   overflow: hidden;
   *zoom: 1;
   margin: 0 0 15px;
 }
-/* line 25, ../../../frontend/sass/events/_detail.sass */
+/* line 31, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .top .date {
   float: left;
   color: #999999;
   font-size: 10px;
 }
-/* line 29, ../../../frontend/sass/events/_detail.sass */
+/* line 35, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .top .close {
   float: right;
   position: absolute;
@@ -2548,43 +2558,43 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   right: 10px;
   font-size: 10px;
 }
-/* line 35, ../../../frontend/sass/events/_detail.sass */
+/* line 41, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .name-and-amount {
   margin: 0 0 0.5em 0;
 }
-/* line 37, ../../../frontend/sass/events/_detail.sass */
+/* line 43, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .name-and-amount .amount {
   font-size: 16px;
   float: right;
   line-height: 1em;
 }
-/* line 41, ../../../frontend/sass/events/_detail.sass */
+/* line 47, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .name-and-amount h3 {
   font-size: 16px;
   line-height: 1em;
 }
-/* line 45, ../../../frontend/sass/events/_detail.sass */
+/* line 51, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .deposit .amount {
   color: #009900;
 }
-/* line 48, ../../../frontend/sass/events/_detail.sass */
+/* line 54, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location {
   padding: 5px 0 12px 0;
   font-size: 11px;
   overflow: hidden;
   *zoom: 1;
 }
-/* line 52, ../../../frontend/sass/events/_detail.sass */
+/* line 58, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .map {
   margin: 0 13px 0 0;
   float: left;
 }
-/* line 55, ../../../frontend/sass/events/_detail.sass */
+/* line 61, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .map img {
   width: 130px;
   border: 1px solid #cccccc;
 }
-/* line 59, ../../../frontend/sass/events/_detail.sass */
+/* line 65, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address h2, #event-detail-view .location .address h3 {
   margin: 0;
   padding: 0;
@@ -2595,19 +2605,19 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   font-weight: bold;
   margin: 0 0 0.3em;
 }
-/* line 65, ../../../frontend/sass/events/_detail.sass */
+/* line 71, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address h2 {
   font-size: 15px;
 }
-/* line 67, ../../../frontend/sass/events/_detail.sass */
+/* line 73, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address h3 {
   font-size: 11px;
 }
-/* line 69, ../../../frontend/sass/events/_detail.sass */
+/* line 75, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address p {
   margin: 0;
 }
-/* line 71, ../../../frontend/sass/events/_detail.sass */
+/* line 77, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address .rating {
   margin-top: 10px;
   display: inline-block;
@@ -2689,16 +2699,11 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   color: #009900;
   font-weight: bold;
 }
-/* line 77, ../../../frontend/sass/events/_detail.sass */
+/* line 83, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address div.comment .buttons p {
   font-size: 10px;
 }
-/* line 81, ../../../frontend/sass/events/_detail.sass */
-#event-detail-view .social {
-  position: absolute;
-  bottom: 15px;
-}
-/* line 85, ../../../frontend/sass/events/_detail.sass */
+/* line 89, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service {
   margin: 10px 0 0;
   border: 1px solid #92c5e0;
@@ -2708,12 +2713,12 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   border-width: 1px 0;
   background: url(/images/background.png) repeat-x left -250px;
 }
-/* line 93, ../../../frontend/sass/events/_detail.sass */
+/* line 97, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service h2 {
   font-size: 14px;
   margin: 0;
 }
-/* line 96, ../../../frontend/sass/events/_detail.sass */
+/* line 100, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service p {
   margin: 0;
   padding: 0;
@@ -2721,7 +2726,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   outline: 0;
   margin: 0.2em 0 0.5em;
 }
-/* line 99, ../../../frontend/sass/events/_detail.sass */
+/* line 103, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service ul {
   list-style: none;
   margin: 0;
@@ -2761,7 +2766,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #event-detail-view .available-service ul li:last-child, #event-detail-view .available-service ul li.last {
   padding-right: 0;
 }
-/* line 104, ../../../frontend/sass/events/_detail.sass */
+/* line 108, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service ul li {
   margin: 0 0 0.5em;
 }
@@ -2781,13 +2786,134 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   text-align: right;
 }
 
-/* line 27, ../../../frontend/sass/screen.sass */
+/* line 1, ../../../frontend/sass/vendor/_jscrollpane.sass */
+.jspContainer {
+  overflow: hidden;
+  position: relative;
+}
+
+/* line 5, ../../../frontend/sass/vendor/_jscrollpane.sass */
+.jspPane {
+  position: absolute;
+}
+
+/* line 8, ../../../frontend/sass/vendor/_jscrollpane.sass */
+.jspVerticalBar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 6px;
+  height: 100%;
+}
+
+/* line 15, ../../../frontend/sass/vendor/_jscrollpane.sass */
+.jspHorizontalBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 16px;
+}
+
+/* line 22, ../../../frontend/sass/vendor/_jscrollpane.sass */
+.jspVerticalBar *, .jspHorizontalBar * {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 26, ../../../frontend/sass/vendor/_jscrollpane.sass */
+.jspCap {
+  display: none;
+}
+
+/* line 29, ../../../frontend/sass/vendor/_jscrollpane.sass */
+.jspHorizontalBar .jspCap {
+  float: left;
+}
+
+/* line 32, ../../../frontend/sass/vendor/_jscrollpane.sass */
+.jspTrack {
+  background: #eeeeee;
+  position: relative;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -o-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -khtml-border-radius: 3px;
+  border-radius: 3px;
+}
+
+/* line 37, ../../../frontend/sass/vendor/_jscrollpane.sass */
+.jspDrag {
+  background: #cccccc;
+  position: relative;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -o-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -khtml-border-radius: 3px;
+  border-radius: 3px;
+}
+
+/* line 46, ../../../frontend/sass/vendor/_jscrollpane.sass */
+.jspHorizontalBar .jspTrack, .jspHorizontalBar .jspDrag {
+  float: left;
+  height: 100%;
+}
+
+/* line 50, ../../../frontend/sass/vendor/_jscrollpane.sass */
+.jspArrow {
+  background: #50506d;
+  text-indent: -20000px;
+  display: block;
+  cursor: pointer;
+}
+/* line 55, ../../../frontend/sass/vendor/_jscrollpane.sass */
+.jspArrow.jspDisabled {
+  cursor: default;
+  background: #80808d;
+}
+
+/* line 59, ../../../frontend/sass/vendor/_jscrollpane.sass */
+.jspVerticalBar .jspArrow {
+  height: 16px;
+}
+
+/* line 62, ../../../frontend/sass/vendor/_jscrollpane.sass */
+.jspHorizontalBar .jspArrow {
+  width: 16px;
+  float: left;
+  height: 100%;
+}
+
+/* line 67, ../../../frontend/sass/vendor/_jscrollpane.sass */
+.jspVerticalBar .jspArrow:focus {
+  outline: none;
+}
+
+/* line 70, ../../../frontend/sass/vendor/_jscrollpane.sass */
+.jspCorner {
+  background: #eeeef4;
+  float: left;
+  height: 100%;
+}
+
+/* Yuk! CSS Hack for IE6 3 pixel bug :( */
+/* line 77, ../../../frontend/sass/vendor/_jscrollpane.sass */
+* html .jspCorner {
+  margin: 0 -3px 0 0;
+}
+
+/* line 29, ../../../frontend/sass/screen.sass */
 #container {
   position: relative;
   padding-top: 20px;
 }
 
-/* line 31, ../../../frontend/sass/screen.sass */
+/* line 33, ../../../frontend/sass/screen.sass */
 #global {
   float: right;
   position: absolute;
@@ -2795,7 +2921,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   right: 15px;
   display: none;
 }
-/* line 37, ../../../frontend/sass/screen.sass */
+/* line 39, ../../../frontend/sass/screen.sass */
 #global ul {
   margin: 0;
   padding: 0;
@@ -2823,7 +2949,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #global ul li:last-child, #global ul li.last {
   padding-right: 0;
 }
-/* line 39, ../../../frontend/sass/screen.sass */
+/* line 41, ../../../frontend/sass/screen.sass */
 #global ul a {
   text-decoration: none;
   color: white;

@@ -1,4 +1,4 @@
-<div class="{{ event_type }}" id="event-detail">
+<div id="event-header">
   <div class="top">
     <div class="date">{{ formatted_date }}</div>
     <a href="#" class="close">Close</a>
@@ -11,11 +11,19 @@
     <h3>{{ description }}</h3>
 
   </div>
+</div>
 
-{{#address}}
-  <div class="location">
-    <div class="map"><img src="{{ ../map }}" /></div>
-    <div class="address">{{{ . }}}</div>
+<div id="event-detail-wrapper">
+  <div class="{{ event_type }}" id="event-detail">
+    {{#address}}
+      <div class="location">
+        <div class="map"><img src="{{ ../map }}" /></div>
+        <div class="address">{{{ . }}}</div>
+      </div>
+    {{/address}}
   </div>
-{{/address}}
+</div>
+
+<div id="event-footer">
+
 </div>
