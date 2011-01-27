@@ -11,7 +11,7 @@ class EventsController < ApplicationController
   before_filter :add_expires_header
 
   def add_expires_header
-    expires_in 0, :public => true
+    expires_in 0
   end
 
 end
