@@ -1,8 +1,8 @@
 {{#check_image}}
 <div class="check-image">
   <ul>
-    <li><img src="{{.}}" alt="{{../meta}}" /></li>
-    <li><img src="{{../check_image_back}}" alt="{{../meta}}" /></li>
+    <li><a href="{{ . }}" rel="checks"><img src="{{.}}" title="{{../meta}}" /></a></li>
+    <li><a href="{{ ../check_image_back }}" rel="checks"><img src="{{../check_image_back}}" title="{{../meta}}" /></a></li>
   </ul>
   <a href="#" class="report-problems">Problems with the check images?</a>
 </div>

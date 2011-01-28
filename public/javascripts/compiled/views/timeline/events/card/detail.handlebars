@@ -1,0 +1,21 @@
+<div class="receipt-and-account-info">
+  {{#receipt_image}}
+    <div class="receipt-image">
+      <a href="{{ . }}"><img src="{{ . }}" /></a>
+    </div>
+  {{/receipt_image}}
+  {{^receipt_image}}
+    <div class="receipt-upload">
+      <a href="#" class="upload">Upload your receipt</a>
+      <p class="email">
+        or email it to <a href="mailto:receipts+092341234@vcu.com">receipts+092341234@vcu.com</a>
+      </p>
+    </div>
+  {{/receipt_image}}
+  {{#account_information}}
+    <div class="account-information">
+      {{{ . }}}
+    </div>
+  {{/account_information}}
+</div>
+

@@ -27,6 +27,12 @@ define ["text!views/feedback/form.handlebars?v=4", "app/views/common/feedback/ra
         commentParent: $(@el)
         commentFormTitle: "Care to elaborate?"
 
+      ratingView.bind 'expand', =>
+        this.trigger 'expand'
+
+      ratingView.bind 'collapse', =>
+        this.trigger 'collapse'
+
       this.$('.question').after ratingView.render().el
 
       return this

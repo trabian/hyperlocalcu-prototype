@@ -58,24 +58,26 @@ define ["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
 
       @heightOffset = parseInt($(@el).css('top')) + @header.height() + 130
 
-      $(window).resize =>
-
-        height = $(window).height()
-
-        @wrapper.height(height - @heightOffset)
-
-        if $.browser.ie
-
-          if !throttleTimeout
-            setTimeout =>
-              @scroll.reinitialise()
-              throttleTimeout = null
-            , 50
-
-        else
-          @scroll.reinitialise()
+      $(window).bind 'resize', @resize
 
       $(window).trigger 'resize'
+
+    resize: =>
+
+      height = $(window).height()
+
+      @wrapper.height(height - @heightOffset)
+
+      if $.browser.ie
+
+        if !throttleTimeout
+          setTimeout =>
+            @scroll.reinitialise()
+            throttleTimeout = null
+          , 50
+
+      else
+        @scroll.reinitialise()
 
     show: ->
 
@@ -102,6 +104,8 @@ define ["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
           commentParent: @merchantDetails
           commentFormTitle: "Care to elaborate?"
 
+        @merchantRatingView.bind 'expand', @resize
+        @merchantRatingView.bind 'collapse', @resize
 
         @merchantDetails.append @merchantRatingView.render().el
 
@@ -114,5 +118,8 @@ define ["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
           @feedbackView = new FeedbackView
             model: feedback
             question: @model.feedbackQuestion
+
+          @feedbackView.bind 'expand', @resize
+          @feedbackView.bind 'collapse', @resize
 
           @detail.append @feedbackView.render().el

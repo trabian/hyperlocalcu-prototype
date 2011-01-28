@@ -5,7 +5,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.prototype = new ctor;
   child.__super__ = parent.prototype;
   return child;
-};
+}, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 define(["text!views/feedback/form.handlebars?v=4", "app/views/common/feedback/rating_view", "vendor/handlebars", "vendor/jquery-ui"], function(template, RatingView) {
   var FeedbackView;
   return FeedbackView = (function() {
@@ -32,6 +32,12 @@ define(["text!views/feedback/form.handlebars?v=4", "app/views/common/feedback/ra
         commentParent: $(this.el),
         commentFormTitle: "Care to elaborate?"
       });
+      ratingView.bind('expand', __bind(function() {
+        return this.trigger('expand');
+      }, this));
+      ratingView.bind('collapse', __bind(function() {
+        return this.trigger('collapse');
+      }, this));
       this.$('.question').after(ratingView.render().el);
       return this;
     };

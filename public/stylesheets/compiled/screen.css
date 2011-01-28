@@ -2349,18 +2349,58 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   display: none;
 }
 
-/* line 7, ../../../frontend/sass/events/_detail.sass */
+/* line 1, ../../../frontend/sass/events/card/_detail.sass */
+.receipt-and-account-info {
+  margin: 0.5em 0;
+  padding: 10px 0;
+  border: 1px solid #d4d4d4;
+  border-width: 1px 0;
+  background: url(/images/background.png) repeat-x left -250px;
+  text-align: center;
+}
+/* line 5, ../../../frontend/sass/events/card/_detail.sass */
+.receipt-and-account-info .receipt-image img {
+  width: 200px;
+  border: 1px solid #cccccc;
+  padding: 2px;
+  background: white;
+}
+/* line 11, ../../../frontend/sass/events/card/_detail.sass */
+.receipt-and-account-info .receipt-upload p.email {
+  margin: 0.5em 0 0;
+  font-size: 10px;
+}
+/* line 15, ../../../frontend/sass/events/card/_detail.sass */
+.receipt-and-account-info .account-information h2 {
+  font-size: 13px;
+  font-weight: normal;
+  color: #444444;
+  margin: 0.5em 0 0.2em;
+}
+/* line 20, ../../../frontend/sass/events/card/_detail.sass */
+.receipt-and-account-info .account-information h2 strong {
+  font-weight: bold;
+}
+/* line 22, ../../../frontend/sass/events/card/_detail.sass */
+.receipt-and-account-info .account-information p.meta {
+  font-size: 10px;
+  color: #999999;
+  margin: 0.3em 0;
+}
+
+/* line 16, ../../../frontend/sass/events/_detail.sass */
 #event-detail {
   width: 318px;
   padding-right: 5px;
 }
 
-/* line 11, ../../../frontend/sass/events/_detail.sass */
+/* line 20, ../../../frontend/sass/events/_detail.sass */
 #event-footer {
   padding: 5px 5px 5px 0;
+  min-height: 75px;
 }
 
-/* line 14, ../../../frontend/sass/events/_detail.sass */
+/* line 24, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view {
   position: fixed;
   color: #444444;
@@ -2392,21 +2432,21 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   border-width: 1px 0;
   background: url(/images/background.png) repeat-x left -250px;
 }
-/* line 8, ../../../frontend/sass/events/billpay/_detail.sass */
+/* line 4, ../../../frontend/sass/events/billpay/_detail.sass */
 #event-detail-view .processing-summary p {
   text-align: center;
   margin: 0.3em 0;
 }
-/* line 11, ../../../frontend/sass/events/billpay/_detail.sass */
+/* line 7, ../../../frontend/sass/events/billpay/_detail.sass */
 #event-detail-view .processing-summary p.processing-days {
   font-size: 13px;
   font-weight: normal;
 }
-/* line 14, ../../../frontend/sass/events/billpay/_detail.sass */
+/* line 10, ../../../frontend/sass/events/billpay/_detail.sass */
 #event-detail-view .processing-summary p.processing-days strong {
   font-weight: bold;
 }
-/* line 16, ../../../frontend/sass/events/billpay/_detail.sass */
+/* line 12, ../../../frontend/sass/events/billpay/_detail.sass */
 #event-detail-view .processing-summary p.submitted-date {
   color: #999999;
 }
@@ -2538,24 +2578,24 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #event-detail-view .check-image ul li img {
   width: 155px;
 }
-/* line 28, ../../../frontend/sass/events/_detail.sass */
+/* line 38, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view #event-detail-wrapper {
   min-height: 110px;
   width: 323px;
 }
-/* line 31, ../../../frontend/sass/events/_detail.sass */
+/* line 41, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .top {
   overflow: hidden;
   *zoom: 1;
   margin: 0 0 15px;
 }
-/* line 34, ../../../frontend/sass/events/_detail.sass */
+/* line 44, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .top .date {
   float: left;
   color: #999999;
   font-size: 10px;
 }
-/* line 38, ../../../frontend/sass/events/_detail.sass */
+/* line 48, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .top .close {
   float: right;
   position: absolute;
@@ -2563,43 +2603,43 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   right: 10px;
   font-size: 10px;
 }
-/* line 44, ../../../frontend/sass/events/_detail.sass */
+/* line 54, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .name-and-amount {
   margin: 0 0 0.5em 0;
 }
-/* line 46, ../../../frontend/sass/events/_detail.sass */
+/* line 56, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .name-and-amount .amount {
   font-size: 16px;
   float: right;
   line-height: 1em;
 }
-/* line 50, ../../../frontend/sass/events/_detail.sass */
+/* line 60, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .name-and-amount h3 {
   font-size: 16px;
   line-height: 1em;
 }
-/* line 54, ../../../frontend/sass/events/_detail.sass */
+/* line 64, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .deposit .amount {
   color: #009900;
 }
-/* line 57, ../../../frontend/sass/events/_detail.sass */
+/* line 67, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location {
   padding: 5px 0 12px 0;
   font-size: 11px;
   overflow: hidden;
   *zoom: 1;
 }
-/* line 61, ../../../frontend/sass/events/_detail.sass */
+/* line 71, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .map {
   margin: 0 13px 0 0;
   float: left;
 }
-/* line 64, ../../../frontend/sass/events/_detail.sass */
+/* line 74, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .map img {
   width: 130px;
   border: 1px solid #cccccc;
 }
-/* line 68, ../../../frontend/sass/events/_detail.sass */
+/* line 78, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address h2, #event-detail-view .location .address h3 {
   margin: 0;
   padding: 0;
@@ -2610,19 +2650,19 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   font-weight: bold;
   margin: 0 0 0.3em;
 }
-/* line 74, ../../../frontend/sass/events/_detail.sass */
+/* line 84, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address h2 {
   font-size: 15px;
 }
-/* line 76, ../../../frontend/sass/events/_detail.sass */
+/* line 86, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address h3 {
   font-size: 11px;
 }
-/* line 78, ../../../frontend/sass/events/_detail.sass */
+/* line 88, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address p {
   margin: 0;
 }
-/* line 80, ../../../frontend/sass/events/_detail.sass */
+/* line 90, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address .rating {
   margin-top: 10px;
   display: inline-block;
@@ -2704,11 +2744,11 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   color: #009900;
   font-weight: bold;
 }
-/* line 86, ../../../frontend/sass/events/_detail.sass */
+/* line 96, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address div.comment .buttons p {
   font-size: 10px;
 }
-/* line 92, ../../../frontend/sass/events/_detail.sass */
+/* line 102, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service {
   margin: 10px 0 0;
   border: 1px solid #92c5e0;
@@ -2718,12 +2758,12 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   border-width: 1px 0;
   background: url(/images/background.png) repeat-x left -250px;
 }
-/* line 100, ../../../frontend/sass/events/_detail.sass */
+/* line 110, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service h2 {
   font-size: 14px;
   margin: 0;
 }
-/* line 103, ../../../frontend/sass/events/_detail.sass */
+/* line 113, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service p {
   margin: 0;
   padding: 0;
@@ -2731,7 +2771,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   outline: 0;
   margin: 0.2em 0 0.5em;
 }
-/* line 106, ../../../frontend/sass/events/_detail.sass */
+/* line 116, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service ul {
   list-style: none;
   margin: 0;
@@ -2771,7 +2811,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #event-detail-view .available-service ul li:last-child, #event-detail-view .available-service ul li.last {
   padding-right: 0;
 }
-/* line 111, ../../../frontend/sass/events/_detail.sass */
+/* line 121, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service ul li {
   margin: 0 0 0.5em;
 }
@@ -2789,6 +2829,220 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 /* line 10, ../../../frontend/sass/members/_billpay_signup.sass */
 #billpay-signup-dialog .buttons {
   text-align: right;
+}
+
+/* line 1, ../../../frontend/sass/vendor/_colorbox.sass */
+#colorbox, #cboxOverlay, #cboxWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+/* line 8, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxOverlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+/* line 13, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxMiddleLeft, #cboxBottomLeft {
+  clear: left;
+}
+
+/* line 16, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxContent {
+  position: relative;
+  overflow: visible;
+}
+
+/* line 20, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxLoadedContent {
+  overflow: auto;
+}
+/* line 22, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxLoadedContent iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* line 28, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxTitle {
+  margin: 0;
+}
+
+/* line 31, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxLoadingOverlay, #cboxLoadingGraphic {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+/* line 37, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow {
+  cursor: pointer;
+}
+
+/* line 40, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxOverlay {
+  background: black;
+}
+
+/* line 45, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxTopLeft {
+  width: 14px;
+  height: 14px;
+  background: url(/images/colorbox/style_5/controls.png) 0 0 no-repeat;
+}
+
+/* line 50, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxTopCenter {
+  height: 14px;
+  background: url(/images/colorbox/style_5/border.png) top left repeat-x;
+}
+
+/* line 54, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxTopRight {
+  width: 14px;
+  height: 14px;
+  background: url(/images/colorbox/style_5/controls.png) -36px 0 no-repeat;
+}
+
+/* line 59, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxBottomLeft {
+  width: 14px;
+  height: 43px;
+  background: url(/images/colorbox/style_5/controls.png) 0 -32px no-repeat;
+}
+
+/* line 64, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxBottomCenter {
+  height: 43px;
+  background: url(/images/colorbox/style_5/border.png) bottom left repeat-x;
+}
+
+/* line 68, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxBottomRight {
+  width: 14px;
+  height: 43px;
+  background: url(/images/colorbox/style_5/controls.png) -36px -32px no-repeat;
+}
+
+/* line 73, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxMiddleLeft {
+  width: 14px;
+  background: url(/images/colorbox/style_5/controls.png) -175px 0 repeat-y;
+}
+
+/* line 77, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxMiddleRight {
+  width: 14px;
+  background: url(/images/colorbox/style_5/controls.png) -211px 0 repeat-y;
+}
+
+/* line 81, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxContent {
+  background: white;
+}
+
+/* line 84, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxLoadedContent {
+  margin-bottom: 5px;
+}
+
+/* line 87, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxLoadingOverlay {
+  background: url(/images/colorbox/style_5/loading_background.png) center center no-repeat;
+}
+
+/* line 90, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxLoadingGraphic {
+  background: url(/images/colorbox/style_5/loading.gif) center center no-repeat;
+}
+
+/* line 93, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxTitle {
+  position: absolute;
+  bottom: -25px;
+  left: 0;
+  text-align: center;
+  width: 100%;
+  font-weight: bold;
+  color: #7c7c7c;
+}
+
+/* line 102, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxCurrent {
+  position: absolute;
+  bottom: -25px;
+  left: 58px;
+  font-weight: bold;
+  color: #7c7c7c;
+}
+
+/* line 109, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow {
+  position: absolute;
+  bottom: -29px;
+  background: url(/images/colorbox/style_5/controls.png) 0px 0px no-repeat;
+  width: 23px;
+  height: 23px;
+  text-indent: -9999px;
+}
+
+/* line 117, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxPrevious {
+  left: 0px;
+  background-position: -51px -25px;
+}
+/* line 120, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxPrevious.hover {
+  background-position: -51px 0px;
+}
+
+/* line 123, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxNext {
+  left: 27px;
+  background-position: -75px -25px;
+}
+/* line 126, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxNext.hover {
+  background-position: -75px 0px;
+}
+
+/* line 129, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxClose {
+  right: 0;
+  background-position: -100px -25px;
+}
+/* line 132, ../../../frontend/sass/vendor/_colorbox.sass */
+#cboxClose.hover {
+  background-position: -100px 0px;
+}
+
+/* line 135, ../../../frontend/sass/vendor/_colorbox.sass */
+.cboxSlideshow_on #cboxSlideshow {
+  background-position: -125px 0px;
+  right: 27px;
+}
+/* line 138, ../../../frontend/sass/vendor/_colorbox.sass */
+.cboxSlideshow_on #cboxSlideshow.hover {
+  background-position: -150px 0px;
+}
+
+/* line 141, ../../../frontend/sass/vendor/_colorbox.sass */
+.cboxSlideshow_off #cboxSlideshow {
+  background-position: -150px -25px;
+  right: 27px;
+}
+/* line 144, ../../../frontend/sass/vendor/_colorbox.sass */
+.cboxSlideshow_off #cboxSlideshow.hover {
+  background-position: -125px 0px;
 }
 
 /* line 1, ../../../frontend/sass/vendor/_jscrollpane.sass */
@@ -2912,13 +3166,13 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   margin: 0 -3px 0 0;
 }
 
-/* line 29, ../../../frontend/sass/screen.sass */
+/* line 30, ../../../frontend/sass/screen.sass */
 #container {
   position: relative;
   padding-top: 20px;
 }
 
-/* line 33, ../../../frontend/sass/screen.sass */
+/* line 34, ../../../frontend/sass/screen.sass */
 #global {
   float: right;
   position: absolute;
@@ -2926,7 +3180,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   right: 15px;
   display: none;
 }
-/* line 39, ../../../frontend/sass/screen.sass */
+/* line 40, ../../../frontend/sass/screen.sass */
 #global ul {
   margin: 0;
   padding: 0;
@@ -2954,7 +3208,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #global ul li:last-child, #global ul li.last {
   padding-right: 0;
 }
-/* line 41, ../../../frontend/sass/screen.sass */
+/* line 42, ../../../frontend/sass/screen.sass */
 #global ul a {
   text-decoration: none;
   color: white;

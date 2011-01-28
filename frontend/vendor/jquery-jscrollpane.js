@@ -167,8 +167,6 @@
 				$('body').append(tempWrapper);
 				contentWidth = Math.max(pane.outerWidth(), clonedElem.outerWidth());
 
-        console.log(pane.outerWidth(), clonedElem, clonedElem.outerWidth(), contentWidth, paneWidth);
-
 				tempWrapper.remove();
 				
 				contentHeight = pane.outerHeight();

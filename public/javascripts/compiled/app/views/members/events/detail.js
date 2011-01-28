@@ -12,6 +12,7 @@ define(["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
     function EventDetailView() {
       this.addFeedbackView = __bind(this.addFeedbackView, this);;
       this.addMerchantFeedbackView = __bind(this.addMerchantFeedbackView, this);;
+      this.resize = __bind(this.resize, this);;
       this.render = __bind(this.render, this);;
       this.close = __bind(this.close, this);;      EventDetailView.__super__.constructor.apply(this, arguments);
     }
@@ -67,23 +68,24 @@ define(["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
       this.wrapper.jScrollPane();
       this.scroll = this.wrapper.data('jsp');
       this.heightOffset = parseInt($(this.el).css('top')) + this.header.height() + 130;
-      $(window).resize(__bind(function() {
-        var height;
-        height = $(window).height();
-        this.wrapper.height(height - this.heightOffset);
-        if ($.browser.ie) {
-          if (!throttleTimeout) {
-            return setTimeout(__bind(function() {
-              var throttleTimeout;
-              this.scroll.reinitialise();
-              return throttleTimeout = null;
-            }, this), 50);
-          }
-        } else {
-          return this.scroll.reinitialise();
-        }
-      }, this));
+      $(window).bind('resize', this.resize);
       return $(window).trigger('resize');
+    };
+    EventDetailView.prototype.resize = function() {
+      var height;
+      height = $(window).height();
+      this.wrapper.height(height - this.heightOffset);
+      if ($.browser.ie) {
+        if (!throttleTimeout) {
+          return setTimeout(__bind(function() {
+            var throttleTimeout;
+            this.scroll.reinitialise();
+            return throttleTimeout = null;
+          }, this), 50);
+        }
+      } else {
+        return this.scroll.reinitialise();
+      }
     };
     EventDetailView.prototype.show = function() {
       this.trigger('show');
@@ -103,6 +105,8 @@ define(["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
           commentParent: this.merchantDetails,
           commentFormTitle: "Care to elaborate?"
         });
+        this.merchantRatingView.bind('expand', this.resize);
+        this.merchantRatingView.bind('collapse', this.resize);
         return this.merchantDetails.append(this.merchantRatingView.render().el);
       }
     };
@@ -117,6 +121,8 @@ define(["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
             model: feedback,
             question: this.model.feedbackQuestion
           });
+          this.feedbackView.bind('expand', this.resize);
+          this.feedbackView.bind('collapse', this.resize);
           return this.detail.append(this.feedbackView.render().el);
         }
       }, this));

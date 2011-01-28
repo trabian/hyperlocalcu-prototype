@@ -138,14 +138,17 @@ define(['app/views/common/feedback/comment_view'], function(CommentView) {
           title: this.options.commentFormTitle
         });
         this.commentView.bind('show', __bind(function() {
-          return this.$('.commentLink').addClass('active');
+          this.$('.commentLink').addClass('active');
+          return this.trigger('expand');
         }, this));
         this.commentView.bind('hide', __bind(function() {
           if (this.model.get(this.options.commentField) == null) {
-            return this.$('.commentLink').removeClass('active');
+            this.$('.commentLink').removeClass('active');
           }
+          return this.trigger('collapse');
         }, this));
-        return this.options.commentParent.append(this.commentView.render().el);
+        this.options.commentParent.append(this.commentView.render().el);
+        return this.commentView.trigger('show');
       }
     };
     return RatingView;

@@ -43,6 +43,8 @@ RailsAdmin.config do |config|
       field :merchant_id
       field :name
       field :amount
+      field :receipt_image
+      field :account_information
     end
   end
 

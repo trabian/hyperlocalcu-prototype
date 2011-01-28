@@ -13,7 +13,6 @@ define(['text!views/timeline/events/branch/detail.handlebars?v=2', 'app/views/me
       this.renderDetail = __bind(this.renderDetail, this);;      BranchDetailView.__super__.constructor.apply(this, arguments);
     }
     __extends(BranchDetailView, EventDetailView);
-    BranchDetailView.prototype.eventTypeTemplate = Handlebars.compile(template);
     BranchDetailView.prototype.renderDetail = function() {
       return this.addFeedbackView('teller');
     };

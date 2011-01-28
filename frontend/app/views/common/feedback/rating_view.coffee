@@ -135,9 +135,13 @@ define ['app/views/common/feedback/comment_view'], (CommentView) ->
 
         @commentView.bind 'show', =>
           this.$('.commentLink').addClass('active')
+          this.trigger('expand')
 
         @commentView.bind 'hide', =>
           this.$('.commentLink').removeClass('active') unless @model.get(@options.commentField)?
+          this.trigger('collapse')
 
         @options.commentParent.append @commentView.render().el
+
+        @commentView.trigger 'show'
 

@@ -27,6 +27,7 @@ define(['app/lib/models/custom_sync', 'app/models/feedback', 'app/models/feedbac
     __extends(Event, Backbone.Model);
     Event.prototype.initialize = function() {
       this.sync = CustomSync;
+      this.member = window.member;
       this.updateFields = [];
       return this.bind('change', this.trackEventActivity);
     };

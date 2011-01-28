@@ -6,7 +6,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(['text!views/timeline/events/check/detail.handlebars?v=3', 'app/views/members/events/detail', 'app/views/common/feedback/comment_view', 'vendor/handlebars'], function(template, EventDetailView, CommentView) {
+define(['text!views/timeline/events/check/detail.handlebars?v=6', 'app/views/members/events/detail', 'app/views/common/feedback/comment_view', 'vendor/handlebars', 'vendor/jquery-colorbox'], function(template, EventDetailView, CommentView) {
   var CheckDetailView;
   return CheckDetailView = (function() {
     function CheckDetailView() {
@@ -34,7 +34,8 @@ define(['text!views/timeline/events/check/detail.handlebars?v=3', 'app/views/mem
       return false;
     };
     CheckDetailView.prototype.renderDetail = function() {
-      return this.$('.available-service li a').button();
+      this.$('.available-service li a').button();
+      return this.$('.check-image a').colorbox();
     };
     CheckDetailView.prototype.showCheckCommentView = function() {
       if (this.checkCommentView != null) {

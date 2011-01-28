@@ -6,6 +6,7 @@ define ['app/lib/models/custom_sync', 'app/models/feedback', 'app/models/feedbac
     initialize: ->
 
       this.sync = CustomSync
+      this.member = window.member
 
       @updateFields = []
 

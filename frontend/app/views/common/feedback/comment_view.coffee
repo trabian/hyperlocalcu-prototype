@@ -30,8 +30,6 @@ define ["text!views/feedback/comment.handlebars?v=4"], (template) ->
 
       this.updateButton()
 
-      this.trigger 'show'
-
       return this
 
     updateButton: =>

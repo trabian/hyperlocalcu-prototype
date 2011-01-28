@@ -1,4 +1,4 @@
-define ['text!views/timeline/events/check/detail.handlebars?v=3', 'app/views/members/events/detail', 'app/views/common/feedback/comment_view', 'vendor/handlebars'], (template, EventDetailView, CommentView) ->
+define ['text!views/timeline/events/check/detail.handlebars?v=6', 'app/views/members/events/detail', 'app/views/common/feedback/comment_view', 'vendor/handlebars', 'vendor/jquery-colorbox'], (template, EventDetailView, CommentView) ->
 
   class CheckDetailView extends EventDetailView
 
@@ -21,7 +21,10 @@ define ['text!views/timeline/events/check/detail.handlebars?v=3', 'app/views/mem
       return false
 
     renderDetail: =>
+
       this.$('.available-service li a').button()
+
+      this.$('.check-image a').colorbox()
 
     showCheckCommentView: =>
 

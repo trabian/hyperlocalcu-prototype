@@ -43,7 +43,6 @@ define(["text!views/feedback/comment.handlebars?v=4"], function(template) {
         }
       });
       this.updateButton();
-      this.trigger('show');
       return this;
     };
     CommentView.prototype.updateButton = function() {

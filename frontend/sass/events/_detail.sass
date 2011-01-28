@@ -1,7 +1,16 @@
 @import ui_mixins
 @import feedback
+
+= highlight
+  margin: 0.5em 0
+  padding: 10px 0
+  border: 1px solid #d4d4d4
+  border-width: 1px 0
+  background: url(/images/background.png) repeat-x left -250px
+
 @import events/billpay/detail
 @import events/branch/detail
+@import events/card/detail
 @import events/check/detail
 
 #event-detail
@@ -10,6 +19,7 @@
 
 #event-footer
   padding: 5px 5px 5px 0
+  min-height: 75px
 
 #event-detail-view
   +billpay-detail-view
