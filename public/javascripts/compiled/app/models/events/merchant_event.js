@@ -1,4 +1,4 @@
-var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
   ctor.prototype = parent.prototype;
@@ -10,7 +10,7 @@ define(['app/models/event'], function(Event) {
   var MerchantEvent;
   return MerchantEvent = (function() {
     function MerchantEvent() {
-      MerchantEvent.__super__.constructor.apply(this, arguments);
+      this.addMerchant = __bind(this.addMerchant, this);;      MerchantEvent.__super__.constructor.apply(this, arguments);
     }
     __extends(MerchantEvent, Event);
     MerchantEvent.prototype.initialize = function() {
@@ -35,6 +35,23 @@ define(['app/models/event'], function(Event) {
       } else {
         return MerchantEvent.__super__.toDetailJSON.call(this);
       }
+    };
+    MerchantEvent.prototype.addMerchant = function(merchant) {
+      var params;
+      params = {
+        url: "" + (this.url()) + "/add_merchant",
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          merchant: merchant
+        }),
+        dataType: 'json',
+        processData: false,
+        success: __bind(function(resp) {
+          return this.set(this.parse(resp));
+        }, this)
+      };
+      return $.ajax(params);
     };
     return MerchantEvent;
   })();

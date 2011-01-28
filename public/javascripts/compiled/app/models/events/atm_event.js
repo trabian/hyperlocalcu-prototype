@@ -16,7 +16,15 @@ define(['app/models/events/cu_event'], function(CUEvent) {
     AtmEvent.prototype.initialize = function() {
       AtmEvent.__super__.initialize.call(this);
       this.description = "ATM " + (this.depositOrWithdrawal());
-      return this.meta = "" + (this.get('atm').name) + " ATM";
+      this.meta = "" + (this.get('atm').name) + " ATM";
+      return this.nameAndAddress = "<h2>Vantage Credit Union</h2><h3>" + (this.get('atm').name) + " ATM</h3><p>" + (this.get('atm')['address_summary']) + "</p>";
+    };
+    AtmEvent.prototype.toDetailJSON = function() {
+      var detailJSON;
+      detailJSON = AtmEvent.__super__.toDetailJSON.call(this);
+      return _.extend(detailJSON, {
+        address: this.nameAndAddress
+      });
     };
     return AtmEvent;
   })();

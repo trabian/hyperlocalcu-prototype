@@ -14,6 +14,9 @@ define(['text!views/timeline/events/card/detail.handlebars?v=4', 'app/views/memb
       this.renderDetail = __bind(this.renderDetail, this);;      CardDetailView.__super__.constructor.apply(this, arguments);
     }
     __extends(CardDetailView, EventDetailView);
+    CardDetailView.prototype.initialize = function() {
+      return this.model.bind('change:merchant', this.render);
+    };
     CardDetailView.prototype.eventTypeOptions = {
       template: Handlebars.compile(template)
     };

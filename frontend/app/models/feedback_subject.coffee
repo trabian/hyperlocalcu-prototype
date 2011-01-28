@@ -1,4 +1,4 @@
-define ['app/models/feedback_list', 'app/models/feedback'], (FeedbackList, Feedback) ->
+define ['app/models/feedback_list'], (FeedbackList) ->
 
   class FeedbackSubject extends Backbone.Model
 

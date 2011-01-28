@@ -6,7 +6,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-define(['app/models/feedback_list', 'app/models/feedback'], function(FeedbackList, Feedback) {
+define(['app/models/feedback_list'], function(FeedbackList) {
   var FeedbackSubject;
   return FeedbackSubject = (function() {
     function FeedbackSubject() {

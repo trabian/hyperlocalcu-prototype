@@ -2,6 +2,9 @@ define ['text!views/timeline/events/card/detail.handlebars?v=4', 'app/views/memb
 
   class CardDetailView extends EventDetailView
 
+    initialize: ->
+      @model.bind 'change:merchant', @render
+
     eventTypeOptions:
       template: Handlebars.compile(template)
 

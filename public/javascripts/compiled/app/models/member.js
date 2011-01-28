@@ -14,7 +14,7 @@ define(function() {
     }
     __extends(Member, Backbone.Model);
     Member.prototype.cityState = function() {
-      return [this.get('city'), this.get('state')].join(', ');
+      return [this.get('city'), this.get('region')].join(', ');
     };
     return Member;
   })();

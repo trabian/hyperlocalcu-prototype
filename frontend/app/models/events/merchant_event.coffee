@@ -25,3 +25,19 @@ define ['app/models/event'], (Event) ->
       else
         super()
 
+    addMerchant: (merchant) =>
+
+      params =
+        url: "#{this.url()}/add_merchant"
+        type: 'POST'
+        contentType: 'application/json'
+
+        data: JSON.stringify
+          merchant: merchant
+
+        dataType: 'json'
+        processData: false
+        success: (resp) =>
+          this.set(this.parse(resp))
+
+      $.ajax params

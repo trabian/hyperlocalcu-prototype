@@ -18,7 +18,11 @@ Hyperlocalcu::Application.routes.draw do
 
   resources :accounts do
 
-    resources :events
+    resources :events do
+      member do
+        post 'add_merchant'
+      end
+    end
 
     resources :items do
       member do

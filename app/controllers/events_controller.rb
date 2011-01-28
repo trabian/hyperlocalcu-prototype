@@ -8,4 +8,14 @@ class EventsController < ApplicationController
 
   has_scope :ordered, :type => :boolean, :default => true
 
+  def add_merchant
+
+    resource.merchant = Merchant.create(params[:merchant])
+
+    resource.save
+
+    render :json => resource
+
+  end
+
 end

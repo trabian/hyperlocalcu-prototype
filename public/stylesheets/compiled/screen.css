@@ -2831,6 +2831,83 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   text-align: right;
 }
 
+/* line 1, ../../../frontend/sass/merchants/_search.sass */
+#merchant-search {
+  margin: 0 0 2em;
+}
+/* line 3, ../../../frontend/sass/merchants/_search.sass */
+#merchant-search p.note {
+  color: #3c64a0;
+  font-size: 11px;
+  margin: 0 0 0.2em;
+}
+/* line 7, ../../../frontend/sass/merchants/_search.sass */
+#merchant-search .search-results {
+  height: 150px;
+  width: 318px;
+  border: 1px solid #d4d4d4;
+  border-width: 1px 0;
+  margin: 1em 0;
+}
+/* line 13, ../../../frontend/sass/merchants/_search.sass */
+#merchant-search .search-results ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+}
+/* line 11, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_bullets.scss */
+#merchant-search .search-results ul li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0px;
+}
+/* line 16, ../../../frontend/sass/merchants/_search.sass */
+#merchant-search .search-results ul li {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  overflow: hidden;
+  *zoom: 1;
+  padding: 7px 5px;
+}
+/* line 20, ../../../frontend/sass/merchants/_search.sass */
+#merchant-search .search-results ul li .map {
+  float: left;
+  margin: 0 7px 0 0;
+  border: 1px solid #d4d4d4;
+}
+/* line 24, ../../../frontend/sass/merchants/_search.sass */
+#merchant-search .search-results ul li:hover {
+  cursor: pointer;
+  background: #f7f2d8;
+}
+/* line 27, ../../../frontend/sass/merchants/_search.sass */
+#merchant-search .search-results ul li h3 {
+  font-size: 13px;
+  margin: 0.3em 0 0.3em;
+}
+/* line 30, ../../../frontend/sass/merchants/_search.sass */
+#merchant-search .search-results ul li p {
+  font-size: 10px;
+  margin: 0;
+}
+/* line 34, ../../../frontend/sass/merchants/_search.sass */
+#merchant-search .search-form h4 {
+  font-size: 11px;
+  font-weight: bold;
+  margin: 0 0 0.1em;
+}
+/* line 38, ../../../frontend/sass/merchants/_search.sass */
+#merchant-search .search-form .text {
+  width: 223px;
+  padding: 6px 5px;
+  position: relative;
+  top: 1px;
+}
+
 /* line 1, ../../../frontend/sass/vendor/_colorbox.sass */
 #colorbox, #cboxOverlay, #cboxWrapper {
   position: absolute;
@@ -3166,13 +3243,13 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   margin: 0 -3px 0 0;
 }
 
-/* line 30, ../../../frontend/sass/screen.sass */
+/* line 32, ../../../frontend/sass/screen.sass */
 #container {
   position: relative;
   padding-top: 20px;
 }
 
-/* line 34, ../../../frontend/sass/screen.sass */
+/* line 36, ../../../frontend/sass/screen.sass */
 #global {
   float: right;
   position: absolute;
@@ -3180,7 +3257,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   right: 15px;
   display: none;
 }
-/* line 40, ../../../frontend/sass/screen.sass */
+/* line 42, ../../../frontend/sass/screen.sass */
 #global ul {
   margin: 0;
   padding: 0;
@@ -3208,7 +3285,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #global ul li:last-child, #global ul li.last {
   padding-right: 0;
 }
-/* line 42, ../../../frontend/sass/screen.sass */
+/* line 44, ../../../frontend/sass/screen.sass */
 #global ul a {
   text-decoration: none;
   color: white;
