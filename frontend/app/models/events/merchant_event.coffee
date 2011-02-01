@@ -6,15 +6,22 @@ define ['app/models/event'], (Event) ->
 
       super()
 
-      @merchant = this.get('merchant')
+      this.loadMerchantAttributes()
 
-      if @merchant?
-        @description = @merchant.name
-        @twitter_username = @merchant.twitter_username
-        @address_summary = "<h2>#{@merchant.name}</h2><p>#{@merchant.address_summary}</p>"
+      this.bind 'change:merchant', @loadMerchantAttributes
 
     isSocial: ->
       @twitter_username?
+
+    loadMerchantAttributes: =>
+
+      @merchant = this.get('merchant')
+
+      if @merchant?
+        @meta = this.get('name')
+        @description = @merchant.name
+        @twitter_username = @merchant.twitter_username
+        @address_summary = "<h2>#{@merchant.name}</h2><p>#{@merchant.address_summary}</p>"
 
     toDetailJSON: ->
       if @merchant?

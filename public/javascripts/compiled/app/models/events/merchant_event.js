@@ -10,20 +10,26 @@ define(['app/models/event'], function(Event) {
   var MerchantEvent;
   return MerchantEvent = (function() {
     function MerchantEvent() {
-      this.addMerchant = __bind(this.addMerchant, this);;      MerchantEvent.__super__.constructor.apply(this, arguments);
+      this.addMerchant = __bind(this.addMerchant, this);;
+      this.loadMerchantAttributes = __bind(this.loadMerchantAttributes, this);;      MerchantEvent.__super__.constructor.apply(this, arguments);
     }
     __extends(MerchantEvent, Event);
     MerchantEvent.prototype.initialize = function() {
       MerchantEvent.__super__.initialize.call(this);
+      this.loadMerchantAttributes();
+      return this.bind('change:merchant', this.loadMerchantAttributes);
+    };
+    MerchantEvent.prototype.isSocial = function() {
+      return this.twitter_username != null;
+    };
+    MerchantEvent.prototype.loadMerchantAttributes = function() {
       this.merchant = this.get('merchant');
       if (this.merchant != null) {
+        this.meta = this.get('name');
         this.description = this.merchant.name;
         this.twitter_username = this.merchant.twitter_username;
         return this.address_summary = "<h2>" + this.merchant.name + "</h2><p>" + this.merchant.address_summary + "</p>";
       }
-    };
-    MerchantEvent.prototype.isSocial = function() {
-      return this.twitter_username != null;
     };
     MerchantEvent.prototype.toDetailJSON = function() {
       if (this.merchant != null) {

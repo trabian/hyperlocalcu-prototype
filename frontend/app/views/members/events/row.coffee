@@ -14,6 +14,8 @@ define ['text!views/timeline/events/row.handlebars?v=3', 'vendor/handlebars'], (
 
       @model.bind 'change:selected', @changeSelection
 
+      @model.bind 'change', @onChange
+
       this.render()
 
     render: ->
@@ -25,6 +27,16 @@ define ['text!views/timeline/events/row.handlebars?v=3', 'vendor/handlebars'], (
     # Change the 'selected' class for the row without re-rendering.
     changeSelection: =>
       $(@el).toggleClass 'selected', @model.get('selected')
+
+    onChange: =>
+
+      attributesToIgnore = ['selected']
+
+      changedKeys = _.keys(@model.changedAttributes())
+
+      return if _.isEmpty(_.without(changedKeys, attributesToIgnore...))
+
+      this.render()
 
     # If the model is selected, unselect it.  Otherwise if this view is
     # part of a collection then select only this model (by deselecting 
