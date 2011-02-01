@@ -25,7 +25,6 @@ define(['app/models/event'], function(Event) {
     MerchantEvent.prototype.loadMerchantAttributes = function() {
       this.merchant = this.get('merchant');
       if (this.merchant != null) {
-        this.meta = this.get('name');
         this.description = this.merchant.name;
         this.twitter_username = this.merchant.twitter_username;
         return this.address_summary = "<h2>" + this.merchant.name + "</h2><p>" + this.merchant.address_summary + "</p>";

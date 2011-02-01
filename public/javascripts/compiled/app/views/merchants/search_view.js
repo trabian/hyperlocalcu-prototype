@@ -6,7 +6,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(['text!views/merchants/search_with_options.handlebars?v=2', 'app/views/merchants/search_result_view', "vendor/jquery-mousewheel", "vendor/jquery-jscrollpane"], function(template_with_options, MerchantSearchResultView) {
+define(['text!views/merchants/search_with_options.handlebars?v=3', 'app/views/merchants/search_result_view', "vendor/jquery-mousewheel", "vendor/jquery-jscrollpane"], function(template_with_options, MerchantSearchResultView) {
   var MerchantSearchView;
   return MerchantSearchView = (function() {
     function MerchantSearchView() {
@@ -24,11 +24,12 @@ define(['text!views/merchants/search_with_options.handlebars?v=2', 'app/views/me
     };
     MerchantSearchView.prototype.templateWithOptions = Handlebars.compile(template_with_options);
     MerchantSearchView.prototype.initialize = function(options) {
-      return this.defaultSearch = "" + (this.model.get('name')) + " in " + (this.model.member.cityState());
+      return this.defaultSearch = this.model.get('name') != null ? "" + (this.model.get('name')) + " in " + (this.model.member.cityState()) : null;
     };
     MerchantSearchView.prototype.render = function() {
       $(this.el).html(this.templateWithOptions({
-        defaultSearch: this.defaultSearch
+        defaultSearch: this.defaultSearch,
+        searchPrompt: this.options.searchPrompt
       }));
       this.resultsDiv = this.$('.search-results');
       this.resultsList = this.resultsDiv.find('ul');
@@ -39,7 +40,11 @@ define(['text!views/merchants/search_with_options.handlebars?v=2', 'app/views/me
           primary: 'ui-icon-search'
         }
       });
-      this.search();
+      if (this.model.get('name') != null) {
+        this.search();
+      } else {
+        this.resultsDiv.hide();
+      }
       return this;
     };
     MerchantSearchView.prototype.searchOnEnter = function(e) {
@@ -74,7 +79,10 @@ define(['text!views/merchants/search_with_options.handlebars?v=2', 'app/views/me
       this.resultsDiv.find('ul').empty();
       if (_.any(this.localSearch.results)) {
         resultCount = this.localSearch.results.length;
-        if (resultCount === 0) {} else {
+        if (resultCount === 0) {
+          this.resultsDiv.hide();
+        } else {
+          this.resultsDiv.show();
           _.each(this.localSearch.results, __bind(function(result) {
             var resultView;
             resultView = new MerchantSearchResultView({

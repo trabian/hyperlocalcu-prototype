@@ -15,6 +15,9 @@ define ['app/models/events/merchant_event'], (MerchantEvent) ->
 
       @updateFields.push 'check_image_comment'
 
+      this.bind 'change:merchant', =>
+        @meta = check_name
+
     toDetailJSON: ->
       detailJSON = super()
       _.extend detailJSON,

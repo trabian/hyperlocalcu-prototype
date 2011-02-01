@@ -5,7 +5,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.prototype = new ctor;
   child.__super__ = parent.prototype;
   return child;
-};
+}, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 define(['app/models/events/merchant_event'], function(MerchantEvent) {
   var CheckEvent;
   return CheckEvent = (function() {
@@ -22,7 +22,10 @@ define(['app/models/events/merchant_event'], function(MerchantEvent) {
       } else {
         this.description = check_name;
       }
-      return this.updateFields.push('check_image_comment');
+      this.updateFields.push('check_image_comment');
+      return this.bind('change:merchant', __bind(function() {
+        return this.meta = check_name;
+      }, this));
     };
     CheckEvent.prototype.toDetailJSON = function() {
       var detailJSON;

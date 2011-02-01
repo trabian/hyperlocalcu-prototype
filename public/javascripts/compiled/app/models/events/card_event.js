@@ -5,7 +5,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.prototype = new ctor;
   child.__super__ = parent.prototype;
   return child;
-};
+}, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 define(['app/models/events/merchant_event'], function(MerchantEvent) {
   var CardEvent;
   return CardEvent = (function() {
@@ -18,10 +18,13 @@ define(['app/models/events/merchant_event'], function(MerchantEvent) {
       CardEvent.__super__.initialize.call(this);
       name = this.get('name');
       if (this.merchant != null) {
-        return this.meta = name;
+        this.meta = name;
       } else {
-        return this.description = name;
+        this.description = name;
       }
+      return this.bind('change:merchant', __bind(function() {
+        return this.meta = name;
+      }, this));
     };
     return CardEvent;
   })();

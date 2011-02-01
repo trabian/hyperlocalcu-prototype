@@ -6,10 +6,11 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(['text!views/timeline/events/check/detail.handlebars?v=6', 'app/views/members/events/detail', 'app/views/common/feedback/comment_view', 'vendor/handlebars', 'vendor/jquery-colorbox'], function(template, EventDetailView, CommentView) {
+define(['text!views/timeline/events/check/detail.handlebars?v=7', 'app/views/members/events/detail', 'app/views/common/feedback/comment_view', 'app/views/merchants/search_view', 'vendor/handlebars', 'vendor/jquery-colorbox'], function(template, EventDetailView, CommentView, MerchantSearchView) {
   var CheckDetailView;
   return CheckDetailView = (function() {
     function CheckDetailView() {
+      this.addMerchantSearchView = __bind(this.addMerchantSearchView, this);;
       this.showCheckCommentView = __bind(this.showCheckCommentView, this);;
       this.renderDetail = __bind(this.renderDetail, this);;
       this.toggleCheckCommentView = __bind(this.toggleCheckCommentView, this);;      CheckDetailView.__super__.constructor.apply(this, arguments);
@@ -17,6 +18,7 @@ define(['text!views/timeline/events/check/detail.handlebars?v=6', 'app/views/mem
     __extends(CheckDetailView, EventDetailView);
     CheckDetailView.prototype.initialize = function() {
       mpq.push(["track", "View billpay offer"]);
+      this.model.bind('change:merchant', this.render);
       return CheckDetailView.__super__.initialize.call(this);
     };
     CheckDetailView.prototype.eventTypeOptions = {
@@ -35,7 +37,10 @@ define(['text!views/timeline/events/check/detail.handlebars?v=6', 'app/views/mem
     };
     CheckDetailView.prototype.renderDetail = function() {
       this.$('.available-service li a').button();
-      return this.$('.check-image a').colorbox();
+      this.$('.check-image a').colorbox();
+      if (this.model.get('merchant') == null) {
+        return this.addMerchantSearchView();
+      }
     };
     CheckDetailView.prototype.showCheckCommentView = function() {
       if (this.checkCommentView != null) {
@@ -49,6 +54,13 @@ define(['text!views/timeline/events/check/detail.handlebars?v=6', 'app/views/mem
         });
         return this.$('.check-image').append(this.checkCommentView.render().el);
       }
+    };
+    CheckDetailView.prototype.addMerchantSearchView = function() {
+      this.merchantSearchView = new MerchantSearchView({
+        model: this.model,
+        searchPrompt: "Search for merchant information:"
+      });
+      return this.$('#event-detail').prepend(this.merchantSearchView.render().el);
     };
     return CheckDetailView;
   })();

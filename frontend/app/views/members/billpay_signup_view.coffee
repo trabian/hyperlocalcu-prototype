@@ -27,6 +27,7 @@ define ['text!views/members/billpay_signup.handlebars?v=1', 'vendor/handlebars',
       this.$('.form button').button()
 
     close: (event, ui) =>
+      window.location.hash = '#'
       this.remove()
 
     open: (event, ui) =>

@@ -1,4 +1,4 @@
-define ['text!views/merchants/search_with_options.handlebars?v=2', 'app/views/merchants/search_result_view', "vendor/jquery-mousewheel", "vendor/jquery-jscrollpane"], (template_with_options, MerchantSearchResultView) ->
+define ['text!views/merchants/search_with_options.handlebars?v=3', 'app/views/merchants/search_result_view', "vendor/jquery-mousewheel", "vendor/jquery-jscrollpane"], (template_with_options, MerchantSearchResultView) ->
 
   class MerchantSearchView extends Backbone.View
 
@@ -13,12 +13,13 @@ define ['text!views/merchants/search_with_options.handlebars?v=2', 'app/views/me
 
     initialize: (options) ->
 
-      @defaultSearch = "#{@model.get('name')} in #{@model.member.cityState()}"
+      @defaultSearch = if @model.get('name')? then "#{@model.get('name')} in #{@model.member.cityState()}" else null
 
     render: ->
 
       $(@el).html @templateWithOptions
         defaultSearch: @defaultSearch
+        searchPrompt: @options.searchPrompt
 
       @resultsDiv = this.$('.search-results')
       @resultsList = @resultsDiv.find('ul')
@@ -31,7 +32,10 @@ define ['text!views/merchants/search_with_options.handlebars?v=2', 'app/views/me
         icons:
           primary: 'ui-icon-search'
 
-      this.search()
+      if @model.get('name')?
+        this.search()
+      else
+        @resultsDiv.hide()
 
       return this
 
@@ -69,7 +73,11 @@ define ['text!views/merchants/search_with_options.handlebars?v=2', 'app/views/me
 
         if resultCount == 0
 
+          @resultsDiv.hide()
+
         else
+
+          @resultsDiv.show()
 
           _.each @localSearch.results, (result) =>
             resultView = new MerchantSearchResultView

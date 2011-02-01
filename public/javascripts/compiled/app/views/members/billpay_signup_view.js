@@ -37,6 +37,7 @@ define(['text!views/members/billpay_signup.handlebars?v=1', 'vendor/handlebars',
       return this.$('.form button').button();
     };
     BillpaySignupView.prototype.close = function(event, ui) {
+      window.location.hash = '#';
       return this.remove();
     };
     BillpaySignupView.prototype.open = function(event, ui) {
