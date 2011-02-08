@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110208152302) do
+ActiveRecord::Schema.define(:version => 20110208162909) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(:version => 20110208152302) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "member_id"
+    t.float    "balance"
   end
 
   create_table "atms", :force => true do |t|

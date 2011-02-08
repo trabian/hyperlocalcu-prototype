@@ -4,7 +4,7 @@ define ['app/models/event_factory'], (factory) ->
   class EventList extends Backbone.Collection
 
     # This will likely change in the future
-    url: '/accounts/1/events'
+    #url: '/accounts/1/events'
 
     _add: (model) ->
       super factory.getEvent(model)
