@@ -3255,9 +3255,8 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   position: absolute;
   top: 2px;
   right: 15px;
-  display: none;
 }
-/* line 42, ../../../frontend/sass/screen.sass */
+/* line 41, ../../../frontend/sass/screen.sass */
 #global ul {
   margin: 0;
   padding: 0;
@@ -3285,16 +3284,13 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #global ul li:last-child, #global ul li.last {
   padding-right: 0;
 }
-/* line 44, ../../../frontend/sass/screen.sass */
+/* line 43, ../../../frontend/sass/screen.sass */
 #global ul a {
+  font-size: 10px;
   text-decoration: none;
-  color: white;
+  color: #007b82;
 }
 /* line 4, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
 #global ul a:hover {
   text-decoration: underline;
-}
-/* line 24, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_link-colors.scss */
-#global ul a:hover {
-  color: white;
 }

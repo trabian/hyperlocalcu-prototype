@@ -1,5 +1,7 @@
 class Member < ActiveRecord::Base
 
+  has_many :accounts
+
   def name
     [first_name, last_name].join(' ')
   end

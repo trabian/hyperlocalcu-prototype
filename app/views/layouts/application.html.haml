@@ -9,8 +9,9 @@
   #container
     #global
       %ul
-        %li.available-services
-          = link_to "Available Services", '#'
+        - if user_signed_in?
+          %li
+            = link_to "Log out", destroy_user_session_path
         
     #main
       .content

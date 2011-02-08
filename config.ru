@@ -2,8 +2,4 @@
 
 require ::File.expand_path('../config/environment',  __FILE__)
 
-use Rack::Auth::Basic do |username, password|
-  [username, password] == ['techatchery', 'trabian']
-end
-
 run Hyperlocalcu::Application
