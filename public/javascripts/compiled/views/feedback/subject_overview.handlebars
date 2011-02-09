@@ -1,5 +1,7 @@
 <div class="subject-info">
-  <img src="{{ avatar }}" class="avatar" />
+  {{#avatar}}
+    <img src="{{ . }}" class="avatar" />
+  {{/avatar}}
   <div class="name">
     <h2>{{ name }}</h2>
     <p class="meta">{{ meta }}</p>

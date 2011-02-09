@@ -6,7 +6,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(["text!views/feedback/subject_overview.handlebars?v=2", "app/views/common/feedback/rating_view", "vendor/handlebars"], function(template, RatingView) {
+define(["text!views/feedback/subject_overview.handlebars?v=3", "app/views/common/feedback/rating_view", "vendor/handlebars"], function(template, RatingView) {
   var FeedbackSubjectOverviewView;
   return FeedbackSubjectOverviewView = (function() {
     function FeedbackSubjectOverviewView() {

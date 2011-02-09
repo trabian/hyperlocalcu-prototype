@@ -1,4 +1,4 @@
-define ["text!views/feedback/subject_overview.handlebars?v=2", "app/views/common/feedback/rating_view", "vendor/handlebars"], (template, RatingView) ->
+define ["text!views/feedback/subject_overview.handlebars?v=3", "app/views/common/feedback/rating_view", "vendor/handlebars"], (template, RatingView) ->
 
   class FeedbackSubjectOverviewView extends Backbone.View
 
