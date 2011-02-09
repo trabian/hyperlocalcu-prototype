@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110208203342) do
+ActiveRecord::Schema.define(:version => 20110209043606) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -126,6 +126,7 @@ ActiveRecord::Schema.define(:version => 20110208203342) do
     t.string   "twitter_username"
     t.string   "facebook_username"
     t.string   "avatar"
+    t.string   "merchant_number"
   end
 
   create_table "tellers", :force => true do |t|

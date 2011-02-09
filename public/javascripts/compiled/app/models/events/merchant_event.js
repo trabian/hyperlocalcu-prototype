@@ -43,6 +43,7 @@ define(['app/models/event'], function(Event) {
     };
     MerchantEvent.prototype.addMerchant = function(merchant) {
       var params;
+      merchant.merchant_number = this.get('merchant_number');
       params = {
         url: "" + (this.url()) + "/add_merchant",
         type: 'POST',
@@ -53,7 +54,13 @@ define(['app/models/event'], function(Event) {
         dataType: 'json',
         processData: false,
         success: __bind(function(resp) {
-          return this.set(this.parse(resp));
+          var new_merchant;
+          new_merchant = this.parse(resp);
+          return this.collection.each(function(event) {
+            if (event.get('merchant_number') === new_merchant.merchant_number) {
+              return event.set(new_merchant);
+            }
+          });
         }, this)
       };
       return $.ajax(params);

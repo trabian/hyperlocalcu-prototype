@@ -33,6 +33,8 @@ define ['app/models/event'], (Event) ->
 
     addMerchant: (merchant) =>
 
+      merchant.merchant_number = this.get('merchant_number')
+
       params =
         url: "#{this.url()}/add_merchant"
         type: 'POST'
@@ -44,6 +46,10 @@ define ['app/models/event'], (Event) ->
         dataType: 'json'
         processData: false
         success: (resp) =>
-          this.set(this.parse(resp))
+
+          new_merchant = this.parse(resp)
+
+          this.collection.each (event) ->
+            event.set new_merchant if event.get('merchant_number') == new_merchant.merchant_number
 
       $.ajax params
