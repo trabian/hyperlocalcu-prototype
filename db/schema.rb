@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110208162909) do
+ActiveRecord::Schema.define(:version => 20110208203342) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20110208162909) do
     t.string   "check_image_back"
     t.string   "receipt_image"
     t.text     "account_information"
+    t.string   "merchant_number"
   end
 
   create_table "feedbacks", :force => true do |t|

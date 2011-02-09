@@ -12,94 +12,115 @@ namespace :seed do
   ]
 
   ACCOUNTS = [
-    ["Checking", 200.0, 15000.0, "12340927"],
-    ["Share Savings", 5.0, 3500.0, "98123494"],
-    ["Auto Loan", -10000.0, -500.0, "49128401"],
-    ["Home Equity Line of Credit", -40000.0, -500.0, "93270912"]
+    ["Checking", 200.0, 15000.0],
+    ["Share Savings", 5.0, 3500.0],
+    ["Auto Loan", -10000.0, -500.0],
+    ["Home Equity Line of Credit", -40000.0, -500.0]
   ]
 
   EVENT_TYPE_FREQUENCIES = [
-    ["card", 40],
-    ["atm", 2],
-    ["branch", 2],
-    ["check", 4],
-    ["billpay", 5]
+    [:card_event, 40],
+    [:atm_event, 2],
+    [:branch_event, 2],
+    [:check_event, 4],
+    [:billpay_event, 5]
   ]
+
+  #EVENT_TYPE_FREQUENCIES = [
+    #[:card_event, 1],
+    #[:atm_event, 1],
+    #[:branch_event, 1],
+    #[:check_event, 1],
+    #[:billpay_event, 1]
+  #]
 
   EVENT_TYPES = EVENT_TYPE_FREQUENCIES.collect { |event_type, frequency|
     [event_type] * frequency
   }.flatten
 
+  def random_number_in_range(lower, upper)
+    lower + Kernel.rand * (upper - lower)
+  end
+
+  def number_with_precision(number, pre)
+    mult = 10 ** pre
+    (number * mult).truncate.to_f / mult
+  end
+
   def create_member
 
     address = ADDRESSES.rand
 
-    member = Factory.build(:member)
+    member = Factory(:member, :street1 => address[0], :city => address[1], :region => address[2], :postal_code => address[3])
 
-    puts "First name: #{member.first_name}"
+    user = Factory(:user, :member => member)
 
-    #member = Member.create(
-      #:first_name => Faker::Name.first_name,
-      #:last_name => Faker::Name.last_name,
-      #:street1 => address[0],
-      #:city => address[1],
-      #:region => address[2],
-      #:postal_code => address[3]
-    #)
+    account_count = 1 + Kernel.rand(ACCOUNTS.length)
 
-    #user = create_user(member)
+    accounts = []
 
-    #account_count = 1 + Kernel.rand(ACCOUNTS.length)
+    account_count.times do |i|
+      accounts << create_account(member, ACCOUNTS[i])
+    end
 
-    #account_count.times do |i|
-      #create_account(member, ACCOUNTS[i])
-    #end
-
-  end
-
-  def create_user(member)
-
-    password = [member.first_name.downcase, member.last_name.downcase].join('-')
-
-    user = User.create(
-      :email => Faker::Internet.email([member.first_name, member.last_name].join(' ')),
-      :password => password,
-      :confirm_password => password,
-      :member_id => member.id
-    )
+    add_account_events(accounts[0])
 
   end
 
   def create_account(member, account_info)
 
-    balance = account_info[1] + Kernel.rand * (account_info[2] - account_info[1])
+    balance = random_number_in_range(account_info[1], account_info[2]) 
 
-    mult = 10 ** 2
-    balance = (balance * mult).truncate.to_f / mult
-
-    account = member.accounts.create(
-      :name => account_info[0],
-      :balance => balance,
-      :number => account_info[3]
-    )
+    account = Factory(:account, :member => member, :balance => number_with_precision(balance, 2), :name => account_info[0])
 
   end
 
   def add_account_events(account)
 
-    120.times do |day|
+    days_to_include = 120 
+
+    (0..days_to_include).to_a.reverse.each do |day|
 
       timestamp = day.days.ago
 
       event_count = Kernel.rand(10)
 
-      puts "Timestamp: #{timestamp}, Event count: #{event_count}"
-
       event_count.times do
 
         event_type = EVENT_TYPES.rand
 
-        puts "event_type: #{event_type}"
+        amount = 0
+        precision = 2
+
+        if [:billpay_event, :card_event, :check_event].include?(event_type)
+          amount = -200 * Kernel.rand
+        else
+          amount = -1000 + (2000 * Kernel.rand)
+        end
+
+        # Withdrawals should be in multipes of 10
+        if event_type == :atm_event
+          precision = -1 if amount < 0
+        end
+
+        event_options = {
+          :account => account,
+          :posted_at => timestamp
+        }
+
+        if [:card_event, :billpay_event].include?(event_type)
+
+          merchant = MERCHANTS.rand
+
+          event_options[:name] = merchant[0]
+          event_options[:merchant_number] = merchant[1]
+          amount = -1 * random_number_in_range(merchant[2].to_f, merchant[3].to_f)
+
+        end
+
+        event_options[:amount] = number_with_precision(amount, precision)
+
+        event = Factory(event_type, event_options)
 
       end
 
@@ -109,9 +130,9 @@ namespace :seed do
 
   task :members => :environment do
 
-    #add_account_events(nil)
+    MERCHANTS = FasterCSV.read(Rails.root.join("db", "seed", "merchants.csv"))
 
-    2.times { create_member }
+    200.times { create_member }
 
   end
 
