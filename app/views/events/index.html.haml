@@ -26,9 +26,12 @@
 
       window.member = new Member(#{@account.member.to_json});
 
+      eventList = new EventList();
+      eventList.url = "/accounts/#{@account.id}/events";
+
       var timelineController = new MemberTimelineController({
         fetchOnInit: true,
-        events: new EventList()
+        events: eventList
       });
 
       var availableServicesController = new AvailableServicesController();

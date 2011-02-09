@@ -13,7 +13,6 @@ define(['app/models/event_factory'], function(factory) {
       EventList.__super__.constructor.apply(this, arguments);
     }
     __extends(EventList, Backbone.Collection);
-    EventList.prototype.url = '/accounts/1/events';
     EventList.prototype._add = function(model) {
       return EventList.__super__._add.call(this, factory.getEvent(model));
     };

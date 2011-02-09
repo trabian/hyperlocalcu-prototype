@@ -34,4 +34,10 @@ group :development, :test do
 
   gem 'compass'
 
+  gem 'faker'
+
+  gem 'factory_girl_rails'
+
+  gem 'fastercsv'
+
 end
