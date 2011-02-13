@@ -1,10 +1,12 @@
-define ['text!views/timeline/events/check/detail.handlebars?v=2', 'app/views/members/events/detail', 'app/views/common/feedback/comment_view', 'vendor/handlebars'], (template, EventDetailView, CommentView) ->
+define ['text!views/timeline/events/check/detail.handlebars?v=7', 'app/views/members/events/detail', 'app/views/common/feedback/comment_view', 'app/views/merchants/search_view', 'vendor/handlebars', 'vendor/jquery-colorbox'], (template, EventDetailView, CommentView, MerchantSearchView) ->
 
   class CheckDetailView extends EventDetailView
 
     initialize: ->
 
       mpq.push ["track", "View billpay offer"]
+
+      @model.bind 'change:merchant', @render
 
       super()
 
@@ -20,6 +22,14 @@ define ['text!views/timeline/events/check/detail.handlebars?v=2', 'app/views/mem
 
       return false
 
+    renderDetail: =>
+
+      this.$('.available-service li a').button()
+
+      this.$('.check-image a').colorbox()
+
+      this.addMerchantSearchView() unless @model.get('merchant')?
+
     showCheckCommentView: =>
 
       if @checkCommentView?
@@ -32,4 +42,11 @@ define ['text!views/timeline/events/check/detail.handlebars?v=2', 'app/views/mem
           buttonText: 'Report problem'
 
         this.$('.check-image').append @checkCommentView.render().el
+
+    addMerchantSearchView: =>
+      @merchantSearchView = new MerchantSearchView
+        model: @model
+        searchPrompt: "Search for merchant information:"
+
+      this.$('#event-detail').prepend @merchantSearchView.render().el
 

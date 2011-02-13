@@ -1,12 +1,23 @@
 # An Event is a timeline event such as a transaction or other non-transactional event to be presented on the timeline.
-define ['lib/models/custom_sync', 'vendor/jquery-ui'], (CustomSync) ->
+define ['app/lib/models/custom_sync', 'app/models/feedback', 'app/models/feedback_list', 'vendor/jquery-ui', 'vendor/jquery-currency'], (CustomSync, Feedback, FeedbackList) ->
 
   class Event extends Backbone.Model
 
     initialize: ->
+
       this.sync = CustomSync
-      @updateFields = ['vendor_rating', 'vendor_comment']
+      this.member = window.member
+
+      @updateFields = []
+
       this.bind 'change', @trackEventActivity
+
+    initializeDetails: =>
+
+      @feedbacks = new FeedbackList this.get('feedbacks'),
+        event: this
+    
+      @feedbacks.url = "/events/#{@id}/feedbacks"
 
     splitPostedAt: =>
 
@@ -20,6 +31,9 @@ define ['lib/models/custom_sync', 'vendor/jquery-ui'], (CustomSync) ->
 
       [month, day].join('/')
 
+    formatted_date: =>
+      this.formatDate this.get('posted_at'), 'DD, MM d, yy'
+
     day: =>
 
       [year, month, day] = this.splitPostedAt()
@@ -28,10 +42,13 @@ define ['lib/models/custom_sync', 'vendor/jquery-ui'], (CustomSync) ->
     formatCurrency: (amount) =>
 
       sign = if amount < 0 then '<span class="sign">-</span>' else ''
-      "#{sign}<span class='currency'>$</span>#{Math.abs(amount).toFixed(2)}"
+      "#{sign}<span class='currency'>$</span>#{$.currency(Math.abs(amount))}"
 
-    formatDate: (date) ->
-      $.datepicker.formatDate('m/d/yy', $.datepicker.parseDate('yy-m-d', date))
+    formatDate: (date, format) ->
+
+      format or= 'm/d/yy'
+
+      $.datepicker.formatDate(format, $.datepicker.parseDate('yy-m-d', date))
 
     # Move the negative sign in front of the dollar sign for negative amounts and wrap the dollar
     # sign in <span class="currency"> to allow font customization.
@@ -53,6 +70,9 @@ define ['lib/models/custom_sync', 'vendor/jquery-ui'], (CustomSync) ->
     meta: =>
       ''
 
+    map: =>
+      "http://www.google.com/maps/vt/data=LtgX-e3f8ctI3U5dJtbt7EJ1ZfRneYme,xr1VycLGhw6JTyXHga0_5_rOcUkmBglaDj54UK1Pl3Q61KqxI7PKrPOitiqBc3I6vhIGdvPSpmb2yZN3Xv4RQ09i_YMotqFsn2SrqspXx-0c8v2Xkw"
+
     className: =>
       this.depositOrWithdrawal().toLowerCase()
 
@@ -63,7 +83,9 @@ define ['lib/models/custom_sync', 'vendor/jquery-ui'], (CustomSync) ->
         meta: @meta
         html_class: @html_class
         formatted_timestamp: @formatted_timestamp
+        formatted_date: @formatted_date
         formatted_amount: @formatted_amount
+        map: @map
 
     toDetailJSON: ->
       this.toViewJSON()

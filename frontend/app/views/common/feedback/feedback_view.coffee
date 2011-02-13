@@ -8,19 +8,30 @@ define ["text!views/feedback/form.handlebars?v=4", "app/views/common/feedback/ra
 
     template: Handlebars.compile(template)
 
+    initialize: (options)->
+
+      super(options)
+
+      @subject = @model.subject
+      @question = options.question || @subject.get('question')
+
     render: ->
 
       $(@el).html @template(
-        avatar: @options.subject.avatar
-        question: @model.feedbackQuestion || @options.subject.question
+        avatar: @subject.get('avatar')
+        question: @question
       )
 
       ratingView = new RatingView
         model: @model
         commentParent: $(@el)
-        ratingField: "#{@options.fieldPrefix}_rating"
-        commentField: "#{@options.fieldPrefix}_comment"
         commentFormTitle: "Care to elaborate?"
+
+      ratingView.bind 'expand', =>
+        this.trigger 'expand'
+
+      ratingView.bind 'collapse', =>
+        this.trigger 'collapse'
 
       this.$('.question').after ratingView.render().el
 

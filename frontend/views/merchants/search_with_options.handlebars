@@ -1,0 +1,16 @@
+{{#defaultSearch}}
+<p class="note"><strong>We do not currently have detailed information about this merchant.</strong> However, we found the following possibilities using Google Local. Does one of these options look correct?</p>
+{{/defaultSearch}}
+
+<div class="search-results"><ul></ul></div>
+
+<div class="search-form">
+  {{#defaultSearch}}
+  <h4>Improve search results:</h4>
+  {{/defaultSearch}}
+  {{^defaultSearch}}
+  <h4>{{ searchPrompt }}</hr>
+  {{/defaultSearch}}
+  <input type="text" name="search-input" class="text search-field" value="{{ defaultSearch }}" />
+  <button class="search">Search</button>
+</div>

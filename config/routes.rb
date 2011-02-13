@@ -1,5 +1,7 @@
 Hyperlocalcu::Application.routes.draw do
 
+  resources :feedbacks
+
   resources :members
 
   resources :vendors
@@ -10,9 +12,17 @@ Hyperlocalcu::Application.routes.draw do
 
   resources :tellers
 
+  resources :events do
+    resources :feedbacks
+  end
+
   resources :accounts do
 
-    resources :events
+    resources :events do
+      member do
+        post 'add_merchant'
+      end
+    end
 
     resources :items do
       member do

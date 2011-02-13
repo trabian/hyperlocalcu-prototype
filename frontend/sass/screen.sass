@@ -24,6 +24,11 @@
 
 @import members/all
 
+@import merchants/search
+
+@import vendor/colorbox
+@import vendor/jscrollpane
+
 #container
   position: relative
   padding-top: 20px
@@ -33,9 +38,9 @@
   position: absolute
   top: 2px
   right: 15px
-  display: none
   ul
     +horizontal-list(5px)
     a
+      font-size: 10px
       +hover-link
-      +link-colors(#fff, #fff)
+      +link-colors(#007B82)

@@ -10,9 +10,13 @@ define ['app/views/common/feedback/comment_view'], (CommentView) ->
       'click .cancel': 'resetRating'
       'click .commentLink': 'toggleCommentForm'
 
+    initialize: (options) ->
+      options.commentField = 'comment'
+
     render: ->
 
-      @rating = @model.get(@options.ratingField) || 0
+      @rating = @options.rating || @model.get('rating') || 0
+
       @readOnly = (@options.readOnly == true)
 
       this.addCancel() unless @readOnly
@@ -28,7 +32,8 @@ define ['app/views/common/feedback/comment_view'], (CommentView) ->
 
         $(@el).append commentLink
 
-        this.$('.commentLink').addClass('active') if @model.get(@options.commentField)?
+        if @model.get(@options.commentField)
+          this.$('.commentLink').addClass('active')
 
         $(@el).addClass('rated active') if @rating > 0
 
@@ -63,11 +68,7 @@ define ['app/views/common/feedback/comment_view'], (CommentView) ->
 
     updateRating: (num) =>
 
-      ratingAttributes = {}
-      ratingAttributes[@options.ratingField] = num
-
-      @model.save ratingAttributes
-
+      @model.save 'rating': num
 
     addStar: (num, starOn, readOnly)=>
 
@@ -134,9 +135,13 @@ define ['app/views/common/feedback/comment_view'], (CommentView) ->
 
         @commentView.bind 'show', =>
           this.$('.commentLink').addClass('active')
+          this.trigger('expand')
 
         @commentView.bind 'hide', =>
           this.$('.commentLink').removeClass('active') unless @model.get(@options.commentField)?
+          this.trigger('collapse')
 
         @options.commentParent.append @commentView.render().el
+
+        @commentView.trigger 'show'
 

@@ -1,16 +1,17 @@
 !!!
 %head
-  - ['compiled/screen.css', 'jquery-ui.css', 'compiled/jquery_ui_custom.css'].each do |stylesheet|
+  - ['compiled/screen.css?v=4', 'jquery-ui.css', 'compiled/jquery_ui_custom.css'].each do |stylesheet|
     %link{:href => "/stylesheets/#{stylesheet}", :rel => 'stylesheet'}
   %title Hyperlocal CU Prototype
-  = render "layouts/mixpanel"
+  = yield(:head)
 
 %body
   #container
     #global
       %ul
-        %li.available-services
-          = link_to "Available Services", '#'
+        - if user_signed_in?
+          %li
+            = link_to "Log out", destroy_user_session_path
         
     #main
       .content
@@ -20,5 +21,9 @@
       = yield(:sidebar)
 
   %script{:src => '/javascripts/compiled/vendor/require-jquery.js?v=1'}
+
+  :javascript
+
+    PUSHER_KEY = '#{Pusher.key}';
 
   = yield(:javascript)

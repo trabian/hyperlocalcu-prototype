@@ -1,5 +1,5 @@
 # The Member Timeline Controller is the main controller for the member timeline
-define ["app/controllers/common/timeline_controller", "app/views/members/member_timeline", "app/views/members/events/detail", "app/views/members/events/billpay/detail", "app/views/members/events/check/detail"], (TimelineController, MemberTimeline, EventDetailView, BillpayDetailView, CheckDetailView) ->
+define ["app/controllers/common/timeline_controller", "app/views/members/member_timeline", "app/views/members/events/detail", "app/views/members/events/billpay/detail", "app/views/members/events/branch/detail", "app/views/members/events/card/detail", "app/views/members/events/check/detail"], (TimelineController, MemberTimeline, EventDetailView, BillpayDetailView, BranchDetailView, CardDetailView, CheckDetailView) ->
 
   class MemberTimelineController extends TimelineController
 
@@ -16,7 +16,9 @@ define ["app/controllers/common/timeline_controller", "app/views/members/member_
     showEventDetail: (event) =>
 
       @detail_views ||=
+        branch: BranchDetailView
         billpay: BillpayDetailView
+        card: CardDetailView
         check: CheckDetailView
 
       detail_view_class = @detail_views[event.get('event_type')] || EventDetailView

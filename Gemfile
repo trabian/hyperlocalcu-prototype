@@ -14,7 +14,9 @@ gem 'has_scope'
 gem 'haml'
 
 gem 'devise'
-gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
+gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git', :ref => 'e1a9542a599314b1fb13'
+
+gem 'pusher', '0.7.0'
 
 group :development, :test do
 
@@ -28,8 +30,14 @@ group :development, :test do
   gem "guard"
   gem "guard-compass"
   gem "guard-shell"
-  gem "guard-coffeescript", :git => "git://github.com/trabian/guard-coffeescript.git"
+  gem "guard-coffeescript", :git => "git://github.com/trabian/guard-coffeescript.git", :ref => 'a126fd57c74a8fd44ce4'
 
   gem 'compass'
+
+  gem 'faker'
+
+  gem 'factory_girl_rails'
+
+  gem 'fastercsv'
 
 end

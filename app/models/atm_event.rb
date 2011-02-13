@@ -6,7 +6,7 @@ class AtmEvent < Event
   validates :amount, :presence => true
 
   def as_json(options = {})
-    super :include => :atm
+    super :include => {:atm => { :methods => :address_summary }}
   end
 
 end

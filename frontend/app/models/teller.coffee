@@ -1,16 +1,14 @@
-define ['app/models/feedback_list', 'app/models/feedback'], (FeedbackList, Feedback) ->
+define ['app/models/feedback_subject'], (FeedbackSubject) ->
 
-  class Teller extends Backbone.Model
+  class Teller extends FeedbackSubject
 
-    initialize: ->
+    initialize: (options) ->
 
-    # Add the formatted timestamp and amount to the json for the view
-    toViewJSON: ->
-      _.extend this.toJSON()
+      options.list_url = "/tellers/#{@id}/feedbacks"
 
-    toDetailJSON: ->
-      this.toViewJSON()
+      @meta = "Teller ##{@id}"
 
-    feedbacks: ->
-      new FeedbackList this.get('feedbacks'),
-        model: Feedback
+      super(options)
+
+    url: =>
+      "/tellers/#{@id}"

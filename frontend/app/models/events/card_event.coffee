@@ -12,3 +12,6 @@ define ['app/models/events/merchant_event'], (MerchantEvent) ->
         @meta = name
       else
         @description = name
+
+      this.bind 'change:merchant', =>
+        @meta = name

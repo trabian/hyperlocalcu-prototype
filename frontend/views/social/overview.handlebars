@@ -1,10 +1,7 @@
 <div class="twitter">
-  {{#twitter_username}}
-    <div class="icon-and-vote">
-      <a href="http://twitter.com/{{.}}" class="view-profile" target="_blank"><img src="/images/twitter-button.png" /></a>
-      <a href="#" class="vote">Vote</a>
-    </div>
-  {{/twitter_username}}
+  {{#avatar}}
+    <img src="{{ . }}" class="avatar" />
+  {{/avatar}}
   <div class="latest-tweet">
   {{^twitter_username}}
     <div class="form">

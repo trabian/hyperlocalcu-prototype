@@ -6,18 +6,24 @@
   </div>
 </div>
 
+{{#feedback_totals}}
 <div class="averages">
   
+  {{#month}}
   <div class="month average">
     <h2>This Month</h2>
     <div class="rating"></div>
-    <p class="meta">{{ average_feedback_this_month }} based on {{ count_feedback_this_month }} reviews</p>
+    <p class="meta">{{ average }} based on {{ count }} reviews</p>
   </div>
+  {{/month}}
 
+  {{#year}}
   <div class="year average">
     <h2>This Year</h2>
     <div class="rating"></div>
-    <p class="meta">{{ average_feedback_this_year }} based on {{ count_feedback_this_year }} reviews</p>
+    <p class="meta">{{ average }} based on {{ count }} reviews</p>
   </div>
+  {{/year}}
 
 </div>
+{{/feedback_totals}}
