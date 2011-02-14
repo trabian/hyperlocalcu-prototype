@@ -1,42 +1,40 @@
-define ['text!views/members/billpay_signup.handlebars?v=1', 'vendor/handlebars', 'vendor/jquery-ui'], (template) ->
+class App.view.BillpaySignup extends Backbone.View
 
-  class BillpaySignupView extends Backbone.View
+  id: 'billpay-signup-dialog'
 
-    id: 'billpay-signup-dialog'
+  events:
+    "click .form button": "submitForm"
 
-    events:
-      "click .form button": "submitForm"
+  template: Handlebars.compile(template)
 
-    template: Handlebars.compile(template)
+  render: ->
 
-    render: ->
+    mpq.push ["track", "View Billpay Signup", {
+      offer: "billpay"
+    }]
 
-      mpq.push ["track", "View Billpay Signup", {
-        offer: "billpay"
-      }]
+    $(@el).html @template()
+    
+    $(@el).dialog
+      title: "Sign up for Billpay"
+      width: 460
+      height: 310
+      open: @open
+      close: @close
 
-      $(@el).html @template()
-      
-      $(@el).dialog
-        title: "Sign up for Billpay"
-        width: 460
-        height: 310
-        open: @open
-        close: @close
+    this.$('.form button').button()
 
-      this.$('.form button').button()
+  close: (event, ui) =>
+    window.location.hash = '#'
+    this.remove()
 
-    close: (event, ui) =>
-      window.location.hash = '#'
-      this.remove()
+  open: (event, ui) =>
+    this.delegateEvents()
 
-    open: (event, ui) =>
-      this.delegateEvents()
+  submitForm: =>
 
-    submitForm: =>
+    mpq.push ["track", "Submit Billpay Signup"]
 
-      mpq.push ["track", "Submit Billpay Signup"]
+    alert 'Provide instructions on what will happen next'
 
-      alert 'Provide instructions on what will happen next'
-
-      $(@el).dialog 'close'
+    $(@el).dialog 'close'

@@ -6,32 +6,29 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(["text!views/social/overview.handlebars?v=1", "vendor/jquery-tweet", "vendor/jquery-timeago", "vendor/date", "vendor/handlebars"], function(template) {
-  var SocialView;
-  return SocialView = (function() {
-    function SocialView() {
-      this.renderTwitter = __bind(this.renderTwitter, this);;      SocialView.__super__.constructor.apply(this, arguments);
+App.view.Social = (function() {
+  function Social() {
+    this.renderTwitter = __bind(this.renderTwitter, this);;    Social.__super__.constructor.apply(this, arguments);
+  }
+  __extends(Social, Backbone.View);
+  Social.prototype.tagName = 'div';
+  Social.prototype.className = 'social';
+  Social.prototype.template = Handlebars.compile(template);
+  Social.prototype.render = function() {
+    $(this.el).html(this.template(this.model.toDetailJSON()));
+    if (this.model.twitter_username) {
+      this.renderTwitter();
     }
-    __extends(SocialView, Backbone.View);
-    SocialView.prototype.tagName = 'div';
-    SocialView.prototype.className = 'social';
-    SocialView.prototype.template = Handlebars.compile(template);
-    SocialView.prototype.render = function() {
-      $(this.el).html(this.template(this.model.toDetailJSON()));
-      if (this.model.twitter_username) {
-        this.renderTwitter();
-      }
-      return this;
-    };
-    SocialView.prototype.renderTwitter = function() {
-      var username;
-      username = this.model.twitter_username;
-      return this.$('.twitter .latest-tweet').tweet({
-        username: this.model.twitter_username,
-        count: 1,
-        broadcast_only: true
-      });
-    };
-    return SocialView;
-  })();
-});
+    return this;
+  };
+  Social.prototype.renderTwitter = function() {
+    var username;
+    username = this.model.twitter_username;
+    return this.$('.twitter .latest-tweet').tweet({
+      username: this.model.twitter_username,
+      count: 1,
+      broadcast_only: true
+    });
+  };
+  return Social;
+})();

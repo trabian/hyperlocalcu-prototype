@@ -1,4 +1,4 @@
-class TimelineView extends Backbone.View
+class App.view.Timeline extends Backbone.View
 
   el: $('#timeline tbody')
 

@@ -6,21 +6,19 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(['app/models/feedback_subject'], function(FeedbackSubject) {
-  var Vendor;
-  return Vendor = (function() {
-    function Vendor() {
-      this.url = __bind(this.url, this);;      Vendor.__super__.constructor.apply(this, arguments);
-    }
-    __extends(Vendor, FeedbackSubject);
-    Vendor.prototype.initialize = function(options) {
-      options.list_url = "/vendors/" + this.id + "/feedbacks";
-      this.meta = "Vendor #" + this.id;
-      return Vendor.__super__.initialize.call(this, options);
-    };
-    Vendor.prototype.url = function() {
-      return "/vendors/" + this.id;
-    };
-    return Vendor;
-  })();
-});
+App.model.Vendor = (function() {
+  function Vendor() {
+    this.url = __bind(this.url, this);;    Vendor.__super__.constructor.apply(this, arguments);
+  }
+  __extends(Vendor, App.model.FeedbackSubject);
+  Vendor.prototype.initialize = function(options) {
+    options.list_url = "/vendors/" + this.id + "/feedbacks";
+    this.meta = "Vendor #" + this.id;
+    return Vendor.__super__.initialize.call(this, options);
+  };
+  Vendor.prototype.url = function() {
+    return "/vendors/" + this.id;
+  };
+  return Vendor;
+})();
+App.model.FeedbackSubjectFactory.vendor = App.model.Vendor;

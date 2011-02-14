@@ -1,21 +1,9 @@
-FeedbackSubjectTypes = ['merchant', 'teller', 'vendor']
+App.model.FeedbackSubjectFactory = {
 
-FeedbackSubjectTypeDefinitions = _.map FeedbackSubjectTypes, (feedback_subject_type) ->
-  "app/models/#{feedback_subject_type}"
+  getSubject: (model) ->
 
-FeedbackSubjectTypeDefinitions.unshift 'app/models/feedback_subject'
+    feedback_subject_class = App.model.FeedbackSubjectFactory[model.feedback_subject_type] || App.model.FeedbackSubject
 
-define FeedbackSubjectTypeDefinitions, (feedback_subject_classes...) ->
+    new feedback_subject_class(model)
 
-  class FeedbackSubjectFactory
-
-    getSubject: (model) ->
-
-      index = _.indexOf(FeedbackSubjectTypes, model.feedback_subject_type) + 1
-
-      feedback_subject_class = feedback_subject_classes[index] || feedback_subject_classes[0]
-
-      new feedback_subject_class(model)
-
-  return new FeedbackSubjectFactory()
-
+}

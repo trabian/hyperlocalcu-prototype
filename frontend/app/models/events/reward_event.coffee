@@ -1,10 +1,10 @@
-define ['app/models/event'], (Event) ->
+class App.model.RewardEvent extends App.model.Event
 
-  class RewardEvent extends Event
+  initialize: ->
 
-    initialize: ->
+    super()
 
-      super()
+    @description = "Reward"
+    @meta = this.get('rewards')
 
-      @description = "Reward"
-      @meta = this.get('rewards')
+App.model.EventFactory.reward = App.model.RewardEvent

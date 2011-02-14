@@ -1,38 +1,38 @@
-define ["text!views/feedback/form.handlebars?v=4", "app/views/common/feedback/rating_view", "vendor/handlebars", "vendor/jquery-ui"], (template, RatingView) ->
+#define ["text!views/feedback/form.handlebars?v=4", "app/views/common/feedback/rating_view", "vendor/handlebars", "vendor/jquery-ui"], (template, RatingView) ->
 
-  class FeedbackView extends Backbone.View
+class App.view.Feedback extends Backbone.View
 
-    tagName: 'div'
+  tagName: 'div'
 
-    className: 'feedback'
+  className: 'feedback'
 
-    template: Handlebars.compile(template)
+  template: Handlebars.compile(template)
 
-    initialize: (options)->
+  initialize: (options)->
 
-      super(options)
+    super(options)
 
-      @subject = @model.subject
-      @question = options.question || @subject.get('question')
+    @subject = @model.subject
+    @question = options.question || @subject.get('question')
 
-    render: ->
+  render: ->
 
-      $(@el).html @template(
-        avatar: @subject.get('avatar')
-        question: @question
-      )
+    $(@el).html @template(
+      avatar: @subject.get('avatar')
+      question: @question
+    )
 
-      ratingView = new RatingView
-        model: @model
-        commentParent: $(@el)
-        commentFormTitle: "Care to elaborate?"
+    ratingView = new App.view.Rating
+      model: @model
+      commentParent: $(@el)
+      commentFormTitle: "Care to elaborate?"
 
-      ratingView.bind 'expand', =>
-        this.trigger 'expand'
+    ratingView.bind 'expand', =>
+      this.trigger 'expand'
 
-      ratingView.bind 'collapse', =>
-        this.trigger 'collapse'
+    ratingView.bind 'collapse', =>
+      this.trigger 'collapse'
 
-      this.$('.question').after ratingView.render().el
+    this.$('.question').after ratingView.render().el
 
-      return this
+    return this

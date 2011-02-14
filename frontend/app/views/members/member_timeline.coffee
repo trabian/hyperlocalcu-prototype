@@ -1,7 +1,7 @@
-class MemberTimeline extends TimelineView
+class App.view.MemberTimeline extends App.view.Timeline
 
   initialize: (options) ->
 
-    options.rowFactory = new MemberTimelineRowFactory
+    options.rowFactory = new App.view.MemberTimelineRowFactory
 
     super(options)

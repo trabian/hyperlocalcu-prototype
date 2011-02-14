@@ -6,21 +6,19 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(['app/models/feedback_subject'], function(FeedbackSubject) {
-  var Merchant;
-  return Merchant = (function() {
-    function Merchant() {
-      this.url = __bind(this.url, this);;      Merchant.__super__.constructor.apply(this, arguments);
-    }
-    __extends(Merchant, FeedbackSubject);
-    Merchant.prototype.initialize = function(options) {
-      options.list_url = "/merchants/" + this.id + "/feedbacks";
-      this.meta = "Merchant #" + this.id;
-      return Merchant.__super__.initialize.call(this, options);
-    };
-    Merchant.prototype.url = function() {
-      return "/merchants/" + this.id;
-    };
-    return Merchant;
-  })();
-});
+App.model.Merchant = (function() {
+  function Merchant() {
+    this.url = __bind(this.url, this);;    Merchant.__super__.constructor.apply(this, arguments);
+  }
+  __extends(Merchant, App.model.FeedbackSubject);
+  Merchant.prototype.initialize = function(options) {
+    options.list_url = "/merchants/" + this.id + "/feedbacks";
+    this.meta = "Merchant #" + this.id;
+    return Merchant.__super__.initialize.call(this, options);
+  };
+  Merchant.prototype.url = function() {
+    return "/merchants/" + this.id;
+  };
+  return Merchant;
+})();
+App.model.FeedbackSubjectFactory.merchant = App.model.Merchant;

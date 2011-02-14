@@ -23,17 +23,17 @@
 
     Backbone.emulateHTTP = true;
 
-    window.member = new App.Member(#{@account.member.to_json});
+    window.member = new App.model.Member(#{@account.member.to_json});
 
-    var eventList = new App.EventList();
+    var eventList = new App.model.EventList();
     eventList.url = "/accounts/#{@account.id}/events";
 
-    var timelineController = new App.MemberTimelineController({
+    var timelineController = new App.controller.MemberTimelineController({
       fetchOnInit: true,
       events: eventList
     });
 
-    var availableServicesController = new App.AvailableServicesController();
+    var availableServicesController = new App.controller.AvailableServicesController();
 
   });
 

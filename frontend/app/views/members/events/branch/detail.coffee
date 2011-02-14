@@ -1,10 +1,10 @@
-define ['text!views/timeline/events/branch/detail.handlebars?v=2', 'app/views/members/events/detail', 'vendor/handlebars'], (template, EventDetailView) ->
+#define ['text!views/timeline/events/branch/detail.handlebars?v=2', 'app/views/members/events/detail', 'vendor/handlebars'], (template, EventDetailView) ->
 
-  class BranchDetailView extends EventDetailView
+class App.view.BranchDetail extends App.view.EventDetail
 
-    renderDetail: =>
+  renderDetail: =>
 
-      this.addFeedbackView 'teller'
+    this.addFeedbackView 'teller'
 
-      this.addLocationFeedbackView 'branch',
-        commentFormTitle: "Care to tell us more about this branch?"
+    this.addLocationFeedbackView 'branch',
+      commentFormTitle: "Care to tell us more about this branch?"

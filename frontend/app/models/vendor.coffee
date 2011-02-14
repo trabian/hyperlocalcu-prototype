@@ -1,15 +1,14 @@
-define ['app/models/feedback_subject'], (FeedbackSubject) ->
+class App.model.Vendor extends App.model.FeedbackSubject
 
-  class Vendor extends FeedbackSubject
+  initialize: (options) ->
 
-    initialize: (options) ->
+    options.list_url = "/vendors/#{@id}/feedbacks"
 
-      options.list_url = "/vendors/#{@id}/feedbacks"
+    @meta = "Vendor ##{@id}"
 
-      @meta = "Vendor ##{@id}"
+    super(options)
 
-      super(options)
+  url: =>
+    "/vendors/#{@id}"
 
-    url: =>
-      "/vendors/#{@id}"
-
+App.model.FeedbackSubjectFactory.vendor = App.model.Vendor

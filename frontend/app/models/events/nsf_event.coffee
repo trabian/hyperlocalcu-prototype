@@ -1,10 +1,10 @@
-define ['app/models/event'], (Event) ->
+class App.model.NsfEvent extends App.model.Event
 
-  class NsfEvent extends Event
+  initialize: ->
 
-    initialize: ->
+    super()
 
-      super()
+    @description = "NSF Fee"
+    @className = "penalty"
 
-      @description = "NSF Fee"
-      @className = "penalty"
+App.model.EventFactory.nsf = App.model.NsfEvent

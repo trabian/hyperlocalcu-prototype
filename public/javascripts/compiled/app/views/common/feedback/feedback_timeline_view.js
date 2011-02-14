@@ -6,21 +6,18 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-define(["app/views/common/timeline/timeline_view", "app/views/common/feedback/timeline/row_factory"], function(TimelineView, FeedbackRowFactory) {
-  var FeedbackTimelineView;
-  return FeedbackTimelineView = (function() {
-    function FeedbackTimelineView() {
-      FeedbackTimelineView.__super__.constructor.apply(this, arguments);
-    }
-    __extends(FeedbackTimelineView, TimelineView);
-    FeedbackTimelineView.prototype.initialize = function(options) {
-      options.rowFactory = new FeedbackRowFactory;
-      FeedbackTimelineView.__super__.initialize.call(this, options);
-      return this.collection.bind('add', __bind(function(model) {
-        this.addOne(model, 'top');
-        return this.refreshTimestamps();
-      }, this));
-    };
-    return FeedbackTimelineView;
-  })();
-});
+App.view.FeedbackTimeline = (function() {
+  function FeedbackTimeline() {
+    FeedbackTimeline.__super__.constructor.apply(this, arguments);
+  }
+  __extends(FeedbackTimeline, App.view.Timeline);
+  FeedbackTimeline.prototype.initialize = function(options) {
+    options.rowFactory = new App.view.FeedbackRowFactory;
+    FeedbackTimeline.__super__.initialize.call(this, options);
+    return this.collection.bind('add', __bind(function(model) {
+      this.addOne(model, 'top');
+      return this.refreshTimestamps();
+    }, this));
+  };
+  return FeedbackTimeline;
+})();

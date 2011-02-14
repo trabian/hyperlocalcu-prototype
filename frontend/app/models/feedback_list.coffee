@@ -1,24 +1,22 @@
 # The collection of [events](event.html) is backed by a JSON store.
-define ['app/models/feedback', 'app/models/feedback_subject_factory'], (Feedback, FeedbackSubjectFactory) ->
+class App.model.FeedbackList extends Backbone.Collection
 
-  class FeedbackList extends Backbone.Collection
+  model: Feedback
 
-    model: Feedback
+  initialize: (collection, options) ->
+    @event = options.event
 
-    initialize: (collection, options) ->
-      @event = options.event
+  for_subject: (subject_key) =>
 
-    for_subject: (subject_key) =>
+    feedback = this.find (feedback) =>
+      feedback.get('subject_key') == subject_key
 
-      feedback = this.find (feedback) =>
-        feedback.get('subject_key') == subject_key
+    unless feedback?
+      feedback = new App.model.Feedback {
+          subject_key: subject_key
+        },
+        collection: this
 
-      unless feedback?
-        feedback = new Feedback {
-            subject_key: subject_key
-          },
-          collection: this
+    feedback.subject = App.model.FeedbackSubjectFactory.getSubject(@event.get(subject_key))
 
-      feedback.subject = FeedbackSubjectFactory.getSubject(@event.get(subject_key))
-
-      feedback
+    feedback

@@ -1,52 +1,49 @@
-define ['text!views/timeline/events/check/detail.handlebars?v=7', 'app/views/members/events/detail', 'app/views/common/feedback/comment_view', 'app/views/merchants/search_view', 'vendor/handlebars', 'vendor/jquery-colorbox'], (template, EventDetailView, CommentView, MerchantSearchView) ->
+class App.view.CheckDetail extends App.view.EventDetail
 
-  class CheckDetailView extends EventDetailView
+  initialize: ->
 
-    initialize: ->
+    mpq.push ["track", "View billpay offer"]
 
-      mpq.push ["track", "View billpay offer"]
+    @model.bind 'change:merchant', @render
 
-      @model.bind 'change:merchant', @render
+    super()
 
-      super()
+  eventTypeOptions:
 
-    eventTypeOptions:
+    events: 
+      "click .report-problems": 'toggleCheckCommentView'
 
-      events: 
-        "click .report-problems": 'toggleCheckCommentView'
+    template: Handlebars.compile(template)
 
-      template: Handlebars.compile(template)
+  toggleCheckCommentView: =>
+    if @checkCommentView? && @checkCommentView.isActive() then @checkCommentView.hide() else this.showCheckCommentView()
 
-    toggleCheckCommentView: =>
-      if @checkCommentView? && @checkCommentView.isActive() then @checkCommentView.hide() else this.showCheckCommentView()
+    return false
 
-      return false
+  renderDetail: =>
 
-    renderDetail: =>
+    this.$('.available-service li a').button()
 
-      this.$('.available-service li a').button()
+    this.$('.check-image a').colorbox()
 
-      this.$('.check-image a').colorbox()
+    this.addMerchantSearchView() unless @model.get('merchant')?
 
-      this.addMerchantSearchView() unless @model.get('merchant')?
+  showCheckCommentView: =>
 
-    showCheckCommentView: =>
-
-      if @checkCommentView?
-        @checkCommentView.show()
-      else
-        @checkCommentView = new CommentView
-          model: @model
-          commentField: 'check_image_comment'
-          title: 'Problems with the check image?'
-          buttonText: 'Report problem'
-
-        this.$('.check-image').append @checkCommentView.render().el
-
-    addMerchantSearchView: =>
-      @merchantSearchView = new MerchantSearchView
+    if @checkCommentView?
+      @checkCommentView.show()
+    else
+      @checkCommentView = new App.view.Comment
         model: @model
-        searchPrompt: "Search for merchant information:"
+        commentField: 'check_image_comment'
+        title: 'Problems with the check image?'
+        buttonText: 'Report problem'
 
-      this.$('#event-detail').prepend @merchantSearchView.render().el
+      this.$('.check-image').append @checkCommentView.render().el
 
+  addMerchantSearchView: =>
+    @merchantSearchView = new App.view.MerchantSearch
+      model: @model
+      searchPrompt: "Search for merchant information:"
+
+    this.$('#event-detail').prepend @merchantSearchView.render().el

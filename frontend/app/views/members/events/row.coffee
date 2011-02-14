@@ -1,48 +1,48 @@
-define ['text!views/timeline/events/row.handlebars?v=3', 'vendor/handlebars'], (template) ->
+#define ['text!views/timeline/events/row.handlebars?v=3', 'vendor/handlebars'], (template) ->
 
-  class EventRowView extends Backbone.View
+class App.view.EventRow extends Backbone.View
 
-    events:
-      click: "toggleSelectOne"
+  events:
+    click: "toggleSelectOne"
 
-    tagName: 'tr'
-    className: 'withdrawal'
+  tagName: 'tr'
+  className: 'withdrawal'
 
-    template: Handlebars.compile(template)
+  template: Handlebars.compile(template)
 
-    initialize: ->
+  initialize: ->
 
-      @model.bind 'change:selected', @changeSelection
+    @model.bind 'change:selected', @changeSelection
 
-      @model.bind 'change', @onChange
+    @model.bind 'change', @onChange
 
-      this.render()
+    this.render()
 
-    render: ->
+  render: ->
 
-      $(@el).html @template(@model.toViewJSON())
+    $(@el).html @template(@model.toViewJSON())
 
-      return this
+    return this
 
-    # Change the 'selected' class for the row without re-rendering.
-    changeSelection: =>
-      $(@el).toggleClass 'selected', @model.get('selected')
+  # Change the 'selected' class for the row without re-rendering.
+  changeSelection: =>
+    $(@el).toggleClass 'selected', @model.get('selected')
 
-    onChange: =>
+  onChange: =>
 
-      attributesToIgnore = ['selected']
+    attributesToIgnore = ['selected']
 
-      changedKeys = _.keys(@model.changedAttributes())
+    changedKeys = _.keys(@model.changedAttributes())
 
-      return if _.isEmpty(_.without(changedKeys, attributesToIgnore...))
+    return if _.isEmpty(_.without(changedKeys, attributesToIgnore...))
 
-      this.render()
+    this.render()
 
-    # If the model is selected, unselect it.  Otherwise if this view is
-    # part of a collection then select only this model (by deselecting 
-    # all others).  If it's not part of a collection then just select it.
-    toggleSelectOne: ->
-      if @collection?
-        @collection.toggleOrSelectOne @model
-      else
-        @model.toggleSelected()
+  # If the model is selected, unselect it.  Otherwise if this view is
+  # part of a collection then select only this model (by deselecting 
+  # all others).  If it's not part of a collection then just select it.
+  toggleSelectOne: ->
+    if @collection?
+      @collection.toggleOrSelectOne @model
+    else
+      @model.toggleSelected()

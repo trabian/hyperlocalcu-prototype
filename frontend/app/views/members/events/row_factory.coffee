@@ -1,12 +1,12 @@
-class MemberTimelineRowFactory
+class App.view.MemberTimelineRowFactory
 
   build: (event, collection) ->
 
     @row_views ||=
-      atm: AtmRow
-      statement: StatementRow
+      atm: App.view.AtmRow
+      statement: App.view.StatementRow
 
-    row_view_class = @row_views[event.get('event_type')] || EventRowView
+    row_view_class = @row_views[event.get('event_type')] || App.view.EventRow
 
     view = new row_view_class
       model: event

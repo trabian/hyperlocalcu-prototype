@@ -1,72 +1,72 @@
-define ["text!views/feedback/comment.handlebars?v=4"], (template) ->
+#define ["text!views/feedback/comment.handlebars?v=4"], (template) ->
 
-  class CommentView extends Backbone.View
+class App.view.Comment extends Backbone.View
 
-    tagName: 'div'
+  tagName: 'div'
 
-    className: 'comment'
+  className: 'comment'
 
-    events:
-      "click .cancel": "resetAndHide"
-      "keyup textarea": 'updateButton'
-      "click button": "submitComment"
+  events:
+    "click .cancel": "resetAndHide"
+    "keyup textarea": 'updateButton'
+    "click button": "submitComment"
 
-    initialize: (options) ->
-      @commentField = @options.commentField
+  initialize: (options) ->
+    @commentField = @options.commentField
 
-    template: Handlebars.compile(template)
+  template: Handlebars.compile(template)
 
-    render: =>
+  render: =>
 
-      $(@el).html @template(
-        comment: @model.get(@commentField)
-        title: @options.title
-        buttonText: @options.buttonText || 'Share'
-      )
+    $(@el).html @template(
+      comment: @model.get(@commentField)
+      title: @options.title
+      buttonText: @options.buttonText || 'Share'
+    )
 
-      this.$('button').button
-        icons:
-          primary: 'ui-icon-comment'
+    this.$('button').button
+      icons:
+        primary: 'ui-icon-comment'
 
-      this.updateButton()
+    this.updateButton()
 
-      return this
+    return this
 
-    updateButton: =>
-      if $.trim(this.$('textarea').val()).length > 0
-        this.$('button').button('enable')
-      else
-        this.$('button').button('disable')
+  updateButton: =>
+    if $.trim(this.$('textarea').val()).length > 0
+      this.$('button').button('enable')
+    else
+      this.$('button').button('disable')
 
-    show: =>
-      $(@el).show()
-      this.trigger('show')
+  show: =>
+    $(@el).show()
+    this.trigger('show')
 
-    hide: =>
-      $(@el).hide()
-      this.trigger('hide')
+  hide: =>
+    $(@el).hide()
+    this.trigger('hide')
 
-    isActive: =>
-      $(@el).is(":visible")
+  isActive: =>
+    $(@el).is(":visible")
 
-    resetAndHide: =>
-      this.$('textarea').val(@model.get(@commentField))
-      this.hide()
-      return false
+  resetAndHide: =>
+    this.$('textarea').val(@model.get(@commentField))
+    this.hide()
+    return false
 
-    submitComment: =>
-      unless this.$('button').button('option', 'disabled')
-        commentAttributes = {}
-        commentAttributes[@commentField] = this.$('textarea').val()
-        @model.save commentAttributes
-        this.showThanks()
+  submitComment: =>
+    unless this.$('button').button('option', 'disabled')
+      commentAttributes = {}
+      commentAttributes[@commentField] = this.$('textarea').val()
+      @model.save commentAttributes
+      this.showThanks()
 
-    showThanks: =>
-      this.hide()
-      parent = $(@el).parent()
-      parent.append('<p class="thanks">Thank you for your feedback!</p>')
+  showThanks: =>
+    this.hide()
+    parent = $(@el).parent()
+    parent.append('<p class="thanks">Thank you for your feedback!</p>')
 
-      hideThanks = =>
-        parent.find('.thanks').fadeOut()
+    hideThanks = =>
+      parent.find('.thanks').fadeOut()
 
-      _.delay hideThanks, 3000
+    _.delay hideThanks, 3000

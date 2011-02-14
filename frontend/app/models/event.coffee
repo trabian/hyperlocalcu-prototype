@@ -1,10 +1,10 @@
 # An Event is a timeline event such as a transaction or other non-transactional event to be presented on the timeline.
-class App.Event extends Backbone.Model
+class App.model.Event extends Backbone.Model
 
   initialize: ->
 
-    this.sync = CustomSync
-    this.member = window.member
+    this.sync = App.model.CustomSync
+    this.member = App.currentMember
 
     @updateFields = []
 

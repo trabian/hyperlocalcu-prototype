@@ -6,33 +6,30 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-define(["text!views/common/feedback/timeline/row.handlebars?v=3", "app/views/common/feedback/rating_view", 'vendor/handlebars'], function(template, RatingView) {
-  var FeedbackRowView;
-  return FeedbackRowView = (function() {
-    function FeedbackRowView() {
-      FeedbackRowView.__super__.constructor.apply(this, arguments);
-    }
-    __extends(FeedbackRowView, Backbone.View);
-    FeedbackRowView.prototype.tagName = 'tr';
-    FeedbackRowView.prototype.className = 'feedback';
-    FeedbackRowView.prototype.template = Handlebars.compile(template);
-    FeedbackRowView.prototype.initialize = function() {
-      this.model.bind('change', __bind(function() {
-        return this.render();
-      }, this));
+App.view.FeedbackRow = (function() {
+  function FeedbackRow() {
+    FeedbackRow.__super__.constructor.apply(this, arguments);
+  }
+  __extends(FeedbackRow, Backbone.View);
+  FeedbackRow.prototype.tagName = 'tr';
+  FeedbackRow.prototype.className = 'feedback';
+  FeedbackRow.prototype.template = Handlebars.compile(template);
+  FeedbackRow.prototype.initialize = function() {
+    this.model.bind('change', __bind(function() {
       return this.render();
-    };
-    FeedbackRowView.prototype.render = function() {
-      var ratingView;
-      $(this.el).html(this.template(this.model.toViewJSON()));
-      ratingView = new RatingView({
-        model: this.model,
-        rating: this.model.get('rating'),
-        readOnly: true
-      });
-      this.$('.rating').append(ratingView.render().el);
-      return this;
-    };
-    return FeedbackRowView;
-  })();
-});
+    }, this));
+    return this.render();
+  };
+  FeedbackRow.prototype.render = function() {
+    var ratingView;
+    $(this.el).html(this.template(this.model.toViewJSON()));
+    ratingView = new App.view.Rating({
+      model: this.model,
+      rating: this.model.get('rating'),
+      readOnly: true
+    });
+    this.$('.rating').append(ratingView.render().el);
+    return this;
+  };
+  return FeedbackRow;
+})();

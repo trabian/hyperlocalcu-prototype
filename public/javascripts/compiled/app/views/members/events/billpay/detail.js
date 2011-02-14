@@ -6,21 +6,18 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(['text!views/timeline/events/billpay/detail.handlebars?v=2', 'app/views/members/events/detail', 'vendor/handlebars'], function(template, EventDetailView) {
-  var BillpayDetailView;
-  return BillpayDetailView = (function() {
-    function BillpayDetailView() {
-      this.renderDetail = __bind(this.renderDetail, this);;      BillpayDetailView.__super__.constructor.apply(this, arguments);
+App.view.BillpayDetail = (function() {
+  function BillpayDetail() {
+    this.renderDetail = __bind(this.renderDetail, this);;    BillpayDetail.__super__.constructor.apply(this, arguments);
+  }
+  __extends(BillpayDetail, App.view.EventDetail);
+  BillpayDetail.prototype.eventTypeOptions = {
+    template: Handlebars.compile(template)
+  };
+  BillpayDetail.prototype.renderDetail = function() {
+    if (this.model.get('vendor') != null) {
+      return this.addFeedbackView('vendor');
     }
-    __extends(BillpayDetailView, EventDetailView);
-    BillpayDetailView.prototype.eventTypeOptions = {
-      template: Handlebars.compile(template)
-    };
-    BillpayDetailView.prototype.renderDetail = function() {
-      if (this.model.get('vendor') != null) {
-        return this.addFeedbackView('vendor');
-      }
-    };
-    return BillpayDetailView;
-  })();
-});
+  };
+  return BillpayDetail;
+})();

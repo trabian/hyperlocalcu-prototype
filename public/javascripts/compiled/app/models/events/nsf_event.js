@@ -6,18 +6,16 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 };
-define(['app/models/event'], function(Event) {
-  var NsfEvent;
-  return NsfEvent = (function() {
-    function NsfEvent() {
-      NsfEvent.__super__.constructor.apply(this, arguments);
-    }
-    __extends(NsfEvent, Event);
-    NsfEvent.prototype.initialize = function() {
-      NsfEvent.__super__.initialize.call(this);
-      this.description = "NSF Fee";
-      return this.className = "penalty";
-    };
-    return NsfEvent;
-  })();
-});
+App.model.NsfEvent = (function() {
+  function NsfEvent() {
+    NsfEvent.__super__.constructor.apply(this, arguments);
+  }
+  __extends(NsfEvent, App.model.Event);
+  NsfEvent.prototype.initialize = function() {
+    NsfEvent.__super__.initialize.call(this);
+    this.description = "NSF Fee";
+    return this.className = "penalty";
+  };
+  return NsfEvent;
+})();
+App.model.EventFactory.nsf = App.model.NsfEvent;

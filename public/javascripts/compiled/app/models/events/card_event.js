@@ -6,26 +6,24 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-define(['app/models/events/merchant_event'], function(MerchantEvent) {
-  var CardEvent;
-  return CardEvent = (function() {
-    function CardEvent() {
-      CardEvent.__super__.constructor.apply(this, arguments);
+App.model.CardEvent = (function() {
+  function CardEvent() {
+    CardEvent.__super__.constructor.apply(this, arguments);
+  }
+  __extends(CardEvent, App.model.MerchantEvent);
+  CardEvent.prototype.initialize = function() {
+    var name;
+    CardEvent.__super__.initialize.call(this);
+    name = this.get('name');
+    if (this.merchant != null) {
+      this.meta = name;
+    } else {
+      this.description = name;
     }
-    __extends(CardEvent, MerchantEvent);
-    CardEvent.prototype.initialize = function() {
-      var name;
-      CardEvent.__super__.initialize.call(this);
-      name = this.get('name');
-      if (this.merchant != null) {
-        this.meta = name;
-      } else {
-        this.description = name;
-      }
-      return this.bind('change:merchant', __bind(function() {
-        return this.meta = name;
-      }, this));
-    };
-    return CardEvent;
-  })();
-});
+    return this.bind('change:merchant', __bind(function() {
+      return this.meta = name;
+    }, this));
+  };
+  return CardEvent;
+})();
+App.model.EventFactory.card = App.model.CardEvent;

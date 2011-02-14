@@ -6,7 +6,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-App.Member = (function() {
+App.model.Member = (function() {
   function Member() {
     this.cityState = __bind(this.cityState, this);;    Member.__super__.constructor.apply(this, arguments);
   }

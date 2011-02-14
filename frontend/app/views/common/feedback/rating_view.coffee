@@ -1,147 +1,144 @@
-define ['app/views/common/feedback/comment_view'], (CommentView) ->
+class App.view.Rating extends Backbone.View
 
-  class RatingView extends Backbone.View
+  tagName: 'div'
 
-    tagName: 'div'
+  className: 'rating'
 
-    className: 'rating'
+  events:
+    'click .cancel': 'resetRating'
+    'click .commentLink': 'toggleCommentForm'
 
-    events:
-      'click .cancel': 'resetRating'
-      'click .commentLink': 'toggleCommentForm'
+  initialize: (options) ->
+    options.commentField = 'comment'
 
-    initialize: (options) ->
-      options.commentField = 'comment'
+  render: ->
 
-    render: ->
+    @rating = @options.rating || @model.get('rating') || 0
 
-      @rating = @options.rating || @model.get('rating') || 0
+    @readOnly = (@options.readOnly == true)
 
-      @readOnly = (@options.readOnly == true)
+    this.addCancel() unless @readOnly
 
-      this.addCancel() unless @readOnly
+    for num in [1..5]
+      this.addStar num, (num <= @rating), @readOnly
 
-      for num in [1..5]
-        this.addStar num, (num <= @rating), @readOnly
-
-      unless @readOnly
-        commentLink = this.make "a", {
-          href: '#'
-          className: 'commentLink'
-        }, 'comment'
-
-        $(@el).append commentLink
-
-        if @model.get(@options.commentField)
-          this.$('.commentLink').addClass('active')
-
-        $(@el).addClass('rated active') if @rating > 0
-
-      else
-        $(@el).addClass('readonly active')
-
-      this
-
-    imagePath: (name)->
-      "/images/ratings/#{name}.png"
-
-    addCancel: =>
-
-      cancel = this.make "a", {
+    unless @readOnly
+      commentLink = this.make "a", {
         href: '#'
-        className: 'cancel'
-      }, 'cancel'
+        className: 'commentLink'
+      }, 'comment'
 
-      $(@el).append cancel
+      $(@el).append commentLink
 
-    resetRating: =>
+      if @model.get(@options.commentField)
+        this.$('.commentLink').addClass('active')
 
-      this.updateRating 0
+      $(@el).addClass('rated active') if @rating > 0
 
-      @currentStar = null
+    else
+      $(@el).addClass('readonly active')
 
-      $(@el).removeClass 'rated'
+    this
 
-      this.fillStar()
+  imagePath: (name)->
+    "/images/ratings/#{name}.png"
 
-      false
+  addCancel: =>
 
-    updateRating: (num) =>
+    cancel = this.make "a", {
+      href: '#'
+      className: 'cancel'
+    }, 'cancel'
 
-      @model.save 'rating': num
+    $(@el).append cancel
 
-    addStar: (num, starOn, readOnly)=>
+  resetRating: =>
 
-      starTag = if readOnly then "span" else "a"
+    this.updateRating 0
 
-      star = this.make starTag, {
-        className: "star#{if starOn then ' on' else ''}"
-      }, num
+    @currentStar = null
 
-      @currentStar = star if starOn
+    $(@el).removeClass 'rated'
 
-      unless readOnly
+    this.fillStar()
 
-        $(star).attr('href', '#')
+    false
 
-        $(star).bind 'mouseenter', =>
-          this.fillStar(star)
+  updateRating: (num) =>
 
-        $(star).bind 'mouseleave', =>
-          this.fillStar(@currentStar)
+    @model.save 'rating': num
 
-        $(star).bind 'click', =>
+  addStar: (num, starOn, readOnly)=>
 
-          this.updateRating num
+    starTag = if readOnly then "span" else "a"
 
-          @currentStar = star
+    star = this.make starTag, {
+      className: "star#{if starOn then ' on' else ''}"
+    }, num
 
-          this.fillStar(@currentStar)
+    @currentStar = star if starOn
 
-          this.showCommentForm()
+    unless readOnly
 
-          $(@el).addClass 'rated'
+      $(star).attr('href', '#')
 
-          false
+      $(star).bind 'mouseenter', =>
+        this.fillStar(star)
 
-      $(@el).append star
+      $(star).bind 'mouseleave', =>
+        this.fillStar(@currentStar)
 
-    fillStar: (star) =>
+      $(star).bind 'click', =>
 
-      if star?
-        $(star).prevAll().andSelf().addClass 'on'
-        $(star).nextAll().removeClass 'on'
-        $(@el).addClass 'active'
-      else
-        this.$('.star').removeClass 'on'
-        $(@el).removeClass 'active'
+        this.updateRating num
 
-    toggleCommentForm: =>
+        @currentStar = star
 
-      if @commentView? && @commentView.isActive() then @commentView?.hide() else this.showCommentForm()
-      return false
+        this.fillStar(@currentStar)
 
-    showCommentForm: =>
+        this.showCommentForm()
 
-      $(@el).addClass('active')
+        $(@el).addClass 'rated'
 
-      if @commentView?
-        @commentView.show()
-      else
-        @commentView = new CommentView
-          model: @model
-          commentField: @options.commentField
-          title: @options.commentFormTitle
+        false
 
-        @commentView.bind 'show', =>
-          this.$('.commentLink').addClass('active')
-          this.trigger('expand')
+    $(@el).append star
 
-        @commentView.bind 'hide', =>
-          this.$('.commentLink').removeClass('active') unless @model.get(@options.commentField)?
-          this.trigger('collapse')
+  fillStar: (star) =>
 
-        @options.commentParent.append @commentView.render().el
+    if star?
+      $(star).prevAll().andSelf().addClass 'on'
+      $(star).nextAll().removeClass 'on'
+      $(@el).addClass 'active'
+    else
+      this.$('.star').removeClass 'on'
+      $(@el).removeClass 'active'
 
-        @commentView.trigger 'show'
+  toggleCommentForm: =>
 
+    if @commentView? && @commentView.isActive() then @commentView?.hide() else this.showCommentForm()
+    return false
+
+  showCommentForm: =>
+
+    $(@el).addClass('active')
+
+    if @commentView?
+      @commentView.show()
+    else
+      @commentView = new App.view.Comment
+        model: @model
+        commentField: @options.commentField
+        title: @options.commentFormTitle
+
+      @commentView.bind 'show', =>
+        this.$('.commentLink').addClass('active')
+        this.trigger('expand')
+
+      @commentView.bind 'hide', =>
+        this.$('.commentLink').removeClass('active') unless @model.get(@options.commentField)?
+        this.trigger('collapse')
+
+      @options.commentParent.append @commentView.render().el
+
+      @commentView.trigger 'show'

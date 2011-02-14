@@ -1,4 +1,4 @@
-class Branch extends FeedbackSubject
+class App.model.Branch extends App.model.FeedbackSubject
 
   initialize: (options) ->
 
@@ -11,4 +11,4 @@ class Branch extends FeedbackSubject
   url: =>
     "/branches/#{@id}"
 
-EventFactory.branch = BranchEvent
+App.model.FeedbackSubjectFactory.branch = App.model.Branch

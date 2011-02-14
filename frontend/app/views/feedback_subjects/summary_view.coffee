@@ -1,14 +1,12 @@
-define ['app/models/feedback_list'], (FeedbackList) ->
+class App.view.FeedbackSummary extends Backbone.View
 
-  class FeedbackSummaryView extends Backbone.View
+  initialize: (options) ->
+    @collection = new FeedbackList
 
-    initialize: (options) ->
-      @collection = new FeedbackList
+  render: =>
 
-    render: =>
+    alert @collection.length
 
-      alert @collection.length
+    $(@el).html '<div>summary</div>'
 
-      $(@el).html '<div>summary</div>'
-
-      this
+    this

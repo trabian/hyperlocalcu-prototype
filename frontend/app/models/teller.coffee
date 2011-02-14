@@ -1,14 +1,14 @@
-define ['app/models/feedback_subject'], (FeedbackSubject) ->
+class App.model.Teller extends App.model.FeedbackSubject
 
-  class Teller extends FeedbackSubject
+  initialize: (options) ->
 
-    initialize: (options) ->
+    options.list_url = "/tellers/#{@id}/feedbacks"
 
-      options.list_url = "/tellers/#{@id}/feedbacks"
+    @meta = "Teller ##{@id}"
 
-      @meta = "Teller ##{@id}"
+    super(options)
 
-      super(options)
+  url: =>
+    "/tellers/#{@id}"
 
-    url: =>
-      "/tellers/#{@id}"
+App.model.FeedbackSubjectFactory.teller = App.model.Teller
