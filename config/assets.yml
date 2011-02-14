@@ -1,0 +1,13 @@
+javascripts:
+  common:
+    - public/javascripts/compiled/vendor/jquery-1.5.js
+    - public/javascripts/compiled/vendor/underscore.js
+    - public/javascripts/compiled/vendor/*.js
+  timeline:
+    - public/javascripts/compiled/app/base.js
+    - public/javascripts/compiled/app/models/feedback_subject.js
+    - public/javascripts/compiled/app/models/timeline_event.js
+    - public/javascripts/compiled/app/models/event_factory.js
+    - public/javascripts/compiled/app/models/events/cu_event.js
+    - public/javascripts/compiled/app/models/events/*.js
+    - public/javascripts/compiled/app/**/*.js
