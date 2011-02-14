@@ -8,7 +8,7 @@ class EventsController < ApplicationController
 
   belongs_to :account
 
-  has_scope :ordered, :type => :boolean, :default => true
+  has_scope :ordered_with_limit, :type => :boolean, :default => true
 
   def add_merchant
 

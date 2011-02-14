@@ -17,7 +17,9 @@ define(['text!views/timeline/events/billpay/detail.handlebars?v=2', 'app/views/m
       template: Handlebars.compile(template)
     };
     BillpayDetailView.prototype.renderDetail = function() {
-      return this.addFeedbackView('vendor');
+      if (this.model.get('vendor') != null) {
+        return this.addFeedbackView('vendor');
+      }
     };
     return BillpayDetailView;
   })();

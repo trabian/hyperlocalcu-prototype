@@ -48,7 +48,7 @@ define ["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
         @header.addClass('deposit')
 
       if @model.get('merchant')?
-        this.addMerchantFeedbackView()
+        this.addLocationFeedbackView('merchant')
 
       this.show()
 
@@ -91,23 +91,26 @@ define ["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
 
       $(@el).empty().hide()
 
-    addMerchantFeedbackView: =>
+    addLocationFeedbackView: (field, options) =>
 
-      feedback = @model.feedbacks.for_subject('merchant')
+      feedback = @model.feedbacks.for_subject(field)
 
       if feedback?
 
-        @merchantDetails = @detail.find('.address')
+        @addressEl = @detail.find('.address')
 
-        @merchantRatingView = new RatingView
+        ratingViewOptions = _.extend
           model: feedback
-          commentParent: @merchantDetails
+          commentParent: @addressEl
           commentFormTitle: "Care to elaborate?"
+        , options
 
-        @merchantRatingView.bind 'expand', @resize
-        @merchantRatingView.bind 'collapse', @resize
+        @locationRatingView = new RatingView ratingViewOptions
 
-        @merchantDetails.append @merchantRatingView.render().el
+        @locationRatingView.bind 'expand', @resize
+        @locationRatingView.bind 'collapse', @resize
+
+        @addressEl.append @locationRatingView.render().el
 
     addFeedbackView: (subject_types...) =>
       _.each subject_types, (subject_type) =>

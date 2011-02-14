@@ -6,7 +6,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(["app/controllers/common/timeline_controller", "app/views/members/member_timeline", "app/views/members/events/detail", "app/views/members/events/billpay/detail", "app/views/members/events/branch/detail", "app/views/members/events/card/detail", "app/views/members/events/check/detail"], function(TimelineController, MemberTimeline, EventDetailView, BillpayDetailView, BranchDetailView, CardDetailView, CheckDetailView) {
+define(["app/controllers/common/timeline_controller", "app/views/members/member_timeline", "app/views/members/events/detail", "app/views/members/events/atm/detail", "app/views/members/events/billpay/detail", "app/views/members/events/branch/detail", "app/views/members/events/card/detail", "app/views/members/events/check/detail"], function(TimelineController, MemberTimeline, EventDetailView, AtmDetailView, BillpayDetailView, BranchDetailView, CardDetailView, CheckDetailView) {
   var MemberTimelineController;
   return MemberTimelineController = (function() {
     function MemberTimelineController() {
@@ -25,6 +25,7 @@ define(["app/controllers/common/timeline_controller", "app/views/members/member_
     MemberTimelineController.prototype.showEventDetail = function(event) {
       var detail_view_class;
       this.detail_views || (this.detail_views = {
+        atm: AtmDetailView,
         branch: BranchDetailView,
         billpay: BillpayDetailView,
         card: CardDetailView,

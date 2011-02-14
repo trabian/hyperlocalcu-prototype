@@ -14,7 +14,10 @@ define(['text!views/timeline/events/branch/detail.handlebars?v=2', 'app/views/me
     }
     __extends(BranchDetailView, EventDetailView);
     BranchDetailView.prototype.renderDetail = function() {
-      return this.addFeedbackView('teller');
+      this.addFeedbackView('teller');
+      return this.addLocationFeedbackView('branch', {
+        commentFormTitle: "Care to tell us more about this branch?"
+      });
     };
     return BranchDetailView;
   })();

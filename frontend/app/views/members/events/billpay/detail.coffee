@@ -6,5 +6,6 @@ define ['text!views/timeline/events/billpay/detail.handlebars?v=2', 'app/views/m
       template: Handlebars.compile(template)
 
     renderDetail: =>
-      this.addFeedbackView 'vendor'
+      if @model.get('vendor')?
+        this.addFeedbackView 'vendor'
 

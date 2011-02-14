@@ -11,7 +11,7 @@ define(["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
   return EventDetailView = (function() {
     function EventDetailView() {
       this.addFeedbackView = __bind(this.addFeedbackView, this);;
-      this.addMerchantFeedbackView = __bind(this.addMerchantFeedbackView, this);;
+      this.addLocationFeedbackView = __bind(this.addLocationFeedbackView, this);;
       this.resize = __bind(this.resize, this);;
       this.render = __bind(this.render, this);;
       this.close = __bind(this.close, this);;      EventDetailView.__super__.constructor.apply(this, arguments);
@@ -62,7 +62,7 @@ define(["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
         this.header.addClass('deposit');
       }
       if (this.model.get('merchant') != null) {
-        this.addMerchantFeedbackView();
+        this.addLocationFeedbackView('merchant');
       }
       this.show();
       this.wrapper.jScrollPane();
@@ -95,19 +95,20 @@ define(["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
       this.trigger('hide');
       return $(this.el).empty().hide();
     };
-    EventDetailView.prototype.addMerchantFeedbackView = function() {
-      var feedback;
-      feedback = this.model.feedbacks.for_subject('merchant');
+    EventDetailView.prototype.addLocationFeedbackView = function(field, options) {
+      var feedback, ratingViewOptions;
+      feedback = this.model.feedbacks.for_subject(field);
       if (feedback != null) {
-        this.merchantDetails = this.detail.find('.address');
-        this.merchantRatingView = new RatingView({
+        this.addressEl = this.detail.find('.address');
+        ratingViewOptions = _.extend({
           model: feedback,
-          commentParent: this.merchantDetails,
+          commentParent: this.addressEl,
           commentFormTitle: "Care to elaborate?"
-        });
-        this.merchantRatingView.bind('expand', this.resize);
-        this.merchantRatingView.bind('collapse', this.resize);
-        return this.merchantDetails.append(this.merchantRatingView.render().el);
+        }, options);
+        this.locationRatingView = new RatingView(ratingViewOptions);
+        this.locationRatingView.bind('expand', this.resize);
+        this.locationRatingView.bind('collapse', this.resize);
+        return this.addressEl.append(this.locationRatingView.render().el);
       }
     };
     EventDetailView.prototype.addFeedbackView = function() {

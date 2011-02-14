@@ -1,16 +1,14 @@
 Hyperlocalcu::Application.routes.draw do
 
-  resources :feedbacks
-
   resources :members
 
-  resources :vendors
-
-  devise_for :users
-
+  resources :feedbacks
+  
+  resources :atms
+  resources :branches
   resources :merchants
-
   resources :tellers
+  resources :vendors
 
   resources :events do
     resources :feedbacks
@@ -31,6 +29,8 @@ Hyperlocalcu::Application.routes.draw do
     end
 
   end
+
+  devise_for :users
 
   root :to => "events#index", :account_id => 1
 
