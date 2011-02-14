@@ -6,7 +6,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(['app/lib/models/custom_sync', 'app/models/feedback', 'app/models/feedback_list', 'vendor/jquery-ui', 'vendor/jquery-currency'], function(CustomSync, Feedback, FeedbackList) {
+define(['order!app/lib/models/custom_sync', 'order!app/models/feedback', 'app/models/feedback_list', 'vendor/jquery-ui', 'vendor/jquery-currency'], function(CustomSync, Feedback, FeedbackList) {
   var Event;
   return Event = (function() {
     function Event() {

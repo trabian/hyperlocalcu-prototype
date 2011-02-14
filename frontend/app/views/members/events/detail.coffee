@@ -1,4 +1,4 @@
-define ["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "app/views/common/feedback/rating_view", "vendor/handlebars", "vendor/jquery-mousewheel", "vendor/jquery-jscrollpane"], (template, SocialView, FeedbackView, RatingView) ->
+define ["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "app/views/common/feedback/rating_view", "app/views/feedback_subjects/summary_view", "vendor/handlebars", "vendor/jquery-mousewheel", "vendor/jquery-jscrollpane"], (template, SocialView, FeedbackView, RatingView, FeedbackSummaryView) ->
 
   class EventDetailView extends Backbone.View
 
@@ -49,7 +49,8 @@ define ["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
         @header.addClass('deposit')
 
       if @model.get('merchant')?
-        this.addLocationFeedbackView('merchant')
+        this.addLocationFeedbackView 'merchant',
+          include_summary_view: true
 
       this.show()
 
@@ -117,6 +118,10 @@ define ["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
         @locationRatingView.bind 'collapse', @resize
 
         @addressEl.append @locationRatingView.render().el
+
+        @feedbackSummaryView = new FeedbackSummaryView
+
+        @addressEl.append @feedbackSummaryView.render().el
 
     addFeedbackView: (subject_types...) =>
       _.each subject_types, (subject_type) =>

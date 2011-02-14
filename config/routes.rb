@@ -6,7 +6,11 @@ Hyperlocalcu::Application.routes.draw do
   
   resources :atms
   resources :branches
-  resources :merchants
+
+  resources :merchants do
+    resources :feedbacks
+  end
+
   resources :tellers
   resources :vendors
 

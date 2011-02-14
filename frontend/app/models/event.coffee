@@ -1,5 +1,5 @@
 # An Event is a timeline event such as a transaction or other non-transactional event to be presented on the timeline.
-define ['app/lib/models/custom_sync', 'app/models/feedback', 'app/models/feedback_list', 'vendor/jquery-ui', 'vendor/jquery-currency'], (CustomSync, Feedback, FeedbackList) ->
+define ['order!app/lib/models/custom_sync', 'order!app/models/feedback', 'app/models/feedback_list', 'vendor/jquery-ui', 'vendor/jquery-currency'], (CustomSync, Feedback, FeedbackList) ->
 
   class Event extends Backbone.Model
 

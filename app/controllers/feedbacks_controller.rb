@@ -4,7 +4,9 @@ class FeedbacksController < ApplicationController
 
   respond_to :json, :html
 
-  belongs_to :event
+  belongs_to :event, :merchant, :optional => true
+
+  has_scope :from_other_members
 
 protected
 

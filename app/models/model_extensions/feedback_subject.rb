@@ -8,7 +8,7 @@ module ModelExtensions
 
     included do
 
-      has_many :feedbacks, :as => :subject, :order => 'created_at DESC'
+      has_many :feedbacks, :as => :subject, :order => 'feedbacks.created_at DESC'
 
     end
 

@@ -6,7 +6,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 }, __slice = Array.prototype.slice;
-define(["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "app/views/common/feedback/rating_view", "vendor/handlebars", "vendor/jquery-mousewheel", "vendor/jquery-jscrollpane"], function(template, SocialView, FeedbackView, RatingView) {
+define(["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "app/views/common/feedback/rating_view", "app/views/feedback_subjects/summary_view", "vendor/handlebars", "vendor/jquery-mousewheel", "vendor/jquery-jscrollpane"], function(template, SocialView, FeedbackView, RatingView, FeedbackSummaryView) {
   var EventDetailView;
   return EventDetailView = (function() {
     function EventDetailView() {
@@ -63,7 +63,9 @@ define(["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
         this.header.addClass('deposit');
       }
       if (this.model.get('merchant') != null) {
-        this.addLocationFeedbackView('merchant');
+        this.addLocationFeedbackView('merchant', {
+          include_summary_view: true
+        });
       }
       this.show();
       this.wrapper.jScrollPane();
@@ -113,7 +115,9 @@ define(["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
         this.locationRatingView = new RatingView(ratingViewOptions);
         this.locationRatingView.bind('expand', this.resize);
         this.locationRatingView.bind('collapse', this.resize);
-        return this.addressEl.append(this.locationRatingView.render().el);
+        this.addressEl.append(this.locationRatingView.render().el);
+        this.feedbackSummaryView = new FeedbackSummaryView;
+        return this.addressEl.append(this.feedbackSummaryView.render().el);
       }
     };
     EventDetailView.prototype.addFeedbackView = function() {
