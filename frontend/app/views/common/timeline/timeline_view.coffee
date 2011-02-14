@@ -1,46 +1,44 @@
-define ->
+class TimelineView extends Backbone.View
 
-  class TimelineView extends Backbone.View
+  el: $('#timeline tbody')
 
-    el: $('#timeline tbody')
+  initialize: (options) ->
 
-    initialize: (options) ->
+    @collection.bind 'refresh', @addAll
 
-      @collection.bind 'refresh', @addAll
+    unless @collection.isEmpty()
+      this.addAll()
 
-      unless @collection.isEmpty()
-        this.addAll()
+    @collection.trigger 'load'
 
-      @collection.trigger 'load'
+  addAll: =>
+    @collection.each @addOne
 
-    addAll: =>
-      @collection.each @addOne
+  addOne: (model, position) =>
 
-    addOne: (model, position) =>
+    view = @options.rowFactory.build model, @collection
 
-      view = @options.rowFactory.build model, @collection
+    rendered = view.render().el
 
-      rendered = view.render().el
+    if position == 'top'
+      $(@el).prepend rendered
+    else
+      $(@el).append rendered
 
-      if position == 'top'
-        $(@el).prepend rendered
+    this.addTimestampClass view, model
+
+  refreshTimestamps: =>
+    previousDay = null
+    this.$('tr').each (index, row) =>
+      day = $(row).find('>td:first-child').text()
+      if day is previousDay
+        $(row).addClass('repeat-date')
       else
-        $(@el).append rendered
+        $(row).removeClass('repeat-date')
+      previousDay = day
 
-      this.addTimestampClass view, model
-
-    refreshTimestamps: =>
-      previousDay = null
-      this.$('tr').each (index, row) =>
-        day = $(row).find('>td:first-child').text()
-        if day is previousDay
-          $(row).addClass('repeat-date')
-        else
-          $(row).removeClass('repeat-date')
-        previousDay = day
-
-    # Add a "repeat-date' class to rows whose preceding row had the same timestamp.
-    # This allows us to hide them in order to clean up the interface.
-    addTimestampClass: (view, event) ->
-      $(view.el).addClass('repeat-date') if event.day() is @lastEventDay
-      @lastEventDay = event.day()
+  # Add a "repeat-date' class to rows whose preceding row had the same timestamp.
+  # This allows us to hide them in order to clean up the interface.
+  addTimestampClass: (view, event) ->
+    $(view.el).addClass('repeat-date') if event.day() is @lastEventDay
+    @lastEventDay = event.day()

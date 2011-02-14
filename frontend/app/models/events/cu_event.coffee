@@ -1,18 +1,16 @@
-define ['app/models/event'], (Event) ->
+class App.CUEvent extends App.Event
 
-  class CUEvent extends Event
+  initialize: ->
 
-    initialize: ->
+    super()
 
-      super()
+    @twitter_username = 'VantageCU'
+    @avatar = "http://a2.twimg.com/profile_images/447377254/Van_Small_normal.jpg"
 
-      @twitter_username = 'VantageCU'
-      @avatar = "http://a2.twimg.com/profile_images/447377254/Van_Small_normal.jpg"
+  isSocial: ->
+    true
 
-    isSocial: ->
-      true
-
-    toDetailJSON: ->
-      _.extend this.toViewJSON(),
-        twitter_username: @twitter_username
-        avatar: @avatar
+  toDetailJSON: ->
+    _.extend this.toViewJSON(),
+      twitter_username: @twitter_username
+      avatar: @avatar

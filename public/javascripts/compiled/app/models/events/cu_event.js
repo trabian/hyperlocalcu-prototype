@@ -6,27 +6,24 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 };
-define(['app/models/event'], function(Event) {
-  var CUEvent;
-  return CUEvent = (function() {
-    function CUEvent() {
-      CUEvent.__super__.constructor.apply(this, arguments);
-    }
-    __extends(CUEvent, Event);
-    CUEvent.prototype.initialize = function() {
-      CUEvent.__super__.initialize.call(this);
-      this.twitter_username = 'VantageCU';
-      return this.avatar = "http://a2.twimg.com/profile_images/447377254/Van_Small_normal.jpg";
-    };
-    CUEvent.prototype.isSocial = function() {
-      return true;
-    };
-    CUEvent.prototype.toDetailJSON = function() {
-      return _.extend(this.toViewJSON(), {
-        twitter_username: this.twitter_username,
-        avatar: this.avatar
-      });
-    };
-    return CUEvent;
-  })();
-});
+App.CUEvent = (function() {
+  function CUEvent() {
+    CUEvent.__super__.constructor.apply(this, arguments);
+  }
+  __extends(CUEvent, App.Event);
+  CUEvent.prototype.initialize = function() {
+    CUEvent.__super__.initialize.call(this);
+    this.twitter_username = 'VantageCU';
+    return this.avatar = "http://a2.twimg.com/profile_images/447377254/Van_Small_normal.jpg";
+  };
+  CUEvent.prototype.isSocial = function() {
+    return true;
+  };
+  CUEvent.prototype.toDetailJSON = function() {
+    return _.extend(this.toViewJSON(), {
+      twitter_username: this.twitter_username,
+      avatar: this.avatar
+    });
+  };
+  return CUEvent;
+})();

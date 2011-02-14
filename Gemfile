@@ -18,6 +18,8 @@ gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git', :ref => 'e
 
 gem 'pusher', '0.7.0'
 
+gem 'jammit'
+
 group :development, :test do
 
   gem 'qif'

@@ -1,18 +1,15 @@
-define ["http://js.pusherapp.com/1.6/pusher.min.js"], (pusher) ->
+#define ["http://js.pusherapp.com/1.6/pusher.min.js"], (pusher) ->
 
-  class Socket
+class App.lib.Socket
 
-    listenTo: (model) =>
+  listenTo: (model) =>
 
-      @pusher or= new Pusher(PUSHER_KEY)
+    @pusher or= new Pusher(PUSHER_KEY)
 
-      channel = @pusher.subscribe this.channelName(model)
+    channel = @pusher.subscribe this.channelName(model)
 
-      channel.bind_all (event, data) =>
-        model.trigger event, data
+    channel.bind_all (event, data) =>
+      model.trigger event, data
 
-    channelName: (model) =>
-      model.url().replace(/^\//, '').replace(/\//, '_')
-
-  new Socket
-
+  channelName: (model) =>
+    model.url().replace(/^\//, '').replace(/\//, '_')

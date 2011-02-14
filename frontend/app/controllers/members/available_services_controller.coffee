@@ -1,16 +1,14 @@
-define ["app/views/members/billpay_signup_view"], (BillpaySignupView) ->
+class App.controller.AvailableServices extends Backbone.Controller
 
-  class AvailableServicesController extends Backbone.Controller
+  intialize: (options) ->
 
-    intialize: (options) ->
+  routes:
+    "billpay/signup": 'signupForBillpay'
+    "billpay/no": 'rejectBillpay'
 
-    routes:
-      "billpay/signup": 'signupForBillpay'
-      "billpay/no": 'rejectBillpay'
+  signupForBillpay: =>
+    @billpaySignupView or= new App.BillpaySignupView
+    @billpaySignupView.render()
 
-    signupForBillpay: =>
-      @billpaySignupView or= new BillpaySignupView
-      @billpaySignupView.render()
-
-    rejectBillpay: =>
-      $('.available-service.billpay').hide()
+  rejectBillpay: =>
+    $('.available-service.billpay').hide()
