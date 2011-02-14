@@ -32,7 +32,7 @@ define(["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
       });
     };
     EventDetailView.prototype.render = function() {
-      var detailJSON;
+      var detailJSON, shim;
       mpq.push([
         "track", "View event detail", {
           event_type: this.model.get('event_type'),
@@ -47,6 +47,7 @@ define(["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
       this.wrapper = this.$('#event-detail-wrapper');
       this.footer = this.$('#event-footer');
       if (this.model.isSocial()) {
+        this.footer.show();
         this.socialView = new SocialView({
           model: this.model
         });
@@ -67,7 +68,11 @@ define(["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
       this.show();
       this.wrapper.jScrollPane();
       this.scroll = this.wrapper.data('jsp');
-      this.heightOffset = parseInt($(this.el).css('top')) + this.header.height() + 130;
+      shim = 45;
+      if (this.footer.is(':visible')) {
+        shim = shim + this.footer.innerHeight();
+      }
+      this.heightOffset = parseInt($(this.el).css('top')) + this.header.height() + shim;
       $(window).bind('resize', this.resize);
       return $(window).trigger('resize');
     };

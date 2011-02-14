@@ -6,7 +6,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(['text!views/merchants/search_with_options.handlebars?v=3', 'app/views/merchants/search_result_view', "vendor/jquery-mousewheel", "vendor/jquery-jscrollpane"], function(template_with_options, MerchantSearchResultView) {
+define(['text!views/merchants/search_with_options.handlebars?v=5', 'app/views/merchants/search_result_view', "vendor/jquery-mousewheel", "vendor/jquery-jscrollpane"], function(template_with_options, MerchantSearchResultView) {
   var MerchantSearchView;
   return MerchantSearchView = (function() {
     function MerchantSearchView() {
@@ -78,31 +78,32 @@ define(['text!views/merchants/search_with_options.handlebars?v=3', 'app/views/me
       var resultCount;
       this.resultsDiv.find('ul').empty();
       if (_.any(this.localSearch.results)) {
+        this.$('.search-summary').text('However, we found the following possibilities using Google Local. Does one of these options look correct?');
         resultCount = this.localSearch.results.length;
-        if (resultCount === 0) {
-          this.resultsDiv.hide();
+        $(this.el).addClass('results-available');
+        this.resultsDiv.show();
+        _.each(this.localSearch.results, __bind(function(result) {
+          var resultView;
+          resultView = new MerchantSearchResultView({
+            model: this.model,
+            result: result
+          });
+          return this.resultsList.append(resultView.render().el);
+        }, this));
+        if (resultCount === 1) {
+          $(this.resultsDiv).height('70px');
+          this.resultsList.height('68px');
+        } else if (resultCount === 2) {
+          $(this.resultsDiv).height('140px');
+          this.resultsList.height('auto');
+          $(this.resultsDiv).find('ul').height('auto');
         } else {
-          this.resultsDiv.show();
-          _.each(this.localSearch.results, __bind(function(result) {
-            var resultView;
-            resultView = new MerchantSearchResultView({
-              model: this.model,
-              result: result
-            });
-            return this.resultsList.append(resultView.render().el);
-          }, this));
-          if (resultCount === 1) {
-            $(this.resultsDiv).height('70px');
-            this.resultsList.height('68px');
-          } else if (resultCount === 2) {
-            $(this.resultsDiv).height('140px');
-            this.resultsList.height('auto');
-            $(this.resultsDiv).find('ul').height('auto');
-          } else {
-            $(this.resultsDiv).height('210px');
-            this.resultsList.height('auto');
-          }
+          $(this.resultsDiv).height('210px');
+          this.resultsList.height('auto');
         }
+      } else {
+        this.$('.search-summary').text('You can expand the search results using the form below.');
+        $(this.el).removeClass('results-available');
       }
       this.resultsScroll.reinitialise();
       return this.$('button.search').button('enable');

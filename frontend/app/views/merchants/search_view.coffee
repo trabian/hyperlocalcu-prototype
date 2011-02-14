@@ -1,4 +1,4 @@
-define ['text!views/merchants/search_with_options.handlebars?v=3', 'app/views/merchants/search_result_view', "vendor/jquery-mousewheel", "vendor/jquery-jscrollpane"], (template_with_options, MerchantSearchResultView) ->
+define ['text!views/merchants/search_with_options.handlebars?v=5', 'app/views/merchants/search_result_view', "vendor/jquery-mousewheel", "vendor/jquery-jscrollpane"], (template_with_options, MerchantSearchResultView) ->
 
   class MerchantSearchView extends Backbone.View
 
@@ -69,33 +69,37 @@ define ['text!views/merchants/search_with_options.handlebars?v=3', 'app/views/me
 
       if _.any @localSearch.results
 
+        this.$('.search-summary').text 'However, we found the following possibilities using Google Local. Does one of these options look correct?'
+
         resultCount = @localSearch.results.length
 
-        if resultCount == 0
+        $(@el).addClass 'results-available'
 
-          @resultsDiv.hide()
+        @resultsDiv.show()
 
+        _.each @localSearch.results, (result) =>
+          resultView = new MerchantSearchResultView
+            model: @model
+            result: result
+
+          @resultsList.append resultView.render().el
+
+        if resultCount == 1
+          $(@resultsDiv).height '70px'
+          @resultsList.height '68px'
+        else if resultCount == 2
+          $(@resultsDiv).height '140px'
+          @resultsList.height 'auto'
+          $(@resultsDiv).find('ul').height 'auto'
         else
+          $(@resultsDiv).height '210px'
+          @resultsList.height 'auto'
 
-          @resultsDiv.show()
+      else
 
-          _.each @localSearch.results, (result) =>
-            resultView = new MerchantSearchResultView
-              model: @model
-              result: result
+        this.$('.search-summary').text 'You can expand the search results using the form below.'
 
-            @resultsList.append resultView.render().el
-
-          if resultCount == 1
-            $(@resultsDiv).height '70px'
-            @resultsList.height '68px'
-          else if resultCount == 2
-            $(@resultsDiv).height '140px'
-            @resultsList.height 'auto'
-            $(@resultsDiv).find('ul').height 'auto'
-          else
-            $(@resultsDiv).height '210px'
-            @resultsList.height 'auto'
+        $(@el).removeClass 'results-available'
 
       @resultsScroll.reinitialise()
 

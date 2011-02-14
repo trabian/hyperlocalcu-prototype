@@ -2841,15 +2841,20 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   font-size: 11px;
   margin: 0 0 0.2em;
 }
-/* line 7, ../../../frontend/sass/merchants/_search.sass */
+/* line 8, ../../../frontend/sass/merchants/_search.sass */
+#merchant-search.results-available .search-results {
+  display: block;
+}
+/* line 10, ../../../frontend/sass/merchants/_search.sass */
 #merchant-search .search-results {
   height: 150px;
   width: 318px;
   border: 1px solid #d4d4d4;
   border-width: 1px 0;
   margin: 1em 0;
+  display: none;
 }
-/* line 13, ../../../frontend/sass/merchants/_search.sass */
+/* line 17, ../../../frontend/sass/merchants/_search.sass */
 #merchant-search .search-results ul {
   list-style: none;
   margin: 0;
@@ -2863,7 +2868,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   list-style-type: none;
   margin-left: 0px;
 }
-/* line 16, ../../../frontend/sass/merchants/_search.sass */
+/* line 20, ../../../frontend/sass/merchants/_search.sass */
 #merchant-search .search-results ul li {
   margin: 0;
   padding: 0;
@@ -2873,34 +2878,38 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   *zoom: 1;
   padding: 7px 5px;
 }
-/* line 20, ../../../frontend/sass/merchants/_search.sass */
+/* line 24, ../../../frontend/sass/merchants/_search.sass */
 #merchant-search .search-results ul li .map {
   float: left;
   margin: 0 7px 0 0;
   border: 1px solid #d4d4d4;
 }
-/* line 24, ../../../frontend/sass/merchants/_search.sass */
+/* line 28, ../../../frontend/sass/merchants/_search.sass */
 #merchant-search .search-results ul li:hover {
   cursor: pointer;
   background: #f7f2d8;
 }
-/* line 27, ../../../frontend/sass/merchants/_search.sass */
+/* line 31, ../../../frontend/sass/merchants/_search.sass */
 #merchant-search .search-results ul li h3 {
   font-size: 13px;
   margin: 0.3em 0 0.3em;
 }
-/* line 30, ../../../frontend/sass/merchants/_search.sass */
+/* line 34, ../../../frontend/sass/merchants/_search.sass */
 #merchant-search .search-results ul li p {
   font-size: 10px;
   margin: 0;
 }
-/* line 34, ../../../frontend/sass/merchants/_search.sass */
+/* line 37, ../../../frontend/sass/merchants/_search.sass */
+#merchant-search .search-form {
+  margin-top: 0.5em;
+}
+/* line 39, ../../../frontend/sass/merchants/_search.sass */
 #merchant-search .search-form h4 {
   font-size: 11px;
   font-weight: bold;
   margin: 0 0 0.1em;
 }
-/* line 38, ../../../frontend/sass/merchants/_search.sass */
+/* line 43, ../../../frontend/sass/merchants/_search.sass */
 #merchant-search .search-form .text {
   width: 223px;
   padding: 6px 5px;

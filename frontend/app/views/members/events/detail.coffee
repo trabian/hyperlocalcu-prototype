@@ -33,6 +33,7 @@ define ["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
       @footer = this.$('#event-footer')
 
       if @model.isSocial()
+        @footer.show()
         @socialView = new SocialView
           model: @model
 
@@ -56,7 +57,12 @@ define ["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/so
 
       @scroll = @wrapper.data('jsp')
 
-      @heightOffset = parseInt($(@el).css('top')) + @header.height() + 130
+      shim = 45 
+
+      if @footer.is(':visible')
+        shim = shim + @footer.innerHeight() 
+
+      @heightOffset = parseInt($(@el).css('top')) + @header.height() + shim
 
       $(window).bind 'resize', @resize
 
