@@ -1,21 +1,19 @@
-define ["app/controllers/common/timeline_controller", "app/views/common/feedback/feedback_timeline_view", "app/views/feedback_subjects/feedback_subject_overview", "app/lib/socket"], (TimelineController, FeedbackTimelineView, FeedbackSubjectOverviewView, socket) ->
+class App.controller.FeedbackDashboard extends App.controller.Timeline
 
-  class FeedbackDashboardController extends TimelineController
+  initialize: (options) ->
 
-    initialize: (options) ->
+    @subject = options.subject
 
-      @subject = options.subject
+    options.events = @subject.feedbacks
 
-      options.events = @subject.feedbacks
+    super(options)
 
-      super(options)
+    @overview = new App.view.FeedbackSubjectOverview
+      model: @subject
 
-      @overview = new FeedbackSubjectOverviewView
-        model: @subject
+    $('#subject-overview').append @overview.render().el
 
-      $('#subject-overview').append @overview.render().el
+    @timeline = new App.view.FeedbackTimeline
+      collection: @subject.feedbacks
 
-      @timeline = new FeedbackTimelineView
-        collection: @subject.feedbacks
-
-      socket.listenTo @subject
+    App.socket.listenTo @subject

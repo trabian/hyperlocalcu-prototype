@@ -142,6 +142,8 @@
 						});
 					}
 
+
+
 					if (!hasContainingSpaceChanged && previousContentWidth == contentWidth && pane.outerHeight() == contentHeight) {
 						// Nothing has changed since we last initialised
 						if (isScrollableH || isScrollableV) { // If we had already set a width then re-set it
@@ -162,12 +164,14 @@
 				// width as allowed by its container, regardless of overflow settings.
 				// A cunning workaround is to clone the element, set its position to absolute and place it in a narrow
 				// container. Now it will push outwards to its maxium real width...
-				clonedElem = pane.clone().css('position', 'absolute');
-				tempWrapper = $('<div style="width:1px; position: relative;" />').append(clonedElem);
-				$('body').append(tempWrapper);
-				contentWidth = Math.max(pane.outerWidth(), clonedElem.outerWidth());
+        // Unfortunately, this tends to cause problems.
+				//clonedElem = pane.clone().css('position', 'absolute');
+				//tempWrapper = $('<div style="width:1px; position: relative;" />').append(clonedElem);
+				//$('body').append(tempWrapper);
 
-				tempWrapper.remove();
+				//contentWidth = Math.max(pane.outerWidth(), clonedElem.outerWidth());
+
+				//tempWrapper.remove();
 				
 				contentHeight = pane.outerHeight();
 				percentInViewH = contentWidth / paneWidth;

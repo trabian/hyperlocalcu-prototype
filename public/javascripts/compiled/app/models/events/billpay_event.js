@@ -6,26 +6,24 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 };
-define(['app/models/events/merchant_event'], function(MerchantEvent) {
-  var BillpayEvent;
-  return BillpayEvent = (function() {
-    function BillpayEvent() {
-      BillpayEvent.__super__.constructor.apply(this, arguments);
-    }
-    __extends(BillpayEvent, MerchantEvent);
-    BillpayEvent.prototype.initialize = function() {
-      BillpayEvent.__super__.initialize.call(this);
-      return this.meta = "Billpay #" + this.id;
-    };
-    BillpayEvent.prototype.toDetailJSON = function() {
-      var detailJSON;
-      detailJSON = BillpayEvent.__super__.toDetailJSON.call(this);
-      return _.extend(detailJSON, {
-        bill_payment_processing_days: this.get('bill_payment_processing_days'),
-        bill_payment_submitted_date: this.formatDate(this.get('bill_payment_submitted_date')),
-        description: "Billpay #" + this.id
-      });
-    };
-    return BillpayEvent;
-  })();
-});
+App.model.BillpayEvent = (function() {
+  function BillpayEvent() {
+    BillpayEvent.__super__.constructor.apply(this, arguments);
+  }
+  __extends(BillpayEvent, App.model.MerchantEvent);
+  BillpayEvent.prototype.initialize = function() {
+    BillpayEvent.__super__.initialize.call(this);
+    return this.meta = "Billpay #" + this.id;
+  };
+  BillpayEvent.prototype.toDetailJSON = function() {
+    var detailJSON;
+    detailJSON = BillpayEvent.__super__.toDetailJSON.call(this);
+    return _.extend(detailJSON, {
+      bill_payment_processing_days: this.get('bill_payment_processing_days'),
+      bill_payment_submitted_date: this.formatDate(this.get('bill_payment_submitted_date')),
+      description: "Billpay #" + this.id
+    });
+  };
+  return BillpayEvent;
+})();
+App.model.EventFactory.billpay = App.model.BillpayEvent;

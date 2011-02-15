@@ -6,108 +6,101 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(['text!views/merchants/search_with_options.handlebars?v=5', 'app/views/merchants/search_result_view', "vendor/jquery-mousewheel", "vendor/jquery-jscrollpane"], function(template_with_options, MerchantSearchResultView) {
-  var MerchantSearchView;
-  return MerchantSearchView = (function() {
-    function MerchantSearchView() {
-      this.displaySearchResults = __bind(this.displaySearchResults, this);;
-      this.searchGoogle = __bind(this.searchGoogle, this);;
-      this.search = __bind(this.search, this);;
-      this.searchOnEnter = __bind(this.searchOnEnter, this);;      MerchantSearchView.__super__.constructor.apply(this, arguments);
+App.view.MerchantSearch = (function() {
+  function MerchantSearch() {
+    this.displaySearchResults = __bind(this.displaySearchResults, this);;
+    this.searchGoogle = __bind(this.searchGoogle, this);;
+    this.search = __bind(this.search, this);;
+    this.searchOnEnter = __bind(this.searchOnEnter, this);;    MerchantSearch.__super__.constructor.apply(this, arguments);
+  }
+  __extends(MerchantSearch, Backbone.View);
+  MerchantSearch.prototype.id = 'merchant-search';
+  MerchantSearch.prototype.events = {
+    'click button.search': 'search',
+    'keypress input.search-field': 'searchOnEnter',
+    'click li': 'chooseLocation'
+  };
+  MerchantSearch.prototype.templatePath = 'merchants/search_with_options';
+  MerchantSearch.prototype.initialize = function(options) {
+    return this.defaultSearch = this.model.get('name') != null ? "" + (this.model.get('name')) + " in " + (this.model.member.cityState()) : null;
+  };
+  MerchantSearch.prototype.render = function() {
+    $(this.el).html(App.templates[this.templatePath]({
+      defaultSearch: this.defaultSearch,
+      searchPrompt: this.options.searchPrompt
+    }));
+    this.$('a.search').button();
+    this.resultsDiv = this.$('.search-results');
+    this.resultsList = this.resultsDiv.find('ul');
+    this.resultsDiv.jScrollPane();
+    this.resultsScroll = this.resultsDiv.data('jsp');
+    if (this.model.get('name') != null) {
+      this.search();
+    } else {
+      this.resultsDiv.hide();
     }
-    __extends(MerchantSearchView, Backbone.View);
-    MerchantSearchView.prototype.id = 'merchant-search';
-    MerchantSearchView.prototype.events = {
-      'click button.search': 'search',
-      'keypress input.search-field': 'searchOnEnter',
-      'click li': 'chooseLocation'
-    };
-    MerchantSearchView.prototype.templateWithOptions = Handlebars.compile(template_with_options);
-    MerchantSearchView.prototype.initialize = function(options) {
-      return this.defaultSearch = this.model.get('name') != null ? "" + (this.model.get('name')) + " in " + (this.model.member.cityState()) : null;
-    };
-    MerchantSearchView.prototype.render = function() {
-      $(this.el).html(this.templateWithOptions({
-        defaultSearch: this.defaultSearch,
-        searchPrompt: this.options.searchPrompt
-      }));
-      this.resultsDiv = this.$('.search-results');
-      this.resultsList = this.resultsDiv.find('ul');
-      this.resultsDiv.jScrollPane();
-      this.resultsScroll = this.resultsDiv.data('jsp');
-      this.$('button').button({
-        icons: {
-          primary: 'ui-icon-search'
-        }
+    return this;
+  };
+  MerchantSearch.prototype.searchOnEnter = function(e) {
+    if (e.keyCode === 13) {
+      return this.search();
+    }
+  };
+  MerchantSearch.prototype.search = function() {
+    var query;
+    query = this.$('.search-field').val();
+    this.$('.prompt').hide();
+    this.$('button.search').button('disable');
+    if (this.localSearch != null) {
+      return this.searchGoogle(query);
+    } else {
+      return google.load('search', '1', {
+        callback: __bind(function() {
+          this.localSearch = new google.search.LocalSearch();
+          this.localSearch.setCenterPoint(this.model.member.cityState());
+          this.localSearch.setResultSetSize(10);
+          this.localSearch.setSearchCompleteCallback(this, this.displaySearchResults, null);
+          return this.searchGoogle(query);
+        }, this)
       });
-      if (this.model.get('name') != null) {
-        this.search();
-      } else {
-        this.resultsDiv.hide();
-      }
-      return this;
-    };
-    MerchantSearchView.prototype.searchOnEnter = function(e) {
-      if (e.keyCode === 13) {
-        return this.search();
-      }
-    };
-    MerchantSearchView.prototype.search = function() {
-      var query;
-      query = this.$('.search-field').val();
-      this.$('.prompt').hide();
-      this.$('button.search').button('disable');
-      if (this.localSearch != null) {
-        return this.searchGoogle(query);
-      } else {
-        return google.load('search', '1', {
-          callback: __bind(function() {
-            this.localSearch = new google.search.LocalSearch();
-            this.localSearch.setCenterPoint(this.model.member.cityState());
-            this.localSearch.setResultSetSize(10);
-            this.localSearch.setSearchCompleteCallback(this, this.displaySearchResults, null);
-            return this.searchGoogle(query);
-          }, this)
+    }
+  };
+  MerchantSearch.prototype.searchGoogle = function(query) {
+    return this.localSearch.execute(query);
+  };
+  MerchantSearch.prototype.displaySearchResults = function() {
+    var resultCount;
+    this.resultsDiv.find('ul').empty();
+    if (_.any(this.localSearch.results)) {
+      this.$('.search-summary').text('However, we found the following possibilities using Google Local. Does one of these options look correct?');
+      resultCount = this.localSearch.results.length;
+      $(this.el).addClass('results-available');
+      this.resultsDiv.show();
+      _.each(this.localSearch.results, __bind(function(result) {
+        var resultView;
+        resultView = new App.view.MerchantSearchResult({
+          model: this.model,
+          result: result
         });
-      }
-    };
-    MerchantSearchView.prototype.searchGoogle = function(query) {
-      return this.localSearch.execute(query);
-    };
-    MerchantSearchView.prototype.displaySearchResults = function() {
-      var resultCount;
-      this.resultsDiv.find('ul').empty();
-      if (_.any(this.localSearch.results)) {
-        this.$('.search-summary').text('However, we found the following possibilities using Google Local. Does one of these options look correct?');
-        resultCount = this.localSearch.results.length;
-        $(this.el).addClass('results-available');
-        this.resultsDiv.show();
-        _.each(this.localSearch.results, __bind(function(result) {
-          var resultView;
-          resultView = new MerchantSearchResultView({
-            model: this.model,
-            result: result
-          });
-          return this.resultsList.append(resultView.render().el);
-        }, this));
-        if (resultCount === 1) {
-          $(this.resultsDiv).height('70px');
-          this.resultsList.height('68px');
-        } else if (resultCount === 2) {
-          $(this.resultsDiv).height('140px');
-          this.resultsList.height('auto');
-          $(this.resultsDiv).find('ul').height('auto');
-        } else {
-          $(this.resultsDiv).height('210px');
-          this.resultsList.height('auto');
-        }
+        return this.resultsList.append(resultView.render().el);
+      }, this));
+      if (resultCount === 1) {
+        $(this.resultsDiv).height('70px');
+        this.resultsList.height('68px');
+      } else if (resultCount === 2) {
+        $(this.resultsDiv).height('140px');
+        this.resultsList.height('auto');
+        $(this.resultsDiv).find('ul').height('auto');
       } else {
-        this.$('.search-summary').text('You can expand the search results using the form below.');
-        $(this.el).removeClass('results-available');
+        $(this.resultsDiv).height('210px');
+        this.resultsList.height('auto');
       }
-      this.resultsScroll.reinitialise();
-      return this.$('button.search').button('enable');
-    };
-    return MerchantSearchView;
-  })();
-});
+    } else {
+      this.$('.search-summary').text('You can expand the search results using the form below.');
+      $(this.el).removeClass('results-available');
+    }
+    this.resultsScroll.reinitialise();
+    return this.$('button.search').button('enable');
+  };
+  return MerchantSearch;
+})();

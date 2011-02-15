@@ -1,45 +1,43 @@
 # The collection of [events](event.html) is backed by a JSON store.
-define ['app/models/event_factory'], (factory) ->
+class App.model.EventList extends Backbone.Collection
 
-  class EventList extends Backbone.Collection
+  # This will likely change in the future
+  #url: '/accounts/1/events'
 
-    # This will likely change in the future
-    #url: '/accounts/1/events'
+  _add: (model) ->
+    super App.model.EventFactory.getEvent(model)
 
-    _add: (model) ->
-      super factory.getEvent(model)
+  # Remove all events from the event list. This does not destroy the events on
+  # the backend.
+  clear: ->
+    this.remove @models
 
-    # Remove all events from the event list. This does not destroy the events on
-    # the backend.
-    clear: ->
-      this.remove @models
+  # Provides a list of all selected events
+  selected: ->
+    this.filter (event) ->
+      event.get 'selected'
 
-    # Provides a list of all selected events
-    selected: ->
-      this.filter (event) ->
-        event.get 'selected'
+  # Deselects any selected events and selects the event passed
+  selectOne: (event) ->
+    _.each this.selected(), (selectedevent) ->
+      selectedevent.set 'selected': false
 
-    # Deselects any selected events and selects the event passed
-    selectOne: (event) ->
-      _.each this.selected(), (selectedevent) ->
-        selectedevent.set 'selected': false
+    if event?
+      event.set 'selected': true
 
-      if event?
-        event.set 'selected': true
+  # If the event is already selected then unselect it. Otherwise make sure
+  # it's the only one selected.
+  toggleOrSelectOne: (event) ->
 
-    # If the event is already selected then unselect it. Otherwise make sure
-    # it's the only one selected.
-    toggleOrSelectOne: (event) ->
+    if event.get 'selected'
 
-      if event.get 'selected'
+      # Allow listeners to know when an event is explicitly unselected (as
+      # opposed to becoming unselected because another event is selected).
+      #this.trigger('unselect')
 
-        # Allow listeners to know when an event is explicitly unselected (as
-        # opposed to becoming unselected because another event is selected).
-        #this.trigger('unselect')
+      #event.set 'selected': false
 
-        #event.set 'selected': false
+    else
 
-      else
-
-        this.selectOne event
+      this.selectOne event
 

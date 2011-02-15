@@ -6,32 +6,29 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(["text!views/feedback/subject_overview.handlebars?v=3", "app/views/common/feedback/rating_view", "vendor/handlebars"], function(template, RatingView) {
-  var FeedbackSubjectOverviewView;
-  return FeedbackSubjectOverviewView = (function() {
-    function FeedbackSubjectOverviewView() {
-      this.render = __bind(this.render, this);;      FeedbackSubjectOverviewView.__super__.constructor.apply(this, arguments);
-    }
-    __extends(FeedbackSubjectOverviewView, Backbone.View);
-    FeedbackSubjectOverviewView.prototype.template = Handlebars.compile(template);
-    FeedbackSubjectOverviewView.prototype.initialize = function(options) {
-      return this.model.bind('change', __bind(function() {
-        return this.render();
-      }, this));
-    };
-    FeedbackSubjectOverviewView.prototype.render = function() {
-      $(this.el).html(this.template(this.model.toViewJSON()));
-      _.each(['month', 'year'], __bind(function(timespan) {
-        var ratingView;
-        ratingView = new RatingView({
-          model: this.model,
-          rating: this.model.get('feedback_totals')[timespan].average,
-          readOnly: true
-        });
-        return this.$("." + timespan + " .rating").append(ratingView.render().el);
-      }, this));
-      return this;
-    };
-    return FeedbackSubjectOverviewView;
-  })();
-});
+App.view.FeedbackSubjectOverview = (function() {
+  function FeedbackSubjectOverview() {
+    this.render = __bind(this.render, this);;    FeedbackSubjectOverview.__super__.constructor.apply(this, arguments);
+  }
+  __extends(FeedbackSubjectOverview, Backbone.View);
+  FeedbackSubjectOverview.prototype.initialize = function(options) {
+    this.template = App.templates['feedback_subjects/overview'];
+    return this.model.bind('change', __bind(function() {
+      return this.render();
+    }, this));
+  };
+  FeedbackSubjectOverview.prototype.render = function() {
+    $(this.el).html(this.template(this.model.toViewJSON()));
+    _.each(['month', 'year'], __bind(function(timespan) {
+      var ratingView;
+      ratingView = new App.view.Rating({
+        model: this.model,
+        rating: this.model.get('feedback_totals')[timespan].average,
+        readOnly: true
+      });
+      return this.$("." + timespan + " .rating").append(ratingView.render().el);
+    }, this));
+    return this;
+  };
+  return FeedbackSubjectOverview;
+})();

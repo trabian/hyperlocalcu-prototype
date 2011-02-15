@@ -1,17 +1,17 @@
-define ['app/models/events/merchant_event'], (MerchantEvent) ->
+class App.model.CardEvent extends App.model.MerchantEvent
 
-  class CardEvent extends MerchantEvent
+  initialize: ->
 
-    initialize: ->
+    super()
 
-      super()
+    name = this.get('name')
 
-      name = this.get('name')
+    if @merchant?
+      @meta = name
+    else
+      @description = name
 
-      if @merchant?
-        @meta = name
-      else
-        @description = name
+    this.bind 'change:merchant', =>
+      @meta = name
 
-      this.bind 'change:merchant', =>
-        @meta = name
+App.model.EventFactory.card = App.model.CardEvent

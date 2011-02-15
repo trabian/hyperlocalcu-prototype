@@ -1,27 +1,25 @@
-define ["text!views/social/overview.handlebars?v=1", "vendor/jquery-tweet", "vendor/jquery-timeago", "vendor/date", "vendor/handlebars"], (template) ->
+class App.view.Social extends Backbone.View
 
-  class SocialView extends Backbone.View
+  tagName: 'div'
 
-    tagName: 'div'
+  className: 'social'
 
-    className: 'social'
+  render: ->
 
-    template: Handlebars.compile(template)
+    @template = App.templates['common/social/overview']
 
-    render: ->
+    $(@el).html @template(@model.toDetailJSON())
 
-      $(@el).html @template(@model.toDetailJSON())
+    if @model.twitter_username
+      this.renderTwitter()
 
-      if @model.twitter_username
-        this.renderTwitter()
+    return this
 
-      return this
+  renderTwitter: =>
 
-    renderTwitter: =>
+    username = @model.twitter_username
 
-      username = @model.twitter_username
-
-      this.$('.twitter .latest-tweet').tweet
-        username: @model.twitter_username
-        count: 1
-        broadcast_only: true
+    this.$('.twitter .latest-tweet').tweet
+      username: @model.twitter_username
+      count: 1
+      broadcast_only: true

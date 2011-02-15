@@ -10,6 +10,8 @@ class Feedback < ActiveRecord::Base
 
   scope :since, lambda { |time| where('events.posted_at >= ?', time).includes(:event) }
 
+  scope :from_other_members, lambda { |member_id| includes(:event => :account).where(['accounts.member_id != ?', member_id]) }
+
   def as_json(options = {})
 
     options = {} if options.blank?

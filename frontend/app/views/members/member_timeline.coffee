@@ -1,9 +1,7 @@
-define ['app/views/common/timeline/timeline_view', 'app/views/members/events/row_factory'], (TimelineView, MemberTimelineRowFactory) ->
+class App.view.MemberTimeline extends App.view.Timeline
 
-  class MemberTimeline extends TimelineView
+  initialize: (options) ->
 
-    initialize: (options) ->
+    options.rowFactory = new App.view.MemberTimelineRowFactory
 
-      options.rowFactory = new MemberTimelineRowFactory
-
-      super(options)
+    super(options)

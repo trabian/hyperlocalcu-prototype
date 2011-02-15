@@ -6,7 +6,11 @@ Hyperlocalcu::Application.routes.draw do
   
   resources :atms
   resources :branches
-  resources :merchants
+
+  resources :merchants do
+    resources :feedbacks
+  end
+
   resources :tellers
   resources :vendors
 
@@ -32,7 +36,7 @@ Hyperlocalcu::Application.routes.draw do
 
   devise_for :users
 
-  root :to => "events#index", :account_id => 1
+  root :to => "accounts#show", :id => 1
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

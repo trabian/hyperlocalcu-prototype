@@ -1,3 +1,1 @@
-define ['app/views/members/events/row'], (EventRowView) ->
-
-  class AtmRow extends EventRowView
+class App.view.AtmRow extends App.view.EventRow

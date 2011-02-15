@@ -1,25 +1,25 @@
-define ["text!views/feedback/subject_overview.handlebars?v=3", "app/views/common/feedback/rating_view", "vendor/handlebars"], (template, RatingView) ->
+#define ["text!views/feedback/subject_overview.handlebars?v=3", "app/views/common/feedback/rating_view", "vendor/handlebars"], (template, RatingView) ->
 
-  class FeedbackSubjectOverviewView extends Backbone.View
+class App.view.FeedbackSubjectOverview extends Backbone.View
 
-    template: Handlebars.compile(template)
+  initialize: (options) ->
 
-    initialize: (options) ->
+    @template = App.templates['feedback_subjects/overview']
 
-      @model.bind 'change', =>
-        this.render()
+    @model.bind 'change', =>
+      this.render()
 
-    render: =>
+  render: =>
 
-      $(@el).html @template(@model.toViewJSON())
+    $(@el).html @template(@model.toViewJSON())
 
-      _.each ['month', 'year'], (timespan) =>
+    _.each ['month', 'year'], (timespan) =>
 
-        ratingView = new RatingView
-          model: @model
-          rating: @model.get('feedback_totals')[timespan].average
-          readOnly: true
+      ratingView = new App.view.Rating
+        model: @model
+        rating: @model.get('feedback_totals')[timespan].average
+        readOnly: true
 
-        this.$(".#{timespan} .rating").append ratingView.render().el
+      this.$(".#{timespan} .rating").append ratingView.render().el
 
-      return this
+    return this

@@ -1,11 +1,10 @@
-define ['text!views/timeline/events/billpay/detail.handlebars?v=2', 'app/views/members/events/detail', 'vendor/handlebars'], (template, EventDetailView) ->
+#define ['text!views/timeline/events/billpay/detail.handlebars?v=2', 'app/views/members/events/detail', 'vendor/handlebars'], (template, EventDetailView) ->
 
-  class BillpayDetailView extends EventDetailView
+class App.view.BillpayDetail extends App.view.EventDetail
 
-    eventTypeOptions:
-      template: Handlebars.compile(template)
+  eventTypeOptions:
+    templatePath: 'members/events/billpay/detail'
 
-    renderDetail: =>
-      if @model.get('vendor')?
-        this.addFeedbackView 'vendor'
-
+  renderDetail: =>
+    if @model.get('vendor')?
+      this.addFeedbackView 'vendor'

@@ -1,29 +1,27 @@
-define ["text!views/common/feedback/timeline/row.handlebars?v=3", "app/views/common/feedback/rating_view", 'vendor/handlebars'], (template, RatingView) ->
+class App.view.FeedbackRow extends Backbone.View
 
-  class FeedbackRowView extends Backbone.View
+  tagName: 'tr'
 
-    tagName: 'tr'
+  className: 'feedback'
 
-    className: 'feedback'
+  initialize: ->
 
-    template: Handlebars.compile(template)
+    @template = App.templates['common/feedback/timeline/row']
 
-    initialize: ->
-
-      @model.bind 'change', =>
-        this.render()
-
+    @model.bind 'change', =>
       this.render()
 
-    render: ->
+    this.render()
 
-      $(@el).html @template(@model.toViewJSON())
+  render: ->
 
-      ratingView = new RatingView
-        model: @model
-        rating: @model.get('rating')
-        readOnly: true
+    $(@el).html @template(@model.toViewJSON())
 
-      this.$('.rating').append ratingView.render().el
+    ratingView = new App.view.Rating
+      model: @model
+      rating: @model.get('rating')
+      readOnly: true
 
-      return this
+    this.$('.rating').append ratingView.render().el
+
+    return this

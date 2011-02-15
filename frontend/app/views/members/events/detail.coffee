@@ -1,134 +1,141 @@
-define ["text!views/timeline/events/detail.handlebars?v=9", "app/views/common/social/social_view", "app/views/common/feedback/feedback_view", "app/views/common/feedback/rating_view", "vendor/handlebars", "vendor/jquery-mousewheel", "vendor/jquery-jscrollpane"], (template, SocialView, FeedbackView, RatingView) ->
+class App.view.EventDetail extends Backbone.View
 
-  class EventDetailView extends Backbone.View
+  events:
+    "click .close": "close"
 
-    events:
-      "click .close": "close"
+  templatePath: 'members/events/detail'
 
-    template: Handlebars.compile(template)
+  initialize: ->
 
-    initialize: ->
-      if @eventTypeOptions? and @eventTypeOptions.events?
+    if @eventTypeOptions?
+      if @eventTypeOptions.events?
         this.delegateEvents(@eventTypeOptions.events)
+      if @eventTypeOptions.templatePath?
+        @eventTypeOptions.template = App.templates[@eventTypeOptions.templatePath]
 
-    close: =>
-      @model.set 'selected': false
+  close: =>
+    @model.set 'selected': false
 
-    render: =>
+  render: =>
 
-      mpq.push ["track", "View event detail", {
-        event_type: @model.get('event_type')
-        id: @model.id
-      }]
+    mpq.push ["track", "View event detail", {
+      event_type: @model.get('event_type')
+      id: @model.id
+    }]
 
-      @model.initializeDetails()
+    @model.initializeDetails()
 
-      detailJSON = @model.toDetailJSON()
+    detailJSON = @model.toDetailJSON()
 
-      $(@el).html @template(detailJSON)
+    $(@el).html App.templates[@templatePath](detailJSON)
 
-      @header = this.$('#event-header')
-      @detail = this.$('#event-detail')
-      @wrapper = this.$('#event-detail-wrapper')
-      @footer = this.$('#event-footer')
+    @header = this.$('#event-header')
+    @detail = this.$('#event-detail')
+    @wrapper = this.$('#event-detail-wrapper')
+    @footer = this.$('#event-footer')
 
-      if @model.isSocial()
-        @footer.show()
-        @socialView = new SocialView
-          model: @model
+    if @model.isSocial()
+      @footer.show()
+      @socialView = new App.view.Social
+        model: @model
 
-        @footer.append @socialView.render().el
+      @footer.append @socialView.render().el
 
-      if @eventTypeOptions? and @eventTypeOptions.template?
-        @detail.append @eventTypeOptions.template(detailJSON)
+    if @eventTypeOptions? and @eventTypeOptions.template?
+      @detail.append @eventTypeOptions.template(detailJSON)
 
-      if @renderDetail?
-        this.renderDetail()
+    this.show()
 
-      if @model.isDeposit()
-        @header.addClass('deposit')
+    @wrapper.jScrollPane()
 
-      if @model.get('merchant')?
-        this.addLocationFeedbackView('merchant')
+    if @renderDetail?
+      this.renderDetail()
 
-      this.show()
+    if @model.isDeposit()
+      @header.addClass('deposit')
 
-      @wrapper.jScrollPane()
+    if @model.get('merchant')?
+      this.addLocationFeedbackView 'merchant',
+        include_summary_view: true
 
-      @scroll = @wrapper.data('jsp')
+    @scroll = @wrapper.data('jsp')
 
-      shim = 45 
+    shim = 45 
 
-      if @footer.is(':visible')
-        shim = shim + @footer.innerHeight() 
+    if @footer.is(':visible')
+      shim = shim + @footer.innerHeight() 
 
-      @heightOffset = parseInt($(@el).css('top')) + @header.height() + shim
+    @heightOffset = parseInt($(@el).css('top')) + @header.height() + shim
 
-      $(window).bind 'resize', @resize
+    $(window).bind 'resize', @resize
 
-      $(window).trigger 'resize'
+    $(window).trigger 'resize'
 
-    resize: =>
+  resize: =>
 
-      height = $(window).height()
+    height = $(window).height()
 
-      @wrapper.height(height - @heightOffset)
+    @wrapper.height(height - @heightOffset)
 
-      if $.browser.ie
+    if $.browser.ie
 
-        if !throttleTimeout
-          setTimeout =>
-            @scroll.reinitialise()
-            throttleTimeout = null
-          , 50
+      if !throttleTimeout
+        setTimeout =>
+          @scroll.reinitialise()
+          throttleTimeout = null
+        , 50
 
-      else
-        @scroll.reinitialise()
+    else
+      @scroll.reinitialise()
 
-    show: ->
+  show: ->
 
-      this.trigger('show')
+    this.trigger('show')
 
-      $(@el).show()
+    $(@el).show()
 
-    hide: ->
+  hide: ->
 
-      this.trigger('hide')
+    this.trigger('hide')
 
-      $(@el).empty().hide()
+    $(@el).empty().hide()
 
-    addLocationFeedbackView: (field, options) =>
+  addLocationFeedbackView: (field, options) =>
 
-      feedback = @model.feedbacks.for_subject(field)
+    feedback = @model.feedbacks.for_subject(field)
+
+    if feedback?
+
+      @addressEl = @detail.find('.address')
+
+      ratingViewOptions = _.extend
+        model: feedback
+        commentParent: @addressEl
+        commentFormTitle: "Care to elaborate?"
+      , options
+
+      @locationRatingView = new App.view.Rating ratingViewOptions
+
+      @locationRatingView.bind 'expand', @resize
+      @locationRatingView.bind 'collapse', @resize
+
+      @addressEl.append @locationRatingView.render().el
+
+      @feedbackSummaryView = new App.view.FeedbackSummary
+
+      @addressEl.append @feedbackSummaryView.render().el
+
+  addFeedbackView: (subject_types...) =>
+    _.each subject_types, (subject_type) =>
+
+      feedback = @model.feedbacks.for_subject(subject_type)
 
       if feedback?
-
-        @addressEl = @detail.find('.address')
-
-        ratingViewOptions = _.extend
+        @feedbackView = new App.view.Feedback
           model: feedback
-          commentParent: @addressEl
-          commentFormTitle: "Care to elaborate?"
-        , options
+          question: @model.feedbackQuestion
 
-        @locationRatingView = new RatingView ratingViewOptions
+        @feedbackView.bind 'expand', @resize
+        @feedbackView.bind 'collapse', @resize
 
-        @locationRatingView.bind 'expand', @resize
-        @locationRatingView.bind 'collapse', @resize
-
-        @addressEl.append @locationRatingView.render().el
-
-    addFeedbackView: (subject_types...) =>
-      _.each subject_types, (subject_type) =>
-
-        feedback = @model.feedbacks.for_subject(subject_type)
-
-        if feedback?
-          @feedbackView = new FeedbackView
-            model: feedback
-            question: @model.feedbackQuestion
-
-          @feedbackView.bind 'expand', @resize
-          @feedbackView.bind 'collapse', @resize
-
-          @detail.append @feedbackView.render().el
+        @detail.append @feedbackView.render().el

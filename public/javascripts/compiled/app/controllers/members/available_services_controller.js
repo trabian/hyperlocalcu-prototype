@@ -6,26 +6,23 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(["app/views/members/billpay_signup_view"], function(BillpaySignupView) {
-  var AvailableServicesController;
-  return AvailableServicesController = (function() {
-    function AvailableServicesController() {
-      this.rejectBillpay = __bind(this.rejectBillpay, this);;
-      this.signupForBillpay = __bind(this.signupForBillpay, this);;      AvailableServicesController.__super__.constructor.apply(this, arguments);
-    }
-    __extends(AvailableServicesController, Backbone.Controller);
-    AvailableServicesController.prototype.intialize = function(options) {};
-    AvailableServicesController.prototype.routes = {
-      "billpay/signup": 'signupForBillpay',
-      "billpay/no": 'rejectBillpay'
-    };
-    AvailableServicesController.prototype.signupForBillpay = function() {
-      this.billpaySignupView || (this.billpaySignupView = new BillpaySignupView);
-      return this.billpaySignupView.render();
-    };
-    AvailableServicesController.prototype.rejectBillpay = function() {
-      return $('.available-service.billpay').hide();
-    };
-    return AvailableServicesController;
-  })();
-});
+App.controller.AvailableServices = (function() {
+  function AvailableServices() {
+    this.rejectBillpay = __bind(this.rejectBillpay, this);;
+    this.signupForBillpay = __bind(this.signupForBillpay, this);;    AvailableServices.__super__.constructor.apply(this, arguments);
+  }
+  __extends(AvailableServices, Backbone.Controller);
+  AvailableServices.prototype.intialize = function(options) {};
+  AvailableServices.prototype.routes = {
+    "billpay/signup": 'signupForBillpay',
+    "billpay/no": 'rejectBillpay'
+  };
+  AvailableServices.prototype.signupForBillpay = function() {
+    this.billpaySignupView || (this.billpaySignupView = new App.view.BillpaySignup);
+    return this.billpaySignupView.render();
+  };
+  AvailableServices.prototype.rejectBillpay = function() {
+    return $('.available-service.billpay').hide();
+  };
+  return AvailableServices;
+})();

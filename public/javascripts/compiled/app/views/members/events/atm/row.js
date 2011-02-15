@@ -6,13 +6,10 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 };
-define(['app/views/members/events/row'], function(EventRowView) {
-  var AtmRow;
-  return AtmRow = (function() {
-    function AtmRow() {
-      AtmRow.__super__.constructor.apply(this, arguments);
-    }
-    __extends(AtmRow, EventRowView);
-    return AtmRow;
-  })();
-});
+App.view.AtmRow = (function() {
+  function AtmRow() {
+    AtmRow.__super__.constructor.apply(this, arguments);
+  }
+  __extends(AtmRow, App.view.EventRow);
+  return AtmRow;
+})();

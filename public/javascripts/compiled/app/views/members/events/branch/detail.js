@@ -6,19 +6,16 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(['text!views/timeline/events/branch/detail.handlebars?v=2', 'app/views/members/events/detail', 'vendor/handlebars'], function(template, EventDetailView) {
-  var BranchDetailView;
-  return BranchDetailView = (function() {
-    function BranchDetailView() {
-      this.renderDetail = __bind(this.renderDetail, this);;      BranchDetailView.__super__.constructor.apply(this, arguments);
-    }
-    __extends(BranchDetailView, EventDetailView);
-    BranchDetailView.prototype.renderDetail = function() {
-      this.addFeedbackView('teller');
-      return this.addLocationFeedbackView('branch', {
-        commentFormTitle: "Care to tell us more about this branch?"
-      });
-    };
-    return BranchDetailView;
-  })();
-});
+App.view.BranchDetail = (function() {
+  function BranchDetail() {
+    this.renderDetail = __bind(this.renderDetail, this);;    BranchDetail.__super__.constructor.apply(this, arguments);
+  }
+  __extends(BranchDetail, App.view.EventDetail);
+  BranchDetail.prototype.renderDetail = function() {
+    this.addFeedbackView('teller');
+    return this.addLocationFeedbackView('branch', {
+      commentFormTitle: "Care to tell us more about this branch?"
+    });
+  };
+  return BranchDetail;
+})();

@@ -1,14 +1,14 @@
-define ['app/models/feedback_subject'], (FeedbackSubject) ->
+class App.model.Branch extends App.model.FeedbackSubject
 
-  class Branch extends FeedbackSubject
+  initialize: (options) ->
 
-    initialize: (options) ->
+    options.list_url = "/branches/#{@id}/feedbacks"
 
-      options.list_url = "/branches/#{@id}/feedbacks"
+    @meta = "Branch ##{@id}"
 
-      @meta = "Branch ##{@id}"
+    super(options)
 
-      super(options)
+  url: =>
+    "/branches/#{@id}"
 
-    url: =>
-      "/branches/#{@id}"
+App.model.FeedbackSubjectFactory.branch = App.model.Branch

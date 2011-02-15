@@ -1,5 +1,5 @@
-define ['text!views/timeline/events/statement/row.handlebars?v=1', 'app/views/members/events/row'], (template, EventRowView) ->
+#define ['text!views/timeline/events/statement/row.handlebars?v=1', 'app/views/members/events/row'], (template, EventRowView) ->
 
-  class StatementRow extends EventRowView
+class App.view.StatementRow extends App.view.EventRow
 
-    template: Handlebars.compile(template)
+  templatePath: 'members/events/statement/row'

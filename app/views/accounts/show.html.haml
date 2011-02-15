@@ -20,21 +20,17 @@
   %script{:src => google_js_src, :type => 'text/javascript'}
 
   :javascript
-    require({ baseUrl: "/javascripts/compiled" }, ["order!vendor/underscore", "order!vendor/backbone", "order!app/controllers/members/timeline_controller", "order!app/controllers/members/available_services_controller", "order!app/models/event_list", "order!app/models/member"], function(underscore, backbone, MemberTimelineController, AvailableServicesController, EventList, Member) {
 
-      Backbone.emulateHTTP = true;
+    Backbone.emulateHTTP = true;
 
-      window.member = new Member(#{@account.member.to_json});
+    App.currentMember = new App.model.Member(#{@account.member.to_json});
 
-      eventList = new EventList();
-      eventList.url = "/accounts/#{@account.id}/events";
+    var eventList = new App.model.EventList();
+    eventList.url = "/accounts/#{@account.id}/events";
 
-      var timelineController = new MemberTimelineController({
-        fetchOnInit: true,
-        events: eventList
-      });
-
-      var availableServicesController = new AvailableServicesController();
-
+    var timelineController = new App.controller.MemberTimeline({
+      fetchOnInit: true,
+      events: eventList
     });
 
+    var availableServicesController = new App.controller.AvailableServices();

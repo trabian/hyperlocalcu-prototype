@@ -7,10 +7,9 @@ class Event < ActiveRecord::Base
 
   has_many :feedbacks
 
-  scope :ordered, :order => 'posted_at DESC, id'
+  scope :ordered, :order => 'events.posted_at DESC, id'
 
   scope :ordered_with_limit, :order => 'posted_at DESC, id', :limit => 30
-
 
   def as_json(options = {})
 

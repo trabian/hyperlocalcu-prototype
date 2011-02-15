@@ -1,45 +1,45 @@
-define ['text!views/merchants/search_result.handlebars?v=1', 'app/models/merchant_list', 'vendor/handlebars'], (template, MerchantList) ->
+#define ['text!views/merchants/search_result.handlebars?v=1', 'app/models/merchant_list', 'vendor/handlebars'], (template, MerchantList) ->
 
-  class MerchantSearchResultView extends Backbone.View
+class App.view.MerchantSearchResult extends Backbone.View
 
-    tagName: 'li'
+  tagName: 'li'
 
-    className: 'result'
+  className: 'result'
 
-    events:
-      'click': 'select'
+  events:
+    'click': 'select'
 
-    template: Handlebars.compile(template)
+  templatePath: 'merchants/search_result'
 
-    select: =>
+  select: =>
 
-      result = @options.result
+    result = @options.result
 
-      params =
-        name: result.titleNoFormatting
-        street1: result.streetAddress
-        city: result.city
-        region: result.region
-        address_summary: result.addressLines.join("<br />")
+    params =
+      name: result.titleNoFormatting
+      street1: result.streetAddress
+      city: result.city
+      region: result.region
+      address_summary: result.addressLines.join("<br />")
 
-      try
-        params.full_result = JSON.stringify(result)
-      catch error
-        #Nothing
+    try
+      params.full_result = JSON.stringify(result)
+    catch error
+      #Nothing
 
-      @model.addMerchant params
+    @model.addMerchant params
 
-      return false
+    return false
 
-    render: =>
+  render: =>
 
-      result = @options.result
+    result = @options.result
 
-      context =
-        title: result.titleNoFormatting
-        address: result.addressLines.join('<br />')
+    context =
+      title: result.titleNoFormatting
+      address: result.addressLines.join('<br />')
 
-      $(@el).html @template(context)
+    $(@el).html App.templates[@templatePath](context)
 
-      return this
+    return this
 

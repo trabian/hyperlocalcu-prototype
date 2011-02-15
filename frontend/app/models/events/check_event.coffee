@@ -1,24 +1,24 @@
-define ['app/models/events/merchant_event'], (MerchantEvent) ->
+class App.model.CheckEvent extends App.model.MerchantEvent
 
-  class CheckEvent extends MerchantEvent
+  initialize: ->
 
-    initialize: ->
+    super()
 
-      super()
+    check_name = "Check ##{this.get('check_number')}"
 
-      check_name = "Check ##{this.get('check_number')}"
+    if @merchant?
+      @meta = check_name
+    else
+      @description = check_name
 
-      if @merchant?
-        @meta = check_name
-      else
-        @description = check_name
+    @updateFields.push 'check_image_comment'
 
-      @updateFields.push 'check_image_comment'
+    this.bind 'change:merchant', =>
+      @meta = check_name
 
-      this.bind 'change:merchant', =>
-        @meta = check_name
+  toDetailJSON: ->
+    detailJSON = super()
+    _.extend detailJSON,
+      description: "Check ##{this.id}"
 
-    toDetailJSON: ->
-      detailJSON = super()
-      _.extend detailJSON,
-        description: "Check ##{this.id}"
+App.model.EventFactory.check = App.model.CheckEvent

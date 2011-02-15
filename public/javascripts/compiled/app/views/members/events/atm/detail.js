@@ -6,18 +6,15 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-define(['app/views/members/events/detail', 'vendor/handlebars'], function(EventDetailView) {
-  var AtmDetailView;
-  return AtmDetailView = (function() {
-    function AtmDetailView() {
-      this.renderDetail = __bind(this.renderDetail, this);;      AtmDetailView.__super__.constructor.apply(this, arguments);
-    }
-    __extends(AtmDetailView, EventDetailView);
-    AtmDetailView.prototype.renderDetail = function() {
-      return this.addLocationFeedbackView('atm', {
-        commentFormTitle: "Care to elaborate? Did you feel safe?"
-      });
-    };
-    return AtmDetailView;
-  })();
-});
+App.view.AtmDetail = (function() {
+  function AtmDetail() {
+    this.renderDetail = __bind(this.renderDetail, this);;    AtmDetail.__super__.constructor.apply(this, arguments);
+  }
+  __extends(AtmDetail, App.view.EventDetail);
+  AtmDetail.prototype.renderDetail = function() {
+    return this.addLocationFeedbackView('atm', {
+      commentFormTitle: "Care to elaborate? Did you feel safe?"
+    });
+  };
+  return AtmDetail;
+})();

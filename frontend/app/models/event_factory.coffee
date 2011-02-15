@@ -1,20 +1,9 @@
-EventTypes = ['atm', 'branch', 'billpay', 'card', 'check', 'nsf', 'reward', 'statement']
+App.model.EventFactory = {
 
-EventTypeDefinitions = _.map EventTypes, (event_type) ->
-  "app/models/events/#{event_type}_event"
+  getEvent: (model) ->
 
-EventTypeDefinitions.unshift 'app/models/event'
+    event_class = App.model.EventFactory[model.event_type] || App.model.Event
 
-define EventTypeDefinitions, (event_classes...) ->
+    new event_class(model)
 
-  class EventFactory
-
-    getEvent: (model) ->
-
-      index = _.indexOf(EventTypes, model.event_type) + 1
-
-      event_class = event_classes[index] || event_classes[0]
-
-      new event_class(model)
-
-  return new EventFactory()
+}

@@ -1,0 +1,30 @@
+template_function: "Handlebars.compile"
+template_extension: "handlebars"
+template_namespace: "App.templates"
+
+javascripts:
+  timeline:
+    - public/javascripts/compiled/vendor/underscore.js
+    - public/javascripts/compiled/vendor/jquery-1.5.js
+    - public/javascripts/compiled/vendor/jquery-ui.js
+    - public/javascripts/compiled/vendor/handlebars.js
+    - public/javascripts/compiled/vendor/backbone.js
+    - public/javascripts/compiled/vendor/jquery-currency.js
+    - public/javascripts/compiled/vendor/jquery-jscrollpane.js
+    - public/javascripts/compiled/vendor/*.js
+    - public/javascripts/compiled/views/**/*.handlebars
+    - public/javascripts/compiled/app/base.js
+    - public/javascripts/compiled/app/lib/socket.js
+    - public/javascripts/compiled/app/models/timeline_event.js
+    - public/javascripts/compiled/app/models/event.js
+    - public/javascripts/compiled/app/models/event_factory.js
+    - public/javascripts/compiled/app/models/events/cu_event.js
+    - public/javascripts/compiled/app/models/events/merchant_event.js
+    - public/javascripts/compiled/app/models/events/*.js
+    - public/javascripts/compiled/app/models/feedback.js
+    - public/javascripts/compiled/app/models/feedback_subject.js
+    - public/javascripts/compiled/app/models/feedback_subject_factory.js
+    - public/javascripts/compiled/app/views/common/timeline/timeline_view.js
+    - public/javascripts/compiled/app/views/members/events/row.js
+    - public/javascripts/compiled/app/views/members/events/detail.js
+    - public/javascripts/compiled/app/**/*.js

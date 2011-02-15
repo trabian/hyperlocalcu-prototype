@@ -6,17 +6,14 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 };
-define(['app/views/common/timeline/timeline_view', 'app/views/members/events/row_factory'], function(TimelineView, MemberTimelineRowFactory) {
-  var MemberTimeline;
-  return MemberTimeline = (function() {
-    function MemberTimeline() {
-      MemberTimeline.__super__.constructor.apply(this, arguments);
-    }
-    __extends(MemberTimeline, TimelineView);
-    MemberTimeline.prototype.initialize = function(options) {
-      options.rowFactory = new MemberTimelineRowFactory;
-      return MemberTimeline.__super__.initialize.call(this, options);
-    };
-    return MemberTimeline;
-  })();
-});
+App.view.MemberTimeline = (function() {
+  function MemberTimeline() {
+    MemberTimeline.__super__.constructor.apply(this, arguments);
+  }
+  __extends(MemberTimeline, App.view.Timeline);
+  MemberTimeline.prototype.initialize = function(options) {
+    options.rowFactory = new App.view.MemberTimelineRowFactory;
+    return MemberTimeline.__super__.initialize.call(this, options);
+  };
+  return MemberTimeline;
+})();

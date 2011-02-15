@@ -14,13 +14,9 @@
   %script{:src => google_js_src, :type => 'text/javascript'}
 
   :javascript
-    require({ baseUrl: "/javascripts/compiled" }, ["order!vendor/underscore", "order!vendor/backbone", "order!app/controllers/feedbacks/dashboard_controller", "order!app/models/feedback_subject_factory"], function(underscore, backbone, FeedbackDashboardController, FeedbackSubjectFactory) {
 
-      Backbone.emulateHTTP = true;
+    Backbone.emulateHTTP = true;
 
-      var feedbackDashboardController = new FeedbackDashboardController({
-        subject: FeedbackSubjectFactory.getSubject(#{subject.to_feedback_subject_json})
-      });
-
+    var feedbackDashboardController = new App.controller.FeedbackDashboard({
+      subject: App.model.FeedbackSubjectFactory.getSubject(#{subject.to_feedback_subject_json})
     });
-
