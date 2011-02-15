@@ -1,4 +1,3 @@
-var FeedbackSubject;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -7,7 +6,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-FeedbackSubject = (function() {
+App.model.FeedbackSubject = (function() {
   function FeedbackSubject() {
     FeedbackSubject.__super__.constructor.apply(this, arguments);
   }
@@ -15,7 +14,7 @@ FeedbackSubject = (function() {
   FeedbackSubject.prototype.initialize = function(options) {
     FeedbackSubject.__super__.initialize.call(this, options);
     if (this.get('feedbacks') != null) {
-      this.feedbacks = new FeedbackList(this.get('feedbacks'));
+      this.feedbacks = new App.model.FeedbackList(this.get('feedbacks'));
       this.feedbacks.url = options.list_url;
       this.bind('add:feedback', __bind(function(feedback_json) {
         this.set(feedback_json.subject);

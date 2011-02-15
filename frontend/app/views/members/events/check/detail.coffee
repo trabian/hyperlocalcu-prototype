@@ -13,7 +13,7 @@ class App.view.CheckDetail extends App.view.EventDetail
     events: 
       "click .report-problems": 'toggleCheckCommentView'
 
-    template: Handlebars.compile(template)
+    templatePath: 'members/events/check/detail'
 
   toggleCheckCommentView: =>
     if @checkCommentView? && @checkCommentView.isActive() then @checkCommentView.hide() else this.showCheckCommentView()
@@ -31,15 +31,23 @@ class App.view.CheckDetail extends App.view.EventDetail
   showCheckCommentView: =>
 
     if @checkCommentView?
+
       @checkCommentView.show()
+
     else
+
       @checkCommentView = new App.view.Comment
         model: @model
         commentField: 'check_image_comment'
         title: 'Problems with the check image?'
         buttonText: 'Report problem'
 
+      @checkCommentView.bind 'show', @resize
+      @checkCommentView.bind 'hide', @resize
+
       this.$('.check-image').append @checkCommentView.render().el
+
+      @checkCommentView.trigger 'show'
 
   addMerchantSearchView: =>
     @merchantSearchView = new App.view.MerchantSearch

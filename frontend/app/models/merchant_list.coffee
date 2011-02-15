@@ -1,17 +1,15 @@
-define ['app/lib/models/custom_sync'], (CustomSync) ->
+class App.model.EventMerchant extends Backbone.Model
 
-  class EventMerchant extends Backbone.Model
+  initialize: ->
 
-    initialize: ->
+    this.sync = App.model.CustomSync
 
-      this.sync = CustomSync
+  toUpdateJSON: =>
+    merchant:
+      this.toJSON()
 
-    toUpdateJSON: =>
-      merchant:
-        this.toJSON()
+class App.model.MerchantList extends Backbone.Collection
 
-  class MerchantList extends Backbone.Collection
+  url: '/merchants'
 
-    url: '/merchants'
-
-    model: EventMerchant
+  model: App.model.EventMerchant

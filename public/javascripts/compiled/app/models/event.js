@@ -30,7 +30,7 @@ App.model.Event = (function() {
     return this.bind('change', this.trackEventActivity);
   };
   Event.prototype.initializeDetails = function() {
-    this.feedbacks = new FeedbackList(this.get('feedbacks'), {
+    this.feedbacks = new App.model.FeedbackList(this.get('feedbacks'), {
       event: this
     });
     return this.feedbacks.url = "/events/" + this.id + "/feedbacks";

@@ -23,7 +23,7 @@ App.view.CheckDetail = (function() {
     events: {
       "click .report-problems": 'toggleCheckCommentView'
     },
-    template: Handlebars.compile(template)
+    templatePath: 'members/events/check/detail'
   };
   CheckDetail.prototype.toggleCheckCommentView = function() {
     if ((this.checkCommentView != null) && this.checkCommentView.isActive()) {
@@ -50,7 +50,10 @@ App.view.CheckDetail = (function() {
         title: 'Problems with the check image?',
         buttonText: 'Report problem'
       });
-      return this.$('.check-image').append(this.checkCommentView.render().el);
+      this.checkCommentView.bind('show', this.resize);
+      this.checkCommentView.bind('hide', this.resize);
+      this.$('.check-image').append(this.checkCommentView.render().el);
+      return this.checkCommentView.trigger('show');
     }
   };
   CheckDetail.prototype.addMerchantSearchView = function() {

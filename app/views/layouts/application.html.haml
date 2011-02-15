@@ -20,7 +20,9 @@
     #sidebar
       = yield(:sidebar)
 
-  = include_javascripts :common, :timeline
+  %script{:src => "http://js.pusherapp.com/1.6/pusher.min.js", :type => 'text/javascript'}
+
+  = include_javascripts :timeline
 
   :javascript
 

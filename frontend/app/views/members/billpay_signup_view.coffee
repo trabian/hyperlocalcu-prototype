@@ -5,7 +5,9 @@ class App.view.BillpaySignup extends Backbone.View
   events:
     "click .form button": "submitForm"
 
-  template: Handlebars.compile(template)
+  initialize: (options) ->
+
+    @template = App.templates['members/billpay_signup']
 
   render: ->
 

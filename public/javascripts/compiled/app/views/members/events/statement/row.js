@@ -11,6 +11,6 @@ App.view.StatementRow = (function() {
     StatementRow.__super__.constructor.apply(this, arguments);
   }
   __extends(StatementRow, App.view.EventRow);
-  StatementRow.prototype.template = Handlebars.compile(template);
+  StatementRow.prototype.templatePath = 'members/events/statement/row';
   return StatementRow;
 })();

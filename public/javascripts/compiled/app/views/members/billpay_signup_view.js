@@ -17,7 +17,9 @@ App.view.BillpaySignup = (function() {
   BillpaySignup.prototype.events = {
     "click .form button": "submitForm"
   };
-  BillpaySignup.prototype.template = Handlebars.compile(template);
+  BillpaySignup.prototype.initialize = function(options) {
+    return this.template = App.templates['members/billpay_signup'];
+  };
   BillpaySignup.prototype.render = function() {
     mpq.push([
       "track", "View Billpay Signup", {

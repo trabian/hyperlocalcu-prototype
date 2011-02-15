@@ -13,8 +13,8 @@ App.view.Social = (function() {
   __extends(Social, Backbone.View);
   Social.prototype.tagName = 'div';
   Social.prototype.className = 'social';
-  Social.prototype.template = Handlebars.compile(template);
   Social.prototype.render = function() {
+    this.template = App.templates['common/social/overview'];
     $(this.el).html(this.template(this.model.toDetailJSON()));
     if (this.model.twitter_username) {
       this.renderTwitter();

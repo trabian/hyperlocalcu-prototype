@@ -18,10 +18,15 @@ App.view.EventDetail = (function() {
   EventDetail.prototype.events = {
     "click .close": "close"
   };
-  EventDetail.prototype.template = Handlebars.compile(template);
+  EventDetail.prototype.templatePath = 'members/events/detail';
   EventDetail.prototype.initialize = function() {
-    if ((this.eventTypeOptions != null) && (this.eventTypeOptions.events != null)) {
-      return this.delegateEvents(this.eventTypeOptions.events);
+    if (this.eventTypeOptions != null) {
+      if (this.eventTypeOptions.events != null) {
+        this.delegateEvents(this.eventTypeOptions.events);
+      }
+      if (this.eventTypeOptions.templatePath != null) {
+        return this.eventTypeOptions.template = App.templates[this.eventTypeOptions.templatePath];
+      }
     }
   };
   EventDetail.prototype.close = function() {
@@ -39,7 +44,7 @@ App.view.EventDetail = (function() {
     ]);
     this.model.initializeDetails();
     detailJSON = this.model.toDetailJSON();
-    $(this.el).html(this.template(detailJSON));
+    $(this.el).html(App.templates[this.templatePath](detailJSON));
     this.header = this.$('#event-header');
     this.detail = this.$('#event-detail');
     this.wrapper = this.$('#event-detail-wrapper');
@@ -54,6 +59,8 @@ App.view.EventDetail = (function() {
     if ((this.eventTypeOptions != null) && (this.eventTypeOptions.template != null)) {
       this.detail.append(this.eventTypeOptions.template(detailJSON));
     }
+    this.show();
+    this.wrapper.jScrollPane();
     if (this.renderDetail != null) {
       this.renderDetail();
     }
@@ -65,8 +72,6 @@ App.view.EventDetail = (function() {
         include_summary_view: true
       });
     }
-    this.show();
-    this.wrapper.jScrollPane();
     this.scroll = this.wrapper.data('jsp');
     shim = 45;
     if (this.footer.is(':visible')) {

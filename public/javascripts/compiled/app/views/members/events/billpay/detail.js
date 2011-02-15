@@ -12,7 +12,7 @@ App.view.BillpayDetail = (function() {
   }
   __extends(BillpayDetail, App.view.EventDetail);
   BillpayDetail.prototype.eventTypeOptions = {
-    template: Handlebars.compile(template)
+    templatePath: 'members/events/billpay/detail'
   };
   BillpayDetail.prototype.renderDetail = function() {
     if (this.model.get('vendor') != null) {

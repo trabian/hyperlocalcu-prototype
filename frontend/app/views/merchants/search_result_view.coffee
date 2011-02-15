@@ -9,7 +9,7 @@ class App.view.MerchantSearchResult extends Backbone.View
   events:
     'click': 'select'
 
-  template: Handlebars.compile(template)
+  templatePath: 'merchants/search_result'
 
   select: =>
 
@@ -39,7 +39,7 @@ class App.view.MerchantSearchResult extends Backbone.View
       title: result.titleNoFormatting
       address: result.addressLines.join('<br />')
 
-    $(@el).html @template(context)
+    $(@el).html App.templates[@templatePath](context)
 
     return this
 

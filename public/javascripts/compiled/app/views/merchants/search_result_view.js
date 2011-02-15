@@ -17,7 +17,7 @@ App.view.MerchantSearchResult = (function() {
   MerchantSearchResult.prototype.events = {
     'click': 'select'
   };
-  MerchantSearchResult.prototype.template = Handlebars.compile(template);
+  MerchantSearchResult.prototype.templatePath = 'merchants/search_result';
   MerchantSearchResult.prototype.select = function() {
     var params, result;
     result = this.options.result;
@@ -43,7 +43,7 @@ App.view.MerchantSearchResult = (function() {
       title: result.titleNoFormatting,
       address: result.addressLines.join('<br />')
     };
-    $(this.el).html(this.template(context));
+    $(this.el).html(App.templates[this.templatePath](context));
     return this;
   };
   return MerchantSearchResult;

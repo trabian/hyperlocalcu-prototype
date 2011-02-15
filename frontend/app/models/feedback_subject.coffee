@@ -1,11 +1,11 @@
-class FeedbackSubject extends Backbone.Model
+class App.model.FeedbackSubject extends Backbone.Model
 
   initialize: (options) ->
 
     super(options)
 
     if this.get('feedbacks')?
-      @feedbacks = new FeedbackList this.get('feedbacks')
+      @feedbacks = new App.model.FeedbackList this.get('feedbacks')
 
       @feedbacks.url = options.list_url
 

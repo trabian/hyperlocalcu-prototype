@@ -2,9 +2,9 @@
 
 class App.view.FeedbackSubjectOverview extends Backbone.View
 
-  template: Handlebars.compile(template)
-
   initialize: (options) ->
+
+    @template = App.templates['feedback_subjects/overview']
 
     @model.bind 'change', =>
       this.render()

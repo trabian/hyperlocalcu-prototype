@@ -17,3 +17,4 @@ App.lib.Socket = (function() {
   };
   return Socket;
 })();
+App.socket = new App.lib.Socket;

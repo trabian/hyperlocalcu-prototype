@@ -1,16 +1,14 @@
-#define ["text!views/feedback/form.handlebars?v=4", "app/views/common/feedback/rating_view", "vendor/handlebars", "vendor/jquery-ui"], (template, RatingView) ->
-
 class App.view.Feedback extends Backbone.View
 
   tagName: 'div'
 
   className: 'feedback'
 
-  template: Handlebars.compile(template)
-
   initialize: (options)->
 
     super(options)
+
+    @template = App.templates['common/feedback/feedback']
 
     @subject = @model.subject
     @question = options.question || @subject.get('question')

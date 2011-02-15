@@ -1,14 +1,12 @@
-#define ["text!views/social/overview.handlebars?v=1", "vendor/jquery-tweet", "vendor/jquery-timeago", "vendor/date", "vendor/handlebars"], (template) ->
-
 class App.view.Social extends Backbone.View
 
   tagName: 'div'
 
   className: 'social'
 
-  template: Handlebars.compile(template)
-
   render: ->
+
+    @template = App.templates['common/social/overview']
 
     $(@el).html @template(@model.toDetailJSON())
 

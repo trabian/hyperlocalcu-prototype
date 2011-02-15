@@ -1,0 +1,30 @@
+<div id="event-header">
+  <div class="top">
+    <div class="date">{{ formatted_date }}</div>
+    <a href="#" class="close">Close</a>
+  </div>
+
+  <div class="name-and-amount">
+
+    <div class="amount">{{{ formatted_amount }}}</div>
+
+    <h3>{{ description }}</h3>
+
+  </div>
+</div>
+
+<div id="event-detail-wrapper">
+  <div class="{{ event_type }}" id="event-detail">
+    {{#address}}
+      <div class="location">
+        <div class="map"><img src="{{ ../map }}" /></div>
+        <div class="address">{{{ . }}}</div>
+      </div>
+    {{/address}}
+  </div>
+</div>
+
+<div id="event-footer" style="display: none;">
+
+</div>
+

@@ -18,7 +18,7 @@ App.controller.AvailableServices = (function() {
     "billpay/no": 'rejectBillpay'
   };
   AvailableServices.prototype.signupForBillpay = function() {
-    this.billpaySignupView || (this.billpaySignupView = new App.BillpaySignupView);
+    this.billpaySignupView || (this.billpaySignupView = new App.view.BillpaySignup);
     return this.billpaySignupView.render();
   };
   AvailableServices.prototype.rejectBillpay = function() {

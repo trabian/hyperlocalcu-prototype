@@ -16,7 +16,7 @@ App.view.CardDetail = (function() {
     return this.model.bind('change:merchant', this.render);
   };
   CardDetail.prototype.eventTypeOptions = {
-    template: Handlebars.compile(template)
+    templatePath: 'members/events/card/detail'
   };
   CardDetail.prototype.renderDetail = function() {
     this.$('.receipt-image a').colorbox();

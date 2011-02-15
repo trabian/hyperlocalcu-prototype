@@ -20,24 +20,20 @@ App.view.MerchantSearch = (function() {
     'keypress input.search-field': 'searchOnEnter',
     'click li': 'chooseLocation'
   };
-  MerchantSearch.prototype.templateWithOptions = Handlebars.compile(template_with_options);
+  MerchantSearch.prototype.templatePath = 'merchants/search_with_options';
   MerchantSearch.prototype.initialize = function(options) {
     return this.defaultSearch = this.model.get('name') != null ? "" + (this.model.get('name')) + " in " + (this.model.member.cityState()) : null;
   };
   MerchantSearch.prototype.render = function() {
-    $(this.el).html(this.templateWithOptions({
+    $(this.el).html(App.templates[this.templatePath]({
       defaultSearch: this.defaultSearch,
       searchPrompt: this.options.searchPrompt
     }));
+    this.$('a.search').button();
     this.resultsDiv = this.$('.search-results');
     this.resultsList = this.resultsDiv.find('ul');
     this.resultsDiv.jScrollPane();
     this.resultsScroll = this.resultsDiv.data('jsp');
-    this.$('button').button({
-      icons: {
-        primary: 'ui-icon-search'
-      }
-    });
     if (this.model.get('name') != null) {
       this.search();
     } else {

@@ -12,7 +12,7 @@ class App.model.Event extends Backbone.Model
 
   initializeDetails: =>
 
-    @feedbacks = new FeedbackList this.get('feedbacks'),
+    @feedbacks = new App.model.FeedbackList this.get('feedbacks'),
       event: this
   
     @feedbacks.url = "/events/#{@id}/feedbacks"

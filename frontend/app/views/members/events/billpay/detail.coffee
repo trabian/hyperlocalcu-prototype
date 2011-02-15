@@ -3,7 +3,7 @@
 class App.view.BillpayDetail extends App.view.EventDetail
 
   eventTypeOptions:
-    template: Handlebars.compile(template)
+    templatePath: 'members/events/billpay/detail'
 
   renderDetail: =>
     if @model.get('vendor')?

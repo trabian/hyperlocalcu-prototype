@@ -2,4 +2,4 @@
 
 class App.view.StatementRow extends App.view.EventRow
 
-  template: Handlebars.compile(template)
+  templatePath: 'members/events/statement/row'

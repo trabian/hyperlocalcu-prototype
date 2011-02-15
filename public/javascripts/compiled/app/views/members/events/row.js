@@ -17,8 +17,8 @@ App.view.EventRow = (function() {
   };
   EventRow.prototype.tagName = 'tr';
   EventRow.prototype.className = 'withdrawal';
-  EventRow.prototype.template = Handlebars.compile(template);
   EventRow.prototype.initialize = function() {
+    this.template = App.templates['members/events/row'];
     this.model.bind('change:selected', this.changeSelection);
     this.model.bind('change', this.onChange);
     return this.render();

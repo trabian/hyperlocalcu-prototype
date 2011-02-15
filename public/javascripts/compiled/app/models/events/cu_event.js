@@ -6,11 +6,11 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 };
-App.CUEvent = (function() {
+App.model.CUEvent = (function() {
   function CUEvent() {
     CUEvent.__super__.constructor.apply(this, arguments);
   }
-  __extends(CUEvent, App.Event);
+  __extends(CUEvent, App.model.Event);
   CUEvent.prototype.initialize = function() {
     CUEvent.__super__.initialize.call(this);
     this.twitter_username = 'VantageCU';

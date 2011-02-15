@@ -11,7 +11,7 @@ App.model.FeedbackList = (function() {
     this.for_subject = __bind(this.for_subject, this);;    FeedbackList.__super__.constructor.apply(this, arguments);
   }
   __extends(FeedbackList, Backbone.Collection);
-  FeedbackList.prototype.model = Feedback;
+  FeedbackList.prototype.model = App.model.Feedback;
   FeedbackList.prototype.initialize = function(collection, options) {
     return this.event = options.event;
   };

@@ -16,4 +16,4 @@ class App.controller.FeedbackDashboard extends App.controller.Timeline
     @timeline = new App.view.FeedbackTimeline
       collection: @subject.feedbacks
 
-    socket.listenTo @subject
+    App.socket.listenTo @subject

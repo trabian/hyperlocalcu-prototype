@@ -1,16 +1,15 @@
-#define ['text!views/timeline/events/row.handlebars?v=3', 'vendor/handlebars'], (template) ->
-
 class App.view.EventRow extends Backbone.View
 
   events:
     click: "toggleSelectOne"
 
   tagName: 'tr'
+
   className: 'withdrawal'
 
-  template: Handlebars.compile(template)
-
   initialize: ->
+
+    @template = App.templates['members/events/row']
 
     @model.bind 'change:selected', @changeSelection
 

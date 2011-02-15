@@ -1,5 +1,3 @@
-#define ["http://js.pusherapp.com/1.6/pusher.min.js"], (pusher) ->
-
 class App.lib.Socket
 
   listenTo: (model) =>
@@ -13,3 +11,5 @@ class App.lib.Socket
 
   channelName: (model) =>
     model.url().replace(/^\//, '').replace(/\//, '_')
+
+App.socket = new App.lib.Socket

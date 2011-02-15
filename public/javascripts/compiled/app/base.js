@@ -1,2 +1,7 @@
 var App;
-App = {};
+App = {
+  model: {},
+  controller: {},
+  view: {},
+  lib: {}
+};

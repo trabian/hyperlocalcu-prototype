@@ -1,12 +1,10 @@
 class App.view.FeedbackSummary extends Backbone.View
 
   initialize: (options) ->
-    @collection = new FeedbackList
+    @collection = new App.model.FeedbackList
 
   render: =>
 
-    alert @collection.length
-
-    $(@el).html '<div>summary</div>'
+    #$(@el).html '<div>summary</div>'
 
     this

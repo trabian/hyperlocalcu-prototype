@@ -1,7 +1,7 @@
 # The collection of [events](event.html) is backed by a JSON store.
 class App.model.FeedbackList extends Backbone.Collection
 
-  model: Feedback
+  model: App.model.Feedback
 
   initialize: (collection, options) ->
     @event = options.event

@@ -3,11 +3,15 @@ class App.view.EventDetail extends Backbone.View
   events:
     "click .close": "close"
 
-  template: Handlebars.compile(template)
+  templatePath: 'members/events/detail'
 
   initialize: ->
-    if @eventTypeOptions? and @eventTypeOptions.events?
-      this.delegateEvents(@eventTypeOptions.events)
+
+    if @eventTypeOptions?
+      if @eventTypeOptions.events?
+        this.delegateEvents(@eventTypeOptions.events)
+      if @eventTypeOptions.templatePath?
+        @eventTypeOptions.template = App.templates[@eventTypeOptions.templatePath]
 
   close: =>
     @model.set 'selected': false
@@ -23,7 +27,7 @@ class App.view.EventDetail extends Backbone.View
 
     detailJSON = @model.toDetailJSON()
 
-    $(@el).html @template(detailJSON)
+    $(@el).html App.templates[@templatePath](detailJSON)
 
     @header = this.$('#event-header')
     @detail = this.$('#event-detail')
@@ -40,6 +44,10 @@ class App.view.EventDetail extends Backbone.View
     if @eventTypeOptions? and @eventTypeOptions.template?
       @detail.append @eventTypeOptions.template(detailJSON)
 
+    this.show()
+
+    @wrapper.jScrollPane()
+
     if @renderDetail?
       this.renderDetail()
 
@@ -49,10 +57,6 @@ class App.view.EventDetail extends Backbone.View
     if @model.get('merchant')?
       this.addLocationFeedbackView 'merchant',
         include_summary_view: true
-
-    this.show()
-
-    @wrapper.jScrollPane()
 
     @scroll = @wrapper.data('jsp')
 

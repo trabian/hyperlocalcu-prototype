@@ -13,8 +13,8 @@ App.view.FeedbackRow = (function() {
   __extends(FeedbackRow, Backbone.View);
   FeedbackRow.prototype.tagName = 'tr';
   FeedbackRow.prototype.className = 'feedback';
-  FeedbackRow.prototype.template = Handlebars.compile(template);
   FeedbackRow.prototype.initialize = function() {
+    this.template = App.templates['common/feedback/timeline/row'];
     this.model.bind('change', __bind(function() {
       return this.render();
     }, this));

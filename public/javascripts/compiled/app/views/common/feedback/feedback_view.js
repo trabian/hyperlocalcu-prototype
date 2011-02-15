@@ -13,9 +13,9 @@ App.view.Feedback = (function() {
   __extends(Feedback, Backbone.View);
   Feedback.prototype.tagName = 'div';
   Feedback.prototype.className = 'feedback';
-  Feedback.prototype.template = Handlebars.compile(template);
   Feedback.prototype.initialize = function(options) {
     Feedback.__super__.initialize.call(this, options);
+    this.template = App.templates['common/feedback/feedback'];
     this.subject = this.model.subject;
     return this.question = options.question || this.subject.get('question');
   };

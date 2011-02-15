@@ -26,9 +26,9 @@ App.view.Comment = (function() {
     "click button": "submitComment"
   };
   Comment.prototype.initialize = function(options) {
+    this.template = App.templates['common/feedback/comment'];
     return this.commentField = this.options.commentField;
   };
-  Comment.prototype.template = Handlebars.compile(template);
   Comment.prototype.render = function() {
     $(this.el).html(this.template({
       comment: this.model.get(this.commentField),

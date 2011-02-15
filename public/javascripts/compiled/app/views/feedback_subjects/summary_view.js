@@ -12,11 +12,9 @@ App.view.FeedbackSummary = (function() {
   }
   __extends(FeedbackSummary, Backbone.View);
   FeedbackSummary.prototype.initialize = function(options) {
-    return this.collection = new FeedbackList;
+    return this.collection = new App.model.FeedbackList;
   };
   FeedbackSummary.prototype.render = function() {
-    alert(this.collection.length);
-    $(this.el).html('<div>summary</div>');
     return this;
   };
   return FeedbackSummary;

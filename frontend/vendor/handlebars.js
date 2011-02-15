@@ -485,8 +485,3 @@ Handlebars.Compiler.prototype = {
     }
   }
 };
-
-// CommonJS Exports
-var exports = exports || {};
-exports['compile'] = Handlebars.compile;
-exports['compileToString'] = Handlebars.compileToString;

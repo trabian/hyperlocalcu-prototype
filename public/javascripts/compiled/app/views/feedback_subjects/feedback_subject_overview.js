@@ -11,8 +11,8 @@ App.view.FeedbackSubjectOverview = (function() {
     this.render = __bind(this.render, this);;    FeedbackSubjectOverview.__super__.constructor.apply(this, arguments);
   }
   __extends(FeedbackSubjectOverview, Backbone.View);
-  FeedbackSubjectOverview.prototype.template = Handlebars.compile(template);
   FeedbackSubjectOverview.prototype.initialize = function(options) {
+    this.template = App.templates['feedback_subjects/overview'];
     return this.model.bind('change', __bind(function() {
       return this.render();
     }, this));

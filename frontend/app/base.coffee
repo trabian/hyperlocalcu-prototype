@@ -1,6 +1,6 @@
 App = {
-  model = {}
-  controller = {}
-  view = {}
-  lib = {}
+  model: {}
+  controller: {}
+  view: {}
+  lib: {}
 }

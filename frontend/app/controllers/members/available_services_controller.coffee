@@ -7,7 +7,7 @@ class App.controller.AvailableServices extends Backbone.Controller
     "billpay/no": 'rejectBillpay'
 
   signupForBillpay: =>
-    @billpaySignupView or= new App.BillpaySignupView
+    @billpaySignupView or= new App.view.BillpaySignup
     @billpaySignupView.render()
 
   rejectBillpay: =>

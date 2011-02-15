@@ -22,7 +22,7 @@ App.controller.FeedbackDashboard = (function() {
     this.timeline = new App.view.FeedbackTimeline({
       collection: this.subject.feedbacks
     });
-    return socket.listenTo(this.subject);
+    return App.socket.listenTo(this.subject);
   };
   return FeedbackDashboard;
 })();

@@ -36,7 +36,7 @@ Hyperlocalcu::Application.routes.draw do
 
   devise_for :users
 
-  root :to => "events#index", :account_id => 1
+  root :to => "accounts#show", :id => 1
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

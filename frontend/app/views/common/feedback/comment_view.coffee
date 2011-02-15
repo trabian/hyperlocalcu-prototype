@@ -1,5 +1,5 @@
 #define ["text!views/feedback/comment.handlebars?v=4"], (template) ->
-
+ 
 class App.view.Comment extends Backbone.View
 
   tagName: 'div'
@@ -12,9 +12,10 @@ class App.view.Comment extends Backbone.View
     "click button": "submitComment"
 
   initialize: (options) ->
-    @commentField = @options.commentField
 
-  template: Handlebars.compile(template)
+    @template = App.templates['common/feedback/comment']
+
+    @commentField = @options.commentField
 
   render: =>
 
@@ -33,6 +34,7 @@ class App.view.Comment extends Backbone.View
     return this
 
   updateButton: =>
+
     if $.trim(this.$('textarea').val()).length > 0
       this.$('button').button('enable')
     else

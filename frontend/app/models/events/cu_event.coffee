@@ -1,4 +1,4 @@
-class App.CUEvent extends App.Event
+class App.model.CUEvent extends App.model.Event
 
   initialize: ->
 

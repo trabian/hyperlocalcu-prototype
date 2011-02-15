@@ -9,7 +9,7 @@ class App.view.MerchantSearch extends Backbone.View
     'keypress input.search-field': 'searchOnEnter'
     'click li': 'chooseLocation'
 
-  templateWithOptions: Handlebars.compile(template_with_options)
+  templatePath: 'merchants/search_with_options'
 
   initialize: (options) ->
 
@@ -17,9 +17,13 @@ class App.view.MerchantSearch extends Backbone.View
 
   render: ->
 
-    $(@el).html @templateWithOptions
+    $(@el).html App.templates[@templatePath]
       defaultSearch: @defaultSearch
       searchPrompt: @options.searchPrompt
+
+    this.$('a.search').button()
+      icons:
+        primary: 'ui-icon-search'
 
     @resultsDiv = this.$('.search-results')
     @resultsList = @resultsDiv.find('ul')
@@ -27,10 +31,6 @@ class App.view.MerchantSearch extends Backbone.View
     @resultsDiv.jScrollPane()
 
     @resultsScroll = @resultsDiv.data('jsp')
-
-    this.$('button').button
-      icons:
-        primary: 'ui-icon-search'
 
     if @model.get('name')?
       this.search()
