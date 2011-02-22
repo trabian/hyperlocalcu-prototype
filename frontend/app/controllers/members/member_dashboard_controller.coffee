@@ -1,6 +1,6 @@
 # The Member Timeline Controller is the main controller for the member timeline
 
-class App.controller.MemberTimeline extends App.controller.Timeline
+class App.controller.MemberDashboard extends App.controller.Timeline
 
   initialize: (options) ->
 
@@ -11,6 +11,11 @@ class App.controller.MemberTimeline extends App.controller.Timeline
 
     @timeline = new App.view.MemberTimeline
       collection: @events
+
+    @accountView = new App.view.Account
+      model: @account
+
+    $('#sidebar').prepend @accountView.render().el
 
   showEventDetail: (event) =>
 
