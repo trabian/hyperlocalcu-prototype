@@ -1,0 +1,36 @@
+#timeline-loading Loading...
+
+%table#timeline{:style => 'display: none;'}
+  %thead.ui-widget-header
+    %tr
+      %td.date Date
+      %td.name Description
+      %td.amount Amount
+  %tbody.ui-widget-content
+
+= content_for :sidebar do
+  #event-detail-view{:style => "display: none;"}
+
+= content_for :head do
+  = render "layouts/mixpanel"
+
+= content_for :javascript do
+
+  %script{:src => google_js_src, :type => 'text/javascript'}
+
+  :javascript
+
+    Backbone.emulateHTTP = true;
+
+    App.currentMember = new App.model.Member(#{@member.to_json(:include => [:accounts])});
+
+    var eventList = new App.model.EventList();
+    eventList.url = "/accounts/#{@member.accounts.first.id}/events";
+
+    var dashboardController = new App.controller.MemberDashboard({
+      fetchOnInit: true,
+      member: App.currentMember,
+      events: eventList
+    });
+
+    var availableServicesController = new App.controller.AvailableServices();

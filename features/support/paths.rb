@@ -11,8 +11,8 @@ module NavigationHelpers
     when /the home\s?page/
       '/'
 
-    when /my account page/
-      account_path(@my_account)
+    when /my dashboard page/
+      member_path(@current_user.member)
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

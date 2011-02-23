@@ -79,6 +79,7 @@ GEM
       cucumber (>= 0.8.0)
     cucumber_factory (1.7.4)
     culerity (0.2.15)
+    database_cleaner (0.5.0)
     devise (1.1.5)
       bcrypt-ruby (~> 2.1.2)
       warden (~> 1.0.2)
@@ -108,6 +109,9 @@ GEM
     guard-compass (0.0.6)
       compass (>= 0.10.5)
       guard (>= 0.2.1)
+    guard-cucumber (0.2.2)
+      cucumber (~> 0.10.0)
+      guard (~> 0.2.2)
     guard-jammit (0.1.0)
       guard
       jammit
@@ -219,6 +223,7 @@ DEPENDENCIES
   compass
   cucumber-rails (>= 0.3.2)
   cucumber_factory
+  database_cleaner
   devise
   evergreen
   factory_girl_rails
@@ -228,6 +233,7 @@ DEPENDENCIES
   guard
   guard-coffeescript!
   guard-compass
+  guard-cucumber
   guard-jammit
   guard-rspec
   guard-shell

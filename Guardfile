@@ -71,25 +71,29 @@ end
   #watch('^server/(.*)\.rb')
 #end
 #
-guard 'spork' do
-  watch('config/application.rb')
-  watch('config/environment.rb')
-  watch(%r{^config/environments/.*\.rb$})
-  watch(%r{^config/initializers/.*\.rb$})
-  watch('spec/spec_helper.rb')
-end
+#guard 'spork', :wait => 60, :cucumber => true, :rspec => true do
+  #watch('config/application.rb')
+  #watch('config/environment.rb')
+  #watch(%r{^config/environments/.*\.rb$})
+  #watch(%r{^config/initializers/.*\.rb$})
+  #watch('spec/spec_helper.rb')
+#end
 
-guard 'rspec', :version => 2, :drb => true, :formatted => 'instafail' do
-  watch('^spec/(.*)_spec.rb')
-  watch('^lib/(.*)\.rb')                              { |m| "spec/lib/#{m[1]}_spec.rb" }
-  watch('^spec/spec_helper.rb')                       { "spec" }
+#guard 'rspec', :version => 2, :drb => false, :formatted => 'instafail' do
+  #watch('^spec/(.*)_spec.rb')
+  #watch('^lib/(.*)\.rb')                              { |m| "spec/lib/#{m[1]}_spec.rb" }
+  #watch('^spec/spec_helper.rb')                       { "spec" }
   
-  # Rails example
-  watch('^app/(.*)\.rb')                              { |m| "spec/#{m[1]}_spec.rb" }
-  # watch('^lib/(.*)\.rb')                              { |m| "spec/lib/#{m[1]}_spec.rb" }
-  watch('^config/routes.rb')                          { "spec/routing" }
-  watch('^app/controllers/application_controller.rb') { "spec/controllers" }
-  watch('^spec/factories.rb')                         { "spec/models" }
-end
+  ## Rails example
+  #watch('^app/(.*)\.rb')                              { |m| "spec/#{m[1]}_spec.rb" }
+  ## watch('^lib/(.*)\.rb')                              { |m| "spec/lib/#{m[1]}_spec.rb" }
+  #watch('^config/routes.rb')                          { "spec/routing" }
+  #watch('^app/controllers/application_controller.rb') { "spec/controllers" }
+  #watch('^spec/factories.rb')                         { "spec/models" }
+#end
 
-
+#guard 'cucumber', :drb => true do
+  #watch('^features/(.*).feature')
+  #watch('^features/support')                       { 'features' }
+  #watch('^features/step_definitions')              { 'features' }
+#end

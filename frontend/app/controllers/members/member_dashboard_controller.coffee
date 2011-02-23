@@ -9,11 +9,15 @@ class App.controller.MemberDashboard extends App.controller.Timeline
     this.bind 'select', @showEventDetail
     this.bind 'unselect', @hideEventDetail
 
+    @member = options.member
+
     @timeline = new App.view.MemberTimeline
       collection: @events
 
+    console.log @member.accounts
+
     @accountView = new App.view.Account
-      model: @account
+      collection: @member.accounts
 
     $('#sidebar').prepend @accountView.render().el
 

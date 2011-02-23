@@ -5,6 +5,7 @@ compress_assets: off
 
 javascripts:
   timeline:
+    - public/javascripts/compiled/vendor/firebugx.js
     - public/javascripts/compiled/vendor/underscore.js
     - public/javascripts/compiled/vendor/jquery-1.5.js
     - public/javascripts/compiled/vendor/jquery-ui.js

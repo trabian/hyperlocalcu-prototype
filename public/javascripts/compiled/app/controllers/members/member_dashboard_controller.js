@@ -16,11 +16,13 @@ App.controller.MemberDashboard = (function() {
     MemberDashboard.__super__.initialize.call(this, options);
     this.bind('select', this.showEventDetail);
     this.bind('unselect', this.hideEventDetail);
+    this.member = options.member;
     this.timeline = new App.view.MemberTimeline({
       collection: this.events
     });
+    console.log(this.member.accounts);
     this.accountView = new App.view.Account({
-      model: this.account
+      collection: this.member.accounts
     });
     return $('#sidebar').prepend(this.accountView.render().el);
   };
