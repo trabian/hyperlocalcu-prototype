@@ -11,5 +11,17 @@ App.model.Account = (function() {
     Account.__super__.constructor.apply(this, arguments);
   }
   __extends(Account, Backbone.Model);
+  Account.prototype.initialize = function() {
+    return this.refresh();
+  };
+  Account.prototype.refresh = function() {
+    this.subaccounts = new App.model.SubaccountList(this.get('subaccounts'));
+    this.shares = this.subaccounts.filter(function(subaccount) {
+      return subaccount.get('type') === 'share';
+    });
+    return this.loans = this.subaccounts.filter(function(subaccount) {
+      return subaccount.get('type') === 'loan';
+    });
+  };
   return Account;
 })();

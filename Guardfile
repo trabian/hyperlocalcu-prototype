@@ -5,11 +5,6 @@ guard 'coffeescript', :output => 'public/javascripts/compiled/app', :strip_leadi
   watch('^frontend/app/(.*)\.coffee')
 end
 
-guard 'jammit' do
-  watch('^public/javascripts/(.*)\.js')
-  watch('^frontend/app/(.*)\.coffee')
-end
-
 # Compile spec coffeescripts to client/spec/compiled.
 #guard 'coffeescript', :output => 'client/spec/compiled', :strip_leading_path => 'client/spec/coffee', :nowrap => true do
   #watch('^client/spec/coffee/(.*)\.coffee')
@@ -44,17 +39,28 @@ guard 'shell' do
   #watch('^frontend/app/(.*)\.coffee') do
     #`docco #{Dir.glob('frontend/app/**/*.coffee').join(' ')}`
   #end
-
-  watch('^public/assets/timeline.js') do
-    `echo "Running javascript specs" && rake spec:javascripts`
+  
+  watch('^public/javascripts/(.*)\.js') do
+    `bundle exec jammit`
   end
 
-  watch('^spec/javascripts/(.*)\.coffee') do
-    `echo "Running javascript specs" && rake spec:javascripts`
+  watch('^frontend/app/(.*)\.coffee') do
+    `bundle exec jammit`
   end
+
+  watch('^frontend/views/(.*)\.handlebars') do
+    `bundle exec jammit`
+  end
+
+  #watch('^public/assets/timeline.js') do
+    #`echo "Running javascript specs" && rake spec:javascripts`
+  #end
+
+  #watch('^spec/javascripts/(.*)\.coffee') do
+    #`echo "Running javascript specs" && rake spec:javascripts`
+  #end
 
 end
-
 
 # Livereload is a Chrome (and Safari) extension for automatically reloading a
 # browser window as needed. The files watched below should trigger a refresh if
