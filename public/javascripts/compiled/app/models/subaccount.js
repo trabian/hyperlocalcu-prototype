@@ -11,5 +11,11 @@ App.model.Subaccount = (function() {
     Subaccount.__super__.constructor.apply(this, arguments);
   }
   __extends(Subaccount, Backbone.Model);
+  Subaccount.prototype.toViewJSON = function() {
+    return _.extend(this.toJSON(), {
+      formattedBalance: App.helper.currency.format(this.get('balance')),
+      formattedAvailableBalance: this.get('balance') === this.get('availableBalance') ? null : App.helper.currency.format(this.get('availableBalance'))
+    });
+  };
   return Subaccount;
 })();

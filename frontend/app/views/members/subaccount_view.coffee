@@ -7,7 +7,7 @@ class App.view.Subaccount extends Backbone.View
 
   render: =>
 
-    $(@el).html @template(@model.toJSON())
+    $(@el).html @template(@model.toViewJSON())
 
     return this
 

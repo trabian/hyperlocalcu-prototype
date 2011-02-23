@@ -16,6 +16,7 @@ App.model.Account = (function() {
   };
   Account.prototype.refresh = function() {
     this.subaccounts = new App.model.SubaccountList(this.get('subaccounts'));
+    this.subaccounts.account = this;
     this.shares = this.subaccounts.filter(function(subaccount) {
       return subaccount.get('type') === 'share';
     });

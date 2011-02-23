@@ -17,17 +17,25 @@ App.view.Account = (function() {
     return this.collection.bind('change:selected', this.render);
   };
   Account.prototype.render = function() {
-    var sharesView;
+    var loansView, sharesView;
     this.model = this.collection.current();
     $(this.el).html(this.template({
       current: this.model.toJSON()
     }));
     sharesView = new App.view.SubaccountList({
-      className: 'share',
-      title: "Shares",
+      model: this.model,
+      className: 'share-accounts',
+      title: "Share Accounts",
       subaccounts: this.model.shares
     });
     $(this.el).append(sharesView.render().el);
+    loansView = new App.view.SubaccountList({
+      model: this.model,
+      className: 'loan-accounts',
+      title: "Loan Accounts",
+      subaccounts: this.model.loans
+    });
+    $(this.el).append(loansView.render().el);
     return this;
   };
   return Account;

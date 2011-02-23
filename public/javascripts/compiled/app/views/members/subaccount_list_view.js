@@ -8,6 +8,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.view.SubaccountList = (function() {
   function SubaccountList() {
+    this.renderSubaccounts = __bind(this.renderSubaccounts, this);;
     this.render = __bind(this.render, this);;    SubaccountList.__super__.constructor.apply(this, arguments);
   }
   __extends(SubaccountList, Backbone.View);
@@ -16,7 +17,20 @@ App.view.SubaccountList = (function() {
   };
   SubaccountList.prototype.render = function() {
     $(this.el).html(this.template(this.options));
+    this.renderSubaccounts();
     return this;
+  };
+  SubaccountList.prototype.renderSubaccounts = function() {
+    return _.each(this.options.subaccounts, __bind(function(subaccount) {
+      var subaccountView;
+      subaccount.set({
+        'accountNumber': this.model.get('number')
+      });
+      subaccountView = new App.view.Subaccount({
+        model: subaccount
+      });
+      return $(this.el).append(subaccountView.render().el);
+    }, this));
   };
   return SubaccountList;
 })();

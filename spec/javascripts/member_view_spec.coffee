@@ -38,6 +38,13 @@ describe 'a member view with accounts', ->
               balance: -50012.34
               suffix: '13'
               type: 'loan'
+            },
+            {
+              id: 5
+              name: "Auto Loan"
+              balance: -3012.34
+              suffix: '14'
+              type: 'loan'
             }
           ]
         },
@@ -58,15 +65,15 @@ describe 'a member view with accounts', ->
 
   it 'should show the current primary account number', ->
 
-    expect($('#accounts .account-number').html()).toEqual('1234')
+    expect($('#accounts .account-number').html()).toEqual('#1234')
 
   it 'should change the current primary account number when a different account is selected', ->
 
-    expect($('#accounts .account-number').html()).toEqual('1234')
+    expect($('#accounts .account-number').html()).toEqual('#1234')
 
     @member.accounts.selectOne @member.accounts.get(2)
 
-    expect($('#accounts .account-number').html()).toEqual('2341')
+    expect($('#accounts .account-number').html()).toEqual('#2341')
 
   it "should show the current account's subshares split by share and loan", ->
 

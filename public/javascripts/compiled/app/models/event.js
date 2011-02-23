@@ -54,9 +54,7 @@ App.model.Event = (function() {
     return [year, month, day].join('-');
   };
   Event.prototype.formatCurrency = function(amount) {
-    var sign;
-    sign = amount < 0 ? '<span class="sign">-</span>' : '';
-    return "" + sign + "<span class='currency'>$</span>" + ($.currency(Math.abs(amount)));
+    return App.helper.currency.format(amount);
   };
   Event.prototype.formatDate = function(date, format) {
     format || (format = 'm/d/yy');

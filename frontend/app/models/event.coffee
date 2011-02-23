@@ -38,9 +38,7 @@ class App.model.Event extends Backbone.Model
     [year, month, day].join('-')
 
   formatCurrency: (amount) =>
-
-    sign = if amount < 0 then '<span class="sign">-</span>' else ''
-    "#{sign}<span class='currency'>$</span>#{$.currency(Math.abs(amount))}"
+    App.helper.currency.format(amount)
 
   formatDate: (date, format) ->
 

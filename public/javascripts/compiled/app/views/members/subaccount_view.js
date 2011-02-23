@@ -16,7 +16,7 @@ App.view.Subaccount = (function() {
     return this.template = App.templates['members/subaccount'];
   };
   Subaccount.prototype.render = function() {
-    $(this.el).html(this.template(this.model.toJSON()));
+    $(this.el).html(this.template(this.model.toViewJSON()));
     return this;
   };
   return Subaccount;
