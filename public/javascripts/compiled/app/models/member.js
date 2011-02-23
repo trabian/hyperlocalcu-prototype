@@ -11,6 +11,9 @@ App.model.Member = (function() {
     this.cityState = __bind(this.cityState, this);;    Member.__super__.constructor.apply(this, arguments);
   }
   __extends(Member, Backbone.Model);
+  Member.prototype.initialize = function() {
+    return this.accounts = new App.model.AccountList(this.get('accounts'));
+  };
   Member.prototype.cityState = function() {
     return [this.get('city'), this.get('region')].join(', ');
   };

@@ -1,6 +1,7 @@
 template_function: "Handlebars.compile"
 template_extension: "handlebars"
 template_namespace: "App.templates"
+compress_assets: off
 
 javascripts:
   timeline:
@@ -14,8 +15,8 @@ javascripts:
     - public/javascripts/compiled/vendor/*.js
     - public/javascripts/compiled/views/**/*.handlebars
     - public/javascripts/compiled/app/base.js
+    - public/javascripts/compiled/app/helpers/**/*.js
     - public/javascripts/compiled/app/lib/socket.js
-    - public/javascripts/compiled/app/models/timeline_event.js
     - public/javascripts/compiled/app/models/event.js
     - public/javascripts/compiled/app/models/event_factory.js
     - public/javascripts/compiled/app/models/events/cu_event.js

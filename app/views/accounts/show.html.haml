@@ -9,7 +9,6 @@
   %tbody.ui-widget-content
 
 = content_for :sidebar do
-  #overview
   #event-detail-view{:style => "display: none;"}
 
 = content_for :head do
@@ -28,7 +27,7 @@
     var eventList = new App.model.EventList();
     eventList.url = "/accounts/#{@account.id}/events";
 
-    var timelineController = new App.controller.MemberTimeline({
+    var dashboardController = new App.controller.MemberDashboard({
       fetchOnInit: true,
       events: eventList
     });

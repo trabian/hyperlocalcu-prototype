@@ -22,8 +22,26 @@ gem 'jammit'
 
 group :development, :test do
 
+  gem 'cucumber-rails', ">= 0.3.2"
+  gem 'rspec-rails', ">= 2.0.0"
+  gem 'cucumber_factory'
+  gem 'nokogiri'
+
+  #gem 'evergreen', :require => 'evergreen/rails', :path => '/Users/mattdean/dev/forks/evergreen'
+
+  gem 'evergreen', :require => 'evergreen/rails'
+
+  gem 'spork', '~> 0.9.0.rc'
+
+  gem 'guard-jammit'
+  gem 'guard-spork'
+  gem 'guard-rspec'
+
+  gem 'capybara'
+  
+  gem 'akephalos'
+
   gem 'qif'
-  gem 'rspec-rails'
 
   gem "backports"
   gem "growl"
