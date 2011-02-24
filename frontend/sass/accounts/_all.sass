@@ -19,31 +19,32 @@ $left_account_padding = 12px
       font-size: 15px
       margin: 0 0 0.1em
       padding-left: $left_account_padding
+    &.selected
+      .subaccounts
+        background: #f4f9ec
+        .subaccount
+          border: none
+          .balance
+            color: #00890b
+          &.selected
+            +box-shadow(#eee, 3px)
+            border: none
+            border: 1px solid #b4b4b4
+            border-width: 1px 1px 1px 0
+            background: #fff
+            padding: 0.7em 0.7em 0.7em 15px
+            padding-left: $left_account_padding + 1
+            margin: 0.3em 0
+            margin-right: -5px
+            position: relative
+            top: -1px
+            left: -$left_account_padding - 1
+            height: 100px
   .subaccounts
     border: 1px solid #b4b4b4
     border-width: 1px 0
     padding: 0.2em 0
     padding-left: $left_account_padding
-    &:hover, &.selected
-      background: #f4f9ec
-      .subaccount
-        border: none
-        .balance
-          color: #00890b
-        &:hover, &.selected
-          +box-shadow(#eee, 3px)
-          border: none
-          border: 1px solid #b4b4b4
-          border-width: 1px 1px 1px 0
-          background: #fff
-          padding: 0.7em 0.7em 0.7em 15px
-          padding-left: $left_account_padding + 1
-          margin: 0.3em 0
-          margin-right: -5px
-          position: relative
-          top: -1px
-          left: -$left_account_padding - 1
-          height: 100px
     .subaccount
       line-height: 1.5em
       padding: 1em 1.5em 1em 0

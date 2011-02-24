@@ -46,3 +46,12 @@ describe 'a subaccount view', ->
 
   it "should show the combined account number", ->
     expect($('#subaccount-1 .subaccount-number').text().trim()).toEqual("1234-56")
+
+  it "should have a class of 'selected' only when selected", ->
+
+    expect($(@view.el).is('.selected')).toBeFalsy()
+
+    @subaccount.set
+      'selected': true
+
+    expect($(@view.el).is('.selected')).toBeTruthy()

@@ -5,7 +5,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.prototype = new ctor;
   child.__super__ = parent.prototype;
   return child;
-};
+}, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 App.model.Account = (function() {
   function Account() {
     Account.__super__.constructor.apply(this, arguments);
@@ -15,14 +15,23 @@ App.model.Account = (function() {
     return this.refresh();
   };
   Account.prototype.refresh = function() {
+    var rawLoans, rawShares;
     this.subaccounts = new App.model.SubaccountList(this.get('subaccounts'));
     this.subaccounts.account = this;
-    this.shares = this.subaccounts.filter(function(subaccount) {
+    rawShares = this.subaccounts.filter(function(subaccount) {
       return subaccount.get('account_type') === 'share';
     });
-    return this.loans = this.subaccounts.filter(function(subaccount) {
+    this.shares = new App.model.SubaccountList(rawShares);
+    rawLoans = this.subaccounts.filter(function(subaccount) {
       return subaccount.get('account_type') === 'loan';
     });
+    this.loans = new App.model.SubaccountList(rawLoans);
+    return this.subaccounts.bind('selectOne', __bind(function(subaccount) {
+      var account_type;
+      account_type = subaccount.get('account_type');
+      this.shares.trigger('selectSubaccounts', account_type === 'share');
+      return this.loans.trigger('selectSubaccounts', account_type === 'loan');
+    }, this));
   };
   return Account;
 })();

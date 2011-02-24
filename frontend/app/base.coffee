@@ -1,5 +1,7 @@
 App = {
-  model: {}
+  model: {
+    extension: {}
+  }
   controller: {}
   view: {}
   lib: {}

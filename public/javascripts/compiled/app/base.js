@@ -1,6 +1,8 @@
 var App;
 App = {
-  model: {},
+  model: {
+    extension: {}
+  },
   controller: {},
   view: {},
   lib: {}

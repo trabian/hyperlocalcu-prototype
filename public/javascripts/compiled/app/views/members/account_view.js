@@ -17,30 +17,25 @@ App.view.Account = (function() {
     return this.collection.bind('change:selected', this.render);
   };
   Account.prototype.render = function() {
-    var loansView, sharesView;
     this.model = this.collection.current();
     $(this.el).html(this.template({
       current: this.model.toJSON()
     }));
-    if (!_.isEmpty(this.model.shares)) {
-      sharesView = new App.view.SubaccountList({
-        model: this.model,
-        className: 'share-accounts',
-        title: "Share Accounts",
-        subaccounts: this.model.shares
-      });
-      $(this.el).append(sharesView.render().el);
-    }
-    if (!_.isEmpty(this.model.loans)) {
-      loansView = new App.view.SubaccountList({
-        model: this.model,
-        className: 'loan-accounts',
-        title: "Loan Accounts",
-        subaccounts: this.model.loans
-      });
-      $(this.el).append(loansView.render().el);
-    }
+    this.addSubaccounts(this.model.shares, 'share-accounts', 'Share Accounts');
+    this.addSubaccounts(this.model.loans, 'loan-accounts', 'Loan Accounts');
     return this;
+  };
+  Account.prototype.addSubaccounts = function(collection, className, title) {
+    var listView;
+    if (!collection.isEmpty()) {
+      listView = new App.view.SubaccountList({
+        model: this.model,
+        className: className,
+        title: title,
+        collection: collection
+      });
+      return $(this.el).append(listView.render().el);
+    }
   };
   return Account;
 })();

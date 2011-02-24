@@ -2,23 +2,12 @@ class App.model.AccountList extends Backbone.Collection
 
   model: App.model.Account
 
-  # Provides the current selected account
-  selected: ->
-    this.filter (account) ->
-      account.get 'selected'
+  ## Provides the current selected account
+  #selected: ->
+    #this.filter (account) ->
+      #account.get 'selected'
 
-  current: ->
+  defaultSelected: ->
+    this.first()
 
-    selectedAccounts = this.selected()
-
-    if _.isEmpty(selectedAccounts)
-      return this.first()
-    else
-      return _.first(selectedAccounts)
-
-  selectOne: (account) ->
-    _.each this.selected(), (selectedAccount) ->
-      selectedAccount.set 'selected': false
-
-    if account?
-      account.set 'selected': true
+_.extend App.model.AccountList::, App.model.extension.Selectable

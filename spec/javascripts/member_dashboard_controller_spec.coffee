@@ -17,6 +17,13 @@ describe 'a member dashboard with accounts', ->
               balance: 1234.56
               suffix: '11'
               account_type: 'share'
+            },
+            {
+              id: 2
+              name: "Share Savings"
+              balance: 345.23
+              suffix: '01'
+              account_type: 'share'
             }
           ]
         }
@@ -30,5 +37,10 @@ describe 'a member dashboard with accounts', ->
     expect($('#accounts .account-number').html()).toEqual('#1234')
 
   it "should show the current account's subshares split by share and loan", ->
+    expect($('#accounts .share-accounts div.subaccount').length).toEqual(2)
 
-    expect($('#accounts .share-accounts div.subaccount').length).toEqual(1)
+  it "should allow a subaccount to be selected", ->
+
+    @dashboardController.selectSubaccount(2)
+
+    expect(@member.accounts.current().subaccounts.current().get('id')).toEqual(2)

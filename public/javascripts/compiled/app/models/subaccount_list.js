@@ -14,3 +14,4 @@ App.model.SubaccountList = (function() {
   SubaccountList.prototype.model = App.model.Subaccount;
   return SubaccountList;
 })();
+_.extend(App.model.SubaccountList.prototype, App.model.extension.Selectable);

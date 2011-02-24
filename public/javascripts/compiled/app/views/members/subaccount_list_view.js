@@ -13,7 +13,10 @@ App.view.SubaccountList = (function() {
   }
   __extends(SubaccountList, Backbone.View);
   SubaccountList.prototype.initialize = function(options) {
-    return this.template = App.templates['members/subaccount_list'];
+    this.template = App.templates['members/subaccount_list'];
+    return this.collection.bind('selectSubaccounts', __bind(function(selected) {
+      return $(this.el).toggleClass('selected', selected);
+    }, this));
   };
   SubaccountList.prototype.render = function() {
     $(this.el).html(this.template(this.options));
@@ -23,7 +26,7 @@ App.view.SubaccountList = (function() {
   SubaccountList.prototype.renderSubaccounts = function() {
     var subaccountList;
     subaccountList = this.$('.subaccounts');
-    return _.each(this.options.subaccounts, __bind(function(subaccount) {
+    return this.collection.each(__bind(function(subaccount) {
       var subaccountView;
       subaccount.set({
         'accountNumber': this.model.get('number')

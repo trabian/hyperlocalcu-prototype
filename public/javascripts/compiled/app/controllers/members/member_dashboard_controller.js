@@ -8,6 +8,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.controller.MemberDashboard = (function() {
   function MemberDashboard() {
+    this.selectSubaccount = __bind(this.selectSubaccount, this);;
     this.hideEventDetail = __bind(this.hideEventDetail, this);;
     this.showEventDetail = __bind(this.showEventDetail, this);;    MemberDashboard.__super__.constructor.apply(this, arguments);
   }
@@ -25,7 +26,9 @@ App.controller.MemberDashboard = (function() {
     this.accountView = new App.view.Account({
       collection: this.member.accounts
     });
-    return $('#sidebar').prepend(this.accountView.render().el);
+    $('#sidebar').prepend(this.accountView.render().el);
+    this.route('subaccounts/:subaccount_id', 'selectSubaccount', this.selectSubaccount);
+    return Backbone.history.start();
   };
   MemberDashboard.prototype.showEventDetail = function(event) {
     var detail_view_class;
@@ -45,6 +48,11 @@ App.controller.MemberDashboard = (function() {
   };
   MemberDashboard.prototype.hideEventDetail = function(event) {
     return this.detailView.hide();
+  };
+  MemberDashboard.prototype.selectSubaccount = function(subaccountId) {
+    var subaccounts;
+    subaccounts = this.member.accounts.current().subaccounts;
+    return subaccounts.selectOne(subaccounts.get(subaccountId));
   };
   return MemberDashboard;
 })();

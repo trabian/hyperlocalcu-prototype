@@ -20,6 +20,10 @@ class App.controller.MemberDashboard extends App.controller.Timeline
 
     $('#sidebar').prepend @accountView.render().el
 
+    this.route 'subaccounts/:subaccount_id', 'selectSubaccount', @selectSubaccount
+
+    Backbone.history.start()
+
   showEventDetail: (event) =>
 
     @detail_views ||=
@@ -40,3 +44,8 @@ class App.controller.MemberDashboard extends App.controller.Timeline
   hideEventDetail: (event) =>
     @detailView.hide()
 
+  selectSubaccount: (subaccountId) =>
+
+    subaccounts = @member.accounts.current().subaccounts
+
+    subaccounts.selectOne(subaccounts.get(subaccountId))

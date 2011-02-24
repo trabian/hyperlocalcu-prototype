@@ -10,8 +10,19 @@ class App.model.Account extends Backbone.Model
 
     @subaccounts.account = this
 
-    @shares = @subaccounts.filter (subaccount) ->
+    rawShares = @subaccounts.filter (subaccount) ->
       subaccount.get('account_type') == 'share'
 
-    @loans = @subaccounts.filter (subaccount) ->
+    @shares = new App.model.SubaccountList rawShares
+
+    rawLoans = @subaccounts.filter (subaccount) ->
       subaccount.get('account_type') == 'loan'
+
+    @loans = new App.model.SubaccountList rawLoans
+
+    @subaccounts.bind 'selectOne', (subaccount) =>
+ 
+      account_type = subaccount.get('account_type')
+
+      @shares.trigger 'selectSubaccounts', account_type is 'share'
+      @loans.trigger 'selectSubaccounts', account_type is 'loan'

@@ -12,31 +12,9 @@ App.model.AccountList = (function() {
   }
   __extends(AccountList, Backbone.Collection);
   AccountList.prototype.model = App.model.Account;
-  AccountList.prototype.selected = function() {
-    return this.filter(function(account) {
-      return account.get('selected');
-    });
-  };
-  AccountList.prototype.current = function() {
-    var selectedAccounts;
-    selectedAccounts = this.selected();
-    if (_.isEmpty(selectedAccounts)) {
-      return this.first();
-    } else {
-      return _.first(selectedAccounts);
-    }
-  };
-  AccountList.prototype.selectOne = function(account) {
-    _.each(this.selected(), function(selectedAccount) {
-      return selectedAccount.set({
-        'selected': false
-      });
-    });
-    if (account != null) {
-      return account.set({
-        'selected': true
-      });
-    }
+  AccountList.prototype.defaultSelected = function() {
+    return this.first();
   };
   return AccountList;
 })();
+_.extend(App.model.AccountList.prototype, App.model.extension.Selectable);

@@ -13,10 +13,14 @@ App.view.Subaccount = (function() {
   __extends(Subaccount, Backbone.View);
   Subaccount.prototype.className = 'subaccount';
   Subaccount.prototype.initialize = function(options) {
-    return this.template = App.templates['members/subaccount'];
+    this.template = App.templates['members/subaccount'];
+    return this.model.bind('change', this.render);
   };
   Subaccount.prototype.render = function() {
+    var selected;
     $(this.el).html(this.template(this.model.toViewJSON()));
+    selected = this.model.get('selected') === true;
+    $(this.el).toggleClass('selected', selected);
     return this;
   };
   return Subaccount;

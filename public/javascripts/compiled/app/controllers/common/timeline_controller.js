@@ -22,8 +22,7 @@ App.controller.Timeline = (function() {
       }, this));
       this.events.bind('load', __bind(function() {
         $('#timeline-loading').hide();
-        $('#timeline').show();
-        return Backbone.history.start();
+        return $('#timeline').show();
       }, this));
       if (options.fetchOnInit === true) {
         return this.fetch();

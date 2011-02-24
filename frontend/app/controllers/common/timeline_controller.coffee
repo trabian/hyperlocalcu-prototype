@@ -16,8 +16,6 @@ class App.controller.Timeline extends Backbone.Controller
         $('#timeline-loading').hide()
         $('#timeline').show()
 
-        Backbone.history.start()
-
       # Optionally fetch as the final step of initialization
       this.fetch() if options.fetchOnInit == true
 
