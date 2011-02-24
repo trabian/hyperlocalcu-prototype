@@ -27589,18 +27589,20 @@ App.controller.Timeline = (function() {
   }
   __extends(Timeline, Backbone.Controller);
   Timeline.prototype.initialize = function(options) {
-    this.events = options.events;
-    this.events.bind('change:selected', this.changeSelected);
-    this.events.bind('unselect', __bind(function() {
-      return this.saveLocation('');
-    }, this));
-    this.events.bind('load', __bind(function() {
-      $('#timeline-loading').hide();
-      $('#timeline').show();
-      return Backbone.history.start();
-    }, this));
-    if (options.fetchOnInit === true) {
-      return this.fetch();
+    if (this.events != null) {
+      this.events = options.events;
+      this.events.bind('change:selected', this.changeSelected);
+      this.events.bind('unselect', __bind(function() {
+        return this.saveLocation('');
+      }, this));
+      this.events.bind('load', __bind(function() {
+        $('#timeline-loading').hide();
+        $('#timeline').show();
+        return Backbone.history.start();
+      }, this));
+      if (options.fetchOnInit === true) {
+        return this.fetch();
+      }
     }
   };
   Timeline.prototype.routes = {
@@ -27701,10 +27703,11 @@ App.controller.MemberDashboard = (function() {
     this.bind('select', this.showEventDetail);
     this.bind('unselect', this.hideEventDetail);
     this.member = options.member;
-    this.timeline = new App.view.MemberTimeline({
-      collection: this.events
-    });
-    console.log(this.member.accounts);
+    if (this.events != null) {
+      this.timeline = new App.view.MemberTimeline({
+        collection: this.events
+      });
+    }
     this.accountView = new App.view.Account({
       collection: this.member.accounts
     });
@@ -27824,10 +27827,10 @@ App.model.Account = (function() {
     this.subaccounts = new App.model.SubaccountList(this.get('subaccounts'));
     this.subaccounts.account = this;
     this.shares = this.subaccounts.filter(function(subaccount) {
-      return subaccount.get('type') === 'share';
+      return subaccount.get('account_type') === 'share';
     });
     return this.loans = this.subaccounts.filter(function(subaccount) {
-      return subaccount.get('type') === 'loan';
+      return subaccount.get('account_type') === 'loan';
     });
   };
   return Account;
@@ -28094,7 +28097,7 @@ App.model.Subaccount = (function() {
   Subaccount.prototype.toViewJSON = function() {
     return _.extend(this.toJSON(), {
       formattedBalance: App.helper.currency.format(this.get('balance')),
-      formattedAvailableBalance: this.get('balance') === this.get('availableBalance') ? null : App.helper.currency.format(this.get('availableBalance'))
+      formattedAvailableBalance: this.get('balance') === this.get('available_balance') ? null : App.helper.currency.format(this.get('available_balance'))
     });
   };
   return Subaccount;
@@ -28989,6 +28992,8 @@ App.view.SubaccountList = (function() {
     return this;
   };
   SubaccountList.prototype.renderSubaccounts = function() {
+    var subaccountList;
+    subaccountList = this.$('.subaccounts');
     return _.each(this.options.subaccounts, __bind(function(subaccount) {
       var subaccountView;
       subaccount.set({
@@ -28997,7 +29002,7 @@ App.view.SubaccountList = (function() {
       subaccountView = new App.view.Subaccount({
         model: subaccount
       });
-      return $(this.el).append(subaccountView.render().el);
+      return subaccountList.append(subaccountView.render().el);
     }, this));
   };
   return SubaccountList;
@@ -29192,7 +29197,7 @@ App.templates['common/feedback/feedback'] = Handlebars.compile('<div class="avat
 App.templates['common/feedback/timeline/row'] = Handlebars.compile('<td class="date">  <span>{{ formatted_timestamp }}<span></td><td class="comment">  {{#comment}}  <p class="description">{{ . }}</p>  {{/comment}}  <p class="meta">Feedback provided by {{ member_name }} for service on {{ formatted_service_timestamp }} | <a href="#">Create a service request</a></p></td><td class="rating"></td>');
 App.templates['common/social/overview'] = Handlebars.compile('<div class="twitter">  {{#avatar}}    <img src="{{ . }}" class="avatar" />  {{/avatar}}  <div class="latest-tweet">  {{^twitter_username}}    <div class="form">      <input type="text" placeholder="Twitter username for {{name}}" class="text" />      <button>Add</button>    </div>  {{/twitter_username}}  </div></div><p class="security">  Don\'t trust Twitter with your financial information? That\'s ok -- <a href="#">neither do we</a>.</p>');
 App.templates['feedback_subjects/overview'] = Handlebars.compile('<div class="subject-info">  {{#avatar}}    <img src="{{ . }}" class="avatar" />  {{/avatar}}  <div class="name">    <h2>{{ name }}</h2>    <p class="meta">{{ meta }}</p>  </div></div>{{#feedback_totals}}<div class="averages">    {{#month}}  <div class="month average">    <h2>This Month</h2>    <div class="rating"></div>    <p class="meta">{{ average }} based on {{ count }} reviews</p>  </div>  {{/month}}  {{#year}}  <div class="year average">    <h2>This Year</h2>    <div class="rating"></div>    <p class="meta">{{ average }} based on {{ count }} reviews</p>  </div>  {{/year}}</div>{{/feedback_totals}}');
-App.templates['members/account'] = Handlebars.compile('<h3>  {{#current}}    Account <span class="account-number">#{{ number }}</span>  {{/current}}</h3>');
+App.templates['members/account'] = Handlebars.compile('<h3 class="account-title">  {{#current}}    Account <span class="account-number">#{{ number }}</span>  {{/current}}</h3>');
 App.templates['members/billpay_signup'] = Handlebars.compile('<div class="form">  <div class="signup-form">[Signup form]</div>  <div class="buttons">    <button>Sign up for Billpay</button>  </div></div>');
 App.templates['members/events/billpay/detail'] = Handlebars.compile('<div class="processing-summary">  <p class="processing-days">Your payment arrived in <strong>{{ bill_payment_processing_days }} business days</strong>.</p>  <p class="submitted-date">Payment submitted on {{ bill_payment_submitted_date }}</p></div>');
 App.templates['members/events/card/detail'] = Handlebars.compile('<div class="receipt-and-account-info">  {{#receipt_image}}    <div class="receipt-image">      <a href="{{ . }}"><img src="{{ . }}" /></a>    </div>  {{/receipt_image}}  {{^receipt_image}}    <div class="receipt-upload">      <a href="#" class="upload">Upload your receipt</a>      <p class="email">        or email it to <a href="mailto:receipts+092341234@vcu.com">receipts+092341234@vcu.com</a>      </p>    </div>  {{/receipt_image}}  {{#account_information}}    <div class="account-information">      {{{ . }}}    </div>  {{/account_information}}</div>');
@@ -29201,8 +29206,8 @@ App.templates['members/events/detail'] = Handlebars.compile('<div id="event-head
 App.templates['members/events/row'] = Handlebars.compile('<td class="date">  <span>{{ formatted_timestamp }}<span></td><td class="name">  <p class="name">{{ description }}</p>  {{#meta}}    <p class="meta">{{ . }}</p>  {{/meta}}</td><td class="amount">{{{ formatted_amount }}}</td>');
 App.templates['members/events/statement/row'] = Handlebars.compile('<td class="date">  <span>{{ formatted_timestamp }}<span></td><td class="name" colspan="2">  <p class="name">{{ description }}</p>  <p class="meta">    Ending Balance: {{{ ending_balance }}}  </p>  <table class="statement-table" style="display: none;">    <tr><th>Opening Balance</th><td>{{{ opening_balance }}}</td></tr>  </table></td>');
 App.templates['members/sample'] = Handlebars.compile('<!-- Placeholder -->');
-App.templates['members/subaccount'] = Handlebars.compile('<div class="balances">  <div class="balance">{{{formattedBalance}}}</div>  {{#formattedAvailableBalance}}    <div class="available">Available: <span class="available-balance">{{{.}}}</span></div>  {{/formattedAvailableBalance}}</div><h3>{{name}}</h3><div class="meta">  <span class="subaccount-number">    {{accountNumber}}-<strong>{{suffix}}</strong>  </span>  |  <a href="#" class="manage">manage account</a></div>');
-App.templates['members/subaccount_list'] = Handlebars.compile('<h2>{{title}}</h2>');
+App.templates['members/subaccount'] = Handlebars.compile('<div class="balances">  <div class="balance">{{{formattedBalance}}}</div>  {{#formattedAvailableBalance}}    <div class="available">Available: <span class="available-balance">{{{.}}}</span></div>  {{/formattedAvailableBalance}}</div><h3><a href="#">{{name}}</a></h3><div class="meta">  <span class="subaccount-number">    {{accountNumber}}-<strong>{{suffix}}</strong>  </span>  |  <a href="#" class="manage">manage account &#9662;</a></div>');
+App.templates['members/subaccount_list'] = Handlebars.compile('<h2>{{title}}</h2><div class="subaccounts"></div>');
 App.templates['merchants/search_result'] = Handlebars.compile('<img src="/images/sample/merchants/map-1.png" class="map" /><h3>{{title}}</h3><p>{{{address}}}</p>');
 App.templates['merchants/search_with_options'] = Handlebars.compile('{{#defaultSearch}}<p class="note">  <strong>We do not currently have detailed information about this merchant.</strong>  <span class="search-summary"></span></p>{{/defaultSearch}}<div class="search-results"><ul></ul></div><div class="search-form">  {{#defaultSearch}}  <h4>Improve search results:</h4>  {{/defaultSearch}}  {{^defaultSearch}}  <h4>{{ searchPrompt }}</hr>  {{/defaultSearch}}  <input type="text" name="search-input" class="text search-field" value="{{ defaultSearch }}" />  <a href=\'#\' class="search">Search</a></div>');
 })();

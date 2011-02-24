@@ -13,6 +13,8 @@ class App.view.SubaccountList extends Backbone.View
 
   renderSubaccounts: =>
 
+    subaccountList = this.$('.subaccounts')
+
     _.each @options.subaccounts, (subaccount) =>
 
       subaccount.set('accountNumber': @model.get('number'))
@@ -20,4 +22,4 @@ class App.view.SubaccountList extends Backbone.View
       subaccountView = new App.view.Subaccount
         model: subaccount
 
-      $(@el).append subaccountView.render().el
+      subaccountList.append subaccountView.render().el

@@ -1,4 +1,4 @@
-#timeline-loading Loading...
+#timeline-loading [dashboard]
 
 %table#timeline{:style => 'display: none;'}
   %thead.ui-widget-header
@@ -22,15 +22,11 @@
 
     Backbone.emulateHTTP = true;
 
-    App.currentMember = new App.model.Member(#{@member.to_json(:include => [:accounts])});
-
-    var eventList = new App.model.EventList();
-    eventList.url = "/accounts/#{@member.accounts.first.id}/events";
+    App.currentMember = new App.model.Member(#{@member.to_json()});
 
     var dashboardController = new App.controller.MemberDashboard({
-      fetchOnInit: true,
       member: App.currentMember,
-      events: eventList
+      fetchOnInit: true
     });
 
     var availableServicesController = new App.controller.AvailableServices();

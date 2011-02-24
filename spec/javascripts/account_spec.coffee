@@ -12,35 +12,35 @@ describe 'an account with subaccounts', ->
           name: "Rewards Checking"
           balance: 1234.56
           suffix: '11'
-          type: 'share'
+          account_type: 'share'
         },
         {
           id: 2
           name: "Share Savings Account"
           balance: 12.34
           suffix: '10'
-          type: 'share'
+          account_type: 'share'
         },
         {
           id: 3
           name: "Signature Loan"
           balance: -1234.56
           suffix: '12'
-          type: 'loan'
+          account_type: 'loan'
         },
         {
           id: 4
           name: "Second Mortgage"
           balance: -50012.34
           suffix: '13'
-          type: 'loan'
+          account_type: 'loan'
         },
         {
           id: 5
           name: "Auto Loan"
           balance: -6543.21
           suffix: '14'
-          type: 'loan'
+          account_type: 'loan'
         }
       ]
 

@@ -21,6 +21,8 @@ App.view.SubaccountList = (function() {
     return this;
   };
   SubaccountList.prototype.renderSubaccounts = function() {
+    var subaccountList;
+    subaccountList = this.$('.subaccounts');
     return _.each(this.options.subaccounts, __bind(function(subaccount) {
       var subaccountView;
       subaccount.set({
@@ -29,7 +31,7 @@ App.view.SubaccountList = (function() {
       subaccountView = new App.view.Subaccount({
         model: subaccount
       });
-      return $(this.el).append(subaccountView.render().el);
+      return subaccountList.append(subaccountView.render().el);
     }, this));
   };
   return SubaccountList;

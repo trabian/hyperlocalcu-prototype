@@ -11,7 +11,7 @@ class App.model.Account extends Backbone.Model
     @subaccounts.account = this
 
     @shares = @subaccounts.filter (subaccount) ->
-      subaccount.get('type') == 'share'
+      subaccount.get('account_type') == 'share'
 
     @loans = @subaccounts.filter (subaccount) ->
-      subaccount.get('type') == 'loan'
+      subaccount.get('account_type') == 'loan'

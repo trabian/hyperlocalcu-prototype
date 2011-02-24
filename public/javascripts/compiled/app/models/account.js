@@ -18,10 +18,10 @@ App.model.Account = (function() {
     this.subaccounts = new App.model.SubaccountList(this.get('subaccounts'));
     this.subaccounts.account = this;
     this.shares = this.subaccounts.filter(function(subaccount) {
-      return subaccount.get('type') === 'share';
+      return subaccount.get('account_type') === 'share';
     });
     return this.loans = this.subaccounts.filter(function(subaccount) {
-      return subaccount.get('type') === 'loan';
+      return subaccount.get('account_type') === 'loan';
     });
   };
   return Account;

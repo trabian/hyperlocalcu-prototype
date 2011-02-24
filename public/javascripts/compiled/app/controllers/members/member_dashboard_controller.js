@@ -17,10 +17,11 @@ App.controller.MemberDashboard = (function() {
     this.bind('select', this.showEventDetail);
     this.bind('unselect', this.hideEventDetail);
     this.member = options.member;
-    this.timeline = new App.view.MemberTimeline({
-      collection: this.events
-    });
-    console.log(this.member.accounts);
+    if (this.events != null) {
+      this.timeline = new App.view.MemberTimeline({
+        collection: this.events
+      });
+    }
     this.accountView = new App.view.Account({
       collection: this.member.accounts
     });

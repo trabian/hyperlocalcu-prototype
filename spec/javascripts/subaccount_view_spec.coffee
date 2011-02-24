@@ -9,7 +9,7 @@ describe 'a subaccount view', ->
       balance: 1234.56
       accountNumber: '1234'
       suffix: '56'
-      availableBalance: 1230.00
+      available_balance: 1230.00
 
     @subaccount.account = new App.model.Account
       number: '1234'
@@ -34,7 +34,7 @@ describe 'a subaccount view', ->
       id: 1
       name: "Rewards Checking"
       balance: 1234.56
-      availableBalance: 1234.56
+      available_balance: 1234.56
 
     @view2 = new App.view.Subaccount
       model: @subaccountWithMatchingBalances

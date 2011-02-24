@@ -10,4 +10,15 @@ class Member < ActiveRecord::Base
     "#{first_name} #{last_name[0, 1]}."
   end
 
+  def as_json(options = {})
+
+    defaults = {
+      :methods => { :name => {}, :short_name => {}},
+      :include => { :accounts => { :include => :subaccounts }}
+    }
+
+    super defaults.deep_merge(options || {})
+
+  end
+
 end
