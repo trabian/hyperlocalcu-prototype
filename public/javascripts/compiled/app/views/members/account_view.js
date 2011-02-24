@@ -22,20 +22,24 @@ App.view.Account = (function() {
     $(this.el).html(this.template({
       current: this.model.toJSON()
     }));
-    sharesView = new App.view.SubaccountList({
-      model: this.model,
-      className: 'share-accounts',
-      title: "Share Accounts",
-      subaccounts: this.model.shares
-    });
-    $(this.el).append(sharesView.render().el);
-    loansView = new App.view.SubaccountList({
-      model: this.model,
-      className: 'loan-accounts',
-      title: "Loan Accounts",
-      subaccounts: this.model.loans
-    });
-    $(this.el).append(loansView.render().el);
+    if (!_.isEmpty(this.model.shares)) {
+      sharesView = new App.view.SubaccountList({
+        model: this.model,
+        className: 'share-accounts',
+        title: "Share Accounts",
+        subaccounts: this.model.shares
+      });
+      $(this.el).append(sharesView.render().el);
+    }
+    if (!_.isEmpty(this.model.loans)) {
+      loansView = new App.view.SubaccountList({
+        model: this.model,
+        className: 'loan-accounts',
+        title: "Loan Accounts",
+        subaccounts: this.model.loans
+      });
+      $(this.el).append(loansView.render().el);
+    }
     return this;
   };
   return Account;
