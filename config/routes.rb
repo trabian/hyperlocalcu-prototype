@@ -18,15 +18,9 @@ Hyperlocalcu::Application.routes.draw do
     resources :feedbacks
   end
 
-  resources :accounts do
+  resources :subaccounts do
 
     resources :events do
-      member do
-        post 'add_merchant'
-      end
-    end
-
-    resources :items do
       member do
         post 'add_merchant'
       end
@@ -36,7 +30,7 @@ Hyperlocalcu::Application.routes.draw do
 
   devise_for :users
 
-  root :to => "accounts#index"
+  root :to => "members#show", :id => 1
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

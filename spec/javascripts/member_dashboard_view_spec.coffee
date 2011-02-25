@@ -1,6 +1,6 @@
 require '/assets/timeline.js'
 
-describe 'a member dashboard with accounts', ->
+describe 'a member view with accounts', ->
 
   template "main_and_sidebar.html"
 
@@ -29,20 +29,14 @@ describe 'a member dashboard with accounts', ->
         }
       ]
 
-    @dashboardController = new App.controller.MemberDashboard
-      member: @member
-      fetchOnInit: true
+    @view = new App.view.MemberDashboard
+      model: @member
 
-  it "should allow a subaccount to be selected", ->
+  it "should pass a spec", ->
+    expect(true).toBeTruthy()
 
-    @dashboardController.selectSubaccount(1, 2)
+  it 'should show the current primary account number', ->
+    expect($('#accounts .account-number').html()).toEqual('#1234')
 
-    expect(@member.accounts.current().subaccounts.current().get('id')).toEqual(2)
-
-  it "should fetch the events for a subaccount when one is selected", ->
-
-    @dashboardController.selectSubaccount(1, 1)
-
-    subaccount = @member.accounts.current().subaccounts.current()
-
-    expect(subaccount.events).toBeTruthy()
+  it "should show the current account's subshares split by share and loan", ->
+    expect($('#accounts .share-accounts div.subaccount').length).toEqual(2)

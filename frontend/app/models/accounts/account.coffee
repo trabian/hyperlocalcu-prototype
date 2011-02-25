@@ -21,7 +21,7 @@ class App.model.Account extends Backbone.Model
     @loans = new App.model.SubaccountList rawLoans
 
     @subaccounts.bind 'selectOne', (subaccount) =>
- 
+
       account_type = subaccount.get('account_type')
 
       @shares.trigger 'selectSubaccounts', account_type is 'share'

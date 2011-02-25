@@ -1,51 +1,21 @@
 # The Member Timeline Controller is the main controller for the member timeline
 
-class App.controller.MemberDashboard extends App.controller.Timeline
+class App.controller.MemberDashboard extends Backbone.Controller
 
   initialize: (options) ->
 
-    super(options)
-
-    this.bind 'select', @showEventDetail
-    this.bind 'unselect', @hideEventDetail
-
     @member = options.member
 
-    if @events?
-      @timeline = new App.view.MemberTimeline
-        collection: @events
-
-    @accountView = new App.view.Account
-      collection: @member.accounts
-
-    $('#sidebar').prepend @accountView.render().el
-
-    this.route 'subaccounts/:subaccount_id', 'selectSubaccount', @selectSubaccount
+    @dashboardView = new App.view.MemberDashboard
+      model: @member
 
     Backbone.history.start()
 
-  showEventDetail: (event) =>
+  routes:
+    "accounts/:account_id/subaccounts/:subaccount_id": "selectSubaccount"
 
-    @detail_views ||=
-      atm: App.view.AtmDetail
-      branch: App.view.BranchDetail
-      billpay: App.view.BillpayDetail
-      card: App.view.CardDetail
-      check: App.view.CheckDetail
+  selectSubaccount: (accountId, subaccountId) =>
 
-    detail_view_class = @detail_views[event.get('event_type')] || App.view.EventDetail
+    account = @member.accounts.get(accountId)
 
-    @detailView = new detail_view_class
-      model: event
-      el: $('#event-detail-view')
-
-    @detailView.render()
-
-  hideEventDetail: (event) =>
-    @detailView.hide()
-
-  selectSubaccount: (subaccountId) =>
-
-    subaccounts = @member.accounts.current().subaccounts
-
-    subaccounts.selectOne(subaccounts.get(subaccountId))
+    @member.accounts.get(accountId).subaccounts.selectOne(subaccountId)

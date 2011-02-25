@@ -8,51 +8,23 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.controller.MemberDashboard = (function() {
   function MemberDashboard() {
-    this.selectSubaccount = __bind(this.selectSubaccount, this);;
-    this.hideEventDetail = __bind(this.hideEventDetail, this);;
-    this.showEventDetail = __bind(this.showEventDetail, this);;    MemberDashboard.__super__.constructor.apply(this, arguments);
+    this.selectSubaccount = __bind(this.selectSubaccount, this);;    MemberDashboard.__super__.constructor.apply(this, arguments);
   }
-  __extends(MemberDashboard, App.controller.Timeline);
+  __extends(MemberDashboard, Backbone.Controller);
   MemberDashboard.prototype.initialize = function(options) {
-    MemberDashboard.__super__.initialize.call(this, options);
-    this.bind('select', this.showEventDetail);
-    this.bind('unselect', this.hideEventDetail);
     this.member = options.member;
-    if (this.events != null) {
-      this.timeline = new App.view.MemberTimeline({
-        collection: this.events
-      });
-    }
-    this.accountView = new App.view.Account({
-      collection: this.member.accounts
+    this.dashboardView = new App.view.MemberDashboard({
+      model: this.member
     });
-    $('#sidebar').prepend(this.accountView.render().el);
-    this.route('subaccounts/:subaccount_id', 'selectSubaccount', this.selectSubaccount);
     return Backbone.history.start();
   };
-  MemberDashboard.prototype.showEventDetail = function(event) {
-    var detail_view_class;
-    this.detail_views || (this.detail_views = {
-      atm: App.view.AtmDetail,
-      branch: App.view.BranchDetail,
-      billpay: App.view.BillpayDetail,
-      card: App.view.CardDetail,
-      check: App.view.CheckDetail
-    });
-    detail_view_class = this.detail_views[event.get('event_type')] || App.view.EventDetail;
-    this.detailView = new detail_view_class({
-      model: event,
-      el: $('#event-detail-view')
-    });
-    return this.detailView.render();
+  MemberDashboard.prototype.routes = {
+    "accounts/:account_id/subaccounts/:subaccount_id": "selectSubaccount"
   };
-  MemberDashboard.prototype.hideEventDetail = function(event) {
-    return this.detailView.hide();
-  };
-  MemberDashboard.prototype.selectSubaccount = function(subaccountId) {
-    var subaccounts;
-    subaccounts = this.member.accounts.current().subaccounts;
-    return subaccounts.selectOne(subaccounts.get(subaccountId));
+  MemberDashboard.prototype.selectSubaccount = function(accountId, subaccountId) {
+    var account;
+    account = this.member.accounts.get(accountId);
+    return this.member.accounts.get(accountId).subaccounts.selectOne(subaccountId);
   };
   return MemberDashboard;
 })();

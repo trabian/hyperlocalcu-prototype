@@ -12,4 +12,20 @@ Given /^account "([^"]*)" has the following subaccounts:$/ do |number, subaccoun
 
 end
 
+Given /^subaccount (\d+) has the following events:$/ do |subaccount_id, events|
+
+  subaccount = Subaccount.find(subaccount_id)
+
+  events.hashes.each do |hash|
+
+    type = hash.delete('type').to_sym
+
+    event = Factory.build(type, hash)
+
+    subaccount.events << event
+
+  end
+
+end
+
 Cucumber::Factory.add_steps(self)

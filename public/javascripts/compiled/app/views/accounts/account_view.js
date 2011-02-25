@@ -13,15 +13,11 @@ App.view.Account = (function() {
   __extends(Account, Backbone.View);
   Account.prototype.id = 'accounts';
   Account.prototype.initialize = function(options) {
-    this.template = App.templates['members/account'];
-    return this.collection.bind('change:selected', this.render);
+    return this.template = App.templates['accounts/show'];
   };
   Account.prototype.render = function() {
-    this.model = this.collection.current();
-    $(this.el).html(this.template({
-      current: this.model.toJSON()
-    }));
-    this.addSubaccounts(this.model.shares, 'share-accounts', 'Share Accounts');
+    $(this.el).html(this.template(this.model.toJSON()));
+    this.addSubaccounts(this.model.shares, 'share-accounts', 'Share accounts');
     this.addSubaccounts(this.model.loans, 'loan-accounts', 'Loan Accounts');
     return this;
   };

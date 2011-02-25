@@ -4,17 +4,15 @@ App.model.extension.Selectable =
     this.filter (record) ->
       record.get 'selected'
 
-  selectOne: (record) ->
+  selectOne: (record_or_id) ->
+
+    record = if _.isFunction(record_or_id) then record_or_id else this.get(record_or_id)
 
     _.each this.selected(), (selectedRecord) ->
       selectedRecord.set 'selected': false
 
     if record?
-
       record.set 'selected': true
-
-      console.log 'this', record.get('id')
-
       this.trigger 'selectOne', record
 
   current: ->

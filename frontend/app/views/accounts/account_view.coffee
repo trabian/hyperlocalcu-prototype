@@ -3,18 +3,13 @@ class App.view.Account extends Backbone.View
   id: 'accounts'
 
   initialize: (options) ->
-    @template = App.templates['members/account']
-
-    @collection.bind 'change:selected', @render
+    @template = App.templates['accounts/show']
 
   render: =>
 
-    @model = @collection.current()
+    $(@el).html @template(@model.toJSON())
 
-    $(@el).html @template
-      current: @model.toJSON()
-
-    this.addSubaccounts @model.shares, 'share-accounts', 'Share Accounts'
+    this.addSubaccounts @model.shares, 'share-accounts', 'Share accounts'
 
     this.addSubaccounts @model.loans, 'loan-accounts', 'Loan Accounts'
 

@@ -61,22 +61,31 @@ describe 'an account with subaccounts', ->
 
     expect(@account.subaccounts.current().get('id')).toEqual(2)
 
+  it 'should allow a subaccount to be selected by id', ->
+
+    expect(@account.subaccounts.current()).toBeFalsy()
+
+    @account.subaccounts.selectOne(2)
+
+    expect(@account.subaccounts.current().get('id')).toEqual(2)
+
   it 'should trigger a selectOne event once for each account type', ->
 
-    @triggerCount = 0
-    @shareSelected = false
-    @loanSelected = true
+    triggerCount = 0
+    shareSelected = false
+    loanSelected = true
 
-    @account.shares.bind 'selectSubaccounts', (selected) =>
-      @triggerCount++
-      @shareSelected = selected
+    @account.shares.bind 'selectSubaccounts', (selected) ->
+      triggerCount++
+      shareSelected = selected
 
-    @account.loans.bind 'selectSubaccounts', (selected) =>
-      @triggerCount++
-      @loanSelected = selected
+    @account.loans.bind 'selectSubaccounts', (selected) ->
+      triggerCount++
+      loanSelected = selected
 
     @account.subaccounts.selectOne(@account.subaccounts.get(2))
 
-    expect(@triggerCount).toEqual(2)
-    expect(@shareSelected).toBeTruthy()
-    expect(@loanSelected).toBeFalsy()
+    expect(triggerCount).toEqual(2)
+    expect(shareSelected).toBeTruthy()
+    expect(loanSelected).toBeFalsy()
+
