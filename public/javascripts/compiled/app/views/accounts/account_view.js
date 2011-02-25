@@ -17,7 +17,7 @@ App.view.Account = (function() {
   };
   Account.prototype.render = function() {
     $(this.el).html(this.template(this.model.toJSON()));
-    this.addSubaccounts(this.model.shares, 'share-accounts', 'Share accounts');
+    this.addSubaccounts(this.model.shares, 'share-accounts', 'Share Accounts');
     this.addSubaccounts(this.model.loans, 'loan-accounts', 'Loan Accounts');
     return this;
   };

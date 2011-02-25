@@ -9,7 +9,7 @@ class App.view.Account extends Backbone.View
 
     $(@el).html @template(@model.toJSON())
 
-    this.addSubaccounts @model.shares, 'share-accounts', 'Share accounts'
+    this.addSubaccounts @model.shares, 'share-accounts', 'Share Accounts'
 
     this.addSubaccounts @model.loans, 'loan-accounts', 'Loan Accounts'
 
