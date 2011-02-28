@@ -6,7 +6,7 @@ class EventsController < ApplicationController
 
   respond_to :json, :html
 
-  belongs_to :account
+  belongs_to :subaccount
 
   has_scope :ordered_with_limit, :type => :boolean, :default => true
 

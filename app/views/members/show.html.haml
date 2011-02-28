@@ -1,0 +1,24 @@
+#timeline-loading [dashboard]
+
+= content_for :sidebar do
+  #event-detail-view{:style => "display: none;"}
+
+= content_for :head do
+  = render "layouts/mixpanel"
+
+= content_for :javascript do
+
+  %script{:src => google_js_src, :type => 'text/javascript'}
+
+  :javascript
+
+    Backbone.emulateHTTP = true;
+
+    App.currentMember = new App.model.Member(#{@member.to_json()});
+
+    var dashboardController = new App.controller.MemberDashboard({
+      member: App.currentMember,
+      fetchOnInit: true
+    });
+
+    var availableServicesController = new App.controller.AvailableServices();

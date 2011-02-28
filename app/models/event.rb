@@ -1,8 +1,8 @@
 class Event < ActiveRecord::Base
 
-  belongs_to :account
+  belongs_to :subaccount
 
-  validates :account_id, :presence => true
+  validates :subaccount_id, :presence => true
   validates :posted_at, :presence => true
 
   has_many :feedbacks
@@ -14,9 +14,9 @@ class Event < ActiveRecord::Base
   def as_json(options = {})
 
     if options.key?(:methods)
-      options[:methods] = [options[:methods], :event_type, :feedbacks, :vendor].uniq.flatten
+      options[:methods] = [options[:methods], :event_type].uniq.flatten
     else
-      options[:methods] = [:event_type, :feedbacks, :vendor]
+      options[:methods] = [:event_type]
     end
 
     super options
@@ -32,7 +32,7 @@ class Event < ActiveRecord::Base
   end
 
   def member_name
-    self.try(:account).try(:member).short_name
+    self.try(:subaccount).try(:member).short_name
   end
 
   def self.inherited(child)

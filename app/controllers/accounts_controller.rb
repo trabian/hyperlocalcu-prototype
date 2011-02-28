@@ -6,7 +6,13 @@ class AccountsController < ApplicationController
 
   def index
 
-    redirect_to account_path(current_user.member.accounts.first)
+    @member = current_user.member
+
+    if current_user.member.accounts.blank?
+      head :ok
+    else
+      redirect_to account_path(current_user.member.accounts.first)
+    end
     
   end
 

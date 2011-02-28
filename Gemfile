@@ -36,10 +36,13 @@ group :development, :test do
   gem 'guard-jammit'
   gem 'guard-spork'
   gem 'guard-rspec'
+  gem 'guard-cucumber'
 
   gem 'capybara'
   
   gem 'akephalos'
+
+  gem 'database_cleaner'
 
   gem 'qif'
 

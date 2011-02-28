@@ -7,6 +7,7 @@ Factory.define :event do |f|
 end
 
 Factory.define :card_event do |f|
+  f.posted_at { Time.now }
 end
 
 Factory.define :check_event do |f|

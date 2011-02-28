@@ -14,18 +14,19 @@ App.controller.Timeline = (function() {
   }
   __extends(Timeline, Backbone.Controller);
   Timeline.prototype.initialize = function(options) {
-    this.events = options.events;
-    this.events.bind('change:selected', this.changeSelected);
-    this.events.bind('unselect', __bind(function() {
-      return this.saveLocation('');
-    }, this));
-    this.events.bind('load', __bind(function() {
-      $('#timeline-loading').hide();
-      $('#timeline').show();
-      return Backbone.history.start();
-    }, this));
-    if (options.fetchOnInit === true) {
-      return this.fetch();
+    if (this.events != null) {
+      this.events = options.events;
+      this.events.bind('change:selected', this.changeSelected);
+      this.events.bind('unselect', __bind(function() {
+        return this.saveLocation('');
+      }, this));
+      this.events.bind('load', __bind(function() {
+        $('#timeline-loading').hide();
+        return $('#timeline').show();
+      }, this));
+      if (options.fetchOnInit === true) {
+        return this.fetch();
+      }
     }
   };
   Timeline.prototype.routes = {

@@ -1,39 +1,21 @@
 # The Member Timeline Controller is the main controller for the member timeline
 
-class App.controller.MemberDashboard extends App.controller.Timeline
+class App.controller.MemberDashboard extends Backbone.Controller
 
   initialize: (options) ->
 
-    super(options)
+    @member = options.member
 
-    this.bind 'select', @showEventDetail
-    this.bind 'unselect', @hideEventDetail
+    @dashboardView = new App.view.MemberDashboard
+      model: @member
 
-    @timeline = new App.view.MemberTimeline
-      collection: @events
+    Backbone.history.start()
 
-    @accountView = new App.view.Account
-      model: @account
+  routes:
+    "accounts/:account_id/subaccounts/:subaccount_id": "selectSubaccount"
 
-    $('#sidebar').prepend @accountView.render().el
+  selectSubaccount: (accountId, subaccountId) =>
 
-  showEventDetail: (event) =>
+    account = @member.accounts.get(accountId)
 
-    @detail_views ||=
-      atm: App.view.AtmDetail
-      branch: App.view.BranchDetail
-      billpay: App.view.BillpayDetail
-      card: App.view.CardDetail
-      check: App.view.CheckDetail
-
-    detail_view_class = @detail_views[event.get('event_type')] || App.view.EventDetail
-
-    @detailView = new detail_view_class
-      model: event
-      el: $('#event-detail-view')
-
-    @detailView.render()
-
-  hideEventDetail: (event) =>
-    @detailView.hide()
-
+    account.subaccounts.selectOne(subaccountId)

@@ -3,8 +3,8 @@
 !blueprint_grid_margin = 10px
 
 $font_color = darken(#5F83B9, 5)
-$subtle_color = #999
-$link_color = #06d
+$subtle_color = #7b7b7b
+$link_color = #4497cd
 
 $timeline_row_date_border_color = lighten(#A7CFE6, 10)
 $timeline_row_stripe_color = #f6f3e9
@@ -30,7 +30,7 @@ $deposit_color = #090
 @import blueprint/screen
 
 body
-  background: #fff url(/images/background.png) repeat-x left top
+  background: #fff url(/images/background.png) repeat-x left -200px
 
 textarea
   font-family: $blueprint_font_family
@@ -38,16 +38,17 @@ textarea
   color: #333
   line-height: 1.4em
 
-
 #container
-  +column(24)
+  +column(27)
   margin: 0 40px
-  padding: 10px 0
+  padding: 80px 0 0
   a
     +link-colors($link_color, $link_color)
   #main
     +column(15)
-    +box-shadow(#ccc, 2px)
+    +box-shadow(#ddd, 1px)
+    margin-right: 0
+    min-height: 700px
     z-index: 2
     background: #fff
     border: 1px solid #ccc
@@ -57,14 +58,15 @@ textarea
   #sidebar
     +column(9)
     +last
-    float: none
-    display: block
-    z-index: 1
-    //background: #F6FAFD
-    margin: 15px 0 0 592px
-    +border-right-radius(8px)
-    height: 100%
-    min-height: 1000px
-    position: fixed
-    &.selected
-      background: $timeline_row_selected_color
+    #event-detail-view
+      float: none
+      display: block
+      z-index: 1
+      //background: #F6FAFD
+      margin: 15px 0 0 592px
+      +border-right-radius(8px)
+      height: 100%
+      min-height: 1000px
+      position: fixed
+      &.selected
+        background: $timeline_row_selected_color

@@ -32,7 +32,11 @@ end
 
 When /^(?:|I )follow "([^"]*)"(?: within "([^"]*)")?$/ do |link, selector|
   with_scope(selector) do
-    click_link(link)
+    link = find_link(link)
+    link.click
+    if link['href'].match(/(.*)#(.*)/)
+      page.execute_script("window.location.hash = '#{$2}'; Backbone.history.checkUrl();")
+    end
   end
 end
 
@@ -216,4 +220,8 @@ end
 
 Then /^show me the page$/ do
   save_and_open_page
+end
+
+Then /^I wait until the timeline has been loaded$/ do
+  wait_until { page.has_css?("table#timeline tbody tr") }
 end

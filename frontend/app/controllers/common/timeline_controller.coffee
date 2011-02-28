@@ -2,22 +2,22 @@ class App.controller.Timeline extends Backbone.Controller
 
   initialize: (options) ->
 
-    @events = options.events
+    if @events?
 
-    @events.bind 'change:selected', @changeSelected
+      @events = options.events
 
-    @events.bind 'unselect', =>
-      this.saveLocation ''
+      @events.bind 'change:selected', @changeSelected
 
-    @events.bind 'load', =>
+      @events.bind 'unselect', =>
+        this.saveLocation ''
 
-      $('#timeline-loading').hide()
-      $('#timeline').show()
+      @events.bind 'load', =>
 
-      Backbone.history.start()
+        $('#timeline-loading').hide()
+        $('#timeline').show()
 
-    # Optionally fetch as the final step of initialization
-    this.fetch() if options.fetchOnInit == true
+      # Optionally fetch as the final step of initialization
+      this.fetch() if options.fetchOnInit == true
 
   routes:
     "events/:event_id": 'selectEvent'

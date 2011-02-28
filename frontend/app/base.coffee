@@ -1,6 +1,10 @@
 App = {
-  model: {}
+  model: {
+    extension: {}
+  }
   controller: {}
-  view: {}
+  view: {
+    extension: {}
+  }
   lib: {}
 }

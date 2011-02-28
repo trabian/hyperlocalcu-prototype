@@ -1,0 +1,75 @@
+$left_account_padding = 12px
+
+#accounts
+  color: #626262
+  padding: 7px 0 0 2px
+  position: relative
+  left: -2px
+  h2, h3, h4
+    color: #626262
+  h3.account-title
+    font-size: 11px
+    margin: 0 0 0.9em
+    padding-left: $left_account_padding
+    .account-number
+      font-weight: bold
+  .share-accounts, .loan-accounts
+    margin: 0 0 2em
+    h2
+      font-size: 15px
+      margin: 0 0 0.1em
+      padding-left: $left_account_padding
+    &.selected
+      .subaccounts
+        background: #f4f9ec
+        .subaccount
+          border: none
+          .balance
+            color: #00890b
+          &.selected
+            +box-shadow(#eee, 3px)
+            border: none
+            border: 1px solid #b4b4b4
+            border-width: 1px 1px 1px 0
+            background: #fff
+            padding: 0.7em 0.7em 0.7em 15px
+            padding-left: $left_account_padding + 1
+            margin: 0.3em 0
+            margin-right: -5px
+            position: relative
+            top: -1px
+            left: -$left_account_padding - 1
+            height: 100px
+  .subaccounts
+    border: 1px solid #b4b4b4
+    border-width: 1px 0
+    padding: 0.2em 0
+    padding-left: $left_account_padding
+    .subaccount
+      line-height: 1.5em
+      padding: 1em 1.5em 1em 0
+      border-bottom: 1px solid #dcdcdc
+      z-index: 3 
+      &:last-child
+        border: none
+      h3
+        font-size: 12px
+        font-weight: bold
+        margin: 0 0 0.2em
+        line-height: 1.5em
+      .meta
+        color: $subtle_color
+        font-size: 10px
+        .subaccount-number
+          margin-right: 2px
+        .manage
+          margin-left: 2px
+      .balances
+        float: right
+        text-align: right
+        .balance
+          font-weight: bold
+          margin-bottom: 0.2em
+        .available
+          color: $subtle_color
+          font-size: 10px
