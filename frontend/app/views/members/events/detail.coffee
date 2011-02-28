@@ -13,8 +13,11 @@ class App.view.EventDetail extends Backbone.View
       if @eventTypeOptions.templatePath?
         @eventTypeOptions.template = App.templates[@eventTypeOptions.templatePath]
 
+    $(window).bind 'resize', @resize
+
   close: =>
     @model.set 'selected': false
+    this.hide()
 
   render: =>
 
@@ -60,22 +63,22 @@ class App.view.EventDetail extends Backbone.View
 
     @scroll = @wrapper.data('jsp')
 
-    shim = 45 
+    return this
+
+  resize: =>
+
+    shim = 40 
 
     if @footer.is(':visible')
       shim = shim + @footer.innerHeight() 
 
-    @heightOffset = parseInt($(@el).css('top')) + @header.height() + shim
+    console.log $(@el).offset().top
 
-    $(window).bind 'resize', @resize
+    heightOffset = shim + parseInt($(@el).offset().top) + parseInt(@header.css('height'))
 
-    $(window).trigger 'resize'
+    height = $(window).height() - heightOffset
 
-  resize: =>
-
-    height = $(window).height()
-
-    @wrapper.height(height - @heightOffset)
+    @wrapper.height(Math.min(height, @maxHeight))
 
     if $.browser.ie
 
@@ -92,13 +95,27 @@ class App.view.EventDetail extends Backbone.View
 
     this.trigger('show')
 
+    $(@el).waypoint('destroy').waypoint(@adjustPosition).waypoint
+      offset: 10
+
     $(@el).show()
 
   hide: ->
 
     this.trigger('hide')
 
+    $(@el).waypoint 'destroy'
+
     $(@el).empty().hide()
+
+  adjustPosition: (element, direction) =>
+
+    if direction is 'down'
+      $(@el).addClass('fixed')
+    else
+      $(@el).removeClass('fixed')
+
+    this.resize()
 
   addLocationFeedbackView: (field, options) =>
 

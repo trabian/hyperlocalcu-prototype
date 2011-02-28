@@ -15,6 +15,8 @@ App.model.extension.Selectable =
       record.set 'selected': true
       this.trigger 'selectOne', record
 
+    record
+
   current: ->
 
     selectedAccounts = this.selected()

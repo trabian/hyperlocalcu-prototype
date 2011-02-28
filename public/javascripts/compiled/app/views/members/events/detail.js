@@ -10,6 +10,7 @@ App.view.EventDetail = (function() {
   function EventDetail() {
     this.addFeedbackView = __bind(this.addFeedbackView, this);;
     this.addLocationFeedbackView = __bind(this.addLocationFeedbackView, this);;
+    this.adjustPosition = __bind(this.adjustPosition, this);;
     this.resize = __bind(this.resize, this);;
     this.render = __bind(this.render, this);;
     this.close = __bind(this.close, this);;    EventDetail.__super__.constructor.apply(this, arguments);
@@ -25,17 +26,19 @@ App.view.EventDetail = (function() {
         this.delegateEvents(this.eventTypeOptions.events);
       }
       if (this.eventTypeOptions.templatePath != null) {
-        return this.eventTypeOptions.template = App.templates[this.eventTypeOptions.templatePath];
+        this.eventTypeOptions.template = App.templates[this.eventTypeOptions.templatePath];
       }
     }
+    return $(window).bind('resize', this.resize);
   };
   EventDetail.prototype.close = function() {
-    return this.model.set({
+    this.model.set({
       'selected': false
     });
+    return this.hide();
   };
   EventDetail.prototype.render = function() {
-    var detailJSON, shim;
+    var detailJSON;
     mpq.push([
       "track", "View event detail", {
         event_type: this.model.get('event_type'),
@@ -73,18 +76,18 @@ App.view.EventDetail = (function() {
       });
     }
     this.scroll = this.wrapper.data('jsp');
-    shim = 45;
+    return this;
+  };
+  EventDetail.prototype.resize = function() {
+    var height, heightOffset, shim;
+    shim = 40;
     if (this.footer.is(':visible')) {
       shim = shim + this.footer.innerHeight();
     }
-    this.heightOffset = parseInt($(this.el).css('top')) + this.header.height() + shim;
-    $(window).bind('resize', this.resize);
-    return $(window).trigger('resize');
-  };
-  EventDetail.prototype.resize = function() {
-    var height;
-    height = $(window).height();
-    this.wrapper.height(height - this.heightOffset);
+    console.log($(this.el).offset().top);
+    heightOffset = shim + parseInt($(this.el).offset().top) + parseInt(this.header.css('height'));
+    height = $(window).height() - heightOffset;
+    this.wrapper.height(Math.min(height, this.maxHeight));
     if ($.browser.ie) {
       if (!throttleTimeout) {
         return setTimeout(__bind(function() {
@@ -99,11 +102,23 @@ App.view.EventDetail = (function() {
   };
   EventDetail.prototype.show = function() {
     this.trigger('show');
+    $(this.el).waypoint('destroy').waypoint(this.adjustPosition).waypoint({
+      offset: 10
+    });
     return $(this.el).show();
   };
   EventDetail.prototype.hide = function() {
     this.trigger('hide');
+    $(this.el).waypoint('destroy');
     return $(this.el).empty().hide();
+  };
+  EventDetail.prototype.adjustPosition = function(element, direction) {
+    if (direction === 'down') {
+      $(this.el).addClass('fixed');
+    } else {
+      $(this.el).removeClass('fixed');
+    }
+    return this.resize();
   };
   EventDetail.prototype.addLocationFeedbackView = function(field, options) {
     var feedback, ratingViewOptions;

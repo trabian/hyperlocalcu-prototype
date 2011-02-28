@@ -8,6 +8,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.view.MemberDashboard = (function() {
   function MemberDashboard() {
+    this.renderEventDetail = __bind(this.renderEventDetail, this);;
     this.renderTimeline = __bind(this.renderTimeline, this);;
     this.render = __bind(this.render, this);;    MemberDashboard.__super__.constructor.apply(this, arguments);
   }
@@ -24,13 +25,32 @@ App.view.MemberDashboard = (function() {
     this.accountView = new App.view.Account({
       model: this.model.accounts.current()
     });
-    return $('#sidebar').html(this.accountView.render().el);
+    $('#sidebar').html(this.accountView.render().el);
+    $('#sidebar').append(this.make('div', {
+      id: 'event-detail-view'
+    }));
+    this.eventDetailView = new App.view.EventDetail({
+      el: $('#event-detail-view')
+    });
+    this.eventDetailView.bind('show', __bind(function() {
+      return $(this.accountView.el).hide();
+    }, this));
+    return this.eventDetailView.bind('hide', __bind(function() {
+      return $(this.accountView.el).show();
+    }, this));
   };
   MemberDashboard.prototype.renderTimeline = function(subaccount) {
     this.timelineView = new App.view.AccountTimeline({
       model: subaccount
     });
-    return $('#main .content').html(this.timelineView.render().el);
+    $('#main .content').html(this.timelineView.render().el);
+    return subaccount.events.bind('selectOne', this.renderEventDetail);
+  };
+  MemberDashboard.prototype.renderEventDetail = function(event) {
+    this.eventDetailView.model = event;
+    this.eventDetailView.maxHeight = $(this.timelineView.el).height() - 50;
+    $('#sidebar').append(this.eventDetailView.render().el);
+    return this.eventDetailView.resize();
   };
   return MemberDashboard;
 })();

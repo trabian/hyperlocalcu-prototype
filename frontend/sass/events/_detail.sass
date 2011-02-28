@@ -25,16 +25,19 @@
   +billpay-detail-view
   +branch-detail-view
   +check-detail-view
-  position: fixed
+  position: relative
+  top: 10px
   color: #444
-  top: 42px
-  left: 630px
   padding: 5px 10px 5px 15px
   border: 1px solid #ccc
   border-width: 1px 1px 1px 0
   +border-right-radius(5px)
   background: #fff
   width: 318px
+  display: none
+  &.fixed
+    position: fixed
+    top: 10px
   #event-detail-wrapper
     min-height: 110px
     width: 323px

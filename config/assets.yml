@@ -19,10 +19,10 @@ javascripts:
     - public/javascripts/compiled/app/models/extensions/**/*.js
     - public/javascripts/compiled/app/helpers/**/*.js
     - public/javascripts/compiled/app/lib/socket.js
-    - public/javascripts/compiled/app/models/event.js
-    - public/javascripts/compiled/app/models/event_factory.js
-    - public/javascripts/compiled/app/models/events/cu_event.js
-    - public/javascripts/compiled/app/models/events/merchant_event.js
+    - public/javascripts/compiled/app/models/events/event.js
+    - public/javascripts/compiled/app/models/events/event_factory.js
+    - public/javascripts/compiled/app/models/events/types/cu_event.js
+    - public/javascripts/compiled/app/models/events/types/merchant_event.js
     - public/javascripts/compiled/app/models/events/*.js
     - public/javascripts/compiled/app/models/feedback.js
     - public/javascripts/compiled/app/models/feedback_subject.js

@@ -18,4 +18,4 @@ class App.controller.MemberDashboard extends Backbone.Controller
 
     account = @member.accounts.get(accountId)
 
-    account.subaccounts.selectOne(subaccountId)
+    subaccount = account.subaccounts.selectOne(subaccountId)

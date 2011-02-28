@@ -22,9 +22,9 @@ App.controller.MemberDashboard = (function() {
     "accounts/:account_id/subaccounts/:subaccount_id": "selectSubaccount"
   };
   MemberDashboard.prototype.selectSubaccount = function(accountId, subaccountId) {
-    var account;
+    var account, subaccount;
     account = this.member.accounts.get(accountId);
-    return account.subaccounts.selectOne(subaccountId);
+    return subaccount = account.subaccounts.selectOne(subaccountId);
   };
   return MemberDashboard;
 })();

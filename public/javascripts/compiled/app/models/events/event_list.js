@@ -17,29 +17,6 @@ App.model.EventList = (function() {
   EventList.prototype.clear = function() {
     return this.remove(this.models);
   };
-  EventList.prototype.selected = function() {
-    return this.filter(function(event) {
-      return event.get('selected');
-    });
-  };
-  EventList.prototype.selectOne = function(event) {
-    _.each(this.selected(), function(selectedevent) {
-      return selectedevent.set({
-        'selected': false
-      });
-    });
-    if (event != null) {
-      return event.set({
-        'selected': true
-      });
-    }
-  };
-  EventList.prototype.toggleOrSelectOne = function(event) {
-    if (event.get('selected')) {
-      ;
-    } else {
-      return this.selectOne(event);
-    }
-  };
   return EventList;
 })();
+_.extend(App.model.EventList.prototype, App.model.extension.Selectable);

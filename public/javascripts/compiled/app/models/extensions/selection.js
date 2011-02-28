@@ -16,8 +16,9 @@ App.model.extension.Selectable = {
       record.set({
         'selected': true
       });
-      return this.trigger('selectOne', record);
+      this.trigger('selectOne', record);
     }
+    return record;
   },
   current: function() {
     var selectedAccounts;
