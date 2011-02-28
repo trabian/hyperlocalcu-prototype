@@ -1,9 +1,9 @@
 @javascript
 Feature: Member Dashboard
 
-  So that I can manage the money in my accounts
+  So that I can get an overview of my accounts
   As a member
-  I want to see all of my current accounts and transaction history
+  I want to see all of my current accounts
 
   Background:
     Given a user is logged in as me
@@ -19,11 +19,3 @@ Feature: Member Dashboard
   Scenario: Show subaccounts
     When I go to my dashboard page
     Then I should see "Rewards Checking" within "#accounts .share-accounts"
-
-  Scenario: Show transaction history
-    Given subaccount 1 has the following events:
-      | id | name             | type        | amount  |
-      |  1 | Sample Event     | card_event  | 23.45   |
-    When I go to my dashboard page
-    And I follow "Rewards Checking" within "#accounts .share-accounts"
-    Then I should see "Sample Event" within "#timeline .name"

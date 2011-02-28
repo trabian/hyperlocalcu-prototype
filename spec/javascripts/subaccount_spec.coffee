@@ -30,7 +30,8 @@ describe 'a subaccount', ->
 
     expect(@subaccount1.events).toBeTruthy()
 
-  it "should fetch events when selected", ->
+  # Turned the auto-fetch off for now
+  xit "should fetch events when selected", ->
 
     triggerCount = 0
 

@@ -5,11 +5,6 @@ class App.model.Subaccount extends Backbone.Model
     @events = new App.model.EventList
     @events.url = "/subaccounts/#{@id}/events"
 
-    this.bind 'change:selected', @fetchEvents
-
-  fetchEvents: =>
-    @events.fetch() if this.get('selected')
-
   toViewJSON: ->
 
     _.extend this.toJSON(),

@@ -3,6 +3,8 @@ App = {
     extension: {}
   }
   controller: {}
-  view: {}
+  view: {
+    extension: {}
+  }
   lib: {}
 }

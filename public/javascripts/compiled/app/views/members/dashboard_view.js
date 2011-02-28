@@ -8,36 +8,29 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.view.MemberDashboard = (function() {
   function MemberDashboard() {
-    this.renderAccount = __bind(this.renderAccount, this);;
     this.renderTimeline = __bind(this.renderTimeline, this);;
-    this.selectSubaccount = __bind(this.selectSubaccount, this);;
     this.render = __bind(this.render, this);;    MemberDashboard.__super__.constructor.apply(this, arguments);
   }
   __extends(MemberDashboard, Backbone.View);
   MemberDashboard.prototype.initialize = function(options) {
-    this.render();
-    return this.model.accounts.current().subaccounts.bind('selectOne', this.selectSubaccount);
+    var subaccounts;
+    if (this.model.accounts.length !== 0) {
+      this.render();
+      subaccounts = this.model.accounts.current().subaccounts;
+      return subaccounts.bind('selectOne', this.renderTimeline);
+    }
   };
   MemberDashboard.prototype.render = function() {
-    return this.renderAccount();
-  };
-  MemberDashboard.prototype.selectSubaccount = function(subaccount) {
-    subaccount.events.unbind('refresh', this.renderTimeline);
-    subaccount.events.bind('refresh', this.renderTimeline, subaccount);
-    return this.renderTimeline;
-  };
-  MemberDashboard.prototype.renderTimeline = function(subaccount) {
-    var timelineView;
-    timelineView = new App.view.AccountTimeline({
-      model: subaccount
-    });
-    return $('#main .content').html(timelineView.render().el);
-  };
-  MemberDashboard.prototype.renderAccount = function() {
     this.accountView = new App.view.Account({
       model: this.model.accounts.current()
     });
     return $('#sidebar').html(this.accountView.render().el);
+  };
+  MemberDashboard.prototype.renderTimeline = function(subaccount) {
+    this.timelineView = new App.view.AccountTimeline({
+      model: subaccount
+    });
+    return $('#main .content').html(this.timelineView.render().el);
   };
   return MemberDashboard;
 })();
