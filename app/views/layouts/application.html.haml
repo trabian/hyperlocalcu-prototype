@@ -7,6 +7,10 @@
 
 %body
   #container
+  
+    #header
+      %h1= link_to 'Vantage Credit Union', root_path
+
     #global
       %ul
         - if user_signed_in?

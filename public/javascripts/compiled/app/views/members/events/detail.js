@@ -11,6 +11,7 @@ App.view.EventDetail = (function() {
     this.addFeedbackView = __bind(this.addFeedbackView, this);;
     this.addLocationFeedbackView = __bind(this.addLocationFeedbackView, this);;
     this.resize = __bind(this.resize, this);;
+    this.renderFeedback = __bind(this.renderFeedback, this);;
     this.render = __bind(this.render, this);;
     this.close = __bind(this.close, this);;    EventDetail.__super__.constructor.apply(this, arguments);
   }
@@ -51,7 +52,7 @@ App.view.EventDetail = (function() {
     this.detail = this.$('#event-detail');
     this.wrapper = this.$('#event-detail-wrapper');
     this.footer = this.$('#event-footer');
-    if (this.model.isSocial() && false) {
+    if (this.model.isSocial()) {
       this.footer.show();
       this.socialView = new App.view.Social({
         model: this.model
@@ -69,14 +70,18 @@ App.view.EventDetail = (function() {
     if (this.model.isDeposit()) {
       this.header.addClass('deposit');
     }
+    this.scroll = this.wrapper.data('jsp');
+    this.model.feedbacks.bind('refresh', this.renderFeedback);
+    this.model.feedbacks.fetch();
+    this.trigger('rendered');
+    return this;
+  };
+  EventDetail.prototype.renderFeedback = function() {
     if (this.model.get('merchant') != null) {
-      this.addLocationFeedbackView('merchant', {
+      return this.addLocationFeedbackView('merchant', {
         include_summary_view: true
       });
     }
-    this.scroll = this.wrapper.data('jsp');
-    this.trigger('rendered');
-    return this;
   };
   EventDetail.prototype.resize = function(height) {
     var shim, wrapperHeight;

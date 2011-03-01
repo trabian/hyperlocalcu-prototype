@@ -77,9 +77,9 @@ textarea {
   display: inline;
   float: left;
   margin-right: 10px;
-  width: 1070px;
+  width: 950px;
   margin: 0 40px;
-  padding: 80px 0 0;
+  padding: 0;
 }
 /* line 138, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
 * html #container {
@@ -1159,7 +1159,7 @@ input.span-24, textarea.span-24, select.span-24 {
 
 /* line 8, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_debug.scss */
 .showgrid {
-  background: url('/images/grid.png');
+  background: url(/images/grid.png);
 }
 
 /* line 4, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_interaction.scss */
@@ -1337,6 +1337,27 @@ textarea {
 #sidebar .prompt .screenshot p {
   color: #666666;
   margin: 0.1em 0;
+}
+
+/* line 2, ../../../frontend/sass/_header.sass */
+#header h1 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  margin: 10px 0;
+}
+/* line 5, ../../../frontend/sass/_header.sass */
+#header h1 a {
+  display: block;
+  text-indent: -119988px;
+  overflow: hidden;
+  text-align: left;
+  background-image: url(/images/logo.png);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  width: 125px;
+  height: 61px;
 }
 
 /* line 4, ../../../frontend/sass/feedback/_row.sass */
@@ -3289,19 +3310,19 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   margin: 0 -3px 0 0;
 }
 
-/* line 33, ../../../frontend/sass/screen.sass */
+/* line 34, ../../../frontend/sass/screen.sass */
 #container {
   position: relative;
 }
 
-/* line 36, ../../../frontend/sass/screen.sass */
+/* line 37, ../../../frontend/sass/screen.sass */
 #global {
   float: right;
   position: absolute;
   top: 2px;
   right: 15px;
 }
-/* line 41, ../../../frontend/sass/screen.sass */
+/* line 42, ../../../frontend/sass/screen.sass */
 #global ul {
   margin: 0;
   padding: 0;
@@ -3329,7 +3350,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #global ul li:last-child, #global ul li.last {
   padding-right: 0;
 }
-/* line 43, ../../../frontend/sass/screen.sass */
+/* line 44, ../../../frontend/sass/screen.sass */
 #global ul a {
   font-size: 10px;
   text-decoration: none;

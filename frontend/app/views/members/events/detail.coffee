@@ -36,7 +36,7 @@ class App.view.EventDetail extends Backbone.View
     @wrapper = this.$('#event-detail-wrapper')
     @footer = this.$('#event-footer')
 
-    if @model.isSocial() && false
+    if @model.isSocial()
       @footer.show()
       @socialView = new App.view.Social
         model: @model
@@ -56,15 +56,20 @@ class App.view.EventDetail extends Backbone.View
     if @model.isDeposit()
       @header.addClass('deposit')
 
-    if @model.get('merchant')?
-      this.addLocationFeedbackView 'merchant',
-        include_summary_view: true
-
     @scroll = @wrapper.data('jsp')
+
+    @model.feedbacks.bind 'refresh', @renderFeedback
+    @model.feedbacks.fetch()
 
     this.trigger 'rendered'
 
     return this
+
+  renderFeedback: =>
+
+    if @model.get('merchant')?
+      this.addLocationFeedbackView 'merchant',
+        include_summary_view: true
 
   resize: (height) =>
 

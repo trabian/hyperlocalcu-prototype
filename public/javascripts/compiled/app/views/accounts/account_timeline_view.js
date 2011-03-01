@@ -24,7 +24,11 @@ App.view.AccountTimeline = (function() {
   AccountTimeline.prototype.render = function() {
     $(this.el).html(this.template(this.model.toJSON));
     this.eventContainer = this.$('tbody');
-    this.collection.fetch();
+    if (this.collection.length === 0) {
+      this.collection.fetch();
+    } else {
+      this.addAll();
+    }
     return this;
   };
   AccountTimeline.prototype.buildView = function(model) {

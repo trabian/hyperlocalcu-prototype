@@ -16,7 +16,6 @@ class App.view.MemberDashboard extends Backbone.View
       model: @model.accounts.current()
 
     $('#sidebar').html @accountView.render().el
-
     
   renderTimeline: (subaccount) =>
 

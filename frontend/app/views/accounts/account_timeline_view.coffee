@@ -21,7 +21,10 @@ class App.view.AccountTimeline extends Backbone.View
 
     @eventContainer = this.$('tbody')
 
-    @collection.fetch()
+    if @collection.length is 0
+      @collection.fetch()
+    else
+      this.addAll()
 
     return this
 
