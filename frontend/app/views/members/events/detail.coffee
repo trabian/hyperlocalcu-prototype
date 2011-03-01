@@ -13,15 +13,6 @@ class App.view.EventDetail extends Backbone.View
       if @eventTypeOptions.templatePath?
         @eventTypeOptions.template = App.templates[@eventTypeOptions.templatePath]
 
-    $(window).bind 'resize', @resize
-
-    count = 0
-
-    throttled = $.throttle 250, ->
-      console.log 'scroll', count++
-
-    $(window).bind 'scroll', throttled
-
   close: =>
     @model.set 'selected': false
     this.hide()
@@ -45,7 +36,7 @@ class App.view.EventDetail extends Backbone.View
     @wrapper = this.$('#event-detail-wrapper')
     @footer = this.$('#event-footer')
 
-    if @model.isSocial()
+    if @model.isSocial() && false
       @footer.show()
       @socialView = new App.view.Social
         model: @model
@@ -71,38 +62,30 @@ class App.view.EventDetail extends Backbone.View
 
     @scroll = @wrapper.data('jsp')
 
+    this.trigger 'rendered'
+
     return this
 
-  resize: =>
+  resize: (height) =>
 
-    shim = 40 
+    shim = 17
+
+    wrapperHeight = height - shim
+
+    if @header.is(':visible')
+      wrapperHeight -= @header.outerHeight()
 
     if @footer.is(':visible')
-      shim = shim + @footer.innerHeight() 
+      wrapperHeight -= @footer.outerHeight()
 
-    heightOffset = shim + parseInt($(@el).offset().top) + parseInt(@header.css('height'))
+    @wrapper.css
+      height: Math.max(0, wrapperHeight)
 
-    height = $(window).height() - heightOffset
-
-    @wrapper.height(Math.min(height, @maxHeight))
-
-    if $.browser.ie
-
-      if !throttleTimeout
-        setTimeout =>
-          @scroll.reinitialise()
-          throttleTimeout = null
-        , 50
-
-    else
-      @scroll.reinitialise()
+    @scroll.reinitialise()
 
   show: ->
 
     this.trigger('show')
-
-    #$(@el).waypoint('destroy').waypoint(@adjustPosition).waypoint
-      #offset: 10
 
     $(@el).show()
 
@@ -110,18 +93,7 @@ class App.view.EventDetail extends Backbone.View
 
     this.trigger('hide')
 
-    #$(@el).waypoint 'destroy'
-
     $(@el).empty().hide()
-
-  adjustPosition: (element, direction) =>
-
-    if direction is 'down'
-      $(@el).addClass('fixed')
-    else
-      $(@el).removeClass('fixed')
-
-    this.resize()
 
   addLocationFeedbackView: (field, options) =>
 
@@ -139,8 +111,8 @@ class App.view.EventDetail extends Backbone.View
 
       @locationRatingView = new App.view.Rating ratingViewOptions
 
-      @locationRatingView.bind 'expand', @resize
-      @locationRatingView.bind 'collapse', @resize
+      #@locationRatingView.bind 'expand', @resize
+      #@locationRatingView.bind 'collapse', @resize
 
       @addressEl.append @locationRatingView.render().el
 
@@ -158,7 +130,7 @@ class App.view.EventDetail extends Backbone.View
           model: feedback
           question: @model.feedbackQuestion
 
-        @feedbackView.bind 'expand', @resize
-        @feedbackView.bind 'collapse', @resize
+        #@feedbackView.bind 'expand', @resize
+        #@feedbackView.bind 'collapse', @resize
 
         @detail.append @feedbackView.render().el

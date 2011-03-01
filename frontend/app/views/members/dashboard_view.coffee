@@ -17,16 +17,6 @@ class App.view.MemberDashboard extends Backbone.View
 
     $('#sidebar').html @accountView.render().el
 
-    $('#sidebar').append this.make('div', { id: 'event-detail-view' })
-
-    @eventDetailView = new App.view.EventDetail
-      el: $('#event-detail-view')
-
-    @eventDetailView.bind 'show', =>
-      $(@accountView.el).hide()
-
-    @eventDetailView.bind 'hide', =>
-      $(@accountView.el).show()
     
   renderTimeline: (subaccount) =>
 
@@ -39,9 +29,31 @@ class App.view.MemberDashboard extends Backbone.View
 
   renderEventDetail: (event) =>
 
+    this.initEventDetailView() unless @eventDetailView?
+
     @eventDetailView.model = event
     @eventDetailView.maxHeight = $(@timelineView.el).height() - 50
 
     $('#sidebar').append @eventDetailView.render().el
 
-    @eventDetailView.resize()
+  initEventDetailView: =>
+
+    $('#sidebar').append this.make('div', { id: 'event-detail-view' })
+
+    @eventDetailView = new App.view.EventDetail
+      el: $('#event-detail-view')
+
+    @eventDetailView.bind 'show', =>
+      $(@accountView.el).hide()
+
+    @eventDetailView.bind 'hide', =>
+      $(@accountView.el).show()
+
+    $(@eventDetailView.el).drawer
+      main: $('#main')
+      resizeOnInit: false
+      resize: (element, height) =>
+        @eventDetailView.resize height
+
+    @eventDetailView.bind 'rendered', =>
+      $(@eventDetailView.el).drawer('redraw')

@@ -10,7 +10,6 @@ App.view.EventDetail = (function() {
   function EventDetail() {
     this.addFeedbackView = __bind(this.addFeedbackView, this);;
     this.addLocationFeedbackView = __bind(this.addLocationFeedbackView, this);;
-    this.adjustPosition = __bind(this.adjustPosition, this);;
     this.resize = __bind(this.resize, this);;
     this.render = __bind(this.render, this);;
     this.close = __bind(this.close, this);;    EventDetail.__super__.constructor.apply(this, arguments);
@@ -21,21 +20,14 @@ App.view.EventDetail = (function() {
   };
   EventDetail.prototype.templatePath = 'members/events/detail';
   EventDetail.prototype.initialize = function() {
-    var count, throttled;
     if (this.eventTypeOptions != null) {
       if (this.eventTypeOptions.events != null) {
         this.delegateEvents(this.eventTypeOptions.events);
       }
       if (this.eventTypeOptions.templatePath != null) {
-        this.eventTypeOptions.template = App.templates[this.eventTypeOptions.templatePath];
+        return this.eventTypeOptions.template = App.templates[this.eventTypeOptions.templatePath];
       }
     }
-    $(window).bind('resize', this.resize);
-    count = 0;
-    throttled = $.throttle(250, function() {
-      return console.log('scroll', count++);
-    });
-    return $(window).bind('scroll', throttled);
   };
   EventDetail.prototype.close = function() {
     this.model.set({
@@ -59,7 +51,7 @@ App.view.EventDetail = (function() {
     this.detail = this.$('#event-detail');
     this.wrapper = this.$('#event-detail-wrapper');
     this.footer = this.$('#event-footer');
-    if (this.model.isSocial()) {
+    if (this.model.isSocial() && false) {
       this.footer.show();
       this.socialView = new App.view.Social({
         model: this.model
@@ -83,28 +75,23 @@ App.view.EventDetail = (function() {
       });
     }
     this.scroll = this.wrapper.data('jsp');
+    this.trigger('rendered');
     return this;
   };
-  EventDetail.prototype.resize = function() {
-    var height, heightOffset, shim;
-    shim = 40;
+  EventDetail.prototype.resize = function(height) {
+    var shim, wrapperHeight;
+    shim = 17;
+    wrapperHeight = height - shim;
+    if (this.header.is(':visible')) {
+      wrapperHeight -= this.header.outerHeight();
+    }
     if (this.footer.is(':visible')) {
-      shim = shim + this.footer.innerHeight();
+      wrapperHeight -= this.footer.outerHeight();
     }
-    heightOffset = shim + parseInt($(this.el).offset().top) + parseInt(this.header.css('height'));
-    height = $(window).height() - heightOffset;
-    this.wrapper.height(Math.min(height, this.maxHeight));
-    if ($.browser.ie) {
-      if (!throttleTimeout) {
-        return setTimeout(__bind(function() {
-          var throttleTimeout;
-          this.scroll.reinitialise();
-          return throttleTimeout = null;
-        }, this), 50);
-      }
-    } else {
-      return this.scroll.reinitialise();
-    }
+    this.wrapper.css({
+      height: Math.max(0, wrapperHeight)
+    });
+    return this.scroll.reinitialise();
   };
   EventDetail.prototype.show = function() {
     this.trigger('show');
@@ -113,14 +100,6 @@ App.view.EventDetail = (function() {
   EventDetail.prototype.hide = function() {
     this.trigger('hide');
     return $(this.el).empty().hide();
-  };
-  EventDetail.prototype.adjustPosition = function(element, direction) {
-    if (direction === 'down') {
-      $(this.el).addClass('fixed');
-    } else {
-      $(this.el).removeClass('fixed');
-    }
-    return this.resize();
   };
   EventDetail.prototype.addLocationFeedbackView = function(field, options) {
     var feedback, ratingViewOptions;
@@ -133,8 +112,6 @@ App.view.EventDetail = (function() {
         commentFormTitle: "Care to elaborate?"
       }, options);
       this.locationRatingView = new App.view.Rating(ratingViewOptions);
-      this.locationRatingView.bind('expand', this.resize);
-      this.locationRatingView.bind('collapse', this.resize);
       this.addressEl.append(this.locationRatingView.render().el);
       this.feedbackSummaryView = new App.view.FeedbackSummary;
       return this.addressEl.append(this.feedbackSummaryView.render().el);
@@ -151,8 +128,6 @@ App.view.EventDetail = (function() {
           model: feedback,
           question: this.model.feedbackQuestion
         });
-        this.feedbackView.bind('expand', this.resize);
-        this.feedbackView.bind('collapse', this.resize);
         return this.detail.append(this.feedbackView.render().el);
       }
     }, this));

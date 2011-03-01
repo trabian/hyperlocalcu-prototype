@@ -26963,523 +26963,6 @@ var escapeCharacters_callback = function(wholeMatch,m1) {
 
 } // end of Showdown.converter
 
-/*!
-jQuery Waypoints - v1.0.1
-Copyright (c) 2011 Caleb Troughton
-Dual licensed under the MIT license and GPL license.
-https://github.com/imakewebthings/jquery-waypoints/blob/master/MIT-license.txt
-https://github.com/imakewebthings/jquery-waypoints/blob/master/GPL-license.txt
-*/
-
-/*
-Waypoints is a small jQuery plugin that makes it easy to execute a function
-whenever you scroll to an element.
-
-GitHub Repository: https://github.com/imakewebthings/jquery-waypoints
-Documentation and Examples: http://imakewebthings.github.com/jquery-waypoints
-
-Changelog:
-	v1.0.1
-		- Added $.waypoints('viewportHeight')
-		- Fixed iOS bug (using the new viewportHeight method)
-		- Added offset function alias: 'bottom-in-view'
-	v1.0 - Initial release.
-	
-Support:
-	- jQuery versions 1.4+
-	- IE6+, FF3+, Chrome 6+, Safari 4+
-	- Other versions and browsers may work, these are just the ones I've looked at.
-*/
-
-(function($, wp, wps, window, undefined){
-	'$:nomunge';
-	
-	var $w = $(window),
-	/*
-	List of all elements that have been registered as waypoints.  Used privately.
-	Each object in the array contains:
-		element: jQuery object containing a single HTML element.
-		offset: The window scroll offset, in px, that triggers the waypoint event.
-		options: Options object that was passed to the waypoint fn function.
-	*/
-	waypoints = [],
-	
-	/*
-	Starting at a ridiculous negative number allows for a 'down' trigger of 0 or
-	negative offset waypoints on load. Useful for setting initial states.
-	*/
-	oldScroll = -99999,
-	
-	// Flags used in throttling.
-	didScroll = false,
-	didResize = false,
-	
-	// Keeping common strings as variables = better minification
-	eventName = 'waypoint.reached',
-	
-	methods = {
-		/*
-		jQuery.fn.waypoint([handler], [options])
-		
-		handler
-			function, optional
-			A callback function called when the user scrolls past the element.
-			The function signature is function(event, direction) where event is
-			a standard jQuery Event Object and direction is a string, either 'down'
-			or 'up' indicating which direction the user is scrolling.
-			
-		options
-			object, optional
-			A map of options to apply to this set of waypoints, including where on
-			the browser window the waypoint is triggered. For a full list of
-			options and their defaults, see $.fn.waypoint.defaults.
-			
-		This is how you register an element as a waypoint. When the user scrolls past
-		that element it triggers waypoint.reached, a custom event. Since the
-		parameters for creating a waypoint are optional, we have a few different
-		possible signatures. Let’s look at each of them.
-
-		someElements.waypoint();
-			
-		Calling .waypoint with no parameters will register the elements as waypoints
-		using the default options. The elements will fire the waypoint.reached event,
-		but calling it in this way does not bind any handler to the event. You can
-		bind to the event yourself, as with any other event, like so:
-
-		someElements.bind('waypoint.reached', function(event, direction) {
-		   // make it rain
-		});
-			
-		You will usually want to create a waypoint and immediately bind a function to
-		waypoint.reached, and can do so by passing a handler as the first argument to
-		.waypoint:
-
-		someElements.waypoint(function(event, direction) {
-		   if (direction === 'down') {
-		      // do this on the way down
-		   }
-		   else {
-		      // do this on the way back up through the waypoint
-		   }
-		});
-			
-		This will still use the default options, which will trigger the waypoint when
-		the top of the element hits the top of the window. We can pass .waypoint an
-		options object to customize things:
-
-		someElements.waypoint(function(event, direction) {
-		   // do something amazing
-		}, {
-		   offset: '50%'  // middle of the page
-		});
-			
-		You can also pass just an options object.
-
-		someElements.waypoint({
-		   offset: 100  // 100px from the top
-		});
-			
-		This behaves like .waypoint(), in that it registers the elements as waypoints
-		but binds no event handlers.
-
-		Calling .waypoint on an existing waypoint will extend the previous options.
-		If the call includes a handler, it will be bound to waypoint.reached without
-		unbinding any other handlers.
-		*/
-		init: function(f, options) {
-			// Register each element as a waypoint, add to array.
-			this.each(function() {
-				var $this = $(this),
-				ndx = waypointIndex($this),
-				base = ndx < 0 ? $.fn[wp].defaults : waypoints[ndx].options,
-				opts = $.extend({}, base, options);
-				
-				// Offset aliases
-				opts.offset = opts.offset === "bottom-in-view" ?
-					function() {
-						return $[wps]('viewportHeight') - $(this).outerHeight();
-					} : opts.offset;
-
-				// Update, or create new waypoint
-				if (ndx < 0) {
-					waypoints.push({
-						element: $this,
-						offset: $this.offset().top,
-						options: opts
-					});
-				}
-				else {
-					waypoints[ndx].options = opts;
-				}
-				
-				// Bind the function if it was passed in.
-				f && $this.bind(eventName, f);
-			});
-			
-			// Need to resort+refresh the waypoints array after new elements are added.
-			$[wps]('refresh');
-			
-			return this;
-		},
-		
-		
-		/*
-		jQuery.fn.waypoint('remove')
-		
-		Passing the string 'remove' to .waypoint unregisters the elements as waypoints
-		and wipes any custom options, but leaves the waypoint.reached events bound.
-		Calling .waypoint again in the future would reregister the waypoint and the old
-		handlers would continue to work.
-		*/
-		remove: function() {
-			return this.each(function() {
-				var ndx = waypointIndex($(this));
-				
-				if (ndx >= 0) {
-					waypoints.splice(ndx, 1);
-				}
-			});
-		},
-		
-		/*
-		jQuery.fn.waypoint('destroy')
-		
-		Passing the string 'destroy' to .waypoint will unbind all waypoint.reached
-		event handlers on those elements and unregisters them as waypoints.
-		*/
-		destroy: function() {
-			return this.unbind(eventName).waypoint('remove');
-		}
-	};
-	
-	/*
-	Given a jQuery element, returns the index of that element in the waypoints
-	array.  Returns the index, or -1 if the element is not a waypoint.
-	*/
-	function waypointIndex(el) {
-		var i = waypoints.length - 1;
-		while (i >= 0 && waypoints[i].element[0] !== el[0]) {
-			i -= 1;
-		}
-		return i;
-	}
-	
-	/*
-	For the waypoint and direction passed in, trigger the waypoint.reached
-	event and deal with the triggerOnce option.
-	*/
-	function triggerWaypoint(way, dir) {
-		way.element.trigger(eventName, dir)
-		if (way.options.triggerOnce) {
-			way.element.waypoint('destroy');
-		}
-	}
-	
-	/*
-	Function that checks the new scroll value against the old value.  If waypoints
-	were reached, fire the appropriate events.  Called within a throttled
-	window.scroll handler later.
-	*/
-	function doScroll() {
-		var newScroll = $w.scrollTop(),
-		
-		// Are we scrolling up or down? Used for direction argument in callback.
-		isDown = newScroll > oldScroll,
-		
-		// Get a list of all waypoints that were crossed since last scroll move.
-		pointsHit = $.grep(waypoints, function(el, i) {
-			return isDown ?
-				(el.offset > oldScroll && el.offset <= newScroll) :
-				(el.offset <= oldScroll && el.offset > newScroll);
-		});
-		
-		// iOS adjustment
-		if (!oldScroll || !newScroll) {
-			$[wps]('refresh');
-		}
-		
-		// Done with scroll comparisons, store new scroll before ejection
-		oldScroll = newScroll;
-		
-		// No waypoints crossed? Eject.
-		if (!pointsHit.length) return;
-		
-		/*
-		One scroll move may cross several waypoints.  If the continuous setting is
-		true, every waypoint event should fire.  If false, only the last one.
-		*/
-		if ($[wps].settings.continuous) {
-			$.each(isDown ? pointsHit : pointsHit.reverse(), function(i, point) {
-				triggerWaypoint(point, [isDown ? 'down' : 'up']);
-			});
-		}
-		else {
-			triggerWaypoint(pointsHit[isDown ? pointsHit.length - 1 : 0],
-				[isDown ? 'down' : 'up']);
-		}
-	}
-	
-	
-	/*
-	fn extension.  Delegates to appropriate method.
-	*/
-	$.fn[wp] = function(method) {
-		
-		if (methods[method]) {
-			return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-		}
-		else if (typeof method === "function" || !method) {
-			return methods.init.apply(this, arguments);
-		}
-		else if (typeof method === "object") {
-			return methods.init.apply(this, [null, method]);
-		}
-		else {
-			$.error( 'Method ' +  method + ' does not exist on jQuery' + wp );
-		}
-	};
-	
-	
-	/*
-	The default options object that is extended when calling .waypoint. It has the
-	following properties:
-
-	offset
-		number | string | function
-		default: 0
-		Determines how far the top of the element must be from the top of the browser
-		window to trigger a waypoint. It can be a number, which is taken as a number
-		of pixels, a string representing a percentage of the viewport height, or a
-		function that will return a number of pixels.
-		
-	triggerOnce
-		boolean
-		default: false
-		If true, the waypoint will be destroyed when triggered.
-	
-	An offset of 250 would trigger the waypoint when the top of the element is 250px
-	from the top of the viewport. Negative values for any offset work as you might
-	expect. A value of -100 would trigger the waypoint when the element is 100px above
-	the top of the window.
-
-	offset: '100%'
-	
-	A string percentage will determine the pixel offset based on the height of the
-	window. When resizing the window, this offset will automatically be recalculated
-	without needing to call $.waypoints('refresh').
-
-	// The bottom of the element is in view
-	offset: function() {
-	   return $.waypoints('viewportHeight') - $(this).outerHeight();
-	}
-	
-	Offset can take a function, which must return a number of pixels from the top of
-	the window. The this value will always refer to the raw HTML element of the
-	waypoint. As with % values, functions are recalculated automatically when the
-	window resizes. For more on recalculating offsets, see $.waypoints('refresh').
-	
-	An offset value of 'bottom-in-view' will act as an alias for the function in the
-	example above, as this is a common usage.
-	
-	offset: 'bottom-in-view'
-	
-	You can see this alias in use on the Scroll Analytics example page.
-
-	The triggerOnce flag, if true, will destroy the waypoint after the first trigger.
-	This is just a shortcut for calling .waypoint('destroy') within the waypoint
-	handler. This is useful in situations such as scroll analytics, where you only
-	want to record an event once for each page visit.
-	*/
-	$.fn[wp].defaults = {
-		offset: 0,
-		triggerOnce: false
-	};
-	
-	
-	/*
-	Methods used by the jQuery object extension.
-	*/
-	var jQMethods = {
-		
-		/*
-		jQuery.waypoints('refresh')
-		
-		This will force a recalculation of each waypoint’s trigger point based on
-		its offset option. This is called automatically whenever the window is
-		resized, new waypoints are added, or a waypoint’s options are modified.
-		If your project is changing the DOM or page layout without doing one of
-		these things, you may want to manually call this refresh.
-		*/
-		refresh: function() {
-			$.each(waypoints, function(i, o) {
-
-				// Adjustment is just the offset if it's a px value
-				var adjustment = 0,
-				oldOffset = o.offset;
-				
-				// Set adjustment to the return value if offset is a function.
-				if (typeof o.options.offset === "function") {
-					adjustment = o.options.offset.apply(o.element);
-				}
-				// Calculate the adjustment if offset is a percentage.
-				else if (typeof o.options.offset === "string") {
-					var amount = parseFloat(o.options.offset),
-					adjustment = o.options.offset.indexOf("%") ?
-						$[wps]('viewportHeight') * (amount / 100) :
-						amount;
-				}
-				else {
-					adjustment = o.options.offset;
-				}
-				
-				/* 
-				Set the element offset to the window scroll offset, less
-				the adjustment.
-				*/
-				o.offset = o.element.offset().top - adjustment;
-
-				/*
-				An element offset change across the current scroll point triggers
-				the event, just as if we scrolled past it.
-				*/
-				if (oldScroll > oldOffset && oldScroll <= o.offset) {
-					triggerWaypoint(o, ['up']);
-				}
-				else if (oldScroll < oldOffset && oldScroll >= o.offset) {
-					triggerWaypoint(o, ['down']);
-				}
-			});
-			
-			// Keep waypoints sorted by offset value.
-			waypoints.sort(function(a, b) {
-				return a.offset - b.offset;
-			});
-		},
-		
-		
-		/*
-		jQuery.waypoints('viewportHeight')
-		
-		This will return the height of the viewport, adjusting for inconsistencies
-		that come with calling $(window).height() in iOS. Recommended for use
-		within any offset functions.
-		*/
-		viewportHeight: function() {
-			return (window.innerHeight ? window.innerHeight : $w.height());
-		},
-		
-		
-		/*
-		jQuery.waypoints()
-		
-		This will return a jQuery object with a collection of all registered waypoint
-		elements.
-
-		$('.post').waypoint();
-		$('.ad-unit').waypoint(function(event, direction) {
-		   // Passed an ad unit
-		});
-		console.log($.waypoints());
-		
-		The example above would log a jQuery object containing all .post and .ad-unit
-		elements.
-		*/
-		aggregate: function() {
-			var points = $();
-			$.each(waypoints, function(i, e) {
-				points = points.add(e.element);
-			});
-			return points;
-		}
-	};
-	
-	
-	/*
-	jQuery object extension. Delegates to appropriate methods above.
-	*/
-	$[wps] = function(method) {
-		if (jQMethods[method]) {
-			return jQMethods[method].apply(this);
-		}
-		else {
-			return jQMethods["aggregate"]();
-		}
-	};
-	
-	
-	/*
-	$.waypoints.settings
-	
-	Settings object that determines some of the plugin’s behavior.
-
-	continuous
-		boolean
-		default: true
-		Determines which waypoints to trigger events for if a single scroll change
-		passes more than one waypoint. If false, only the last waypoint is triggered
-		and the rest are ignored. If true, all waypoints between the previous scroll
-		position and the new one are triggered in order.
-		
-	resizeThrottle
-		number
-		default: 200
-		For performance reasons, the refresh performed during window resizes is
-		throttled. This value is the rate-limit in milliseconds between resize
-		refreshes. For more information on throttling, check out Ben Alman’s
-		throttle / debounce plugin.
-		http://benalman.com/projects/jquery-throttle-debounce-plugin/
-		
-	scrollThrottle
-		number
-		default: 100
-		For performance reasons, checking for any crossed waypoints during the window
-		scroll event is throttled. This value is the rate-limit in milliseconds
-		between scroll checks. For more information on throttling, check out Ben
-		Alman’s throttle / debounce plugin.
-		http://benalman.com/projects/jquery-throttle-debounce-plugin/
-	*/
-	$[wps].settings = {
-		continuous: true,
-		resizeThrottle: 200,
-		scrollThrottle: 100
-	};
-	
-	
-	/*
-	Set things up on load to guarantee height calculations and offsets are correct.
-	*/
-	$w.load(function() {
-		$w.scroll(function() {
-			// Throttle the scroll event. See doScroll() for actual scroll functionality.
-			if (!didScroll) {
-				didScroll = true;
-				window.setTimeout(function() {
-					doScroll();
-					didScroll = false;
-				}, $[wps].settings.scrollThrottle);
-			}
-		}).resize(function() {
-			// Throttle the window resize event to call jQuery.waypoints('refresh').
-			if (!didResize) {
-				didResize = true;
-				window.setTimeout(function() {
-					$.waypoints('refresh');
-					didResize = false;
-				}, $[wps].settings.resizeThrottle);
-			}
-		});
-		
-		// Calculate everything once on load.
-		$[wps]('refresh');
-		
-		/*
-		Fire a scroll check, should the page be loaded at a non-zero scroll value,
-		as with a fragment id link or a page refresh.
-		*/
-		doScroll();
-	});
-})(jQuery, 'waypoint', 'waypoints', this);
-
 var App;
 App = {
   model: {
@@ -28081,7 +27564,6 @@ App.view.EventDetail = (function() {
   function EventDetail() {
     this.addFeedbackView = __bind(this.addFeedbackView, this);;
     this.addLocationFeedbackView = __bind(this.addLocationFeedbackView, this);;
-    this.adjustPosition = __bind(this.adjustPosition, this);;
     this.resize = __bind(this.resize, this);;
     this.render = __bind(this.render, this);;
     this.close = __bind(this.close, this);;    EventDetail.__super__.constructor.apply(this, arguments);
@@ -28092,21 +27574,14 @@ App.view.EventDetail = (function() {
   };
   EventDetail.prototype.templatePath = 'members/events/detail';
   EventDetail.prototype.initialize = function() {
-    var count, throttled;
     if (this.eventTypeOptions != null) {
       if (this.eventTypeOptions.events != null) {
         this.delegateEvents(this.eventTypeOptions.events);
       }
       if (this.eventTypeOptions.templatePath != null) {
-        this.eventTypeOptions.template = App.templates[this.eventTypeOptions.templatePath];
+        return this.eventTypeOptions.template = App.templates[this.eventTypeOptions.templatePath];
       }
     }
-    $(window).bind('resize', this.resize);
-    count = 0;
-    throttled = $.throttle(250, function() {
-      return console.log('scroll', count++);
-    });
-    return $(window).bind('scroll', throttled);
   };
   EventDetail.prototype.close = function() {
     this.model.set({
@@ -28130,7 +27605,7 @@ App.view.EventDetail = (function() {
     this.detail = this.$('#event-detail');
     this.wrapper = this.$('#event-detail-wrapper');
     this.footer = this.$('#event-footer');
-    if (this.model.isSocial()) {
+    if (this.model.isSocial() && false) {
       this.footer.show();
       this.socialView = new App.view.Social({
         model: this.model
@@ -28154,28 +27629,23 @@ App.view.EventDetail = (function() {
       });
     }
     this.scroll = this.wrapper.data('jsp');
+    this.trigger('rendered');
     return this;
   };
-  EventDetail.prototype.resize = function() {
-    var height, heightOffset, shim;
-    shim = 40;
+  EventDetail.prototype.resize = function(height) {
+    var shim, wrapperHeight;
+    shim = 17;
+    wrapperHeight = height - shim;
+    if (this.header.is(':visible')) {
+      wrapperHeight -= this.header.outerHeight();
+    }
     if (this.footer.is(':visible')) {
-      shim = shim + this.footer.innerHeight();
+      wrapperHeight -= this.footer.outerHeight();
     }
-    heightOffset = shim + parseInt($(this.el).offset().top) + parseInt(this.header.css('height'));
-    height = $(window).height() - heightOffset;
-    this.wrapper.height(Math.min(height, this.maxHeight));
-    if ($.browser.ie) {
-      if (!throttleTimeout) {
-        return setTimeout(__bind(function() {
-          var throttleTimeout;
-          this.scroll.reinitialise();
-          return throttleTimeout = null;
-        }, this), 50);
-      }
-    } else {
-      return this.scroll.reinitialise();
-    }
+    this.wrapper.css({
+      height: Math.max(0, wrapperHeight)
+    });
+    return this.scroll.reinitialise();
   };
   EventDetail.prototype.show = function() {
     this.trigger('show');
@@ -28184,14 +27654,6 @@ App.view.EventDetail = (function() {
   EventDetail.prototype.hide = function() {
     this.trigger('hide');
     return $(this.el).empty().hide();
-  };
-  EventDetail.prototype.adjustPosition = function(element, direction) {
-    if (direction === 'down') {
-      $(this.el).addClass('fixed');
-    } else {
-      $(this.el).removeClass('fixed');
-    }
-    return this.resize();
   };
   EventDetail.prototype.addLocationFeedbackView = function(field, options) {
     var feedback, ratingViewOptions;
@@ -28204,8 +27666,6 @@ App.view.EventDetail = (function() {
         commentFormTitle: "Care to elaborate?"
       }, options);
       this.locationRatingView = new App.view.Rating(ratingViewOptions);
-      this.locationRatingView.bind('expand', this.resize);
-      this.locationRatingView.bind('collapse', this.resize);
       this.addressEl.append(this.locationRatingView.render().el);
       this.feedbackSummaryView = new App.view.FeedbackSummary;
       return this.addressEl.append(this.feedbackSummaryView.render().el);
@@ -28222,8 +27682,6 @@ App.view.EventDetail = (function() {
           model: feedback,
           question: this.model.feedbackQuestion
         });
-        this.feedbackView.bind('expand', this.resize);
-        this.feedbackView.bind('collapse', this.resize);
         return this.detail.append(this.feedbackView.render().el);
       }
     }, this));
@@ -28371,40 +27829,12 @@ App.controller.MemberDashboard = (function() {
   return MemberDashboard;
 })();
 $(function() {
-  var count, debounced, drawer, main, options, redraw, throttled;
-  count = 0;
-  options = {
-    drawerMargin: 10,
-    borderHeight: 2
-  };
-  main = $('#main');
-  drawer = $('#event-detail-view');
-  redraw = function() {
-    var drawerHeight, drawerTop, mainHeight, mainTop, visibleMainHeight, windowHeight, windowScrollTop;
-    drawerTop = 0;
-    drawerHeight = 0;
-    mainTop = main.position().top;
-    mainHeight = main.height();
-    windowScrollTop = $(window).scrollTop();
-    windowHeight = $(window).height();
-    if (mainTop > windowScrollTop) {
-      drawerTop = mainTop + options.drawerMargin;
-      drawerHeight = windowHeight - (drawerTop - windowScrollTop) - (options.drawerMargin * 2);
-      drawerHeight = Math.min(drawerHeight, mainHeight - (options.drawerMargin * 3));
-    } else {
-      drawerTop = windowScrollTop + options.drawerMargin;
-      visibleMainHeight = mainTop + mainHeight - windowScrollTop;
-      drawerHeight = Math.min(windowHeight, visibleMainHeight) - (options.drawerMargin * 3) - options.borderHeight;
+  return $('#event-detail-view').drawer({
+    main: $('#main'),
+    resize: function(element, height) {
+      return element.css('height', height);
     }
-    return drawer.css({
-      'top': drawerTop,
-      'height': drawerHeight
-    });
-  };
-  throttled = $.throttle(100, redraw);
-  debounced = $.debounce(100, redraw);
-  $(window).bind('scroll resize', throttled);
-  return $(window).trigger('scroll');
+  });
 });
 App.model.CustomSync = function(method, model, success, error) {
   var getUrl, methodMap, modelJSON, params, toJSONMethod, type;
@@ -28436,6 +27866,59 @@ App.model.CustomSync = function(method, model, success, error) {
   };
   return $.ajax(params);
 };
+$.widget("ui.drawer", {
+  options: {
+    verticalMargin: 10,
+    throttleOrDebounce: 'debounce',
+    delay: 100,
+    resizeOnInit: true
+  },
+  _create: function() {
+    $(window).bind('scroll resize', this._windowObserver());
+    if (this.options.resizeOnInit) {
+      return this.redraw();
+    }
+  },
+  _windowObserver: function() {
+    _.bindAll(this, 'redraw');
+    if (this.options.throttleOrDebounce === 'debounce') {
+      return $.debounce(this.options.delay, this.redraw);
+    } else {
+      return $.throttle(this.options.delay, this.redraw);
+    }
+  },
+  redraw: function() {
+    var drawerHeight, drawerTop, mainHeight, mainTop, padding, visibleMainHeight, windowHeight, windowScrollTop;
+    drawerTop = 0;
+    drawerHeight = 0;
+    mainTop = this.options.main.position().top;
+    mainHeight = this.options.main.height();
+    windowScrollTop = $(window).scrollTop();
+    windowHeight = $(window).height();
+    padding = parseInt(this.element.css('padding-top')) + parseInt(this.element.css('padding-bottom'));
+    if (mainTop > windowScrollTop) {
+      drawerTop = mainTop + this.options.verticalMargin;
+      drawerHeight = windowHeight - (drawerTop - windowScrollTop) - this.options.verticalMargin;
+      drawerHeight = Math.min(drawerHeight, mainHeight - (this.options.verticalMargin * 2));
+    } else {
+      drawerTop = windowScrollTop + this.options.verticalMargin;
+      visibleMainHeight = mainTop + mainHeight - windowScrollTop;
+      drawerHeight = Math.min(windowHeight, visibleMainHeight) - (this.options.verticalMargin * 2);
+    }
+    drawerHeight -= padding;
+    if (_.isFunction(this.options.resize)) {
+      this.element.css({
+        top: drawerTop
+      });
+      return this.options.resize(this.element, drawerHeight);
+    } else {
+      return this.element.css({
+        top: drawerTop,
+        height: drawerHeight
+      });
+    }
+  }
+});
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -29617,6 +29100,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.view.MemberDashboard = (function() {
   function MemberDashboard() {
+    this.initEventDetailView = __bind(this.initEventDetailView, this);;
     this.renderEventDetail = __bind(this.renderEventDetail, this);;
     this.renderTimeline = __bind(this.renderTimeline, this);;
     this.render = __bind(this.render, this);;    MemberDashboard.__super__.constructor.apply(this, arguments);
@@ -29634,19 +29118,7 @@ App.view.MemberDashboard = (function() {
     this.accountView = new App.view.Account({
       model: this.model.accounts.current()
     });
-    $('#sidebar').html(this.accountView.render().el);
-    $('#sidebar').append(this.make('div', {
-      id: 'event-detail-view'
-    }));
-    this.eventDetailView = new App.view.EventDetail({
-      el: $('#event-detail-view')
-    });
-    this.eventDetailView.bind('show', __bind(function() {
-      return $(this.accountView.el).hide();
-    }, this));
-    return this.eventDetailView.bind('hide', __bind(function() {
-      return $(this.accountView.el).show();
-    }, this));
+    return $('#sidebar').html(this.accountView.render().el);
   };
   MemberDashboard.prototype.renderTimeline = function(subaccount) {
     this.timelineView = new App.view.AccountTimeline({
@@ -29656,10 +29128,36 @@ App.view.MemberDashboard = (function() {
     return subaccount.events.bind('selectOne', this.renderEventDetail);
   };
   MemberDashboard.prototype.renderEventDetail = function(event) {
+    if (this.eventDetailView == null) {
+      this.initEventDetailView();
+    }
     this.eventDetailView.model = event;
     this.eventDetailView.maxHeight = $(this.timelineView.el).height() - 50;
-    $('#sidebar').append(this.eventDetailView.render().el);
-    return this.eventDetailView.resize();
+    return $('#sidebar').append(this.eventDetailView.render().el);
+  };
+  MemberDashboard.prototype.initEventDetailView = function() {
+    $('#sidebar').append(this.make('div', {
+      id: 'event-detail-view'
+    }));
+    this.eventDetailView = new App.view.EventDetail({
+      el: $('#event-detail-view')
+    });
+    this.eventDetailView.bind('show', __bind(function() {
+      return $(this.accountView.el).hide();
+    }, this));
+    this.eventDetailView.bind('hide', __bind(function() {
+      return $(this.accountView.el).show();
+    }, this));
+    $(this.eventDetailView.el).drawer({
+      main: $('#main'),
+      resizeOnInit: false,
+      resize: __bind(function(element, height) {
+        return this.eventDetailView.resize(height);
+      }, this)
+    });
+    return this.eventDetailView.bind('rendered', __bind(function() {
+      return $(this.eventDetailView.el).drawer('redraw');
+    }, this));
   };
   return MemberDashboard;
 })();
