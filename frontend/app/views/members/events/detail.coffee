@@ -15,9 +15,17 @@ class App.view.EventDetail extends Backbone.View
 
     $(window).bind 'resize', @resize
 
+    count = 0
+
+    throttled = $.throttle 250, ->
+      console.log 'scroll', count++
+
+    $(window).bind 'scroll', throttled
+
   close: =>
     @model.set 'selected': false
     this.hide()
+    false
 
   render: =>
 
@@ -72,8 +80,6 @@ class App.view.EventDetail extends Backbone.View
     if @footer.is(':visible')
       shim = shim + @footer.innerHeight() 
 
-    console.log $(@el).offset().top
-
     heightOffset = shim + parseInt($(@el).offset().top) + parseInt(@header.css('height'))
 
     height = $(window).height() - heightOffset
@@ -95,8 +101,8 @@ class App.view.EventDetail extends Backbone.View
 
     this.trigger('show')
 
-    $(@el).waypoint('destroy').waypoint(@adjustPosition).waypoint
-      offset: 10
+    #$(@el).waypoint('destroy').waypoint(@adjustPosition).waypoint
+      #offset: 10
 
     $(@el).show()
 
@@ -104,7 +110,7 @@ class App.view.EventDetail extends Backbone.View
 
     this.trigger('hide')
 
-    $(@el).waypoint 'destroy'
+    #$(@el).waypoint 'destroy'
 
     $(@el).empty().hide()
 

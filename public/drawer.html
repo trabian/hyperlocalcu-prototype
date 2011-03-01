@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<head>
+  <link href='/stylesheets/compiled/screen.css?v=4' rel='stylesheet'>
+  <link href='/stylesheets/jquery-ui.css' rel='stylesheet'>
+  <link href='/stylesheets/compiled/jquery_ui_custom.css' rel='stylesheet'>
+  <title>Hyperlocal CU Prototype</title>
+  <script type="text/javascript">
+  var mpq = [];
+  mpq.push(["init", "b047f6a07720f89414538145a18bdfe0"]);
+  (function() {
+  var mp = document.createElement("script"); mp.type = "text/javascript"; mp.async = true;
+  mp.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + "//api.mixpanel.com/site_media/js/api/mixpanel.js";
+  var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(mp, s);
+  })();
+  </script>
+  <style type="text/css" media="screen">
+    #event-detail-view {
+      background: #eee;
+      width: 300px;
+      height: 300px;
+      display: block;
+      position: absolute;
+      top: 0;
+    }
+    #main {
+      min-height: 500px !important;
+      height: 500px !important;
+      margin-bottom: 40px;
+    }
+    
+  </style>
+</head>
+<body>
+  <div id='container'>
+
+    <div id='global'>
+      <ul>
+        <li>
+          <a href="/users/sign_out">Log out</a>
+        </li>
+      </ul>
+    </div>
+    <div id='main'>
+
+      <div class='content'>
+        <div class='ui-widget'><div id='timeline-loading'>main</div></div>
+      </div>
+    </div>
+    <div id='sidebar'>
+      <div id='event-detail-view'>
+        drawer
+      </div>
+    </div>
+  </div>
+
+  <script src='http://js.pusherapp.com/1.6/pusher.min.js' type='text/javascript'></script>
+  <script src="/javascripts/compiled/vendor/underscore.js?1295831121" type="text/javascript"></script>
+  <script src="/javascripts/compiled/vendor/jquery-1.5.js?1298083731" type="text/javascript"></script>
+  <script src="/javascripts/compiled/vendor/jquery.ba-throttle-debounce.js?1298931814" type="text/javascript"></script>
+  <script src="/javascripts/compiled/app/drawer_test.js" type="text/javascript"></script>
+
+</body>
+

@@ -347,6 +347,7 @@ Support:
 		*/
 		refresh: function() {
 			$.each(waypoints, function(i, o) {
+
 				// Adjustment is just the offset if it's a px value
 				var adjustment = 0,
 				oldOffset = o.offset;

@@ -21,6 +21,7 @@ App.view.EventDetail = (function() {
   };
   EventDetail.prototype.templatePath = 'members/events/detail';
   EventDetail.prototype.initialize = function() {
+    var count, throttled;
     if (this.eventTypeOptions != null) {
       if (this.eventTypeOptions.events != null) {
         this.delegateEvents(this.eventTypeOptions.events);
@@ -29,13 +30,19 @@ App.view.EventDetail = (function() {
         this.eventTypeOptions.template = App.templates[this.eventTypeOptions.templatePath];
       }
     }
-    return $(window).bind('resize', this.resize);
+    $(window).bind('resize', this.resize);
+    count = 0;
+    throttled = $.throttle(250, function() {
+      return console.log('scroll', count++);
+    });
+    return $(window).bind('scroll', throttled);
   };
   EventDetail.prototype.close = function() {
     this.model.set({
       'selected': false
     });
-    return this.hide();
+    this.hide();
+    return false;
   };
   EventDetail.prototype.render = function() {
     var detailJSON;
@@ -84,7 +91,6 @@ App.view.EventDetail = (function() {
     if (this.footer.is(':visible')) {
       shim = shim + this.footer.innerHeight();
     }
-    console.log($(this.el).offset().top);
     heightOffset = shim + parseInt($(this.el).offset().top) + parseInt(this.header.css('height'));
     height = $(window).height() - heightOffset;
     this.wrapper.height(Math.min(height, this.maxHeight));
@@ -102,14 +108,10 @@ App.view.EventDetail = (function() {
   };
   EventDetail.prototype.show = function() {
     this.trigger('show');
-    $(this.el).waypoint('destroy').waypoint(this.adjustPosition).waypoint({
-      offset: 10
-    });
     return $(this.el).show();
   };
   EventDetail.prototype.hide = function() {
     this.trigger('hide');
-    $(this.el).waypoint('destroy');
     return $(this.el).empty().hide();
   };
   EventDetail.prototype.adjustPosition = function(element, direction) {
