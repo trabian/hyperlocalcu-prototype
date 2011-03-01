@@ -5,14 +5,15 @@ App.model.extension.Selectable = {
     });
   },
   selectOne: function(record_or_id) {
-    var record;
+    var record, _ref;
     record = _.isFunction(record_or_id) ? record_or_id : this.get(record_or_id);
-    _.each(this.selected(), function(selectedRecord) {
-      return selectedRecord.set({
+    if ((_ref = this.selectedRecord) != null) {
+      _ref.set({
         'selected': false
       });
-    });
+    }
     if (record != null) {
+      this.selectedRecord = record;
       record.set({
         'selected': true
       });
@@ -21,12 +22,6 @@ App.model.extension.Selectable = {
     return record;
   },
   current: function() {
-    var selectedAccounts;
-    selectedAccounts = this.selected();
-    if (_.isEmpty(selectedAccounts)) {
-      return typeof this.defaultSelected == "function" ? this.defaultSelected() : void 0;
-    } else {
-      return _.first(selectedAccounts);
-    }
+    return this.selectedRecord || (typeof this.defaultSelected == "function" ? this.defaultSelected() : void 0);
   }
 };

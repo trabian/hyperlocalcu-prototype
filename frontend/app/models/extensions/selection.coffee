@@ -8,20 +8,14 @@ App.model.extension.Selectable =
 
     record = if _.isFunction(record_or_id) then record_or_id else this.get(record_or_id)
 
-    _.each this.selected(), (selectedRecord) ->
-      selectedRecord.set 'selected': false
+    @selectedRecord?.set 'selected': false
 
     if record?
+      @selectedRecord = record
       record.set 'selected': true
       this.trigger 'selectOne', record
 
     record
 
   current: ->
-
-    selectedAccounts = this.selected()
-
-    if _.isEmpty(selectedAccounts)
-      return this.defaultSelected?()
-    else
-      return _.first(selectedAccounts)
+    @selectedRecord || this.defaultSelected?()

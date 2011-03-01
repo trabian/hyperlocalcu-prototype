@@ -27,8 +27,7 @@ describe 'a member with accounts', ->
 
   it 'should allow an account to be selected', ->
 
-    @member.accounts.get(2).set
-      selected: true
+    @member.accounts.selectOne(2)
 
     expect(@member.accounts.current().get('id')).toEqual(2)
 
