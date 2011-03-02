@@ -2326,19 +2326,19 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   margin: 0.3em 0;
 }
 
-/* line 16, ../../../frontend/sass/events/_detail.sass */
+/* line 17, ../../../frontend/sass/events/_detail.sass */
 #event-detail {
   width: 318px;
   padding-right: 5px;
 }
 
-/* line 20, ../../../frontend/sass/events/_detail.sass */
+/* line 21, ../../../frontend/sass/events/_detail.sass */
 #event-footer {
   padding: 5px 5px 5px 0;
   min-height: 75px;
 }
 
-/* line 24, ../../../frontend/sass/events/_detail.sass */
+/* line 25, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view {
   position: absolute;
   color: #444444;
@@ -2515,29 +2515,29 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #event-detail-view .check-image ul li img {
   width: 155px;
 }
-/* line 37, ../../../frontend/sass/events/_detail.sass */
+/* line 38, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view.fixed {
   position: fixed;
   top: 10px;
 }
-/* line 40, ../../../frontend/sass/events/_detail.sass */
+/* line 41, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view #event-detail-wrapper {
   min-height: 110px;
   width: 323px;
 }
-/* line 43, ../../../frontend/sass/events/_detail.sass */
+/* line 44, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .top {
   overflow: hidden;
   *zoom: 1;
   margin: 0 0 15px;
 }
-/* line 46, ../../../frontend/sass/events/_detail.sass */
+/* line 47, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .top .date {
   float: left;
   color: #7b7b7b;
   font-size: 10px;
 }
-/* line 50, ../../../frontend/sass/events/_detail.sass */
+/* line 51, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .top .close {
   float: right;
   position: absolute;
@@ -2545,43 +2545,43 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   right: 10px;
   font-size: 10px;
 }
-/* line 56, ../../../frontend/sass/events/_detail.sass */
+/* line 57, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .name-and-amount {
   margin: 0 0 0.5em 0;
 }
-/* line 58, ../../../frontend/sass/events/_detail.sass */
+/* line 59, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .name-and-amount .amount {
   font-size: 16px;
   float: right;
   line-height: 1em;
 }
-/* line 62, ../../../frontend/sass/events/_detail.sass */
+/* line 63, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .name-and-amount h3 {
   font-size: 16px;
   line-height: 1em;
 }
-/* line 66, ../../../frontend/sass/events/_detail.sass */
+/* line 67, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .deposit .amount {
   color: #009900;
 }
-/* line 69, ../../../frontend/sass/events/_detail.sass */
+/* line 70, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location {
   padding: 5px 0 12px 0;
   font-size: 11px;
   overflow: hidden;
   *zoom: 1;
 }
-/* line 73, ../../../frontend/sass/events/_detail.sass */
+/* line 74, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .map {
   margin: 0 13px 0 0;
   float: left;
 }
-/* line 76, ../../../frontend/sass/events/_detail.sass */
+/* line 77, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .map img {
   width: 130px;
   border: 1px solid #cccccc;
 }
-/* line 80, ../../../frontend/sass/events/_detail.sass */
+/* line 81, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address h2, #event-detail-view .location .address h3 {
   margin: 0;
   padding: 0;
@@ -2592,19 +2592,19 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   font-weight: bold;
   margin: 0 0 0.3em;
 }
-/* line 86, ../../../frontend/sass/events/_detail.sass */
+/* line 87, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address h2 {
   font-size: 15px;
 }
-/* line 88, ../../../frontend/sass/events/_detail.sass */
+/* line 89, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address h3 {
   font-size: 11px;
 }
-/* line 90, ../../../frontend/sass/events/_detail.sass */
+/* line 91, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address p {
   margin: 0;
 }
-/* line 92, ../../../frontend/sass/events/_detail.sass */
+/* line 93, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address .rating {
   margin-top: 10px;
   display: inline-block;
@@ -2686,11 +2686,11 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   color: #009900;
   font-weight: bold;
 }
-/* line 98, ../../../frontend/sass/events/_detail.sass */
+/* line 99, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address div.comment .buttons p {
   font-size: 10px;
 }
-/* line 104, ../../../frontend/sass/events/_detail.sass */
+/* line 105, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service {
   margin: 10px 0 0;
   border: 1px solid #92c5e0;
@@ -2700,12 +2700,12 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   border-width: 1px 0;
   background: url(/images/background.png) repeat-x left -250px;
 }
-/* line 112, ../../../frontend/sass/events/_detail.sass */
+/* line 113, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service h2 {
   font-size: 14px;
   margin: 0;
 }
-/* line 115, ../../../frontend/sass/events/_detail.sass */
+/* line 116, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service p {
   margin: 0;
   padding: 0;
@@ -2713,7 +2713,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   outline: 0;
   margin: 0.2em 0 0.5em;
 }
-/* line 118, ../../../frontend/sass/events/_detail.sass */
+/* line 119, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service ul {
   list-style: none;
   margin: 0;
@@ -2753,7 +2753,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #event-detail-view .available-service ul li:last-child, #event-detail-view .available-service ul li.last {
   padding-right: 0;
 }
-/* line 123, ../../../frontend/sass/events/_detail.sass */
+/* line 124, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service ul li {
   margin: 0 0 0.5em;
 }

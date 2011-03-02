@@ -27050,21 +27050,18 @@ App.model.Event = (function() {
     this.day = __bind(this.day, this);;
     this.formatted_date = __bind(this.formatted_date, this);;
     this.formatted_timestamp = __bind(this.formatted_timestamp, this);;
-    this.splitPostedAt = __bind(this.splitPostedAt, this);;
-    this.initializeDetails = __bind(this.initializeDetails, this);;    Event.__super__.constructor.apply(this, arguments);
+    this.splitPostedAt = __bind(this.splitPostedAt, this);;    Event.__super__.constructor.apply(this, arguments);
   }
   __extends(Event, Backbone.Model);
   Event.prototype.initialize = function() {
     this.sync = App.model.CustomSync;
     this.member = App.currentMember;
     this.updateFields = [];
-    return this.bind('change', this.trackEventActivity);
-  };
-  Event.prototype.initializeDetails = function() {
-    this.feedbacks = new App.model.FeedbackList(this.get('feedbacks'), {
+    this.feedbacks = new App.model.FeedbackList({
       event: this
     });
-    return this.feedbacks.url = "/events/" + this.id + "/feedbacks";
+    this.feedbacks.url = "/events/" + this.id + "/feedbacks";
+    return this.bind('change', this.trackEventActivity);
   };
   Event.prototype.splitPostedAt = function() {
     var date, time, _ref;
@@ -27517,7 +27514,7 @@ App.view.EventRow = (function() {
   EventRow.prototype.tagName = 'tr';
   EventRow.prototype.className = 'withdrawal';
   EventRow.prototype.initialize = function() {
-    this.template = App.templates['members/events/row'];
+    this.template = App.templates['events/row'];
     this.model.bind('change:selected', this.changeSelection);
     this.model.bind('change', this.onChange);
     return this.render();
@@ -27554,137 +27551,30 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.prototype = new ctor;
   child.__super__ = parent.prototype;
   return child;
-}, __slice = Array.prototype.slice;
+};
 App.view.EventDetail = (function() {
   function EventDetail() {
-    this.addFeedbackView = __bind(this.addFeedbackView, this);;
-    this.addLocationFeedbackView = __bind(this.addLocationFeedbackView, this);;
-    this.resize = __bind(this.resize, this);;
-    this.renderFeedback = __bind(this.renderFeedback, this);;
-    this.render = __bind(this.render, this);;
-    this.close = __bind(this.close, this);;    EventDetail.__super__.constructor.apply(this, arguments);
+    this.decorateAndShow = __bind(this.decorateAndShow, this);;
+    this.render = __bind(this.render, this);;    EventDetail.__super__.constructor.apply(this, arguments);
   }
   __extends(EventDetail, Backbone.View);
-  EventDetail.prototype.events = {
-    "click .close": "close"
-  };
-  EventDetail.prototype.templatePath = 'members/events/detail';
-  EventDetail.prototype.initialize = function() {
-    if (this.eventTypeOptions != null) {
-      if (this.eventTypeOptions.events != null) {
-        this.delegateEvents(this.eventTypeOptions.events);
-      }
-      if (this.eventTypeOptions.templatePath != null) {
-        return this.eventTypeOptions.template = App.templates[this.eventTypeOptions.templatePath];
-      }
-    }
-  };
-  EventDetail.prototype.close = function() {
-    this.model.set({
-      'selected': false
-    });
-    this.hide();
-    return false;
-  };
+  EventDetail.prototype.templatePath = 'events/detail';
+  EventDetail.prototype.initialize = function() {};
   EventDetail.prototype.render = function() {
-    var detailJSON;
-    mpq.push([
-      "track", "View event detail", {
-        event_type: this.model.get('event_type'),
-        id: this.model.id
-      }
-    ]);
-    this.model.initializeDetails();
-    detailJSON = this.model.toDetailJSON();
-    $(this.el).html(App.templates[this.templatePath](detailJSON));
-    this.header = this.$('#event-header');
-    this.detail = this.$('#event-detail');
-    this.wrapper = this.$('#event-detail-wrapper');
-    this.footer = this.$('#event-footer');
-    if (this.model.isSocial()) {
-      this.footer.show();
-      this.socialView = new App.view.Social({
-        model: this.model
+    $(this.el).html(App.templates[this.templatePath](this.model.toDetailJSON()));
+    $(this.el).bind('hide', __bind(function() {
+      return this.model.set({
+        selected: false
       });
-      this.footer.append(this.socialView.render().el);
-    }
-    if ((this.eventTypeOptions != null) && (this.eventTypeOptions.template != null)) {
-      this.detail.append(this.eventTypeOptions.template(detailJSON));
-    }
-    this.show();
-    this.wrapper.jScrollPane();
-    if (this.renderDetail != null) {
-      this.renderDetail();
-    }
-    if (this.model.isDeposit()) {
-      this.header.addClass('deposit');
-    }
-    this.scroll = this.wrapper.data('jsp');
-    this.model.feedbacks.bind('refresh', this.renderFeedback);
-    this.model.feedbacks.fetch();
-    this.trigger('rendered');
+    }, this));
+    this.decorateAndShow();
     return this;
   };
-  EventDetail.prototype.renderFeedback = function() {
-    if (this.model.get('merchant') != null) {
-      return this.addLocationFeedbackView('merchant', {
-        include_summary_view: true
-      });
+  EventDetail.prototype.decorateAndShow = function() {
+    if (this.model.isDeposit()) {
+      $(this.el).addClass('deposit');
     }
-  };
-  EventDetail.prototype.resize = function(height) {
-    var shim, wrapperHeight;
-    shim = 17;
-    wrapperHeight = height - shim;
-    if (this.header.is(':visible')) {
-      wrapperHeight -= this.header.outerHeight();
-    }
-    if (this.footer.is(':visible')) {
-      wrapperHeight -= this.footer.outerHeight();
-    }
-    this.wrapper.css({
-      height: Math.max(0, wrapperHeight)
-    });
-    return this.scroll.reinitialise();
-  };
-  EventDetail.prototype.show = function() {
-    this.trigger('show');
-    return $(this.el).show();
-  };
-  EventDetail.prototype.hide = function() {
-    this.trigger('hide');
-    return $(this.el).empty().hide();
-  };
-  EventDetail.prototype.addLocationFeedbackView = function(field, options) {
-    var feedback, ratingViewOptions;
-    feedback = this.model.feedbacks.for_subject(field);
-    if (feedback != null) {
-      this.addressEl = this.detail.find('.address');
-      ratingViewOptions = _.extend({
-        model: feedback,
-        commentParent: this.addressEl,
-        commentFormTitle: "Care to elaborate?"
-      }, options);
-      this.locationRatingView = new App.view.Rating(ratingViewOptions);
-      this.addressEl.append(this.locationRatingView.render().el);
-      this.feedbackSummaryView = new App.view.FeedbackSummary;
-      return this.addressEl.append(this.feedbackSummaryView.render().el);
-    }
-  };
-  EventDetail.prototype.addFeedbackView = function() {
-    var subject_types;
-    subject_types = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-    return _.each(subject_types, __bind(function(subject_type) {
-      var feedback;
-      feedback = this.model.feedbacks.for_subject(subject_type);
-      if (feedback != null) {
-        this.feedbackView = new App.view.Feedback({
-          model: feedback,
-          question: this.model.feedbackQuestion
-        });
-        return this.detail.append(this.feedbackView.render().el);
-      }
-    }, this));
+    return $(this.el).drawer('show');
   };
   return EventDetail;
 })();
@@ -27858,12 +27748,14 @@ App.model.CustomSync = function(method, model, success, error) {
   };
   return $.ajax(params);
 };
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 $.widget("ui.drawer", {
   options: {
     verticalMargin: 10,
     throttleOrDebounce: 'debounce',
     delay: 100,
-    resizeOnInit: true
+    resizeOnInit: true,
+    scrollShim: 17
   },
   _create: function() {
     $(window).bind('scroll resize', this._windowObserver());
@@ -27872,12 +27764,20 @@ $.widget("ui.drawer", {
     }
   },
   _windowObserver: function() {
-    _.bindAll(this, 'redraw');
+    _.bindAll(this, 'redraw', 'show');
     if (this.options.throttleOrDebounce === 'debounce') {
       return $.debounce(this.options.delay, this.redraw);
     } else {
       return $.throttle(this.options.delay, this.redraw);
     }
+  },
+  show: function() {
+    this.element.show().trigger('show');
+    this.initializeScrollable();
+    return this.redraw();
+  },
+  hide: function() {
+    return this.element.hide().trigger('hide');
   },
   redraw: function() {
     var drawerHeight, drawerTop, mainHeight, mainTop, padding, visibleMainHeight, windowHeight, windowScrollTop;
@@ -27898,17 +27798,42 @@ $.widget("ui.drawer", {
       drawerHeight = Math.min(windowHeight, visibleMainHeight) - (this.options.verticalMargin * 2);
     }
     drawerHeight -= padding;
-    if (_.isFunction(this.options.resize)) {
-      this.element.css({
-        top: drawerTop
-      });
-      return this.options.resize(this.element, drawerHeight);
-    } else {
-      return this.element.css({
-        top: drawerTop,
-        height: drawerHeight
-      });
+    this.element.css({
+      top: drawerTop
+    });
+    return this.resizeScrollable(drawerHeight);
+  },
+  resizeScrollable: function(height) {
+    var scrollHeight;
+    if (this.scrollableInitialized == null) {
+      this.initializeScrollable();
     }
+    scrollHeight = height - this.options.scrollShim;
+    if (this.header.is(':visible')) {
+      scrollHeight -= this.header.outerHeight();
+      console.log('header', this.header.outerHeight());
+    }
+    if (this.footer.is(':visible')) {
+      scrollHeight -= this.footer.outerHeight();
+      console.log('footer', this.header.outerHeight());
+    }
+    scrollHeight = Math.max(0, scrollHeight);
+    this.scrollable.css({
+      height: scrollHeight
+    });
+    return this.scroll.reinitialise();
+  },
+  initializeScrollable: function() {
+    this.element.find('.close').click(__bind(function() {
+      this.hide();
+      return false;
+    }, this));
+    this.header = this.element.find('.header');
+    this.scrollable = this.element.find('.scrollable');
+    this.footer = this.element.find('.footer');
+    this.scrollable.jScrollPane();
+    this.scroll = this.scrollable.data('jsp');
+    return this.scrollableInitialized = true;
   }
 });
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
@@ -28987,184 +28912,6 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-App.view.FeedbackSubjectOverview = (function() {
-  function FeedbackSubjectOverview() {
-    this.render = __bind(this.render, this);;    FeedbackSubjectOverview.__super__.constructor.apply(this, arguments);
-  }
-  __extends(FeedbackSubjectOverview, Backbone.View);
-  FeedbackSubjectOverview.prototype.initialize = function(options) {
-    this.template = App.templates['feedback_subjects/overview'];
-    return this.model.bind('change', __bind(function() {
-      return this.render();
-    }, this));
-  };
-  FeedbackSubjectOverview.prototype.render = function() {
-    $(this.el).html(this.template(this.model.toViewJSON()));
-    _.each(['month', 'year'], __bind(function(timespan) {
-      var ratingView;
-      ratingView = new App.view.Rating({
-        model: this.model,
-        rating: this.model.get('feedback_totals')[timespan].average,
-        readOnly: true
-      });
-      return this.$("." + timespan + " .rating").append(ratingView.render().el);
-    }, this));
-    return this;
-  };
-  return FeedbackSubjectOverview;
-})();
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-App.view.FeedbackSummary = (function() {
-  function FeedbackSummary() {
-    this.render = __bind(this.render, this);;    FeedbackSummary.__super__.constructor.apply(this, arguments);
-  }
-  __extends(FeedbackSummary, Backbone.View);
-  FeedbackSummary.prototype.initialize = function(options) {
-    return this.collection = new App.model.FeedbackList;
-  };
-  FeedbackSummary.prototype.render = function() {
-    return this;
-  };
-  return FeedbackSummary;
-})();
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-App.view.BillpaySignup = (function() {
-  function BillpaySignup() {
-    this.submitForm = __bind(this.submitForm, this);;
-    this.open = __bind(this.open, this);;
-    this.close = __bind(this.close, this);;    BillpaySignup.__super__.constructor.apply(this, arguments);
-  }
-  __extends(BillpaySignup, Backbone.View);
-  BillpaySignup.prototype.id = 'billpay-signup-dialog';
-  BillpaySignup.prototype.events = {
-    "click .form button": "submitForm"
-  };
-  BillpaySignup.prototype.initialize = function(options) {
-    return this.template = App.templates['members/billpay_signup'];
-  };
-  BillpaySignup.prototype.render = function() {
-    mpq.push([
-      "track", "View Billpay Signup", {
-        offer: "billpay"
-      }
-    ]);
-    $(this.el).html(this.template());
-    $(this.el).dialog({
-      title: "Sign up for Billpay",
-      width: 460,
-      height: 310,
-      open: this.open,
-      close: this.close
-    });
-    return this.$('.form button').button();
-  };
-  BillpaySignup.prototype.close = function(event, ui) {
-    window.location.hash = '#';
-    return this.remove();
-  };
-  BillpaySignup.prototype.open = function(event, ui) {
-    return this.delegateEvents();
-  };
-  BillpaySignup.prototype.submitForm = function() {
-    mpq.push(["track", "Submit Billpay Signup"]);
-    alert('Provide instructions on what will happen next');
-    return $(this.el).dialog('close');
-  };
-  return BillpaySignup;
-})();
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-App.view.MemberDashboard = (function() {
-  function MemberDashboard() {
-    this.initEventDetailView = __bind(this.initEventDetailView, this);;
-    this.renderEventDetail = __bind(this.renderEventDetail, this);;
-    this.renderTimeline = __bind(this.renderTimeline, this);;
-    this.render = __bind(this.render, this);;    MemberDashboard.__super__.constructor.apply(this, arguments);
-  }
-  __extends(MemberDashboard, Backbone.View);
-  MemberDashboard.prototype.initialize = function(options) {
-    var subaccounts;
-    if (this.model.accounts.length !== 0) {
-      this.render();
-      subaccounts = this.model.accounts.current().subaccounts;
-      return subaccounts.bind('selectOne', this.renderTimeline);
-    }
-  };
-  MemberDashboard.prototype.render = function() {
-    this.accountView = new App.view.Account({
-      model: this.model.accounts.current()
-    });
-    return $('#sidebar').html(this.accountView.render().el);
-  };
-  MemberDashboard.prototype.renderTimeline = function(subaccount) {
-    this.timelineView = new App.view.AccountTimeline({
-      model: subaccount
-    });
-    $('#main .content').html(this.timelineView.render().el);
-    return subaccount.events.bind('selectOne', this.renderEventDetail);
-  };
-  MemberDashboard.prototype.renderEventDetail = function(event) {
-    if (this.eventDetailView == null) {
-      this.initEventDetailView();
-    }
-    this.eventDetailView.model = event;
-    this.eventDetailView.maxHeight = $(this.timelineView.el).height() - 50;
-    return $('#sidebar').append(this.eventDetailView.render().el);
-  };
-  MemberDashboard.prototype.initEventDetailView = function() {
-    $('#sidebar').append(this.make('div', {
-      id: 'event-detail-view'
-    }));
-    this.eventDetailView = new App.view.EventDetail({
-      el: $('#event-detail-view')
-    });
-    this.eventDetailView.bind('show', __bind(function() {
-      return $(this.accountView.el).hide();
-    }, this));
-    this.eventDetailView.bind('hide', __bind(function() {
-      return $(this.accountView.el).show();
-    }, this));
-    $(this.eventDetailView.el).drawer({
-      main: $('#main'),
-      resizeOnInit: false,
-      resize: __bind(function(element, height) {
-        return this.eventDetailView.resize(height);
-      }, this)
-    });
-    return this.eventDetailView.bind('rendered', __bind(function() {
-      return $(this.eventDetailView.el).drawer('redraw');
-    }, this));
-  };
-  return MemberDashboard;
-})();
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
 App.view.AtmDetail = (function() {
   function AtmDetail() {
     this.renderDetail = __bind(this.renderDetail, this);;    AtmDetail.__super__.constructor.apply(this, arguments);
@@ -29372,6 +29119,184 @@ App.view.StatementRow = (function() {
   StatementRow.prototype.templatePath = 'members/events/statement/row';
   return StatementRow;
 })();
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.view.FeedbackSubjectOverview = (function() {
+  function FeedbackSubjectOverview() {
+    this.render = __bind(this.render, this);;    FeedbackSubjectOverview.__super__.constructor.apply(this, arguments);
+  }
+  __extends(FeedbackSubjectOverview, Backbone.View);
+  FeedbackSubjectOverview.prototype.initialize = function(options) {
+    this.template = App.templates['feedback_subjects/overview'];
+    return this.model.bind('change', __bind(function() {
+      return this.render();
+    }, this));
+  };
+  FeedbackSubjectOverview.prototype.render = function() {
+    $(this.el).html(this.template(this.model.toViewJSON()));
+    _.each(['month', 'year'], __bind(function(timespan) {
+      var ratingView;
+      ratingView = new App.view.Rating({
+        model: this.model,
+        rating: this.model.get('feedback_totals')[timespan].average,
+        readOnly: true
+      });
+      return this.$("." + timespan + " .rating").append(ratingView.render().el);
+    }, this));
+    return this;
+  };
+  return FeedbackSubjectOverview;
+})();
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.view.FeedbackSummary = (function() {
+  function FeedbackSummary() {
+    this.render = __bind(this.render, this);;    FeedbackSummary.__super__.constructor.apply(this, arguments);
+  }
+  __extends(FeedbackSummary, Backbone.View);
+  FeedbackSummary.prototype.initialize = function(options) {
+    return this.collection = new App.model.FeedbackList;
+  };
+  FeedbackSummary.prototype.render = function() {
+    return this;
+  };
+  return FeedbackSummary;
+})();
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.view.BillpaySignup = (function() {
+  function BillpaySignup() {
+    this.submitForm = __bind(this.submitForm, this);;
+    this.open = __bind(this.open, this);;
+    this.close = __bind(this.close, this);;    BillpaySignup.__super__.constructor.apply(this, arguments);
+  }
+  __extends(BillpaySignup, Backbone.View);
+  BillpaySignup.prototype.id = 'billpay-signup-dialog';
+  BillpaySignup.prototype.events = {
+    "click .form button": "submitForm"
+  };
+  BillpaySignup.prototype.initialize = function(options) {
+    return this.template = App.templates['members/billpay_signup'];
+  };
+  BillpaySignup.prototype.render = function() {
+    mpq.push([
+      "track", "View Billpay Signup", {
+        offer: "billpay"
+      }
+    ]);
+    $(this.el).html(this.template());
+    $(this.el).dialog({
+      title: "Sign up for Billpay",
+      width: 460,
+      height: 310,
+      open: this.open,
+      close: this.close
+    });
+    return this.$('.form button').button();
+  };
+  BillpaySignup.prototype.close = function(event, ui) {
+    window.location.hash = '#';
+    return this.remove();
+  };
+  BillpaySignup.prototype.open = function(event, ui) {
+    return this.delegateEvents();
+  };
+  BillpaySignup.prototype.submitForm = function() {
+    mpq.push(["track", "Submit Billpay Signup"]);
+    alert('Provide instructions on what will happen next');
+    return $(this.el).dialog('close');
+  };
+  return BillpaySignup;
+})();
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.view.MemberDashboard = (function() {
+  function MemberDashboard() {
+    this.initEventDetailView = __bind(this.initEventDetailView, this);;
+    this.renderEventDetail = __bind(this.renderEventDetail, this);;
+    this.renderTimeline = __bind(this.renderTimeline, this);;
+    this.render = __bind(this.render, this);;    MemberDashboard.__super__.constructor.apply(this, arguments);
+  }
+  __extends(MemberDashboard, Backbone.View);
+  MemberDashboard.prototype.initialize = function(options) {
+    var subaccounts;
+    if (this.model.accounts.length !== 0) {
+      this.render();
+      subaccounts = this.model.accounts.current().subaccounts;
+      return subaccounts.bind('selectOne', this.renderTimeline);
+    }
+  };
+  MemberDashboard.prototype.render = function() {
+    this.accountView = new App.view.Account({
+      model: this.model.accounts.current()
+    });
+    return $('#sidebar').html(this.accountView.render().el);
+  };
+  MemberDashboard.prototype.renderTimeline = function(subaccount) {
+    this.timelineView = new App.view.AccountTimeline({
+      model: subaccount
+    });
+    $('#main .content').html(this.timelineView.render().el);
+    return subaccount.events.bind('selectOne', this.renderEventDetail);
+  };
+  MemberDashboard.prototype.renderEventDetail = function(event) {
+    if (this.eventDetailView == null) {
+      this.initEventDetailView();
+    }
+    this.eventDetailView.model = event;
+    this.eventDetailView.maxHeight = $(this.timelineView.el).height() - 50;
+    return $('#sidebar').append(this.eventDetailView.render().el);
+  };
+  MemberDashboard.prototype.initEventDetailView = function() {
+    $('#sidebar').append(this.make('div', {
+      id: 'event-detail-view'
+    }));
+    this.eventDetailView = new App.view.EventDetail({
+      el: $('#event-detail-view')
+    });
+    this.eventDetailView.el.bind('show', __bind(function() {
+      return $(this.accountView.el).hide();
+    }, this));
+    this.eventDetailView.el.bind('hide', __bind(function() {
+      return $(this.accountView.el).show();
+    }, this));
+    $(this.eventDetailView.el).drawer({
+      main: $('#main'),
+      resizeOnInit: false,
+      resize: __bind(function(element, height) {
+        return this.eventDetailView.resize(height);
+      }, this)
+    });
+    return this.eventDetailView.bind('rendered', __bind(function() {
+      return $(this.eventDetailView.el).drawer('redraw');
+    }, this));
+  };
+  return MemberDashboard;
+})();
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -29559,14 +29484,14 @@ App.templates['common/feedback/comment'] = Handlebars.compile('<a href="#" class
 App.templates['common/feedback/feedback'] = Handlebars.compile('<div class="avatar-and-question">  {{#avatar}}    <div class="avatar"><img src="{{ . }}" /></div>  {{/avatar}}  <div class="question-and-rating">    <div class="question">{{{ question }}}</div>  </div></div>');
 App.templates['common/feedback/timeline/row'] = Handlebars.compile('<td class="date">  <span>{{ formatted_timestamp }}<span></td><td class="comment">  {{#comment}}  <p class="description">{{ . }}</p>  {{/comment}}  <p class="meta">Feedback provided by {{ member_name }} for service on {{ formatted_service_timestamp }} | <a href="#">Create a service request</a></p></td><td class="rating"></td>');
 App.templates['common/social/overview'] = Handlebars.compile('<div class="twitter">  {{#avatar}}    <img src="{{ . }}" class="avatar" />  {{/avatar}}  <div class="latest-tweet">  {{^twitter_username}}    <div class="form">      <input type="text" placeholder="Twitter username for {{name}}" class="text" />      <button>Add</button>    </div>  {{/twitter_username}}  </div></div><p class="security">  Don\'t trust Twitter with your financial information? That\'s ok -- <a href="#">neither do we</a>.</p>');
+App.templates['events/billpay/detail'] = Handlebars.compile('<div class="processing-summary">  <p class="processing-days">Your payment arrived in <strong>{{ bill_payment_processing_days }} business days</strong>.</p>  <p class="submitted-date">Payment submitted on {{ bill_payment_submitted_date }}</p></div>');
+App.templates['events/card/detail'] = Handlebars.compile('<div class="receipt-and-account-info">  {{#receipt_image}}    <div class="receipt-image">      <a href="{{ . }}"><img src="{{ . }}" /></a>    </div>  {{/receipt_image}}  {{^receipt_image}}    <div class="receipt-upload">      <a href="#" class="upload">Upload your receipt</a>      <p class="email">        or email it to <a href="mailto:receipts+092341234@vcu.com">receipts+092341234@vcu.com</a>      </p>    </div>  {{/receipt_image}}  {{#account_information}}    <div class="account-information">      {{{ . }}}    </div>  {{/account_information}}</div>');
+App.templates['events/check/detail'] = Handlebars.compile('{{#check_image}}<div class="check-image">  <ul>    <li><a href="{{ . }}" rel="checks"><img src="{{.}}" title="{{../meta}}" /></a></li>    <li><a href="{{ ../check_image_back }}" rel="checks"><img src="{{../check_image_back}}" title="{{../meta}}" /></a></li>  </ul>  <a href="#" class="report-problems">Problems with the check images?</a></div>{{/check_image}}{{#merchant}}<div class="available-service billpay">  <h2>Avaliable service: MyVantage Bill Pay</h2>  <p>It looks like you regularly write checks to Trugreen.  Would you like to sign up for MyVantage Bill Pay to automate these payments?</p>  <ul>    <li><a href="#billpay/signup" class="yes">Yes, I\'d like to sign up</a></li>    <li><a href="#billpay/no" class="no">No, thanks</a></li>  </ul></div>{{/merchant}}');
+App.templates['events/detail'] = Handlebars.compile('<div id="event-header" class="header">  <div class="top">    <div class="date">{{ formatted_date }}</div>    <a href="#" class="close">Close</a>  </div>  <div class="name-and-amount">    <div class="amount">{{{ formatted_amount }}}</div>    <h3>{{ description }}</h3>  </div></div><div id="event-detail-wrapper" class="scrollable">  <div class="{{ event_type }}" id="event-detail">    {{#address}}      <div class="location">        <div class="map"><img src="{{ ../map }}" /></div>        <div class="address">{{{ . }}}</div>      </div>    {{/address}}  </div></div><div id="event-footer" style="display: none;" class="footer"></div>');
+App.templates['events/row'] = Handlebars.compile('<td class="date">  <span>{{ formatted_timestamp }}<span></td><td class="name">  <p class="name"><a href="#events/{{ id }}">{{ description }}</a></p>  {{#meta}}    <p class="meta">{{ . }}</p>  {{/meta}}</td><td class="amount">{{{ formatted_amount }}}</td>');
+App.templates['events/statement/row'] = Handlebars.compile('<td class="date">  <span>{{ formatted_timestamp }}<span></td><td class="name" colspan="2">  <p class="name">{{ description }}</p>  <p class="meta">    Ending Balance: {{{ ending_balance }}}  </p>  <table class="statement-table" style="display: none;">    <tr><th>Opening Balance</th><td>{{{ opening_balance }}}</td></tr>  </table></td>');
 App.templates['feedback_subjects/overview'] = Handlebars.compile('<div class="subject-info">  {{#avatar}}    <img src="{{ . }}" class="avatar" />  {{/avatar}}  <div class="name">    <h2>{{ name }}</h2>    <p class="meta">{{ meta }}</p>  </div></div>{{#feedback_totals}}<div class="averages">    {{#month}}  <div class="month average">    <h2>This Month</h2>    <div class="rating"></div>    <p class="meta">{{ average }} based on {{ count }} reviews</p>  </div>  {{/month}}  {{#year}}  <div class="year average">    <h2>This Year</h2>    <div class="rating"></div>    <p class="meta">{{ average }} based on {{ count }} reviews</p>  </div>  {{/year}}</div>{{/feedback_totals}}');
 App.templates['members/billpay_signup'] = Handlebars.compile('<div class="form">  <div class="signup-form">[Signup form]</div>  <div class="buttons">    <button>Sign up for Billpay</button>  </div></div>');
-App.templates['members/events/billpay/detail'] = Handlebars.compile('<div class="processing-summary">  <p class="processing-days">Your payment arrived in <strong>{{ bill_payment_processing_days }} business days</strong>.</p>  <p class="submitted-date">Payment submitted on {{ bill_payment_submitted_date }}</p></div>');
-App.templates['members/events/card/detail'] = Handlebars.compile('<div class="receipt-and-account-info">  {{#receipt_image}}    <div class="receipt-image">      <a href="{{ . }}"><img src="{{ . }}" /></a>    </div>  {{/receipt_image}}  {{^receipt_image}}    <div class="receipt-upload">      <a href="#" class="upload">Upload your receipt</a>      <p class="email">        or email it to <a href="mailto:receipts+092341234@vcu.com">receipts+092341234@vcu.com</a>      </p>    </div>  {{/receipt_image}}  {{#account_information}}    <div class="account-information">      {{{ . }}}    </div>  {{/account_information}}</div>');
-App.templates['members/events/check/detail'] = Handlebars.compile('{{#check_image}}<div class="check-image">  <ul>    <li><a href="{{ . }}" rel="checks"><img src="{{.}}" title="{{../meta}}" /></a></li>    <li><a href="{{ ../check_image_back }}" rel="checks"><img src="{{../check_image_back}}" title="{{../meta}}" /></a></li>  </ul>  <a href="#" class="report-problems">Problems with the check images?</a></div>{{/check_image}}{{#merchant}}<div class="available-service billpay">  <h2>Avaliable service: MyVantage Bill Pay</h2>  <p>It looks like you regularly write checks to Trugreen.  Would you like to sign up for MyVantage Bill Pay to automate these payments?</p>  <ul>    <li><a href="#billpay/signup" class="yes">Yes, I\'d like to sign up</a></li>    <li><a href="#billpay/no" class="no">No, thanks</a></li>  </ul></div>{{/merchant}}');
-App.templates['members/events/detail'] = Handlebars.compile('<div id="event-header">  <div class="top">    <div class="date">{{ formatted_date }}</div>    <a href="#" class="close">Close</a>  </div>  <div class="name-and-amount">    <div class="amount">{{{ formatted_amount }}}</div>    <h3>{{ description }}</h3>  </div></div><div id="event-detail-wrapper">  <div class="{{ event_type }}" id="event-detail">    {{#address}}      <div class="location">        <div class="map"><img src="{{ ../map }}" /></div>        <div class="address">{{{ . }}}</div>      </div>    {{/address}}  </div></div><div id="event-footer" style="display: none;"></div>');
-App.templates['members/events/row'] = Handlebars.compile('<td class="date">  <span>{{ formatted_timestamp }}<span></td><td class="name">  <p class="name"><a href="#events/{{ id }}">{{ description }}</a></p>  {{#meta}}    <p class="meta">{{ . }}</p>  {{/meta}}</td><td class="amount">{{{ formatted_amount }}}</td>');
-App.templates['members/events/statement/row'] = Handlebars.compile('<td class="date">  <span>{{ formatted_timestamp }}<span></td><td class="name" colspan="2">  <p class="name">{{ description }}</p>  <p class="meta">    Ending Balance: {{{ ending_balance }}}  </p>  <table class="statement-table" style="display: none;">    <tr><th>Opening Balance</th><td>{{{ opening_balance }}}</td></tr>  </table></td>');
 App.templates['members/sample'] = Handlebars.compile('<!-- Placeholder -->');
 App.templates['members/subaccount'] = Handlebars.compile('<div class="balances">  <div class="balance">{{{formattedBalance}}}</div>  {{#formattedAvailableBalance}}    <div class="available">Available: <span class="available-balance">{{{.}}}</span></div>  {{/formattedAvailableBalance}}</div><h3><a href="#accounts/{{account_id}}/subaccounts/{{id}}">{{name}}</a></h3><div class="meta">  <span class="subaccount-number">    {{accountNumber}}-<strong>{{suffix}}</strong>  </span>  |  <a href="#" class="manage">manage account &#9662;</a></div>');
 App.templates['members/subaccount_list'] = Handlebars.compile('<h2>{{title}}</h2><div class="subaccounts"></div>');

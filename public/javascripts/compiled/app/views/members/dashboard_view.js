@@ -50,10 +50,10 @@ App.view.MemberDashboard = (function() {
     this.eventDetailView = new App.view.EventDetail({
       el: $('#event-detail-view')
     });
-    this.eventDetailView.bind('show', __bind(function() {
+    this.eventDetailView.el.bind('show', __bind(function() {
       return $(this.accountView.el).hide();
     }, this));
-    this.eventDetailView.bind('hide', __bind(function() {
+    this.eventDetailView.el.bind('hide', __bind(function() {
       return $(this.accountView.el).show();
     }, this));
     $(this.eventDetailView.el).drawer({

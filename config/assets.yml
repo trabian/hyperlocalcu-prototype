@@ -29,6 +29,6 @@ javascripts:
     - public/javascripts/compiled/app/models/feedback_subject_factory.js
     - public/javascripts/compiled/app/views/extensions/**/*.js
     - public/javascripts/compiled/app/views/common/timeline/timeline_view.js
-    - public/javascripts/compiled/app/views/members/events/row.js
-    - public/javascripts/compiled/app/views/members/events/detail.js
+    - public/javascripts/compiled/app/views/events/row.js
+    - public/javascripts/compiled/app/views/events/detail.js
     - public/javascripts/compiled/app/**/*.js

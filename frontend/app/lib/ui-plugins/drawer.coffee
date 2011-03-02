@@ -5,6 +5,7 @@ $.widget "ui.drawer",
     throttleOrDebounce: 'debounce'
     delay: 100
     resizeOnInit: true
+    scrollShim: 17
 
   _create: ->
 
@@ -14,12 +15,20 @@ $.widget "ui.drawer",
 
   _windowObserver: ->
 
-    _.bindAll this, 'redraw'
+    _.bindAll this, 'redraw', 'show'
 
     if @options.throttleOrDebounce is 'debounce'
       $.debounce @options.delay, @redraw
     else
       $.throttle @options.delay, @redraw
+
+  show: ->
+    this.element.show().trigger('show')
+    this.initializeScrollable()
+    this.redraw()
+
+  hide: ->
+    this.element.hide().trigger('hide')
 
   redraw: ->
 
@@ -50,14 +59,44 @@ $.widget "ui.drawer",
 
     drawerHeight -= padding
 
-    if _.isFunction @options.resize
+    this.element.css
+      top: drawerTop
 
-      this.element.css
-        top: drawerTop
+    this.resizeScrollable drawerHeight
 
-      @options.resize this.element, drawerHeight
+  resizeScrollable: (height) ->
 
-    else
-      this.element.css
-        top: drawerTop
-        height: drawerHeight
+    this.initializeScrollable() unless @scrollableInitialized?
+
+    scrollHeight = height - @options.scrollShim
+
+    if @header.is(':visible')
+      scrollHeight -= @header.outerHeight()
+      console.log 'header', @header.outerHeight()
+
+    if @footer.is(':visible')
+      scrollHeight -= @footer.outerHeight()
+      console.log 'footer', @header.outerHeight()
+
+    scrollHeight = Math.max 0, scrollHeight
+
+    @scrollable.css
+      height: scrollHeight
+
+    @scroll.reinitialise()
+
+  initializeScrollable: ->
+
+    this.element.find('.close').click =>
+      this.hide()
+      return false
+
+    @header = this.element.find('.header')
+    @scrollable = this.element.find('.scrollable')
+    @footer = this.element.find('.footer')
+
+    @scrollable.jScrollPane()
+    @scroll = @scrollable.data('jsp')
+
+    @scrollableInitialized = true
+

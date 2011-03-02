@@ -42,10 +42,10 @@ class App.view.MemberDashboard extends Backbone.View
     @eventDetailView = new App.view.EventDetail
       el: $('#event-detail-view')
 
-    @eventDetailView.bind 'show', =>
+    @eventDetailView.el.bind 'show', =>
       $(@accountView.el).hide()
 
-    @eventDetailView.bind 'hide', =>
+    @eventDetailView.el.bind 'hide', =>
       $(@accountView.el).show()
 
     $(@eventDetailView.el).drawer

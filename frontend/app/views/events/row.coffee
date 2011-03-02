@@ -9,7 +9,7 @@ class App.view.EventRow extends Backbone.View
 
   initialize: ->
 
-    @template = App.templates['members/events/row']
+    @template = App.templates['events/row']
 
     @model.bind 'change:selected', @changeSelection
 

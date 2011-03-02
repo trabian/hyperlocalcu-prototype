@@ -1,4 +1,4 @@
-<div id="event-header">
+<div id="event-header" class="header">
   <div class="top">
     <div class="date">{{ formatted_date }}</div>
     <a href="#" class="close">Close</a>
@@ -13,7 +13,7 @@
   </div>
 </div>
 
-<div id="event-detail-wrapper">
+<div id="event-detail-wrapper" class="scrollable">
   <div class="{{ event_type }}" id="event-detail">
     {{#address}}
       <div class="location">
@@ -24,7 +24,7 @@
   </div>
 </div>
 
-<div id="event-footer" style="display: none;">
+<div id="event-footer" style="display: none;" class="footer">
 
 </div>
 

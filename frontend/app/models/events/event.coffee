@@ -8,14 +8,13 @@ class App.model.Event extends Backbone.Model
 
     @updateFields = []
 
+    @feedbacks = new App.model.FeedbackList
+      event: this
+
+    @feedbacks.url = "/events/#{@id}/feedbacks"
+
     this.bind 'change', @trackEventActivity
 
-  initializeDetails: =>
-
-    @feedbacks = new App.model.FeedbackList this.get('feedbacks'),
-      event: this
-  
-    @feedbacks.url = "/events/#{@id}/feedbacks"
 
   splitPostedAt: =>
 
