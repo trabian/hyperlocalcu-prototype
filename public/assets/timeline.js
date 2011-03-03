@@ -27057,10 +27057,10 @@ App.model.Event = (function() {
     this.sync = App.model.CustomSync;
     this.member = App.currentMember;
     this.updateFields = [];
-    this.feedbacks = new App.model.FeedbackList({
-      event: this
+    this.feedbacks = new App.model.FeedbackList([], {
+      event: this,
+      url: "/events/" + this.id + "/feedbacks"
     });
-    this.feedbacks.url = "/events/" + this.id + "/feedbacks";
     return this.bind('change', this.trackEventActivity);
   };
   Event.prototype.splitPostedAt = function() {
@@ -27551,33 +27551,99 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.prototype = new ctor;
   child.__super__ = parent.prototype;
   return child;
-};
+}, __slice = Array.prototype.slice;
 App.view.EventDetail = (function() {
   function EventDetail() {
-    this.decorateAndShow = __bind(this.decorateAndShow, this);;
+    this.addSubjectFeedbackView = __bind(this.addSubjectFeedbackView, this);;
+    this.resize = __bind(this.resize, this);;
+    this.renderLocationFeedbackView = __bind(this.renderLocationFeedbackView, this);;
+    this.renderFeedback = __bind(this.renderFeedback, this);;
+    this.renderSocialView = __bind(this.renderSocialView, this);;
+    this.decorate = __bind(this.decorate, this);;
     this.render = __bind(this.render, this);;    EventDetail.__super__.constructor.apply(this, arguments);
   }
   __extends(EventDetail, Backbone.View);
   EventDetail.prototype.templatePath = 'events/detail';
   EventDetail.prototype.initialize = function() {};
+  EventDetail.prototype.setModel = function(model) {
+    this.model = model;
+    this.model.feedbacks.unbind('refresh');
+    this.model.feedbacks.bind('refresh', this.renderFeedback);
+    return this.eventTypeView = App.view.EventDetailFactory.getEventDetailView(this.model, this);
+  };
   EventDetail.prototype.render = function() {
     $(this.el).html(App.templates[this.templatePath](this.model.toDetailJSON()));
-    $(this.el).bind('hide', __bind(function() {
-      return this.model.set({
-        selected: false
-      });
-    }, this));
-    this.decorateAndShow();
+    this.decorate();
+    if (this.model.isSocial()) {
+      this.renderSocialView();
+    }
+    this.model.feedbacks.fetch();
     return this;
   };
-  EventDetail.prototype.decorateAndShow = function() {
-    if (this.model.isDeposit()) {
-      $(this.el).addClass('deposit');
+  EventDetail.prototype.decorate = function() {
+    return $(this.el).toggleClass('deposit', this.model.isDeposit());
+  };
+  EventDetail.prototype.renderSocialView = function() {
+    this.socialView = new App.view.Social({
+      model: this.model
+    });
+    return this.$('.footer').append(this.socialView.render().el).show();
+  };
+  EventDetail.prototype.renderFeedback = function() {
+    var _ref;
+    return (_ref = this.eventTypeView) != null ? typeof _ref.renderFeedback == "function" ? _ref.renderFeedback() : void 0 : void 0;
+  };
+  EventDetail.prototype.renderLocationFeedbackView = function(field, options) {
+    var addressEl, feedback, locationRatingView, ratingViewOptions;
+    feedback = this.model.feedbacks.for_subject(field);
+    if (feedback != null) {
+      addressEl = this.$('.location .address');
+      ratingViewOptions = _.extend({
+        model: feedback,
+        commentParent: addressEl,
+        commentFormTitle: "Care to elaborate?"
+      }, options);
+      locationRatingView = new App.view.Rating(ratingViewOptions);
+      locationRatingView.bind('expand', this.resize);
+      locationRatingView.bind('collapse', this.resize);
+      return addressEl.append(locationRatingView.render().el);
     }
-    return $(this.el).drawer('show');
+  };
+  EventDetail.prototype.resize = function() {
+    return this.trigger('resize');
+  };
+  EventDetail.prototype.addSubjectFeedbackView = function() {
+    var subject_types;
+    subject_types = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    return _.each(subject_types, __bind(function(subject_type) {
+      var feedback, feedbackView;
+      feedback = this.model.feedbacks.for_subject(subject_type);
+      if (feedback != null) {
+        feedbackView = new App.view.Feedback({
+          model: feedback,
+          question: this.model.feedbackQuestion
+        });
+        feedbackView.bind('expand', this.resize);
+        feedbackView.bind('collapse', this.resize);
+        return this.$('#event-detail').append(feedbackView.render().el);
+      }
+    }, this));
   };
   return EventDetail;
 })();
+App.view.EventDetailFactory = {
+  getEventDetailView: function(model, parent) {
+    var event_detail_view_class;
+    event_detail_view_class = App.view.EventDetailFactory[model.get('event_type')];
+    if (event_detail_view_class == null) {
+      return null;
+    }
+    return new event_detail_view_class({
+      model: model,
+      parent: parent
+    });
+  }
+};
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -27811,11 +27877,9 @@ $.widget("ui.drawer", {
     scrollHeight = height - this.options.scrollShim;
     if (this.header.is(':visible')) {
       scrollHeight -= this.header.outerHeight();
-      console.log('header', this.header.outerHeight());
     }
     if (this.footer.is(':visible')) {
       scrollHeight -= this.footer.outerHeight();
-      console.log('footer', this.header.outerHeight());
     }
     scrollHeight = Math.max(0, scrollHeight);
     this.scrollable.css({
@@ -28226,7 +28290,8 @@ App.model.FeedbackList = (function() {
   __extends(FeedbackList, Backbone.Collection);
   FeedbackList.prototype.model = App.model.Feedback;
   FeedbackList.prototype.initialize = function(collection, options) {
-    return this.event = options.event;
+    this.event = options.event;
+    return this.url = options.url;
   };
   FeedbackList.prototype.for_subject = function(subject_key) {
     var feedback;
@@ -28972,17 +29037,18 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.view.BranchDetail = (function() {
   function BranchDetail() {
-    this.renderDetail = __bind(this.renderDetail, this);;    BranchDetail.__super__.constructor.apply(this, arguments);
+    this.renderFeedback = __bind(this.renderFeedback, this);;    BranchDetail.__super__.constructor.apply(this, arguments);
   }
-  __extends(BranchDetail, App.view.EventDetail);
-  BranchDetail.prototype.renderDetail = function() {
-    this.addFeedbackView('teller');
-    return this.addLocationFeedbackView('branch', {
-      commentFormTitle: "Care to tell us more about this branch?"
-    });
+  __extends(BranchDetail, Backbone.View);
+  BranchDetail.prototype.renderFeedback = function() {
+    this.options.parent.renderLocationFeedbackView('branch');
+    if (this.model.get('teller') != null) {
+      return this.options.parent.addSubjectFeedbackView('teller');
+    }
   };
   return BranchDetail;
 })();
+App.view.EventDetailFactory.branch = App.view.BranchDetail;
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -29261,15 +29327,22 @@ App.view.MemberDashboard = (function() {
       model: subaccount
     });
     $('#main .content').html(this.timelineView.render().el);
+    subaccount.events.unbind('selectOne', this.renderEventDetail);
     return subaccount.events.bind('selectOne', this.renderEventDetail);
   };
   MemberDashboard.prototype.renderEventDetail = function(event) {
     if (this.eventDetailView == null) {
       this.initEventDetailView();
     }
-    this.eventDetailView.model = event;
+    this.eventDetailView.setModel(event);
     this.eventDetailView.maxHeight = $(this.timelineView.el).height() - 50;
-    return $('#sidebar').append(this.eventDetailView.render().el);
+    $('#sidebar').append(this.eventDetailView.render().el);
+    $(this.eventDetailView.el).drawer('show');
+    return $(this.eventDetailView.el).bind('hide', __bind(function() {
+      return event.set({
+        selected: false
+      });
+    }, this));
   };
   MemberDashboard.prototype.initEventDetailView = function() {
     $('#sidebar').append(this.make('div', {
@@ -29291,7 +29364,7 @@ App.view.MemberDashboard = (function() {
         return this.eventDetailView.resize(height);
       }, this)
     });
-    return this.eventDetailView.bind('rendered', __bind(function() {
+    return this.eventDetailView.bind('resize', __bind(function() {
       return $(this.eventDetailView.el).drawer('redraw');
     }, this));
   };

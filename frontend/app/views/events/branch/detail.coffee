@@ -1,8 +1,9 @@
-class App.view.BranchDetail extends App.view.EventDetail
+class App.view.BranchDetail extends Backbone.View
 
-  renderDetail: =>
+  renderFeedback: =>
 
-    this.addFeedbackView 'teller'
+    @options.parent.renderLocationFeedbackView 'branch'
 
-    this.addLocationFeedbackView 'branch',
-      commentFormTitle: "Care to tell us more about this branch?"
+    @options.parent.addSubjectFeedbackView 'teller' if @model.get('teller')?
+
+App.view.EventDetailFactory.branch = App.view.BranchDetail

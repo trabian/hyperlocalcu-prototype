@@ -13,7 +13,8 @@ App.model.FeedbackList = (function() {
   __extends(FeedbackList, Backbone.Collection);
   FeedbackList.prototype.model = App.model.Feedback;
   FeedbackList.prototype.initialize = function(collection, options) {
-    return this.event = options.event;
+    this.event = options.event;
+    return this.url = options.url;
   };
   FeedbackList.prototype.for_subject = function(subject_key) {
     var feedback;

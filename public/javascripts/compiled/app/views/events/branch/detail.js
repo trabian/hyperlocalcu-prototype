@@ -8,14 +8,15 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.view.BranchDetail = (function() {
   function BranchDetail() {
-    this.renderDetail = __bind(this.renderDetail, this);;    BranchDetail.__super__.constructor.apply(this, arguments);
+    this.renderFeedback = __bind(this.renderFeedback, this);;    BranchDetail.__super__.constructor.apply(this, arguments);
   }
-  __extends(BranchDetail, App.view.EventDetail);
-  BranchDetail.prototype.renderDetail = function() {
-    this.addFeedbackView('teller');
-    return this.addLocationFeedbackView('branch', {
-      commentFormTitle: "Care to tell us more about this branch?"
-    });
+  __extends(BranchDetail, Backbone.View);
+  BranchDetail.prototype.renderFeedback = function() {
+    this.options.parent.renderLocationFeedbackView('branch');
+    if (this.model.get('teller') != null) {
+      return this.options.parent.addSubjectFeedbackView('teller');
+    }
   };
   return BranchDetail;
 })();
+App.view.EventDetailFactory.branch = App.view.BranchDetail;

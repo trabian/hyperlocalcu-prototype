@@ -33,15 +33,22 @@ App.view.MemberDashboard = (function() {
       model: subaccount
     });
     $('#main .content').html(this.timelineView.render().el);
+    subaccount.events.unbind('selectOne', this.renderEventDetail);
     return subaccount.events.bind('selectOne', this.renderEventDetail);
   };
   MemberDashboard.prototype.renderEventDetail = function(event) {
     if (this.eventDetailView == null) {
       this.initEventDetailView();
     }
-    this.eventDetailView.model = event;
+    this.eventDetailView.setModel(event);
     this.eventDetailView.maxHeight = $(this.timelineView.el).height() - 50;
-    return $('#sidebar').append(this.eventDetailView.render().el);
+    $('#sidebar').append(this.eventDetailView.render().el);
+    $(this.eventDetailView.el).drawer('show');
+    return $(this.eventDetailView.el).bind('hide', __bind(function() {
+      return event.set({
+        selected: false
+      });
+    }, this));
   };
   MemberDashboard.prototype.initEventDetailView = function() {
     $('#sidebar').append(this.make('div', {
@@ -63,7 +70,7 @@ App.view.MemberDashboard = (function() {
         return this.eventDetailView.resize(height);
       }, this)
     });
-    return this.eventDetailView.bind('rendered', __bind(function() {
+    return this.eventDetailView.bind('resize', __bind(function() {
       return $(this.eventDetailView.el).drawer('redraw');
     }, this));
   };

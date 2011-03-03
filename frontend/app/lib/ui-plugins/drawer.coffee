@@ -72,11 +72,9 @@ $.widget "ui.drawer",
 
     if @header.is(':visible')
       scrollHeight -= @header.outerHeight()
-      console.log 'header', @header.outerHeight()
 
     if @footer.is(':visible')
       scrollHeight -= @footer.outerHeight()
-      console.log 'footer', @header.outerHeight()
 
     scrollHeight = Math.max 0, scrollHeight
 

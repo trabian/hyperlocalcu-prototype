@@ -61,11 +61,9 @@ $.widget("ui.drawer", {
     scrollHeight = height - this.options.scrollShim;
     if (this.header.is(':visible')) {
       scrollHeight -= this.header.outerHeight();
-      console.log('header', this.header.outerHeight());
     }
     if (this.footer.is(':visible')) {
       scrollHeight -= this.footer.outerHeight();
-      console.log('footer', this.header.outerHeight());
     }
     scrollHeight = Math.max(0, scrollHeight);
     this.scrollable.css({

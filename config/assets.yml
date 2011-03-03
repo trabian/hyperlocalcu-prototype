@@ -31,4 +31,5 @@ javascripts:
     - public/javascripts/compiled/app/views/common/timeline/timeline_view.js
     - public/javascripts/compiled/app/views/events/row.js
     - public/javascripts/compiled/app/views/events/detail.js
+    - public/javascripts/compiled/app/views/events/detail_factory.js
     - public/javascripts/compiled/app/**/*.js

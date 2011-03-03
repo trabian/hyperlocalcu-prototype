@@ -24,16 +24,24 @@ class App.view.MemberDashboard extends Backbone.View
 
     $('#main .content').html @timelineView.render().el
 
+    subaccount.events.unbind 'selectOne', @renderEventDetail
     subaccount.events.bind 'selectOne', @renderEventDetail
 
   renderEventDetail: (event) =>
 
     this.initEventDetailView() unless @eventDetailView?
 
-    @eventDetailView.model = event
+    @eventDetailView.setModel event
+
     @eventDetailView.maxHeight = $(@timelineView.el).height() - 50
 
     $('#sidebar').append @eventDetailView.render().el
+
+    $(@eventDetailView.el).drawer 'show'
+
+    $(@eventDetailView.el).bind 'hide', =>
+      event.set
+        selected: false
 
   initEventDetailView: =>
 
@@ -54,5 +62,5 @@ class App.view.MemberDashboard extends Backbone.View
       resize: (element, height) =>
         @eventDetailView.resize height
 
-    @eventDetailView.bind 'rendered', =>
+    @eventDetailView.bind 'resize', =>
       $(@eventDetailView.el).drawer('redraw')

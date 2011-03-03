@@ -26,10 +26,10 @@ App.model.Event = (function() {
     this.sync = App.model.CustomSync;
     this.member = App.currentMember;
     this.updateFields = [];
-    this.feedbacks = new App.model.FeedbackList({
-      event: this
+    this.feedbacks = new App.model.FeedbackList([], {
+      event: this,
+      url: "/events/" + this.id + "/feedbacks"
     });
-    this.feedbacks.url = "/events/" + this.id + "/feedbacks";
     return this.bind('change', this.trackEventActivity);
   };
   Event.prototype.splitPostedAt = function() {
