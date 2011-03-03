@@ -19,16 +19,17 @@ javascripts:
     - public/javascripts/compiled/app/models/extensions/**/*.js
     - public/javascripts/compiled/app/helpers/**/*.js
     - public/javascripts/compiled/app/lib/socket.js
-    - public/javascripts/compiled/app/models/event.js
-    - public/javascripts/compiled/app/models/event_factory.js
-    - public/javascripts/compiled/app/models/events/cu_event.js
-    - public/javascripts/compiled/app/models/events/merchant_event.js
+    - public/javascripts/compiled/app/models/events/event.js
+    - public/javascripts/compiled/app/models/events/event_factory.js
+    - public/javascripts/compiled/app/models/events/types/cu_event.js
+    - public/javascripts/compiled/app/models/events/types/merchant_event.js
     - public/javascripts/compiled/app/models/events/*.js
     - public/javascripts/compiled/app/models/feedback.js
     - public/javascripts/compiled/app/models/feedback_subject.js
     - public/javascripts/compiled/app/models/feedback_subject_factory.js
     - public/javascripts/compiled/app/views/extensions/**/*.js
     - public/javascripts/compiled/app/views/common/timeline/timeline_view.js
-    - public/javascripts/compiled/app/views/members/events/row.js
-    - public/javascripts/compiled/app/views/members/events/detail.js
+    - public/javascripts/compiled/app/views/events/row.js
+    - public/javascripts/compiled/app/views/events/detail.js
+    - public/javascripts/compiled/app/views/events/detail_factory.js
     - public/javascripts/compiled/app/**/*.js

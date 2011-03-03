@@ -5,6 +5,7 @@ class App.model.FeedbackList extends Backbone.Collection
 
   initialize: (collection, options) ->
     @event = options.event
+    @url = options.url
 
   for_subject: (subject_key) =>
 

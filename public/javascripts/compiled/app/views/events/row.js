@@ -13,12 +13,12 @@ App.view.EventRow = (function() {
   }
   __extends(EventRow, Backbone.View);
   EventRow.prototype.events = {
-    click: "toggleSelectOne"
+    click: "selectOne"
   };
   EventRow.prototype.tagName = 'tr';
   EventRow.prototype.className = 'withdrawal';
   EventRow.prototype.initialize = function() {
-    this.template = App.templates['members/events/row'];
+    this.template = App.templates['events/row'];
     this.model.bind('change:selected', this.changeSelection);
     this.model.bind('change', this.onChange);
     return this.render();
@@ -39,9 +39,9 @@ App.view.EventRow = (function() {
     }
     return this.render();
   };
-  EventRow.prototype.toggleSelectOne = function() {
+  EventRow.prototype.selectOne = function() {
     if (this.collection != null) {
-      return this.collection.toggleOrSelectOne(this.model);
+      return this.collection.selectOne(this.model);
     } else {
       return this.model.toggleSelected();
     }

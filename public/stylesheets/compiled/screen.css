@@ -77,9 +77,9 @@ textarea {
   display: inline;
   float: left;
   margin-right: 10px;
-  width: 1070px;
+  width: 950px;
   margin: 0 40px;
-  padding: 80px 0 0;
+  padding: 0;
 }
 /* line 138, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
 * html #container {
@@ -129,32 +129,6 @@ textarea {
 /* line 138, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
 * html #container #sidebar {
   overflow-x: hidden;
-}
-/* line 61, ../../../frontend/sass/_base.sass */
-#container #sidebar #event-detail-view {
-  float: none;
-  display: block;
-  z-index: 1;
-  margin: 15px 0 0 592px;
-  -moz-border-radius-topright: 8px;
-  -webkit-border-top-right-radius: 8px;
-  -o-border-top-right-radius: 8px;
-  -ms-border-top-right-radius: 8px;
-  -khtml-border-top-right-radius: 8px;
-  border-top-right-radius: 8px;
-  -moz-border-radius-bottomright: 8px;
-  -webkit-border-bottom-right-radius: 8px;
-  -o-border-bottom-right-radius: 8px;
-  -ms-border-bottom-right-radius: 8px;
-  -khtml-border-bottom-right-radius: 8px;
-  border-bottom-right-radius: 8px;
-  height: 100%;
-  min-height: 1000px;
-  position: fixed;
-}
-/* line 71, ../../../frontend/sass/_base.sass */
-#container #sidebar #event-detail-view.selected {
-  background: #f7f2d8;
 }
 
 /* line 39, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_typography.scss */
@@ -1185,7 +1159,7 @@ input.span-24, textarea.span-24, select.span-24 {
 
 /* line 8, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_debug.scss */
 .showgrid {
-  background: url('/images/grid.png');
+  background: url(/images/grid.png);
 }
 
 /* line 4, ../../../../../.rvm/gems/ree-1.8.7-2010.02@hyperlocalcu/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_interaction.scss */
@@ -1363,6 +1337,27 @@ textarea {
 #sidebar .prompt .screenshot p {
   color: #666666;
   margin: 0.1em 0;
+}
+
+/* line 2, ../../../frontend/sass/_header.sass */
+#header h1 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  margin: 10px 0;
+}
+/* line 5, ../../../frontend/sass/_header.sass */
+#header h1 a {
+  display: block;
+  text-indent: -119988px;
+  overflow: hidden;
+  text-align: left;
+  background-image: url(/images/logo.png);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  width: 125px;
+  height: 61px;
 }
 
 /* line 4, ../../../frontend/sass/feedback/_row.sass */
@@ -2331,24 +2326,22 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   margin: 0.3em 0;
 }
 
-/* line 16, ../../../frontend/sass/events/_detail.sass */
+/* line 18, ../../../frontend/sass/events/_detail.sass */
 #event-detail {
   width: 318px;
   padding-right: 5px;
 }
 
-/* line 20, ../../../frontend/sass/events/_detail.sass */
+/* line 22, ../../../frontend/sass/events/_detail.sass */
 #event-footer {
   padding: 5px 5px 5px 0;
   min-height: 75px;
 }
 
-/* line 24, ../../../frontend/sass/events/_detail.sass */
+/* line 26, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view {
-  position: fixed;
+  position: absolute;
   color: #444444;
-  top: 42px;
-  left: 630px;
   padding: 5px 10px 5px 15px;
   border: 1px solid #cccccc;
   border-width: 1px 1px 1px 0;
@@ -2366,6 +2359,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   border-bottom-right-radius: 5px;
   background: white;
   width: 318px;
+  display: none;
 }
 /* line 2, ../../../frontend/sass/events/billpay/_detail.sass */
 #event-detail-view .processing-summary {
@@ -2521,24 +2515,29 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #event-detail-view .check-image ul li img {
   width: 155px;
 }
-/* line 38, ../../../frontend/sass/events/_detail.sass */
+/* line 39, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view.fixed {
+  position: fixed;
+  top: 10px;
+}
+/* line 42, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view #event-detail-wrapper {
   min-height: 110px;
   width: 323px;
 }
-/* line 41, ../../../frontend/sass/events/_detail.sass */
+/* line 45, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .top {
   overflow: hidden;
   *zoom: 1;
   margin: 0 0 15px;
 }
-/* line 44, ../../../frontend/sass/events/_detail.sass */
+/* line 48, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .top .date {
   float: left;
   color: #7b7b7b;
   font-size: 10px;
 }
-/* line 48, ../../../frontend/sass/events/_detail.sass */
+/* line 52, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .top .close {
   float: right;
   position: absolute;
@@ -2546,43 +2545,43 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   right: 10px;
   font-size: 10px;
 }
-/* line 54, ../../../frontend/sass/events/_detail.sass */
+/* line 58, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .name-and-amount {
   margin: 0 0 0.5em 0;
 }
-/* line 56, ../../../frontend/sass/events/_detail.sass */
+/* line 60, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .name-and-amount .amount {
   font-size: 16px;
   float: right;
   line-height: 1em;
 }
-/* line 60, ../../../frontend/sass/events/_detail.sass */
+/* line 64, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .name-and-amount h3 {
   font-size: 16px;
   line-height: 1em;
 }
-/* line 64, ../../../frontend/sass/events/_detail.sass */
-#event-detail-view .deposit .amount {
+/* line 68, ../../../frontend/sass/events/_detail.sass */
+#event-detail-view.deposit .amount {
   color: #009900;
 }
-/* line 67, ../../../frontend/sass/events/_detail.sass */
+/* line 71, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location {
   padding: 5px 0 12px 0;
   font-size: 11px;
   overflow: hidden;
   *zoom: 1;
 }
-/* line 71, ../../../frontend/sass/events/_detail.sass */
+/* line 75, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .map {
   margin: 0 13px 0 0;
   float: left;
 }
-/* line 74, ../../../frontend/sass/events/_detail.sass */
+/* line 78, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .map img {
   width: 130px;
   border: 1px solid #cccccc;
 }
-/* line 78, ../../../frontend/sass/events/_detail.sass */
+/* line 82, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address h2, #event-detail-view .location .address h3 {
   margin: 0;
   padding: 0;
@@ -2593,19 +2592,19 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   font-weight: bold;
   margin: 0 0 0.3em;
 }
-/* line 84, ../../../frontend/sass/events/_detail.sass */
+/* line 88, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address h2 {
   font-size: 15px;
 }
-/* line 86, ../../../frontend/sass/events/_detail.sass */
+/* line 90, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address h3 {
   font-size: 11px;
 }
-/* line 88, ../../../frontend/sass/events/_detail.sass */
+/* line 92, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address p {
   margin: 0;
 }
-/* line 90, ../../../frontend/sass/events/_detail.sass */
+/* line 94, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address .rating {
   margin-top: 10px;
   display: inline-block;
@@ -2687,11 +2686,11 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   color: #009900;
   font-weight: bold;
 }
-/* line 96, ../../../frontend/sass/events/_detail.sass */
+/* line 100, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .location .address div.comment .buttons p {
   font-size: 10px;
 }
-/* line 102, ../../../frontend/sass/events/_detail.sass */
+/* line 106, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service {
   margin: 10px 0 0;
   border: 1px solid #92c5e0;
@@ -2701,12 +2700,12 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   border-width: 1px 0;
   background: url(/images/background.png) repeat-x left -250px;
 }
-/* line 110, ../../../frontend/sass/events/_detail.sass */
+/* line 114, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service h2 {
   font-size: 14px;
   margin: 0;
 }
-/* line 113, ../../../frontend/sass/events/_detail.sass */
+/* line 117, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service p {
   margin: 0;
   padding: 0;
@@ -2714,7 +2713,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   outline: 0;
   margin: 0.2em 0 0.5em;
 }
-/* line 116, ../../../frontend/sass/events/_detail.sass */
+/* line 120, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service ul {
   list-style: none;
   margin: 0;
@@ -2754,7 +2753,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #event-detail-view .available-service ul li:last-child, #event-detail-view .available-service ul li.last {
   padding-right: 0;
 }
-/* line 121, ../../../frontend/sass/events/_detail.sass */
+/* line 125, ../../../frontend/sass/events/_detail.sass */
 #event-detail-view .available-service ul li {
   margin: 0 0 0.5em;
 }
@@ -3311,19 +3310,19 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   margin: 0 -3px 0 0;
 }
 
-/* line 33, ../../../frontend/sass/screen.sass */
+/* line 34, ../../../frontend/sass/screen.sass */
 #container {
   position: relative;
 }
 
-/* line 36, ../../../frontend/sass/screen.sass */
+/* line 37, ../../../frontend/sass/screen.sass */
 #global {
   float: right;
   position: absolute;
   top: 2px;
   right: 15px;
 }
-/* line 41, ../../../frontend/sass/screen.sass */
+/* line 42, ../../../frontend/sass/screen.sass */
 #global ul {
   margin: 0;
   padding: 0;
@@ -3351,7 +3350,7 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 #global ul li:last-child, #global ul li.last {
   padding-right: 0;
 }
-/* line 43, ../../../frontend/sass/screen.sass */
+/* line 44, ../../../frontend/sass/screen.sass */
 #global ul a {
   font-size: 10px;
   text-decoration: none;

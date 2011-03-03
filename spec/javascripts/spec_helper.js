@@ -1,3 +1,5 @@
+require('/javascripts/spec_helpers/jasmine-jquery-1.2.0.js');
+
 /*
 Jasmine-Ajax : a set of helpers for testing AJAX requests under the Jasmine
 BDD framework for JavaScript.

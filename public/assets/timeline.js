@@ -25413,6 +25413,259 @@ function handler(event) {
   };
 })(jQuery);
 
+/*!
+ * jQuery throttle / debounce - v1.1 - 3/7/2010
+ * http://benalman.com/projects/jquery-throttle-debounce-plugin/
+ * 
+ * Copyright (c) 2010 "Cowboy" Ben Alman
+ * Dual licensed under the MIT and GPL licenses.
+ * http://benalman.com/about/license/
+ */
+
+// Script: jQuery throttle / debounce: Sometimes, less is more!
+//
+// *Version: 1.1, Last updated: 3/7/2010*
+// 
+// Project Home - http://benalman.com/projects/jquery-throttle-debounce-plugin/
+// GitHub       - http://github.com/cowboy/jquery-throttle-debounce/
+// Source       - http://github.com/cowboy/jquery-throttle-debounce/raw/master/jquery.ba-throttle-debounce.js
+// (Minified)   - http://github.com/cowboy/jquery-throttle-debounce/raw/master/jquery.ba-throttle-debounce.min.js (0.7kb)
+// 
+// About: License
+// 
+// Copyright (c) 2010 "Cowboy" Ben Alman,
+// Dual licensed under the MIT and GPL licenses.
+// http://benalman.com/about/license/
+// 
+// About: Examples
+// 
+// These working examples, complete with fully commented code, illustrate a few
+// ways in which this plugin can be used.
+// 
+// Throttle - http://benalman.com/code/projects/jquery-throttle-debounce/examples/throttle/
+// Debounce - http://benalman.com/code/projects/jquery-throttle-debounce/examples/debounce/
+// 
+// About: Support and Testing
+// 
+// Information about what version or versions of jQuery this plugin has been
+// tested with, what browsers it has been tested in, and where the unit tests
+// reside (so you can test it yourself).
+// 
+// jQuery Versions - none, 1.3.2, 1.4.2
+// Browsers Tested - Internet Explorer 6-8, Firefox 2-3.6, Safari 3-4, Chrome 4-5, Opera 9.6-10.1.
+// Unit Tests      - http://benalman.com/code/projects/jquery-throttle-debounce/unit/
+// 
+// About: Release History
+// 
+// 1.1 - (3/7/2010) Fixed a bug in <jQuery.throttle> where trailing callbacks
+//       executed later than they should. Reworked a fair amount of internal
+//       logic as well.
+// 1.0 - (3/6/2010) Initial release as a stand-alone project. Migrated over
+//       from jquery-misc repo v0.4 to jquery-throttle repo v1.0, added the
+//       no_trailing throttle parameter and debounce functionality.
+// 
+// Topic: Note for non-jQuery users
+// 
+// jQuery isn't actually required for this plugin, because nothing internal
+// uses any jQuery methods or properties. jQuery is just used as a namespace
+// under which these methods can exist.
+// 
+// Since jQuery isn't actually required for this plugin, if jQuery doesn't exist
+// when this plugin is loaded, the method described below will be created in
+// the `Cowboy` namespace. Usage will be exactly the same, but instead of
+// $.method() or jQuery.method(), you'll need to use Cowboy.method().
+
+(function(window,undefined){
+  '$:nomunge'; // Used by YUI compressor.
+  
+  // Since jQuery really isn't required for this plugin, use `jQuery` as the
+  // namespace only if it already exists, otherwise use the `Cowboy` namespace,
+  // creating it if necessary.
+  var $ = window.jQuery || window.Cowboy || ( window.Cowboy = {} ),
+    
+    // Internal method reference.
+    jq_throttle;
+  
+  // Method: jQuery.throttle
+  // 
+  // Throttle execution of a function. Especially useful for rate limiting
+  // execution of handlers on events like resize and scroll. If you want to
+  // rate-limit execution of a function to a single time, see the
+  // <jQuery.debounce> method.
+  // 
+  // In this visualization, | is a throttled-function call and X is the actual
+  // callback execution:
+  // 
+  // > Throttled with `no_trailing` specified as false or unspecified:
+  // > ||||||||||||||||||||||||| (pause) |||||||||||||||||||||||||
+  // > X    X    X    X    X    X        X    X    X    X    X    X
+  // > 
+  // > Throttled with `no_trailing` specified as true:
+  // > ||||||||||||||||||||||||| (pause) |||||||||||||||||||||||||
+  // > X    X    X    X    X             X    X    X    X    X
+  // 
+  // Usage:
+  // 
+  // > var throttled = jQuery.throttle( delay, [ no_trailing, ] callback );
+  // > 
+  // > jQuery('selector').bind( 'someevent', throttled );
+  // > jQuery('selector').unbind( 'someevent', throttled );
+  // 
+  // This also works in jQuery 1.4+:
+  // 
+  // > jQuery('selector').bind( 'someevent', jQuery.throttle( delay, [ no_trailing, ] callback ) );
+  // > jQuery('selector').unbind( 'someevent', callback );
+  // 
+  // Arguments:
+  // 
+  //  delay - (Number) A zero-or-greater delay in milliseconds. For event
+  //    callbacks, values around 100 or 250 (or even higher) are most useful.
+  //  no_trailing - (Boolean) Optional, defaults to false. If no_trailing is
+  //    true, callback will only execute every `delay` milliseconds while the
+  //    throttled-function is being called. If no_trailing is false or
+  //    unspecified, callback will be executed one final time after the last
+  //    throttled-function call. (After the throttled-function has not been
+  //    called for `delay` milliseconds, the internal counter is reset)
+  //  callback - (Function) A function to be executed after delay milliseconds.
+  //    The `this` context and all arguments are passed through, as-is, to
+  //    `callback` when the throttled-function is executed.
+  // 
+  // Returns:
+  // 
+  //  (Function) A new, throttled, function.
+  
+  $.throttle = jq_throttle = function( delay, no_trailing, callback, debounce_mode ) {
+    // After wrapper has stopped being called, this timeout ensures that
+    // `callback` is executed at the proper times in `throttle` and `end`
+    // debounce modes.
+    var timeout_id,
+      
+      // Keep track of the last time `callback` was executed.
+      last_exec = 0;
+    
+    // `no_trailing` defaults to falsy.
+    if ( typeof no_trailing !== 'boolean' ) {
+      debounce_mode = callback;
+      callback = no_trailing;
+      no_trailing = undefined;
+    }
+    
+    // The `wrapper` function encapsulates all of the throttling / debouncing
+    // functionality and when executed will limit the rate at which `callback`
+    // is executed.
+    function wrapper() {
+      var that = this,
+        elapsed = +new Date() - last_exec,
+        args = arguments;
+      
+      // Execute `callback` and update the `last_exec` timestamp.
+      function exec() {
+        last_exec = +new Date();
+        callback.apply( that, args );
+      };
+      
+      // If `debounce_mode` is true (at_begin) this is used to clear the flag
+      // to allow future `callback` executions.
+      function clear() {
+        timeout_id = undefined;
+      };
+      
+      if ( debounce_mode && !timeout_id ) {
+        // Since `wrapper` is being called for the first time and
+        // `debounce_mode` is true (at_begin), execute `callback`.
+        exec();
+      }
+      
+      // Clear any existing timeout.
+      timeout_id && clearTimeout( timeout_id );
+      
+      if ( debounce_mode === undefined && elapsed > delay ) {
+        // In throttle mode, if `delay` time has been exceeded, execute
+        // `callback`.
+        exec();
+        
+      } else if ( no_trailing !== true ) {
+        // In trailing throttle mode, since `delay` time has not been
+        // exceeded, schedule `callback` to execute `delay` ms after most
+        // recent execution.
+        // 
+        // If `debounce_mode` is true (at_begin), schedule `clear` to execute
+        // after `delay` ms.
+        // 
+        // If `debounce_mode` is false (at end), schedule `callback` to
+        // execute after `delay` ms.
+        timeout_id = setTimeout( debounce_mode ? clear : exec, debounce_mode === undefined ? delay - elapsed : delay );
+      }
+    };
+    
+    // Set the guid of `wrapper` function to the same of original callback, so
+    // it can be removed in jQuery 1.4+ .unbind or .die by using the original
+    // callback as a reference.
+    if ( $.guid ) {
+      wrapper.guid = callback.guid = callback.guid || $.guid++;
+    }
+    
+    // Return the wrapper function.
+    return wrapper;
+  };
+  
+  // Method: jQuery.debounce
+  // 
+  // Debounce execution of a function. Debouncing, unlike throttling,
+  // guarantees that a function is only executed a single time, either at the
+  // very beginning of a series of calls, or at the very end. If you want to
+  // simply rate-limit execution of a function, see the <jQuery.throttle>
+  // method.
+  // 
+  // In this visualization, | is a debounced-function call and X is the actual
+  // callback execution:
+  // 
+  // > Debounced with `at_begin` specified as false or unspecified:
+  // > ||||||||||||||||||||||||| (pause) |||||||||||||||||||||||||
+  // >                          X                                 X
+  // > 
+  // > Debounced with `at_begin` specified as true:
+  // > ||||||||||||||||||||||||| (pause) |||||||||||||||||||||||||
+  // > X                                 X
+  // 
+  // Usage:
+  // 
+  // > var debounced = jQuery.debounce( delay, [ at_begin, ] callback );
+  // > 
+  // > jQuery('selector').bind( 'someevent', debounced );
+  // > jQuery('selector').unbind( 'someevent', debounced );
+  // 
+  // This also works in jQuery 1.4+:
+  // 
+  // > jQuery('selector').bind( 'someevent', jQuery.debounce( delay, [ at_begin, ] callback ) );
+  // > jQuery('selector').unbind( 'someevent', callback );
+  // 
+  // Arguments:
+  // 
+  //  delay - (Number) A zero-or-greater delay in milliseconds. For event
+  //    callbacks, values around 100 or 250 (or even higher) are most useful.
+  //  at_begin - (Boolean) Optional, defaults to false. If at_begin is false or
+  //    unspecified, callback will only be executed `delay` milliseconds after
+  //    the last debounced-function call. If at_begin is true, callback will be
+  //    executed only at the first debounced-function call. (After the
+  //    throttled-function has not been called for `delay` milliseconds, the
+  //    internal counter is reset)
+  //  callback - (Function) A function to be executed after delay milliseconds.
+  //    The `this` context and all arguments are passed through, as-is, to
+  //    `callback` when the debounced-function is executed.
+  // 
+  // Returns:
+  // 
+  //  (Function) A new, debounced, function.
+  
+  $.debounce = function( delay, at_begin, callback ) {
+    return callback === undefined
+      ? jq_throttle( delay, at_begin, false )
+      : jq_throttle( delay, callback, at_begin !== false );
+  };
+  
+})(this);
+
 //
 // showdown.js -- A javascript port of Markdown.
 //
@@ -26728,28 +26981,24 @@ App.model.extension.Selectable = {
     });
   },
   selectOne: function(record_or_id) {
-    var record;
+    var record, _ref;
     record = _.isFunction(record_or_id) ? record_or_id : this.get(record_or_id);
-    _.each(this.selected(), function(selectedRecord) {
-      return selectedRecord.set({
+    if ((_ref = this.selectedRecord) != null) {
+      _ref.set({
         'selected': false
       });
-    });
+    }
     if (record != null) {
+      this.selectedRecord = record;
       record.set({
         'selected': true
       });
-      return this.trigger('selectOne', record);
+      this.trigger('selectOne', record);
     }
+    return record;
   },
   current: function() {
-    var selectedAccounts;
-    selectedAccounts = this.selected();
-    if (_.isEmpty(selectedAccounts)) {
-      return typeof this.defaultSelected == "function" ? this.defaultSelected() : void 0;
-    } else {
-      return _.first(selectedAccounts);
-    }
+    return this.selectedRecord || (typeof this.defaultSelected == "function" ? this.defaultSelected() : void 0);
   }
 };
 App.helper || (App.helper = {});
@@ -26801,21 +27050,18 @@ App.model.Event = (function() {
     this.day = __bind(this.day, this);;
     this.formatted_date = __bind(this.formatted_date, this);;
     this.formatted_timestamp = __bind(this.formatted_timestamp, this);;
-    this.splitPostedAt = __bind(this.splitPostedAt, this);;
-    this.initializeDetails = __bind(this.initializeDetails, this);;    Event.__super__.constructor.apply(this, arguments);
+    this.splitPostedAt = __bind(this.splitPostedAt, this);;    Event.__super__.constructor.apply(this, arguments);
   }
   __extends(Event, Backbone.Model);
   Event.prototype.initialize = function() {
     this.sync = App.model.CustomSync;
     this.member = App.currentMember;
     this.updateFields = [];
-    return this.bind('change', this.trackEventActivity);
-  };
-  Event.prototype.initializeDetails = function() {
-    this.feedbacks = new App.model.FeedbackList(this.get('feedbacks'), {
-      event: this
+    this.feedbacks = new App.model.FeedbackList([], {
+      event: this,
+      url: "/events/" + this.id + "/feedbacks"
     });
-    return this.feedbacks.url = "/events/" + this.id + "/feedbacks";
+    return this.bind('change', this.trackEventActivity);
   };
   Event.prototype.splitPostedAt = function() {
     var date, time, _ref;
@@ -27018,6 +27264,789 @@ App.model.MerchantEvent = (function() {
   return MerchantEvent;
 })();
 App.model.EventFactory.merchant = App.model.MerchantEvent;
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.model.EventList = (function() {
+  function EventList() {
+    EventList.__super__.constructor.apply(this, arguments);
+  }
+  __extends(EventList, Backbone.Collection);
+  EventList.prototype._add = function(model) {
+    return EventList.__super__._add.call(this, App.model.EventFactory.getEvent(model));
+  };
+  EventList.prototype.clear = function() {
+    return this.remove(this.models);
+  };
+  return EventList;
+})();
+_.extend(App.model.EventList.prototype, App.model.extension.Selectable);
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.model.Feedback = (function() {
+  function Feedback() {
+    this.day = __bind(this.day, this);;
+    this.formatted_service_timestamp = __bind(this.formatted_service_timestamp, this);;
+    this.formatted_timestamp = __bind(this.formatted_timestamp, this);;
+    this.formatDate = __bind(this.formatDate, this);;
+    this.splitDate = __bind(this.splitDate, this);;
+    this.toUpdateJSON = __bind(this.toUpdateJSON, this);;    Feedback.__super__.constructor.apply(this, arguments);
+  }
+  __extends(Feedback, Backbone.Model);
+  Feedback.prototype.initialize = function() {
+    return this.sync = App.model.CustomSync;
+  };
+  Feedback.prototype.toUpdateJSON = function() {
+    return {
+      subject: {
+        key: this.get('subject_key'),
+        id: this.subject.id
+      },
+      feedback: {
+        rating: this.get('rating'),
+        comment: this.get('comment')
+      }
+    };
+  };
+  Feedback.prototype.toViewJSON = function() {
+    return _.extend(this.toJSON(), {
+      formatted_timestamp: this.formatted_timestamp,
+      formatted_service_timestamp: this.formatted_service_timestamp
+    });
+  };
+  Feedback.prototype.splitDate = function(date) {
+    var time, _ref;
+    _ref = date.split('T'), date = _ref[0], time = _ref[1];
+    return date.split('-');
+  };
+  Feedback.prototype.formatDate = function(date) {
+    var day, month, year, _ref;
+    _ref = this.splitDate(date), year = _ref[0], month = _ref[1], day = _ref[2];
+    return [month, day].join('/');
+  };
+  Feedback.prototype.formatted_timestamp = function() {
+    return this.formatDate(this.get('created_at'));
+  };
+  Feedback.prototype.formatted_service_timestamp = function() {
+    return this.formatDate(this.get('event_posted_at'));
+  };
+  Feedback.prototype.day = function() {
+    var day, month, year, _ref;
+    _ref = this.splitDate(this.get('created_at')), year = _ref[0], month = _ref[1], day = _ref[2];
+    return [year, month, day].join('-');
+  };
+  return Feedback;
+})();
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+}, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+App.model.FeedbackSubject = (function() {
+  function FeedbackSubject() {
+    FeedbackSubject.__super__.constructor.apply(this, arguments);
+  }
+  __extends(FeedbackSubject, Backbone.Model);
+  FeedbackSubject.prototype.initialize = function(options) {
+    FeedbackSubject.__super__.initialize.call(this, options);
+    if (this.get('feedbacks') != null) {
+      this.feedbacks = new App.model.FeedbackList(this.get('feedbacks'));
+      this.feedbacks.url = options.list_url;
+      this.bind('add:feedback', __bind(function(feedback_json) {
+        this.set(feedback_json.subject);
+        return this.feedbacks.add(feedback_json);
+      }, this));
+      return this.bind('update:feedback', __bind(function(feedback_json) {
+        var feedback;
+        this.set(feedback_json.subject);
+        feedback = this.feedbacks.get(feedback_json.id);
+        return feedback.set(feedback_json);
+      }, this));
+    }
+  };
+  FeedbackSubject.prototype.toViewJSON = function() {
+    return _.extend(this.toJSON(), {
+      meta: this.meta
+    });
+  };
+  FeedbackSubject.prototype.toDetailJSON = function() {
+    return this.toViewJSON();
+  };
+  return FeedbackSubject;
+})();
+App.model.FeedbackSubjectFactory = {
+  getSubject: function(model) {
+    var feedback_subject_class;
+    feedback_subject_class = App.model.FeedbackSubjectFactory[model.feedback_subject_type] || App.model.FeedbackSubject;
+    return new feedback_subject_class(model);
+  }
+};
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+App.view.extension.Timeline = {
+  addAll: function() {
+    return this.collection.each(this.addOne);
+  },
+  addOne: function(model, position) {
+    var rendered, view;
+    view = this.buildView(model);
+    rendered = view.render().el;
+    if (position === 'top') {
+      this.eventContainer.prepend(rendered);
+    } else {
+      this.eventContainer.append(rendered);
+    }
+    return this.addTimestampClass(view, model);
+  },
+  addTimestampClass: function(view, event) {
+    if (event.day() === this.lastEventDay) {
+      $(view.el).addClass('repeat-date');
+    }
+    return this.lastEventDay = event.day();
+  },
+  refreshTimestamps: __bind(function() {
+    var previousDay;
+    previousDay = null;
+    return this.eventContainer.find('tr').each(__bind(function(index, row) {
+      var day;
+      day = $(row).find('>td:first-child').text();
+      if (day === previousDay) {
+        $(row).addClass('repeat-date');
+      } else {
+        $(row).removeClass('repeat-date');
+      }
+      return previousDay = day;
+    }, this));
+  }, this),
+  bindTimeline: function() {
+    return _.bindAll(this, "addAll", "addOne", "addTimestampClass", "refreshTimestamps");
+  }
+};
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.view.Timeline = (function() {
+  function Timeline() {
+    this.refreshTimestamps = __bind(this.refreshTimestamps, this);;
+    this.addOne = __bind(this.addOne, this);;
+    this.addAll = __bind(this.addAll, this);;    Timeline.__super__.constructor.apply(this, arguments);
+  }
+  __extends(Timeline, Backbone.View);
+  Timeline.prototype.el = $('#timeline tbody');
+  Timeline.prototype.initialize = function(options) {
+    this.collection.bind('refresh', this.addAll);
+    if (!this.collection.isEmpty()) {
+      this.addAll();
+    }
+    return this.collection.trigger('load');
+  };
+  Timeline.prototype.addAll = function() {
+    return this.collection.each(this.addOne);
+  };
+  Timeline.prototype.addOne = function(model, position) {
+    var rendered, view;
+    view = this.options.rowFactory.build(model, this.collection);
+    rendered = view.render().el;
+    if (position === 'top') {
+      $(this.el).prepend(rendered);
+    } else {
+      $(this.el).append(rendered);
+    }
+    return this.addTimestampClass(view, model);
+  };
+  Timeline.prototype.refreshTimestamps = function() {
+    var previousDay;
+    previousDay = null;
+    return this.$('tr').each(__bind(function(index, row) {
+      var day;
+      day = $(row).find('>td:first-child').text();
+      if (day === previousDay) {
+        $(row).addClass('repeat-date');
+      } else {
+        $(row).removeClass('repeat-date');
+      }
+      return previousDay = day;
+    }, this));
+  };
+  Timeline.prototype.addTimestampClass = function(view, event) {
+    if (event.day() === this.lastEventDay) {
+      $(view.el).addClass('repeat-date');
+    }
+    return this.lastEventDay = event.day();
+  };
+  return Timeline;
+})();
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+}, __slice = Array.prototype.slice;
+App.view.EventRow = (function() {
+  function EventRow() {
+    this.onChange = __bind(this.onChange, this);;
+    this.changeSelection = __bind(this.changeSelection, this);;    EventRow.__super__.constructor.apply(this, arguments);
+  }
+  __extends(EventRow, Backbone.View);
+  EventRow.prototype.events = {
+    click: "selectOne"
+  };
+  EventRow.prototype.tagName = 'tr';
+  EventRow.prototype.className = 'withdrawal';
+  EventRow.prototype.initialize = function() {
+    this.template = App.templates['events/row'];
+    this.model.bind('change:selected', this.changeSelection);
+    this.model.bind('change', this.onChange);
+    return this.render();
+  };
+  EventRow.prototype.render = function() {
+    $(this.el).html(this.template(this.model.toViewJSON()));
+    return this;
+  };
+  EventRow.prototype.changeSelection = function() {
+    return $(this.el).toggleClass('selected', this.model.get('selected'));
+  };
+  EventRow.prototype.onChange = function() {
+    var attributesToIgnore, changedKeys;
+    attributesToIgnore = ['selected'];
+    changedKeys = _.keys(this.model.changedAttributes());
+    if (_.isEmpty(_.without.apply(_, [changedKeys].concat(__slice.call(attributesToIgnore))))) {
+      return;
+    }
+    return this.render();
+  };
+  EventRow.prototype.selectOne = function() {
+    if (this.collection != null) {
+      return this.collection.selectOne(this.model);
+    } else {
+      return this.model.toggleSelected();
+    }
+  };
+  return EventRow;
+})();
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+}, __slice = Array.prototype.slice;
+App.view.EventDetail = (function() {
+  function EventDetail() {
+    this.addSubjectFeedbackView = __bind(this.addSubjectFeedbackView, this);;
+    this.resize = __bind(this.resize, this);;
+    this.renderLocationFeedbackView = __bind(this.renderLocationFeedbackView, this);;
+    this.renderFeedback = __bind(this.renderFeedback, this);;
+    this.renderSocialView = __bind(this.renderSocialView, this);;
+    this.decorate = __bind(this.decorate, this);;
+    this.render = __bind(this.render, this);;    EventDetail.__super__.constructor.apply(this, arguments);
+  }
+  __extends(EventDetail, Backbone.View);
+  EventDetail.prototype.templatePath = 'events/detail';
+  EventDetail.prototype.initialize = function() {};
+  EventDetail.prototype.setModel = function(model) {
+    this.model = model;
+    this.model.feedbacks.unbind('refresh');
+    this.model.feedbacks.bind('refresh', this.renderFeedback);
+    return this.eventTypeView = App.view.EventDetailFactory.getEventDetailView(this.model, this);
+  };
+  EventDetail.prototype.render = function() {
+    $(this.el).html(App.templates[this.templatePath](this.model.toDetailJSON()));
+    this.decorate();
+    if (this.model.isSocial()) {
+      this.renderSocialView();
+    }
+    this.model.feedbacks.fetch();
+    return this;
+  };
+  EventDetail.prototype.decorate = function() {
+    return $(this.el).toggleClass('deposit', this.model.isDeposit());
+  };
+  EventDetail.prototype.renderSocialView = function() {
+    this.socialView = new App.view.Social({
+      model: this.model
+    });
+    return this.$('.footer').append(this.socialView.render().el).show();
+  };
+  EventDetail.prototype.renderFeedback = function() {
+    var _ref;
+    return (_ref = this.eventTypeView) != null ? typeof _ref.renderFeedback == "function" ? _ref.renderFeedback() : void 0 : void 0;
+  };
+  EventDetail.prototype.renderLocationFeedbackView = function(field, options) {
+    var addressEl, feedback, locationRatingView, ratingViewOptions;
+    feedback = this.model.feedbacks.for_subject(field);
+    if (feedback != null) {
+      addressEl = this.$('.location .address');
+      ratingViewOptions = _.extend({
+        model: feedback,
+        commentParent: addressEl,
+        commentFormTitle: "Care to elaborate?"
+      }, options);
+      locationRatingView = new App.view.Rating(ratingViewOptions);
+      locationRatingView.bind('expand', this.resize);
+      locationRatingView.bind('collapse', this.resize);
+      return addressEl.append(locationRatingView.render().el);
+    }
+  };
+  EventDetail.prototype.resize = function() {
+    return this.trigger('resize');
+  };
+  EventDetail.prototype.addSubjectFeedbackView = function() {
+    var subject_types;
+    subject_types = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    return _.each(subject_types, __bind(function(subject_type) {
+      var feedback, feedbackView;
+      feedback = this.model.feedbacks.for_subject(subject_type);
+      if (feedback != null) {
+        feedbackView = new App.view.Feedback({
+          model: feedback,
+          question: this.model.feedbackQuestion
+        });
+        feedbackView.bind('expand', this.resize);
+        feedbackView.bind('collapse', this.resize);
+        return this.$('#event-detail').append(feedbackView.render().el);
+      }
+    }, this));
+  };
+  return EventDetail;
+})();
+App.view.EventDetailFactory = {
+  getEventDetailView: function(model, parent) {
+    var event_detail_view_class;
+    event_detail_view_class = App.view.EventDetailFactory[model.get('event_type')];
+    if (event_detail_view_class == null) {
+      return null;
+    }
+    return new event_detail_view_class({
+      model: model,
+      parent: parent
+    });
+  }
+};
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.controller.Timeline = (function() {
+  function Timeline() {
+    this.changeSelected = __bind(this.changeSelected, this);;
+    this.fetch = __bind(this.fetch, this);;
+    this.selectEvent = __bind(this.selectEvent, this);;    Timeline.__super__.constructor.apply(this, arguments);
+  }
+  __extends(Timeline, Backbone.Controller);
+  Timeline.prototype.initialize = function(options) {
+    if (this.events != null) {
+      this.events = options.events;
+      this.events.bind('change:selected', this.changeSelected);
+      this.events.bind('unselect', __bind(function() {
+        return this.saveLocation('');
+      }, this));
+      this.events.bind('load', __bind(function() {
+        $('#timeline-loading').hide();
+        return $('#timeline').show();
+      }, this));
+      if (options.fetchOnInit === true) {
+        return this.fetch();
+      }
+    }
+  };
+  Timeline.prototype.routes = {
+    "events/:event_id": 'selectEvent'
+  };
+  Timeline.prototype.selectEvent = function(eventId) {
+    return this.events.selectOne(this.events.get(eventId));
+  };
+  Timeline.prototype.fetch = function() {
+    return this.events.fetch({
+      success: __bind(function() {
+        return this.events.trigger('load');
+      }, this)
+    });
+  };
+  Timeline.prototype.changeSelected = function(event) {
+    if (event.get('selected')) {
+      this.trigger('select', event);
+      return this.saveLocation("events/" + event.id);
+    } else {
+      return this.trigger('unselect', event);
+    }
+  };
+  return Timeline;
+})();
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.controller.FeedbackDashboard = (function() {
+  function FeedbackDashboard() {
+    FeedbackDashboard.__super__.constructor.apply(this, arguments);
+  }
+  __extends(FeedbackDashboard, App.controller.Timeline);
+  FeedbackDashboard.prototype.initialize = function(options) {
+    this.subject = options.subject;
+    options.events = this.subject.feedbacks;
+    FeedbackDashboard.__super__.initialize.call(this, options);
+    this.overview = new App.view.FeedbackSubjectOverview({
+      model: this.subject
+    });
+    $('#subject-overview').append(this.overview.render().el);
+    this.timeline = new App.view.FeedbackTimeline({
+      collection: this.subject.feedbacks
+    });
+    return App.socket.listenTo(this.subject);
+  };
+  return FeedbackDashboard;
+})();
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.controller.AvailableServices = (function() {
+  function AvailableServices() {
+    this.rejectBillpay = __bind(this.rejectBillpay, this);;
+    this.signupForBillpay = __bind(this.signupForBillpay, this);;    AvailableServices.__super__.constructor.apply(this, arguments);
+  }
+  __extends(AvailableServices, Backbone.Controller);
+  AvailableServices.prototype.intialize = function(options) {};
+  AvailableServices.prototype.routes = {
+    "billpay/signup": 'signupForBillpay',
+    "billpay/no": 'rejectBillpay'
+  };
+  AvailableServices.prototype.signupForBillpay = function() {
+    this.billpaySignupView || (this.billpaySignupView = new App.view.BillpaySignup);
+    return this.billpaySignupView.render();
+  };
+  AvailableServices.prototype.rejectBillpay = function() {
+    return $('.available-service.billpay').hide();
+  };
+  return AvailableServices;
+})();
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.controller.MemberDashboard = (function() {
+  function MemberDashboard() {
+    this.selectSubaccount = __bind(this.selectSubaccount, this);;    MemberDashboard.__super__.constructor.apply(this, arguments);
+  }
+  __extends(MemberDashboard, Backbone.Controller);
+  MemberDashboard.prototype.initialize = function(options) {
+    this.member = options.member;
+    this.dashboardView = new App.view.MemberDashboard({
+      model: this.member
+    });
+    return Backbone.history.start();
+  };
+  MemberDashboard.prototype.routes = {
+    "accounts/:account_id/subaccounts/:subaccount_id": "selectSubaccount"
+  };
+  MemberDashboard.prototype.selectSubaccount = function(accountId, subaccountId) {
+    var account, subaccount;
+    account = this.member.accounts.get(accountId);
+    return subaccount = account.subaccounts.selectOne(subaccountId);
+  };
+  return MemberDashboard;
+})();
+App.model.CustomSync = function(method, model, success, error) {
+  var getUrl, methodMap, modelJSON, params, toJSONMethod, type;
+  methodMap = {
+    'create': 'POST',
+    'update': 'PUT',
+    'delete': 'DELETE',
+    'read': 'GET'
+  };
+  type = methodMap[method];
+  toJSONMethod = model.toUpdateJSON || model.toJSON;
+  modelJSON = method === 'create' || method === 'update' ? JSON.stringify(toJSONMethod.call(this)) : null;
+  getUrl = function(object) {
+    if (_.isFunction(object.url)) {
+      return object.url();
+    } else {
+      return object.url;
+    }
+  };
+  params = {
+    url: getUrl(model),
+    type: type,
+    contentType: 'application/json',
+    data: modelJSON,
+    dataType: 'json',
+    processData: false,
+    success: success,
+    error: error
+  };
+  return $.ajax(params);
+};
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+$.widget("ui.drawer", {
+  options: {
+    verticalMargin: 10,
+    throttleOrDebounce: 'debounce',
+    delay: 100,
+    resizeOnInit: true,
+    scrollShim: 17
+  },
+  _create: function() {
+    $(window).bind('scroll resize', this._windowObserver());
+    if (this.options.resizeOnInit) {
+      return this.redraw();
+    }
+  },
+  _windowObserver: function() {
+    _.bindAll(this, 'redraw', 'show');
+    if (this.options.throttleOrDebounce === 'debounce') {
+      return $.debounce(this.options.delay, this.redraw);
+    } else {
+      return $.throttle(this.options.delay, this.redraw);
+    }
+  },
+  show: function() {
+    this.element.show().trigger('show');
+    this.initializeScrollable();
+    return this.redraw();
+  },
+  hide: function() {
+    return this.element.hide().trigger('hide');
+  },
+  redraw: function() {
+    var drawerHeight, drawerTop, mainHeight, mainTop, padding, visibleMainHeight, windowHeight, windowScrollTop;
+    drawerTop = 0;
+    drawerHeight = 0;
+    mainTop = this.options.main.position().top;
+    mainHeight = this.options.main.height();
+    windowScrollTop = $(window).scrollTop();
+    windowHeight = $(window).height();
+    padding = parseInt(this.element.css('padding-top')) + parseInt(this.element.css('padding-bottom'));
+    if (mainTop > windowScrollTop) {
+      drawerTop = mainTop + this.options.verticalMargin;
+      drawerHeight = windowHeight - (drawerTop - windowScrollTop) - this.options.verticalMargin;
+      drawerHeight = Math.min(drawerHeight, mainHeight - (this.options.verticalMargin * 2));
+    } else {
+      drawerTop = windowScrollTop + this.options.verticalMargin;
+      visibleMainHeight = mainTop + mainHeight - windowScrollTop;
+      drawerHeight = Math.min(windowHeight, visibleMainHeight) - (this.options.verticalMargin * 2);
+    }
+    drawerHeight -= padding;
+    this.element.css({
+      top: drawerTop
+    });
+    return this.resizeScrollable(drawerHeight);
+  },
+  resizeScrollable: function(height) {
+    var scrollHeight;
+    if (this.scrollableInitialized == null) {
+      this.initializeScrollable();
+    }
+    scrollHeight = height - this.options.scrollShim;
+    if (this.header.is(':visible')) {
+      scrollHeight -= this.header.outerHeight();
+    }
+    if (this.footer.is(':visible')) {
+      scrollHeight -= this.footer.outerHeight();
+    }
+    scrollHeight = Math.max(0, scrollHeight);
+    this.scrollable.css({
+      height: scrollHeight
+    });
+    return this.scroll.reinitialise();
+  },
+  initializeScrollable: function() {
+    this.element.find('.close').click(__bind(function() {
+      this.hide();
+      return false;
+    }, this));
+    this.header = this.element.find('.header');
+    this.scrollable = this.element.find('.scrollable');
+    this.footer = this.element.find('.footer');
+    this.scrollable.jScrollPane();
+    this.scroll = this.scrollable.data('jsp');
+    return this.scrollableInitialized = true;
+  }
+});
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+}, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+App.model.Account = (function() {
+  function Account() {
+    Account.__super__.constructor.apply(this, arguments);
+  }
+  __extends(Account, Backbone.Model);
+  Account.prototype.initialize = function() {
+    return this.refresh();
+  };
+  Account.prototype.refresh = function() {
+    var rawLoans, rawShares;
+    this.subaccounts = new App.model.SubaccountList(this.get('subaccounts'));
+    this.subaccounts.account = this;
+    rawShares = this.subaccounts.filter(function(subaccount) {
+      return subaccount.get('account_type') === 'share';
+    });
+    this.shares = new App.model.SubaccountList(rawShares);
+    rawLoans = this.subaccounts.filter(function(subaccount) {
+      return subaccount.get('account_type') === 'loan';
+    });
+    this.loans = new App.model.SubaccountList(rawLoans);
+    return this.subaccounts.bind('selectOne', __bind(function(subaccount) {
+      var account_type;
+      account_type = subaccount.get('account_type');
+      this.shares.trigger('selectSubaccounts', account_type === 'share');
+      return this.loans.trigger('selectSubaccounts', account_type === 'loan');
+    }, this));
+  };
+  return Account;
+})();
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.model.AccountList = (function() {
+  function AccountList() {
+    AccountList.__super__.constructor.apply(this, arguments);
+  }
+  __extends(AccountList, Backbone.Collection);
+  AccountList.prototype.model = App.model.Account;
+  AccountList.prototype.defaultSelected = function() {
+    return this.first();
+  };
+  return AccountList;
+})();
+_.extend(App.model.AccountList.prototype, App.model.extension.Selectable);
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.model.Subaccount = (function() {
+  function Subaccount() {
+    Subaccount.__super__.constructor.apply(this, arguments);
+  }
+  __extends(Subaccount, Backbone.Model);
+  Subaccount.prototype.initialize = function() {
+    this.events = new App.model.EventList;
+    return this.events.url = "/subaccounts/" + this.id + "/events";
+  };
+  Subaccount.prototype.toViewJSON = function() {
+    return _.extend(this.toJSON(), {
+      formattedBalance: App.helper.currency.format(this.get('balance')),
+      formattedAvailableBalance: this.get('balance') === this.get('available_balance') ? null : App.helper.currency.format(this.get('available_balance'))
+    });
+  };
+  return Subaccount;
+})();
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.model.SubaccountList = (function() {
+  function SubaccountList() {
+    SubaccountList.__super__.constructor.apply(this, arguments);
+  }
+  __extends(SubaccountList, Backbone.Collection);
+  SubaccountList.prototype.model = App.model.Subaccount;
+  return SubaccountList;
+})();
+_.extend(App.model.SubaccountList.prototype, App.model.extension.Selectable);
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.model.Atm = (function() {
+  function Atm() {
+    this.url = __bind(this.url, this);;    Atm.__super__.constructor.apply(this, arguments);
+  }
+  __extends(Atm, App.model.FeedbackSubject);
+  Atm.prototype.initialize = function(options) {
+    options.list_url = "/atms/" + this.id + "/feedbacks";
+    this.meta = "ATM #" + this.id;
+    return Atm.__super__.initialize.call(this, options);
+  };
+  Atm.prototype.url = function() {
+    return "/atms/" + this.id;
+  };
+  return Atm;
+})();
+App.model.FeedbackSubjectFactory.atm = App.model.Atm;
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.model.Branch = (function() {
+  function Branch() {
+    this.url = __bind(this.url, this);;    Branch.__super__.constructor.apply(this, arguments);
+  }
+  __extends(Branch, App.model.FeedbackSubject);
+  Branch.prototype.initialize = function(options) {
+    options.list_url = "/branches/" + this.id + "/feedbacks";
+    this.meta = "Branch #" + this.id;
+    return Branch.__super__.initialize.call(this, options);
+  };
+  Branch.prototype.url = function() {
+    return "/branches/" + this.id;
+  };
+  return Branch;
+})();
+App.model.FeedbackSubjectFactory.branch = App.model.Branch;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -27254,770 +28283,6 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-App.model.Feedback = (function() {
-  function Feedback() {
-    this.day = __bind(this.day, this);;
-    this.formatted_service_timestamp = __bind(this.formatted_service_timestamp, this);;
-    this.formatted_timestamp = __bind(this.formatted_timestamp, this);;
-    this.formatDate = __bind(this.formatDate, this);;
-    this.splitDate = __bind(this.splitDate, this);;
-    this.toUpdateJSON = __bind(this.toUpdateJSON, this);;    Feedback.__super__.constructor.apply(this, arguments);
-  }
-  __extends(Feedback, Backbone.Model);
-  Feedback.prototype.initialize = function() {
-    return this.sync = App.model.CustomSync;
-  };
-  Feedback.prototype.toUpdateJSON = function() {
-    return {
-      subject: {
-        key: this.get('subject_key'),
-        id: this.subject.id
-      },
-      feedback: {
-        rating: this.get('rating'),
-        comment: this.get('comment')
-      }
-    };
-  };
-  Feedback.prototype.toViewJSON = function() {
-    return _.extend(this.toJSON(), {
-      formatted_timestamp: this.formatted_timestamp,
-      formatted_service_timestamp: this.formatted_service_timestamp
-    });
-  };
-  Feedback.prototype.splitDate = function(date) {
-    var time, _ref;
-    _ref = date.split('T'), date = _ref[0], time = _ref[1];
-    return date.split('-');
-  };
-  Feedback.prototype.formatDate = function(date) {
-    var day, month, year, _ref;
-    _ref = this.splitDate(date), year = _ref[0], month = _ref[1], day = _ref[2];
-    return [month, day].join('/');
-  };
-  Feedback.prototype.formatted_timestamp = function() {
-    return this.formatDate(this.get('created_at'));
-  };
-  Feedback.prototype.formatted_service_timestamp = function() {
-    return this.formatDate(this.get('event_posted_at'));
-  };
-  Feedback.prototype.day = function() {
-    var day, month, year, _ref;
-    _ref = this.splitDate(this.get('created_at')), year = _ref[0], month = _ref[1], day = _ref[2];
-    return [year, month, day].join('-');
-  };
-  return Feedback;
-})();
-var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-}, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-App.model.FeedbackSubject = (function() {
-  function FeedbackSubject() {
-    FeedbackSubject.__super__.constructor.apply(this, arguments);
-  }
-  __extends(FeedbackSubject, Backbone.Model);
-  FeedbackSubject.prototype.initialize = function(options) {
-    FeedbackSubject.__super__.initialize.call(this, options);
-    if (this.get('feedbacks') != null) {
-      this.feedbacks = new App.model.FeedbackList(this.get('feedbacks'));
-      this.feedbacks.url = options.list_url;
-      this.bind('add:feedback', __bind(function(feedback_json) {
-        this.set(feedback_json.subject);
-        return this.feedbacks.add(feedback_json);
-      }, this));
-      return this.bind('update:feedback', __bind(function(feedback_json) {
-        var feedback;
-        this.set(feedback_json.subject);
-        feedback = this.feedbacks.get(feedback_json.id);
-        return feedback.set(feedback_json);
-      }, this));
-    }
-  };
-  FeedbackSubject.prototype.toViewJSON = function() {
-    return _.extend(this.toJSON(), {
-      meta: this.meta
-    });
-  };
-  FeedbackSubject.prototype.toDetailJSON = function() {
-    return this.toViewJSON();
-  };
-  return FeedbackSubject;
-})();
-App.model.FeedbackSubjectFactory = {
-  getSubject: function(model) {
-    var feedback_subject_class;
-    feedback_subject_class = App.model.FeedbackSubjectFactory[model.feedback_subject_type] || App.model.FeedbackSubject;
-    return new feedback_subject_class(model);
-  }
-};
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-App.view.extension.Timeline = {
-  addAll: function() {
-    return this.collection.each(this.addOne);
-  },
-  addOne: function(model, position) {
-    var rendered, view;
-    view = this.buildView(model);
-    rendered = view.render().el;
-    if (position === 'top') {
-      this.eventContainer.prepend(rendered);
-    } else {
-      this.eventContainer.append(rendered);
-    }
-    return this.addTimestampClass(view, model);
-  },
-  addTimestampClass: function(view, event) {
-    if (event.day() === this.lastEventDay) {
-      $(view.el).addClass('repeat-date');
-    }
-    return this.lastEventDay = event.day();
-  },
-  refreshTimestamps: __bind(function() {
-    var previousDay;
-    previousDay = null;
-    return this.eventContainer.find('tr').each(__bind(function(index, row) {
-      var day;
-      day = $(row).find('>td:first-child').text();
-      if (day === previousDay) {
-        $(row).addClass('repeat-date');
-      } else {
-        $(row).removeClass('repeat-date');
-      }
-      return previousDay = day;
-    }, this));
-  }, this),
-  bindTimeline: function() {
-    return _.bindAll(this, "addAll", "addOne", "addTimestampClass", "refreshTimestamps");
-  }
-};
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-App.view.Timeline = (function() {
-  function Timeline() {
-    this.refreshTimestamps = __bind(this.refreshTimestamps, this);;
-    this.addOne = __bind(this.addOne, this);;
-    this.addAll = __bind(this.addAll, this);;    Timeline.__super__.constructor.apply(this, arguments);
-  }
-  __extends(Timeline, Backbone.View);
-  Timeline.prototype.el = $('#timeline tbody');
-  Timeline.prototype.initialize = function(options) {
-    this.collection.bind('refresh', this.addAll);
-    if (!this.collection.isEmpty()) {
-      this.addAll();
-    }
-    return this.collection.trigger('load');
-  };
-  Timeline.prototype.addAll = function() {
-    return this.collection.each(this.addOne);
-  };
-  Timeline.prototype.addOne = function(model, position) {
-    var rendered, view;
-    view = this.options.rowFactory.build(model, this.collection);
-    rendered = view.render().el;
-    if (position === 'top') {
-      $(this.el).prepend(rendered);
-    } else {
-      $(this.el).append(rendered);
-    }
-    return this.addTimestampClass(view, model);
-  };
-  Timeline.prototype.refreshTimestamps = function() {
-    var previousDay;
-    previousDay = null;
-    return this.$('tr').each(__bind(function(index, row) {
-      var day;
-      day = $(row).find('>td:first-child').text();
-      if (day === previousDay) {
-        $(row).addClass('repeat-date');
-      } else {
-        $(row).removeClass('repeat-date');
-      }
-      return previousDay = day;
-    }, this));
-  };
-  Timeline.prototype.addTimestampClass = function(view, event) {
-    if (event.day() === this.lastEventDay) {
-      $(view.el).addClass('repeat-date');
-    }
-    return this.lastEventDay = event.day();
-  };
-  return Timeline;
-})();
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-}, __slice = Array.prototype.slice;
-App.view.EventRow = (function() {
-  function EventRow() {
-    this.onChange = __bind(this.onChange, this);;
-    this.changeSelection = __bind(this.changeSelection, this);;    EventRow.__super__.constructor.apply(this, arguments);
-  }
-  __extends(EventRow, Backbone.View);
-  EventRow.prototype.events = {
-    click: "toggleSelectOne"
-  };
-  EventRow.prototype.tagName = 'tr';
-  EventRow.prototype.className = 'withdrawal';
-  EventRow.prototype.initialize = function() {
-    this.template = App.templates['members/events/row'];
-    this.model.bind('change:selected', this.changeSelection);
-    this.model.bind('change', this.onChange);
-    return this.render();
-  };
-  EventRow.prototype.render = function() {
-    $(this.el).html(this.template(this.model.toViewJSON()));
-    return this;
-  };
-  EventRow.prototype.changeSelection = function() {
-    return $(this.el).toggleClass('selected', this.model.get('selected'));
-  };
-  EventRow.prototype.onChange = function() {
-    var attributesToIgnore, changedKeys;
-    attributesToIgnore = ['selected'];
-    changedKeys = _.keys(this.model.changedAttributes());
-    if (_.isEmpty(_.without.apply(_, [changedKeys].concat(__slice.call(attributesToIgnore))))) {
-      return;
-    }
-    return this.render();
-  };
-  EventRow.prototype.toggleSelectOne = function() {
-    if (this.collection != null) {
-      return this.collection.toggleOrSelectOne(this.model);
-    } else {
-      return this.model.toggleSelected();
-    }
-  };
-  return EventRow;
-})();
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-}, __slice = Array.prototype.slice;
-App.view.EventDetail = (function() {
-  function EventDetail() {
-    this.addFeedbackView = __bind(this.addFeedbackView, this);;
-    this.addLocationFeedbackView = __bind(this.addLocationFeedbackView, this);;
-    this.resize = __bind(this.resize, this);;
-    this.render = __bind(this.render, this);;
-    this.close = __bind(this.close, this);;    EventDetail.__super__.constructor.apply(this, arguments);
-  }
-  __extends(EventDetail, Backbone.View);
-  EventDetail.prototype.events = {
-    "click .close": "close"
-  };
-  EventDetail.prototype.templatePath = 'members/events/detail';
-  EventDetail.prototype.initialize = function() {
-    if (this.eventTypeOptions != null) {
-      if (this.eventTypeOptions.events != null) {
-        this.delegateEvents(this.eventTypeOptions.events);
-      }
-      if (this.eventTypeOptions.templatePath != null) {
-        return this.eventTypeOptions.template = App.templates[this.eventTypeOptions.templatePath];
-      }
-    }
-  };
-  EventDetail.prototype.close = function() {
-    return this.model.set({
-      'selected': false
-    });
-  };
-  EventDetail.prototype.render = function() {
-    var detailJSON, shim;
-    mpq.push([
-      "track", "View event detail", {
-        event_type: this.model.get('event_type'),
-        id: this.model.id
-      }
-    ]);
-    this.model.initializeDetails();
-    detailJSON = this.model.toDetailJSON();
-    $(this.el).html(App.templates[this.templatePath](detailJSON));
-    this.header = this.$('#event-header');
-    this.detail = this.$('#event-detail');
-    this.wrapper = this.$('#event-detail-wrapper');
-    this.footer = this.$('#event-footer');
-    if (this.model.isSocial()) {
-      this.footer.show();
-      this.socialView = new App.view.Social({
-        model: this.model
-      });
-      this.footer.append(this.socialView.render().el);
-    }
-    if ((this.eventTypeOptions != null) && (this.eventTypeOptions.template != null)) {
-      this.detail.append(this.eventTypeOptions.template(detailJSON));
-    }
-    this.show();
-    this.wrapper.jScrollPane();
-    if (this.renderDetail != null) {
-      this.renderDetail();
-    }
-    if (this.model.isDeposit()) {
-      this.header.addClass('deposit');
-    }
-    if (this.model.get('merchant') != null) {
-      this.addLocationFeedbackView('merchant', {
-        include_summary_view: true
-      });
-    }
-    this.scroll = this.wrapper.data('jsp');
-    shim = 45;
-    if (this.footer.is(':visible')) {
-      shim = shim + this.footer.innerHeight();
-    }
-    this.heightOffset = parseInt($(this.el).css('top')) + this.header.height() + shim;
-    $(window).bind('resize', this.resize);
-    return $(window).trigger('resize');
-  };
-  EventDetail.prototype.resize = function() {
-    var height;
-    height = $(window).height();
-    this.wrapper.height(height - this.heightOffset);
-    if ($.browser.ie) {
-      if (!throttleTimeout) {
-        return setTimeout(__bind(function() {
-          var throttleTimeout;
-          this.scroll.reinitialise();
-          return throttleTimeout = null;
-        }, this), 50);
-      }
-    } else {
-      return this.scroll.reinitialise();
-    }
-  };
-  EventDetail.prototype.show = function() {
-    this.trigger('show');
-    return $(this.el).show();
-  };
-  EventDetail.prototype.hide = function() {
-    this.trigger('hide');
-    return $(this.el).empty().hide();
-  };
-  EventDetail.prototype.addLocationFeedbackView = function(field, options) {
-    var feedback, ratingViewOptions;
-    feedback = this.model.feedbacks.for_subject(field);
-    if (feedback != null) {
-      this.addressEl = this.detail.find('.address');
-      ratingViewOptions = _.extend({
-        model: feedback,
-        commentParent: this.addressEl,
-        commentFormTitle: "Care to elaborate?"
-      }, options);
-      this.locationRatingView = new App.view.Rating(ratingViewOptions);
-      this.locationRatingView.bind('expand', this.resize);
-      this.locationRatingView.bind('collapse', this.resize);
-      this.addressEl.append(this.locationRatingView.render().el);
-      this.feedbackSummaryView = new App.view.FeedbackSummary;
-      return this.addressEl.append(this.feedbackSummaryView.render().el);
-    }
-  };
-  EventDetail.prototype.addFeedbackView = function() {
-    var subject_types;
-    subject_types = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-    return _.each(subject_types, __bind(function(subject_type) {
-      var feedback;
-      feedback = this.model.feedbacks.for_subject(subject_type);
-      if (feedback != null) {
-        this.feedbackView = new App.view.Feedback({
-          model: feedback,
-          question: this.model.feedbackQuestion
-        });
-        this.feedbackView.bind('expand', this.resize);
-        this.feedbackView.bind('collapse', this.resize);
-        return this.detail.append(this.feedbackView.render().el);
-      }
-    }, this));
-  };
-  return EventDetail;
-})();
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-App.controller.Timeline = (function() {
-  function Timeline() {
-    this.changeSelected = __bind(this.changeSelected, this);;
-    this.fetch = __bind(this.fetch, this);;
-    this.selectEvent = __bind(this.selectEvent, this);;    Timeline.__super__.constructor.apply(this, arguments);
-  }
-  __extends(Timeline, Backbone.Controller);
-  Timeline.prototype.initialize = function(options) {
-    if (this.events != null) {
-      this.events = options.events;
-      this.events.bind('change:selected', this.changeSelected);
-      this.events.bind('unselect', __bind(function() {
-        return this.saveLocation('');
-      }, this));
-      this.events.bind('load', __bind(function() {
-        $('#timeline-loading').hide();
-        return $('#timeline').show();
-      }, this));
-      if (options.fetchOnInit === true) {
-        return this.fetch();
-      }
-    }
-  };
-  Timeline.prototype.routes = {
-    "events/:event_id": 'selectEvent'
-  };
-  Timeline.prototype.selectEvent = function(eventId) {
-    return this.events.selectOne(this.events.get(eventId));
-  };
-  Timeline.prototype.fetch = function() {
-    return this.events.fetch({
-      success: __bind(function() {
-        return this.events.trigger('load');
-      }, this)
-    });
-  };
-  Timeline.prototype.changeSelected = function(event) {
-    if (event.get('selected')) {
-      this.trigger('select', event);
-      return this.saveLocation("events/" + event.id);
-    } else {
-      return this.trigger('unselect', event);
-    }
-  };
-  return Timeline;
-})();
-var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-App.controller.FeedbackDashboard = (function() {
-  function FeedbackDashboard() {
-    FeedbackDashboard.__super__.constructor.apply(this, arguments);
-  }
-  __extends(FeedbackDashboard, App.controller.Timeline);
-  FeedbackDashboard.prototype.initialize = function(options) {
-    this.subject = options.subject;
-    options.events = this.subject.feedbacks;
-    FeedbackDashboard.__super__.initialize.call(this, options);
-    this.overview = new App.view.FeedbackSubjectOverview({
-      model: this.subject
-    });
-    $('#subject-overview').append(this.overview.render().el);
-    this.timeline = new App.view.FeedbackTimeline({
-      collection: this.subject.feedbacks
-    });
-    return App.socket.listenTo(this.subject);
-  };
-  return FeedbackDashboard;
-})();
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-App.controller.AvailableServices = (function() {
-  function AvailableServices() {
-    this.rejectBillpay = __bind(this.rejectBillpay, this);;
-    this.signupForBillpay = __bind(this.signupForBillpay, this);;    AvailableServices.__super__.constructor.apply(this, arguments);
-  }
-  __extends(AvailableServices, Backbone.Controller);
-  AvailableServices.prototype.intialize = function(options) {};
-  AvailableServices.prototype.routes = {
-    "billpay/signup": 'signupForBillpay',
-    "billpay/no": 'rejectBillpay'
-  };
-  AvailableServices.prototype.signupForBillpay = function() {
-    this.billpaySignupView || (this.billpaySignupView = new App.view.BillpaySignup);
-    return this.billpaySignupView.render();
-  };
-  AvailableServices.prototype.rejectBillpay = function() {
-    return $('.available-service.billpay').hide();
-  };
-  return AvailableServices;
-})();
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-App.controller.MemberDashboard = (function() {
-  function MemberDashboard() {
-    this.selectSubaccount = __bind(this.selectSubaccount, this);;    MemberDashboard.__super__.constructor.apply(this, arguments);
-  }
-  __extends(MemberDashboard, Backbone.Controller);
-  MemberDashboard.prototype.initialize = function(options) {
-    this.member = options.member;
-    this.dashboardView = new App.view.MemberDashboard({
-      model: this.member
-    });
-    return Backbone.history.start();
-  };
-  MemberDashboard.prototype.routes = {
-    "accounts/:account_id/subaccounts/:subaccount_id": "selectSubaccount"
-  };
-  MemberDashboard.prototype.selectSubaccount = function(accountId, subaccountId) {
-    var account;
-    account = this.member.accounts.get(accountId);
-    return account.subaccounts.selectOne(subaccountId);
-  };
-  return MemberDashboard;
-})();
-App.model.CustomSync = function(method, model, success, error) {
-  var getUrl, methodMap, modelJSON, params, toJSONMethod, type;
-  methodMap = {
-    'create': 'POST',
-    'update': 'PUT',
-    'delete': 'DELETE',
-    'read': 'GET'
-  };
-  type = methodMap[method];
-  toJSONMethod = model.toUpdateJSON || model.toJSON;
-  modelJSON = method === 'create' || method === 'update' ? JSON.stringify(toJSONMethod.call(this)) : null;
-  getUrl = function(object) {
-    if (_.isFunction(object.url)) {
-      return object.url();
-    } else {
-      return object.url;
-    }
-  };
-  params = {
-    url: getUrl(model),
-    type: type,
-    contentType: 'application/json',
-    data: modelJSON,
-    dataType: 'json',
-    processData: false,
-    success: success,
-    error: error
-  };
-  return $.ajax(params);
-};
-var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-}, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-App.model.Account = (function() {
-  function Account() {
-    Account.__super__.constructor.apply(this, arguments);
-  }
-  __extends(Account, Backbone.Model);
-  Account.prototype.initialize = function() {
-    return this.refresh();
-  };
-  Account.prototype.refresh = function() {
-    var rawLoans, rawShares;
-    this.subaccounts = new App.model.SubaccountList(this.get('subaccounts'));
-    this.subaccounts.account = this;
-    rawShares = this.subaccounts.filter(function(subaccount) {
-      return subaccount.get('account_type') === 'share';
-    });
-    this.shares = new App.model.SubaccountList(rawShares);
-    rawLoans = this.subaccounts.filter(function(subaccount) {
-      return subaccount.get('account_type') === 'loan';
-    });
-    this.loans = new App.model.SubaccountList(rawLoans);
-    return this.subaccounts.bind('selectOne', __bind(function(subaccount) {
-      var account_type;
-      account_type = subaccount.get('account_type');
-      this.shares.trigger('selectSubaccounts', account_type === 'share');
-      return this.loans.trigger('selectSubaccounts', account_type === 'loan');
-    }, this));
-  };
-  return Account;
-})();
-var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-App.model.AccountList = (function() {
-  function AccountList() {
-    AccountList.__super__.constructor.apply(this, arguments);
-  }
-  __extends(AccountList, Backbone.Collection);
-  AccountList.prototype.model = App.model.Account;
-  AccountList.prototype.defaultSelected = function() {
-    return this.first();
-  };
-  return AccountList;
-})();
-_.extend(App.model.AccountList.prototype, App.model.extension.Selectable);
-var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-App.model.Subaccount = (function() {
-  function Subaccount() {
-    Subaccount.__super__.constructor.apply(this, arguments);
-  }
-  __extends(Subaccount, Backbone.Model);
-  Subaccount.prototype.initialize = function() {
-    this.events = new App.model.EventList;
-    return this.events.url = "/subaccounts/" + this.id + "/events";
-  };
-  Subaccount.prototype.toViewJSON = function() {
-    return _.extend(this.toJSON(), {
-      formattedBalance: App.helper.currency.format(this.get('balance')),
-      formattedAvailableBalance: this.get('balance') === this.get('available_balance') ? null : App.helper.currency.format(this.get('available_balance'))
-    });
-  };
-  return Subaccount;
-})();
-var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-App.model.SubaccountList = (function() {
-  function SubaccountList() {
-    SubaccountList.__super__.constructor.apply(this, arguments);
-  }
-  __extends(SubaccountList, Backbone.Collection);
-  SubaccountList.prototype.model = App.model.Subaccount;
-  return SubaccountList;
-})();
-_.extend(App.model.SubaccountList.prototype, App.model.extension.Selectable);
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-App.model.Atm = (function() {
-  function Atm() {
-    this.url = __bind(this.url, this);;    Atm.__super__.constructor.apply(this, arguments);
-  }
-  __extends(Atm, App.model.FeedbackSubject);
-  Atm.prototype.initialize = function(options) {
-    options.list_url = "/atms/" + this.id + "/feedbacks";
-    this.meta = "ATM #" + this.id;
-    return Atm.__super__.initialize.call(this, options);
-  };
-  Atm.prototype.url = function() {
-    return "/atms/" + this.id;
-  };
-  return Atm;
-})();
-App.model.FeedbackSubjectFactory.atm = App.model.Atm;
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-App.model.Branch = (function() {
-  function Branch() {
-    this.url = __bind(this.url, this);;    Branch.__super__.constructor.apply(this, arguments);
-  }
-  __extends(Branch, App.model.FeedbackSubject);
-  Branch.prototype.initialize = function(options) {
-    options.list_url = "/branches/" + this.id + "/feedbacks";
-    this.meta = "Branch #" + this.id;
-    return Branch.__super__.initialize.call(this, options);
-  };
-  Branch.prototype.url = function() {
-    return "/branches/" + this.id;
-  };
-  return Branch;
-})();
-App.model.FeedbackSubjectFactory.branch = App.model.Branch;
-var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-App.model.EventList = (function() {
-  function EventList() {
-    EventList.__super__.constructor.apply(this, arguments);
-  }
-  __extends(EventList, Backbone.Collection);
-  EventList.prototype._add = function(model) {
-    return EventList.__super__._add.call(this, App.model.EventFactory.getEvent(model));
-  };
-  EventList.prototype.clear = function() {
-    return this.remove(this.models);
-  };
-  EventList.prototype.selected = function() {
-    return this.filter(function(event) {
-      return event.get('selected');
-    });
-  };
-  EventList.prototype.selectOne = function(event) {
-    _.each(this.selected(), function(selectedevent) {
-      return selectedevent.set({
-        'selected': false
-      });
-    });
-    if (event != null) {
-      return event.set({
-        'selected': true
-      });
-    }
-  };
-  EventList.prototype.toggleOrSelectOne = function(event) {
-    if (event.get('selected')) {
-      ;
-    } else {
-      return this.selectOne(event);
-    }
-  };
-  return EventList;
-})();
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
 App.model.FeedbackList = (function() {
   function FeedbackList() {
     this.for_subject = __bind(this.for_subject, this);;    FeedbackList.__super__.constructor.apply(this, arguments);
@@ -28025,7 +28290,8 @@ App.model.FeedbackList = (function() {
   __extends(FeedbackList, Backbone.Collection);
   FeedbackList.prototype.model = App.model.Feedback;
   FeedbackList.prototype.initialize = function(collection, options) {
-    return this.event = options.event;
+    this.event = options.event;
+    return this.url = options.url;
   };
   FeedbackList.prototype.for_subject = function(subject_key) {
     var feedback;
@@ -28180,7 +28446,6 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 App.view.AccountTimeline = (function() {
   function AccountTimeline() {
     this.buildView = __bind(this.buildView, this);;
-    this.addAll = __bind(this.addAll, this);;
     this.render = __bind(this.render, this);;    AccountTimeline.__super__.constructor.apply(this, arguments);
   }
   __extends(AccountTimeline, Backbone.View);
@@ -28196,11 +28461,12 @@ App.view.AccountTimeline = (function() {
   AccountTimeline.prototype.render = function() {
     $(this.el).html(this.template(this.model.toJSON));
     this.eventContainer = this.$('tbody');
-    this.collection.fetch();
+    if (this.collection.length === 0) {
+      this.collection.fetch();
+    } else {
+      this.addAll();
+    }
     return this;
-  };
-  AccountTimeline.prototype.addAll = function() {
-    return this.collection.each(this.addOne);
   };
   AccountTimeline.prototype.buildView = function(model) {
     return this.rowFactory.build(model, this.collection);
@@ -28711,149 +28977,6 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
-App.view.FeedbackSubjectOverview = (function() {
-  function FeedbackSubjectOverview() {
-    this.render = __bind(this.render, this);;    FeedbackSubjectOverview.__super__.constructor.apply(this, arguments);
-  }
-  __extends(FeedbackSubjectOverview, Backbone.View);
-  FeedbackSubjectOverview.prototype.initialize = function(options) {
-    this.template = App.templates['feedback_subjects/overview'];
-    return this.model.bind('change', __bind(function() {
-      return this.render();
-    }, this));
-  };
-  FeedbackSubjectOverview.prototype.render = function() {
-    $(this.el).html(this.template(this.model.toViewJSON()));
-    _.each(['month', 'year'], __bind(function(timespan) {
-      var ratingView;
-      ratingView = new App.view.Rating({
-        model: this.model,
-        rating: this.model.get('feedback_totals')[timespan].average,
-        readOnly: true
-      });
-      return this.$("." + timespan + " .rating").append(ratingView.render().el);
-    }, this));
-    return this;
-  };
-  return FeedbackSubjectOverview;
-})();
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-App.view.FeedbackSummary = (function() {
-  function FeedbackSummary() {
-    this.render = __bind(this.render, this);;    FeedbackSummary.__super__.constructor.apply(this, arguments);
-  }
-  __extends(FeedbackSummary, Backbone.View);
-  FeedbackSummary.prototype.initialize = function(options) {
-    return this.collection = new App.model.FeedbackList;
-  };
-  FeedbackSummary.prototype.render = function() {
-    return this;
-  };
-  return FeedbackSummary;
-})();
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-App.view.BillpaySignup = (function() {
-  function BillpaySignup() {
-    this.submitForm = __bind(this.submitForm, this);;
-    this.open = __bind(this.open, this);;
-    this.close = __bind(this.close, this);;    BillpaySignup.__super__.constructor.apply(this, arguments);
-  }
-  __extends(BillpaySignup, Backbone.View);
-  BillpaySignup.prototype.id = 'billpay-signup-dialog';
-  BillpaySignup.prototype.events = {
-    "click .form button": "submitForm"
-  };
-  BillpaySignup.prototype.initialize = function(options) {
-    return this.template = App.templates['members/billpay_signup'];
-  };
-  BillpaySignup.prototype.render = function() {
-    mpq.push([
-      "track", "View Billpay Signup", {
-        offer: "billpay"
-      }
-    ]);
-    $(this.el).html(this.template());
-    $(this.el).dialog({
-      title: "Sign up for Billpay",
-      width: 460,
-      height: 310,
-      open: this.open,
-      close: this.close
-    });
-    return this.$('.form button').button();
-  };
-  BillpaySignup.prototype.close = function(event, ui) {
-    window.location.hash = '#';
-    return this.remove();
-  };
-  BillpaySignup.prototype.open = function(event, ui) {
-    return this.delegateEvents();
-  };
-  BillpaySignup.prototype.submitForm = function() {
-    mpq.push(["track", "Submit Billpay Signup"]);
-    alert('Provide instructions on what will happen next');
-    return $(this.el).dialog('close');
-  };
-  return BillpaySignup;
-})();
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-App.view.MemberDashboard = (function() {
-  function MemberDashboard() {
-    this.renderTimeline = __bind(this.renderTimeline, this);;
-    this.render = __bind(this.render, this);;    MemberDashboard.__super__.constructor.apply(this, arguments);
-  }
-  __extends(MemberDashboard, Backbone.View);
-  MemberDashboard.prototype.initialize = function(options) {
-    var subaccounts;
-    if (this.model.accounts.length !== 0) {
-      this.render();
-      subaccounts = this.model.accounts.current().subaccounts;
-      return subaccounts.bind('selectOne', this.renderTimeline);
-    }
-  };
-  MemberDashboard.prototype.render = function() {
-    this.accountView = new App.view.Account({
-      model: this.model.accounts.current()
-    });
-    return $('#sidebar').html(this.accountView.render().el);
-  };
-  MemberDashboard.prototype.renderTimeline = function(subaccount) {
-    this.timelineView = new App.view.AccountTimeline({
-      model: subaccount
-    });
-    return $('#main .content').html(this.timelineView.render().el);
-  };
-  return MemberDashboard;
-})();
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
 App.view.AtmDetail = (function() {
   function AtmDetail() {
     this.renderDetail = __bind(this.renderDetail, this);;    AtmDetail.__super__.constructor.apply(this, arguments);
@@ -28914,17 +29037,18 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.view.BranchDetail = (function() {
   function BranchDetail() {
-    this.renderDetail = __bind(this.renderDetail, this);;    BranchDetail.__super__.constructor.apply(this, arguments);
+    this.renderFeedback = __bind(this.renderFeedback, this);;    BranchDetail.__super__.constructor.apply(this, arguments);
   }
-  __extends(BranchDetail, App.view.EventDetail);
-  BranchDetail.prototype.renderDetail = function() {
-    this.addFeedbackView('teller');
-    return this.addLocationFeedbackView('branch', {
-      commentFormTitle: "Care to tell us more about this branch?"
-    });
+  __extends(BranchDetail, Backbone.View);
+  BranchDetail.prototype.renderFeedback = function() {
+    this.options.parent.renderLocationFeedbackView('branch');
+    if (this.model.get('teller') != null) {
+      return this.options.parent.addSubjectFeedbackView('teller');
+    }
   };
   return BranchDetail;
 })();
+App.view.EventDetailFactory.branch = App.view.BranchDetail;
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -29060,6 +29184,191 @@ App.view.StatementRow = (function() {
   __extends(StatementRow, App.view.EventRow);
   StatementRow.prototype.templatePath = 'members/events/statement/row';
   return StatementRow;
+})();
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.view.FeedbackSubjectOverview = (function() {
+  function FeedbackSubjectOverview() {
+    this.render = __bind(this.render, this);;    FeedbackSubjectOverview.__super__.constructor.apply(this, arguments);
+  }
+  __extends(FeedbackSubjectOverview, Backbone.View);
+  FeedbackSubjectOverview.prototype.initialize = function(options) {
+    this.template = App.templates['feedback_subjects/overview'];
+    return this.model.bind('change', __bind(function() {
+      return this.render();
+    }, this));
+  };
+  FeedbackSubjectOverview.prototype.render = function() {
+    $(this.el).html(this.template(this.model.toViewJSON()));
+    _.each(['month', 'year'], __bind(function(timespan) {
+      var ratingView;
+      ratingView = new App.view.Rating({
+        model: this.model,
+        rating: this.model.get('feedback_totals')[timespan].average,
+        readOnly: true
+      });
+      return this.$("." + timespan + " .rating").append(ratingView.render().el);
+    }, this));
+    return this;
+  };
+  return FeedbackSubjectOverview;
+})();
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.view.FeedbackSummary = (function() {
+  function FeedbackSummary() {
+    this.render = __bind(this.render, this);;    FeedbackSummary.__super__.constructor.apply(this, arguments);
+  }
+  __extends(FeedbackSummary, Backbone.View);
+  FeedbackSummary.prototype.initialize = function(options) {
+    return this.collection = new App.model.FeedbackList;
+  };
+  FeedbackSummary.prototype.render = function() {
+    return this;
+  };
+  return FeedbackSummary;
+})();
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.view.BillpaySignup = (function() {
+  function BillpaySignup() {
+    this.submitForm = __bind(this.submitForm, this);;
+    this.open = __bind(this.open, this);;
+    this.close = __bind(this.close, this);;    BillpaySignup.__super__.constructor.apply(this, arguments);
+  }
+  __extends(BillpaySignup, Backbone.View);
+  BillpaySignup.prototype.id = 'billpay-signup-dialog';
+  BillpaySignup.prototype.events = {
+    "click .form button": "submitForm"
+  };
+  BillpaySignup.prototype.initialize = function(options) {
+    return this.template = App.templates['members/billpay_signup'];
+  };
+  BillpaySignup.prototype.render = function() {
+    mpq.push([
+      "track", "View Billpay Signup", {
+        offer: "billpay"
+      }
+    ]);
+    $(this.el).html(this.template());
+    $(this.el).dialog({
+      title: "Sign up for Billpay",
+      width: 460,
+      height: 310,
+      open: this.open,
+      close: this.close
+    });
+    return this.$('.form button').button();
+  };
+  BillpaySignup.prototype.close = function(event, ui) {
+    window.location.hash = '#';
+    return this.remove();
+  };
+  BillpaySignup.prototype.open = function(event, ui) {
+    return this.delegateEvents();
+  };
+  BillpaySignup.prototype.submitForm = function() {
+    mpq.push(["track", "Submit Billpay Signup"]);
+    alert('Provide instructions on what will happen next');
+    return $(this.el).dialog('close');
+  };
+  return BillpaySignup;
+})();
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.view.MemberDashboard = (function() {
+  function MemberDashboard() {
+    this.initEventDetailView = __bind(this.initEventDetailView, this);;
+    this.renderEventDetail = __bind(this.renderEventDetail, this);;
+    this.renderTimeline = __bind(this.renderTimeline, this);;
+    this.render = __bind(this.render, this);;    MemberDashboard.__super__.constructor.apply(this, arguments);
+  }
+  __extends(MemberDashboard, Backbone.View);
+  MemberDashboard.prototype.initialize = function(options) {
+    var subaccounts;
+    if (this.model.accounts.length !== 0) {
+      this.render();
+      subaccounts = this.model.accounts.current().subaccounts;
+      return subaccounts.bind('selectOne', this.renderTimeline);
+    }
+  };
+  MemberDashboard.prototype.render = function() {
+    this.accountView = new App.view.Account({
+      model: this.model.accounts.current()
+    });
+    return $('#sidebar').html(this.accountView.render().el);
+  };
+  MemberDashboard.prototype.renderTimeline = function(subaccount) {
+    this.timelineView = new App.view.AccountTimeline({
+      model: subaccount
+    });
+    $('#main .content').html(this.timelineView.render().el);
+    subaccount.events.unbind('selectOne', this.renderEventDetail);
+    return subaccount.events.bind('selectOne', this.renderEventDetail);
+  };
+  MemberDashboard.prototype.renderEventDetail = function(event) {
+    if (this.eventDetailView == null) {
+      this.initEventDetailView();
+    }
+    this.eventDetailView.setModel(event);
+    this.eventDetailView.maxHeight = $(this.timelineView.el).height() - 50;
+    $('#sidebar').append(this.eventDetailView.render().el);
+    $(this.eventDetailView.el).drawer('show');
+    return $(this.eventDetailView.el).bind('hide', __bind(function() {
+      return event.set({
+        selected: false
+      });
+    }, this));
+  };
+  MemberDashboard.prototype.initEventDetailView = function() {
+    $('#sidebar').append(this.make('div', {
+      id: 'event-detail-view'
+    }));
+    this.eventDetailView = new App.view.EventDetail({
+      el: $('#event-detail-view')
+    });
+    this.eventDetailView.el.bind('show', __bind(function() {
+      return $(this.accountView.el).hide();
+    }, this));
+    this.eventDetailView.el.bind('hide', __bind(function() {
+      return $(this.accountView.el).show();
+    }, this));
+    $(this.eventDetailView.el).drawer({
+      main: $('#main'),
+      resizeOnInit: false,
+      resize: __bind(function(element, height) {
+        return this.eventDetailView.resize(height);
+      }, this)
+    });
+    return this.eventDetailView.bind('resize', __bind(function() {
+      return $(this.eventDetailView.el).drawer('redraw');
+    }, this));
+  };
+  return MemberDashboard;
 })();
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
@@ -29248,14 +29557,14 @@ App.templates['common/feedback/comment'] = Handlebars.compile('<a href="#" class
 App.templates['common/feedback/feedback'] = Handlebars.compile('<div class="avatar-and-question">  {{#avatar}}    <div class="avatar"><img src="{{ . }}" /></div>  {{/avatar}}  <div class="question-and-rating">    <div class="question">{{{ question }}}</div>  </div></div>');
 App.templates['common/feedback/timeline/row'] = Handlebars.compile('<td class="date">  <span>{{ formatted_timestamp }}<span></td><td class="comment">  {{#comment}}  <p class="description">{{ . }}</p>  {{/comment}}  <p class="meta">Feedback provided by {{ member_name }} for service on {{ formatted_service_timestamp }} | <a href="#">Create a service request</a></p></td><td class="rating"></td>');
 App.templates['common/social/overview'] = Handlebars.compile('<div class="twitter">  {{#avatar}}    <img src="{{ . }}" class="avatar" />  {{/avatar}}  <div class="latest-tweet">  {{^twitter_username}}    <div class="form">      <input type="text" placeholder="Twitter username for {{name}}" class="text" />      <button>Add</button>    </div>  {{/twitter_username}}  </div></div><p class="security">  Don\'t trust Twitter with your financial information? That\'s ok -- <a href="#">neither do we</a>.</p>');
+App.templates['events/billpay/detail'] = Handlebars.compile('<div class="processing-summary">  <p class="processing-days">Your payment arrived in <strong>{{ bill_payment_processing_days }} business days</strong>.</p>  <p class="submitted-date">Payment submitted on {{ bill_payment_submitted_date }}</p></div>');
+App.templates['events/card/detail'] = Handlebars.compile('<div class="receipt-and-account-info">  {{#receipt_image}}    <div class="receipt-image">      <a href="{{ . }}"><img src="{{ . }}" /></a>    </div>  {{/receipt_image}}  {{^receipt_image}}    <div class="receipt-upload">      <a href="#" class="upload">Upload your receipt</a>      <p class="email">        or email it to <a href="mailto:receipts+092341234@vcu.com">receipts+092341234@vcu.com</a>      </p>    </div>  {{/receipt_image}}  {{#account_information}}    <div class="account-information">      {{{ . }}}    </div>  {{/account_information}}</div>');
+App.templates['events/check/detail'] = Handlebars.compile('{{#check_image}}<div class="check-image">  <ul>    <li><a href="{{ . }}" rel="checks"><img src="{{.}}" title="{{../meta}}" /></a></li>    <li><a href="{{ ../check_image_back }}" rel="checks"><img src="{{../check_image_back}}" title="{{../meta}}" /></a></li>  </ul>  <a href="#" class="report-problems">Problems with the check images?</a></div>{{/check_image}}{{#merchant}}<div class="available-service billpay">  <h2>Avaliable service: MyVantage Bill Pay</h2>  <p>It looks like you regularly write checks to Trugreen.  Would you like to sign up for MyVantage Bill Pay to automate these payments?</p>  <ul>    <li><a href="#billpay/signup" class="yes">Yes, I\'d like to sign up</a></li>    <li><a href="#billpay/no" class="no">No, thanks</a></li>  </ul></div>{{/merchant}}');
+App.templates['events/detail'] = Handlebars.compile('<div id="event-header" class="header">  <div class="top">    <div class="date">{{ formatted_date }}</div>    <a href="#" class="close">Close</a>  </div>  <div class="name-and-amount">    <div class="amount">{{{ formatted_amount }}}</div>    <h3>{{ description }}</h3>  </div></div><div id="event-detail-wrapper" class="scrollable">  <div class="{{ event_type }}" id="event-detail">    {{#address}}      <div class="location">        <div class="map"><img src="{{ ../map }}" /></div>        <div class="address">{{{ . }}}</div>      </div>    {{/address}}  </div></div><div id="event-footer" style="display: none;" class="footer"></div>');
+App.templates['events/row'] = Handlebars.compile('<td class="date">  <span>{{ formatted_timestamp }}<span></td><td class="name">  <p class="name"><a href="#events/{{ id }}">{{ description }}</a></p>  {{#meta}}    <p class="meta">{{ . }}</p>  {{/meta}}</td><td class="amount">{{{ formatted_amount }}}</td>');
+App.templates['events/statement/row'] = Handlebars.compile('<td class="date">  <span>{{ formatted_timestamp }}<span></td><td class="name" colspan="2">  <p class="name">{{ description }}</p>  <p class="meta">    Ending Balance: {{{ ending_balance }}}  </p>  <table class="statement-table" style="display: none;">    <tr><th>Opening Balance</th><td>{{{ opening_balance }}}</td></tr>  </table></td>');
 App.templates['feedback_subjects/overview'] = Handlebars.compile('<div class="subject-info">  {{#avatar}}    <img src="{{ . }}" class="avatar" />  {{/avatar}}  <div class="name">    <h2>{{ name }}</h2>    <p class="meta">{{ meta }}</p>  </div></div>{{#feedback_totals}}<div class="averages">    {{#month}}  <div class="month average">    <h2>This Month</h2>    <div class="rating"></div>    <p class="meta">{{ average }} based on {{ count }} reviews</p>  </div>  {{/month}}  {{#year}}  <div class="year average">    <h2>This Year</h2>    <div class="rating"></div>    <p class="meta">{{ average }} based on {{ count }} reviews</p>  </div>  {{/year}}</div>{{/feedback_totals}}');
 App.templates['members/billpay_signup'] = Handlebars.compile('<div class="form">  <div class="signup-form">[Signup form]</div>  <div class="buttons">    <button>Sign up for Billpay</button>  </div></div>');
-App.templates['members/events/billpay/detail'] = Handlebars.compile('<div class="processing-summary">  <p class="processing-days">Your payment arrived in <strong>{{ bill_payment_processing_days }} business days</strong>.</p>  <p class="submitted-date">Payment submitted on {{ bill_payment_submitted_date }}</p></div>');
-App.templates['members/events/card/detail'] = Handlebars.compile('<div class="receipt-and-account-info">  {{#receipt_image}}    <div class="receipt-image">      <a href="{{ . }}"><img src="{{ . }}" /></a>    </div>  {{/receipt_image}}  {{^receipt_image}}    <div class="receipt-upload">      <a href="#" class="upload">Upload your receipt</a>      <p class="email">        or email it to <a href="mailto:receipts+092341234@vcu.com">receipts+092341234@vcu.com</a>      </p>    </div>  {{/receipt_image}}  {{#account_information}}    <div class="account-information">      {{{ . }}}    </div>  {{/account_information}}</div>');
-App.templates['members/events/check/detail'] = Handlebars.compile('{{#check_image}}<div class="check-image">  <ul>    <li><a href="{{ . }}" rel="checks"><img src="{{.}}" title="{{../meta}}" /></a></li>    <li><a href="{{ ../check_image_back }}" rel="checks"><img src="{{../check_image_back}}" title="{{../meta}}" /></a></li>  </ul>  <a href="#" class="report-problems">Problems with the check images?</a></div>{{/check_image}}{{#merchant}}<div class="available-service billpay">  <h2>Avaliable service: MyVantage Bill Pay</h2>  <p>It looks like you regularly write checks to Trugreen.  Would you like to sign up for MyVantage Bill Pay to automate these payments?</p>  <ul>    <li><a href="#billpay/signup" class="yes">Yes, I\'d like to sign up</a></li>    <li><a href="#billpay/no" class="no">No, thanks</a></li>  </ul></div>{{/merchant}}');
-App.templates['members/events/detail'] = Handlebars.compile('<div id="event-header">  <div class="top">    <div class="date">{{ formatted_date }}</div>    <a href="#" class="close">Close</a>  </div>  <div class="name-and-amount">    <div class="amount">{{{ formatted_amount }}}</div>    <h3>{{ description }}</h3>  </div></div><div id="event-detail-wrapper">  <div class="{{ event_type }}" id="event-detail">    {{#address}}      <div class="location">        <div class="map"><img src="{{ ../map }}" /></div>        <div class="address">{{{ . }}}</div>      </div>    {{/address}}  </div></div><div id="event-footer" style="display: none;"></div>');
-App.templates['members/events/row'] = Handlebars.compile('<td class="date">  <span>{{ formatted_timestamp }}<span></td><td class="name">  <p class="name">{{ description }}</p>  {{#meta}}    <p class="meta">{{ . }}</p>  {{/meta}}</td><td class="amount">{{{ formatted_amount }}}</td>');
-App.templates['members/events/statement/row'] = Handlebars.compile('<td class="date">  <span>{{ formatted_timestamp }}<span></td><td class="name" colspan="2">  <p class="name">{{ description }}</p>  <p class="meta">    Ending Balance: {{{ ending_balance }}}  </p>  <table class="statement-table" style="display: none;">    <tr><th>Opening Balance</th><td>{{{ opening_balance }}}</td></tr>  </table></td>');
 App.templates['members/sample'] = Handlebars.compile('<!-- Placeholder -->');
 App.templates['members/subaccount'] = Handlebars.compile('<div class="balances">  <div class="balance">{{{formattedBalance}}}</div>  {{#formattedAvailableBalance}}    <div class="available">Available: <span class="available-balance">{{{.}}}</span></div>  {{/formattedAvailableBalance}}</div><h3><a href="#accounts/{{account_id}}/subaccounts/{{id}}">{{name}}</a></h3><div class="meta">  <span class="subaccount-number">    {{accountNumber}}-<strong>{{suffix}}</strong>  </span>  |  <a href="#" class="manage">manage account &#9662;</a></div>');
 App.templates['members/subaccount_list'] = Handlebars.compile('<h2>{{title}}</h2><div class="subaccounts"></div>');

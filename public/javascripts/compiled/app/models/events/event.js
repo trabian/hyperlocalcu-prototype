@@ -19,21 +19,18 @@ App.model.Event = (function() {
     this.day = __bind(this.day, this);;
     this.formatted_date = __bind(this.formatted_date, this);;
     this.formatted_timestamp = __bind(this.formatted_timestamp, this);;
-    this.splitPostedAt = __bind(this.splitPostedAt, this);;
-    this.initializeDetails = __bind(this.initializeDetails, this);;    Event.__super__.constructor.apply(this, arguments);
+    this.splitPostedAt = __bind(this.splitPostedAt, this);;    Event.__super__.constructor.apply(this, arguments);
   }
   __extends(Event, Backbone.Model);
   Event.prototype.initialize = function() {
     this.sync = App.model.CustomSync;
     this.member = App.currentMember;
     this.updateFields = [];
-    return this.bind('change', this.trackEventActivity);
-  };
-  Event.prototype.initializeDetails = function() {
-    this.feedbacks = new App.model.FeedbackList(this.get('feedbacks'), {
-      event: this
+    this.feedbacks = new App.model.FeedbackList([], {
+      event: this,
+      url: "/events/" + this.id + "/feedbacks"
     });
-    return this.feedbacks.url = "/events/" + this.id + "/feedbacks";
+    return this.bind('change', this.trackEventActivity);
   };
   Event.prototype.splitPostedAt = function() {
     var date, time, _ref;

@@ -30,6 +30,12 @@ When /^(?:|I )press "([^"]*)"(?: within "([^"]*)")?$/ do |button, selector|
   end
 end
 
+When /^(?:|I )click "([^"]*)"(?: within "([^"]*)")?$/ do |element, selector|
+  with_scope(selector) do
+    find(element).click
+  end
+end
+
 When /^(?:|I )follow "([^"]*)"(?: within "([^"]*)")?$/ do |link, selector|
   with_scope(selector) do
     link = find_link(link)

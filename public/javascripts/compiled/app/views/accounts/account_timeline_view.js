@@ -9,7 +9,6 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 App.view.AccountTimeline = (function() {
   function AccountTimeline() {
     this.buildView = __bind(this.buildView, this);;
-    this.addAll = __bind(this.addAll, this);;
     this.render = __bind(this.render, this);;    AccountTimeline.__super__.constructor.apply(this, arguments);
   }
   __extends(AccountTimeline, Backbone.View);
@@ -25,11 +24,12 @@ App.view.AccountTimeline = (function() {
   AccountTimeline.prototype.render = function() {
     $(this.el).html(this.template(this.model.toJSON));
     this.eventContainer = this.$('tbody');
-    this.collection.fetch();
+    if (this.collection.length === 0) {
+      this.collection.fetch();
+    } else {
+      this.addAll();
+    }
     return this;
-  };
-  AccountTimeline.prototype.addAll = function() {
-    return this.collection.each(this.addOne);
   };
   AccountTimeline.prototype.buildView = function(model) {
     return this.rowFactory.build(model, this.collection);

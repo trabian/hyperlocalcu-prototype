@@ -1,7 +1,7 @@
 class App.view.EventRow extends Backbone.View
 
   events:
-    click: "toggleSelectOne"
+    click: "selectOne"
 
   tagName: 'tr'
 
@@ -9,7 +9,7 @@ class App.view.EventRow extends Backbone.View
 
   initialize: ->
 
-    @template = App.templates['members/events/row']
+    @template = App.templates['events/row']
 
     @model.bind 'change:selected', @changeSelection
 
@@ -40,8 +40,8 @@ class App.view.EventRow extends Backbone.View
   # If the model is selected, unselect it.  Otherwise if this view is
   # part of a collection then select only this model (by deselecting 
   # all others).  If it's not part of a collection then just select it.
-  toggleSelectOne: ->
+  selectOne: ->
     if @collection?
-      @collection.toggleOrSelectOne @model
+      @collection.selectOne @model
     else
       @model.toggleSelected()

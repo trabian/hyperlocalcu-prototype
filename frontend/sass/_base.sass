@@ -39,9 +39,9 @@ textarea
   line-height: 1.4em
 
 #container
-  +column(27)
+  +column(24)
   margin: 0 40px
-  padding: 80px 0 0
+  padding: 0
   a
     +link-colors($link_color, $link_color)
   #main
@@ -58,15 +58,3 @@ textarea
   #sidebar
     +column(9)
     +last
-    #event-detail-view
-      float: none
-      display: block
-      z-index: 1
-      //background: #F6FAFD
-      margin: 15px 0 0 592px
-      +border-right-radius(8px)
-      height: 100%
-      min-height: 1000px
-      position: fixed
-      &.selected
-        background: $timeline_row_selected_color
