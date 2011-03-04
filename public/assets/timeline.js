@@ -38671,10 +38671,14 @@ App.model.Subaccount = (function() {
       return [parseInt(key), value];
     });
   };
+  Subaccount.prototype.statements = function() {
+    return [["Feb. 2011", "/images/sample/statement.pdf"], ["Jan. 2011", "/images/sample/statement.pdf"]];
+  };
   Subaccount.prototype.toViewJSON = function() {
     return _.extend(this.toJSON(), {
       formattedBalance: App.helper.currency.format(this.get('balance')),
-      formattedAvailableBalance: this.get('balance') === this.get('available_balance') ? null : App.helper.currency.format(this.get('available_balance'))
+      formattedAvailableBalance: this.get('balance') === this.get('available_balance') ? null : App.helper.currency.format(this.get('available_balance')),
+      statements: this.statements()
     });
   };
   return Subaccount;
@@ -39017,6 +39021,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.model.Member = (function() {
   function Member() {
+    this.name = __bind(this.name, this);;
     this.cityState = __bind(this.cityState, this);;    Member.__super__.constructor.apply(this, arguments);
   }
   __extends(Member, Backbone.Model);
@@ -39025,6 +39030,15 @@ App.model.Member = (function() {
   };
   Member.prototype.cityState = function() {
     return [this.get('city'), this.get('region')].join(', ');
+  };
+  Member.prototype.name = function() {
+    return "" + (this.get('first_name')) + " " + (this.get('last_name'));
+  };
+  Member.prototype.toViewJSON = function() {
+    return _.extend(this.toJSON(), {
+      name: this.name(),
+      last_login: "2/28/2011"
+    });
   };
   return Member;
 })();
@@ -40223,7 +40237,15 @@ App.view.MemberDashboard = (function() {
     this.accountView = new App.view.Account({
       model: this.model.accounts.current()
     });
-    return $('#sidebar').html(this.accountView.render().el);
+    $('#sidebar').html(this.accountView.render().el);
+    this.messagesNoticeView = new App.view.MessagesNotice({
+      model: this.model
+    });
+    $('#global').append(this.messagesNoticeView.render().el);
+    this.loginStatusView = new App.view.LoginStatus({
+      model: this.model
+    });
+    return $('#global').append(this.loginStatusView.render().el);
   };
   MemberDashboard.prototype.renderTimeline = function(subaccount) {
     this.timelineView = new App.view.AccountTimeline({
@@ -40281,6 +40303,29 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 };
+App.view.LoginStatus = (function() {
+  function LoginStatus() {
+    LoginStatus.__super__.constructor.apply(this, arguments);
+  }
+  __extends(LoginStatus, Backbone.View);
+  LoginStatus.prototype.id = 'login-status';
+  LoginStatus.prototype.initialize = function(options) {
+    return this.template = App.templates['members/login_status'];
+  };
+  LoginStatus.prototype.render = function() {
+    $(this.el).html(this.template(this.model.toViewJSON()));
+    return this;
+  };
+  return LoginStatus;
+})();
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
 App.view.MemberTimeline = (function() {
   function MemberTimeline() {
     MemberTimeline.__super__.constructor.apply(this, arguments);
@@ -40291,6 +40336,29 @@ App.view.MemberTimeline = (function() {
     return MemberTimeline.__super__.initialize.call(this, options);
   };
   return MemberTimeline;
+})();
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.view.MessagesNotice = (function() {
+  function MessagesNotice() {
+    MessagesNotice.__super__.constructor.apply(this, arguments);
+  }
+  __extends(MessagesNotice, Backbone.View);
+  MessagesNotice.prototype.id = 'messages-notice';
+  MessagesNotice.prototype.initialize = function(options) {
+    return this.template = App.templates['members/messages_notice'];
+  };
+  MessagesNotice.prototype.render = function() {
+    $(this.el).html(this.template());
+    return this;
+  };
+  return MessagesNotice;
 })();
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
@@ -40455,7 +40523,7 @@ App.view.MerchantSearch = (function() {
 App.templates = App.templates || {};
 
 App.templates['accounts/show'] = Handlebars.compile('<h3 class="account-title">  Account <span class="account-number">#{{ number }}</span></h3>');
-App.templates['accounts/subaccount'] = Handlebars.compile('<div class="balances">  <div class="balance">{{{formattedBalance}}}</div>  {{#formattedAvailableBalance}}    <div class="available">Available: <span class="available-balance">{{{.}}}</span></div>  {{/formattedAvailableBalance}}</div>{{#selected}}  <h3>{{../name}}</h3>{{/selected}}{{^selected}}  <h3><a href="#accounts/{{account_id}}/subaccounts/{{id}}">{{name}}</a></h3>{{/selected}}<div class="meta">  <span class="subaccount-number">    {{accountNumber}}-<strong>{{suffix}}</strong>  </span>  |  <a href="#" class="manage">manage account &#9662;</a></div>{{#selected}}  <div id="balance-chart"></div>{{/selected}}');
+App.templates['accounts/subaccount'] = Handlebars.compile('<div class="balances">  <div class="balance">{{{formattedBalance}}}</div>  {{#formattedAvailableBalance}}    <div class="available">Available: <span class="available-balance">{{{.}}}</span></div>  {{/formattedAvailableBalance}}</div>{{#selected}}  <h3>{{../name}}</h3>{{/selected}}{{^selected}}  <h3><a href="#accounts/{{account_id}}/subaccounts/{{id}}">{{name}}</a></h3>{{/selected}}<div class="meta">  <span class="subaccount-number">    {{accountNumber}}-<strong>{{suffix}}</strong>  </span>  |  <a href="#" class="manage">manage account &#9662;</a></div>{{#selected}}  <div class="left">  </div>  <div id="balance-chart"></div>{{/selected}}');
 App.templates['accounts/subaccount_list'] = Handlebars.compile('<h2>{{title}}</h2><div class="subaccounts"></div>');
 App.templates['accounts/timeline'] = Handlebars.compile('<table id="timeline">  <thead class="ui-widget-header">    <tr>      <td class="date">Date</td>      <td class="name">Description</td>      <td class="amount">Amount</td>    </tr>  </thead>  <tbody class="ui-widget-content"></tbody></table>');
 App.templates['common/feedback/comment'] = Handlebars.compile('<a href="#" class="cancel">Cancel</a><h4>{{title}}</h4><textarea>{{comment}}</textarea><div class="buttons">  <button>{{ buttonText }}</button>  <p><strong>Your review will be shared, not your name.</strong>  <br />Enjoy your anonymity. Use it for good, not evil.</p></div>');
@@ -40470,6 +40538,8 @@ App.templates['events/row'] = Handlebars.compile('<td class="date">  <span>{{ fo
 App.templates['events/statement/row'] = Handlebars.compile('<td class="date">  <span>{{ formatted_timestamp }}<span></td><td class="name" colspan="2">  <p class="name">{{ description }}</p>  <p class="meta">    Ending Balance: {{{ ending_balance }}}  </p>  <table class="statement-table" style="display: none;">    <tr><th>Opening Balance</th><td>{{{ opening_balance }}}</td></tr>  </table></td>');
 App.templates['feedback_subjects/overview'] = Handlebars.compile('<div class="subject-info">  {{#avatar}}    <img src="{{ . }}" class="avatar" />  {{/avatar}}  <div class="name">    <h2>{{ name }}</h2>    <p class="meta">{{ meta }}</p>  </div></div>{{#feedback_totals}}<div class="averages">    {{#month}}  <div class="month average">    <h2>This Month</h2>    <div class="rating"></div>    <p class="meta">{{ average }} based on {{ count }} reviews</p>  </div>  {{/month}}  {{#year}}  <div class="year average">    <h2>This Year</h2>    <div class="rating"></div>    <p class="meta">{{ average }} based on {{ count }} reviews</p>  </div>  {{/year}}</div>{{/feedback_totals}}');
 App.templates['members/billpay_signup'] = Handlebars.compile('<div class="form">  <div class="signup-form">[Signup form]</div>  <div class="buttons">    <button>Sign up for Billpay</button>  </div></div>');
+App.templates['members/login_status'] = Handlebars.compile('<ul class="login-user">  <li>Logged in as {{name}}</li>  <li><a href="/users/sign_out">Log Out</a></li></ul><div class="last-login">Last login: {{last_login}}</div>');
+App.templates['members/messages_notice'] = Handlebars.compile('<ul>  <li class="latest-message">James responded to your recent teller feedback</li>  <li><a href="#" class="inbox">View this and 4 other unread messages</a></li></ul>');
 App.templates['members/sample'] = Handlebars.compile('<!-- Placeholder -->');
 App.templates['members/subaccount'] = Handlebars.compile('<div class="balances">  <div class="balance">{{{formattedBalance}}}</div>  {{#formattedAvailableBalance}}    <div class="available">Available: <span class="available-balance">{{{.}}}</span></div>  {{/formattedAvailableBalance}}</div><h3><a href="#accounts/{{account_id}}/subaccounts/{{id}}">{{name}}</a></h3><div class="meta">  <span class="subaccount-number">    {{accountNumber}}-<strong>{{suffix}}</strong>  </span>  |  <a href="#" class="manage">manage account &#9662;</a></div>');
 App.templates['members/subaccount_list'] = Handlebars.compile('<h2>{{title}}</h2><div class="subaccounts"></div>');

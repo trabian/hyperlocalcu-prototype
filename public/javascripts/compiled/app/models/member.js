@@ -8,6 +8,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.model.Member = (function() {
   function Member() {
+    this.name = __bind(this.name, this);;
     this.cityState = __bind(this.cityState, this);;    Member.__super__.constructor.apply(this, arguments);
   }
   __extends(Member, Backbone.Model);
@@ -16,6 +17,15 @@ App.model.Member = (function() {
   };
   Member.prototype.cityState = function() {
     return [this.get('city'), this.get('region')].join(', ');
+  };
+  Member.prototype.name = function() {
+    return "" + (this.get('first_name')) + " " + (this.get('last_name'));
+  };
+  Member.prototype.toViewJSON = function() {
+    return _.extend(this.toJSON(), {
+      name: this.name(),
+      last_login: "2/28/2011"
+    });
   };
   return Member;
 })();

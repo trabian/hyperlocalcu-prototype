@@ -16,6 +16,16 @@ class App.view.MemberDashboard extends Backbone.View
       model: @model.accounts.current()
 
     $('#sidebar').html @accountView.render().el
+
+    @messagesNoticeView = new App.view.MessagesNotice
+      model: @model
+
+    $('#global').append @messagesNoticeView.render().el
+
+    @loginStatusView = new App.view.LoginStatus
+      model: @model
+
+    $('#global').append @loginStatusView.render().el
     
   renderTimeline: (subaccount) =>
 

@@ -26,7 +26,15 @@ App.view.MemberDashboard = (function() {
     this.accountView = new App.view.Account({
       model: this.model.accounts.current()
     });
-    return $('#sidebar').html(this.accountView.render().el);
+    $('#sidebar').html(this.accountView.render().el);
+    this.messagesNoticeView = new App.view.MessagesNotice({
+      model: this.model
+    });
+    $('#global').append(this.messagesNoticeView.render().el);
+    this.loginStatusView = new App.view.LoginStatus({
+      model: this.model
+    });
+    return $('#global').append(this.loginStatusView.render().el);
   };
   MemberDashboard.prototype.renderTimeline = function(subaccount) {
     this.timelineView = new App.view.AccountTimeline({

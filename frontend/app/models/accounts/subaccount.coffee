@@ -21,8 +21,13 @@ class App.model.Subaccount extends Backbone.Model
     _.map balances, (value, key) ->
       [parseInt(key), value]
 
+  # Mock
+  statements: ->
+    [["Feb. 2011", "/images/sample/statement.pdf"], ["Jan. 2011", "/images/sample/statement.pdf"]]
+
   toViewJSON: ->
 
     _.extend this.toJSON(),
       formattedBalance: App.helper.currency.format(this.get('balance'))
       formattedAvailableBalance: if this.get('balance') == this.get('available_balance') then null else App.helper.currency.format(this.get('available_balance'))
+      statements: this.statements()

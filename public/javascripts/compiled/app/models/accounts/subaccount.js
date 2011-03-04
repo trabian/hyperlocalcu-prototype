@@ -30,10 +30,14 @@ App.model.Subaccount = (function() {
       return [parseInt(key), value];
     });
   };
+  Subaccount.prototype.statements = function() {
+    return [["Feb. 2011", "/images/sample/statement.pdf"], ["Jan. 2011", "/images/sample/statement.pdf"]];
+  };
   Subaccount.prototype.toViewJSON = function() {
     return _.extend(this.toJSON(), {
       formattedBalance: App.helper.currency.format(this.get('balance')),
-      formattedAvailableBalance: this.get('balance') === this.get('available_balance') ? null : App.helper.currency.format(this.get('available_balance'))
+      formattedAvailableBalance: this.get('balance') === this.get('available_balance') ? null : App.helper.currency.format(this.get('available_balance')),
+      statements: this.statements()
     });
   };
   return Subaccount;
