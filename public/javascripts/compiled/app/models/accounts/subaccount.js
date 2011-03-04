@@ -15,6 +15,21 @@ App.model.Subaccount = (function() {
     this.events = new App.model.EventList;
     return this.events.url = "/subaccounts/" + this.id + "/events";
   };
+  Subaccount.prototype.dailyBalances = function() {
+    var balances;
+    balances = {};
+    this.events.each(function(event) {
+      var date, datetime;
+      datetime = event.postedDate();
+      date = Date.UTC(datetime.getUTCFullYear(), datetime.getUTCMonth(), datetime.getUTCDate());
+      if (balances[date] == null) {
+        return balances[date] = event.get('balance');
+      }
+    });
+    return _.map(balances, function(value, key) {
+      return [parseInt(key), value];
+    });
+  };
   Subaccount.prototype.toViewJSON = function() {
     return _.extend(this.toJSON(), {
       formattedBalance: App.helper.currency.format(this.get('balance')),

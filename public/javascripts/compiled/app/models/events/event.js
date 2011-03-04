@@ -53,6 +53,9 @@ App.model.Event = (function() {
   Event.prototype.formatCurrency = function(amount) {
     return App.helper.currency.format(amount);
   };
+  Event.prototype.postedDate = function() {
+    return $.datepicker.parseDate('yy-m-d', this.get('posted_at'));
+  };
   Event.prototype.formatDate = function(date, format) {
     format || (format = 'm/d/yy');
     return $.datepicker.formatDate(format, $.datepicker.parseDate('yy-m-d', date));

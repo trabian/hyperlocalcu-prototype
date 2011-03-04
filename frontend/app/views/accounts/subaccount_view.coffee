@@ -8,6 +8,8 @@ class App.view.Subaccount extends Backbone.View
 
     @model.bind 'change', @render
 
+    @model.events.bind 'refresh', @renderChart
+
   render: =>
 
     $(@el).html @template(@model.toViewJSON())
@@ -16,4 +18,17 @@ class App.view.Subaccount extends Backbone.View
 
     $(@el).toggleClass 'selected', selected
 
+    if @model.events.fetched?
+      this.renderChart()
+
     return this
+
+  renderChart: =>
+
+    if @model.get('selected') is true
+
+      balanceChart = new App.view.BalanceChart
+        model: @model
+        el: this.$('#balance-chart')
+
+      $(@el).append balanceChart.render().el

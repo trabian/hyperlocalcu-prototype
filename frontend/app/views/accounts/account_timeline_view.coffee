@@ -10,7 +10,6 @@ class App.view.AccountTimeline extends Backbone.View
 
     @collection = @model.events
 
-    @collection.unbind 'refresh'
     @collection.bind 'refresh', @addAll
 
     @rowFactory = new App.view.MemberTimelineRowFactory
@@ -21,10 +20,11 @@ class App.view.AccountTimeline extends Backbone.View
 
     @eventContainer = this.$('tbody')
 
-    if @collection.length is 0
-      @collection.fetch()
-    else
+    if @collection.fetched?
       this.addAll()
+    else
+      @collection.fetched = true
+      @collection.fetch()
 
     return this
 

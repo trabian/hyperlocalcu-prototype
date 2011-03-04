@@ -37,6 +37,9 @@ class App.model.Event extends Backbone.Model
   formatCurrency: (amount) =>
     App.helper.currency.format(amount)
 
+  postedDate: ->
+    $.datepicker.parseDate('yy-m-d', this.get('posted_at'))
+
   formatDate: (date, format) ->
 
     format or= 'm/d/yy'

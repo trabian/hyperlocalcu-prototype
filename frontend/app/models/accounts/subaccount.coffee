@@ -5,6 +5,22 @@ class App.model.Subaccount extends Backbone.Model
     @events = new App.model.EventList
     @events.url = "/subaccounts/#{@id}/events"
 
+  dailyBalances: ->
+
+    balances = {}
+    
+    # Cheating until accessing a real db
+    this.events.each (event) ->
+
+      datetime = event.postedDate()
+
+      date = Date.UTC(datetime.getUTCFullYear(), datetime.getUTCMonth(), datetime.getUTCDate())
+
+      balances[date] = event.get('balance') unless balances[date]?
+
+    _.map balances, (value, key) ->
+      [parseInt(key), value]
+
   toViewJSON: ->
 
     _.extend this.toJSON(),

@@ -17,17 +17,17 @@ App.view.AccountTimeline = (function() {
     this.bindTimeline();
     this.template = App.templates['accounts/timeline'];
     this.collection = this.model.events;
-    this.collection.unbind('refresh');
     this.collection.bind('refresh', this.addAll);
     return this.rowFactory = new App.view.MemberTimelineRowFactory;
   };
   AccountTimeline.prototype.render = function() {
     $(this.el).html(this.template(this.model.toJSON));
     this.eventContainer = this.$('tbody');
-    if (this.collection.length === 0) {
-      this.collection.fetch();
-    } else {
+    if (this.collection.fetched != null) {
       this.addAll();
+    } else {
+      this.collection.fetched = true;
+      this.collection.fetch();
     }
     return this;
   };

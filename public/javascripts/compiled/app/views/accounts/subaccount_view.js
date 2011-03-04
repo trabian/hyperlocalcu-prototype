@@ -8,20 +8,35 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.view.Subaccount = (function() {
   function Subaccount() {
+    this.renderChart = __bind(this.renderChart, this);;
     this.render = __bind(this.render, this);;    Subaccount.__super__.constructor.apply(this, arguments);
   }
   __extends(Subaccount, Backbone.View);
   Subaccount.prototype.className = 'subaccount';
   Subaccount.prototype.initialize = function(options) {
     this.template = App.templates['accounts/subaccount'];
-    return this.model.bind('change', this.render);
+    this.model.bind('change', this.render);
+    return this.model.events.bind('refresh', this.renderChart);
   };
   Subaccount.prototype.render = function() {
     var selected;
     $(this.el).html(this.template(this.model.toViewJSON()));
     selected = this.model.get('selected') === true;
     $(this.el).toggleClass('selected', selected);
+    if (this.model.events.fetched != null) {
+      this.renderChart();
+    }
     return this;
+  };
+  Subaccount.prototype.renderChart = function() {
+    var balanceChart;
+    if (this.model.get('selected') === true) {
+      balanceChart = new App.view.BalanceChart({
+        model: this.model,
+        el: this.$('#balance-chart')
+      });
+      return $(this.el).append(balanceChart.render().el);
+    }
   };
   return Subaccount;
 })();
