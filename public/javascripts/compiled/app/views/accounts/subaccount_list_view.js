@@ -32,6 +32,7 @@ App.view.SubaccountList = (function() {
         'accountNumber': this.model.get('number')
       });
       subaccountView = new App.view.Subaccount({
+        collection: this.collection,
         model: subaccount
       });
       return subaccountList.append(subaccountView.render().el);

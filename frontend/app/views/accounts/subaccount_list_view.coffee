@@ -24,6 +24,7 @@ class App.view.SubaccountList extends Backbone.View
       subaccount.set('accountNumber': @model.get('number'))
 
       subaccountView = new App.view.Subaccount
+        collection: @collection
         model: subaccount
 
       subaccountList.append subaccountView.render().el
