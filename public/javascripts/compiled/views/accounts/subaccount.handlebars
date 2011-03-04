@@ -1,0 +1,21 @@
+<div class="balances">
+  <div class="balance">{{{formattedBalance}}}</div>
+  {{#formattedAvailableBalance}}
+    <div class="available">Available: <span class="available-balance">{{{.}}}</span></div>
+  {{/formattedAvailableBalance}}
+</div>
+
+{{#selected}}
+  <h3>{{../name}}</h3>
+{{/selected}}
+{{^selected}}
+  <h3><a href="#accounts/{{account_id}}/subaccounts/{{id}}">{{name}}</a></h3>
+{{/selected}}
+
+<div class="meta">
+  <span class="subaccount-number">
+    {{accountNumber}}-<strong>{{suffix}}</strong>
+  </span>
+  |
+  <a href="#" class="manage">manage account &#9662;</a>
+</div>

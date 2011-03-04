@@ -2,7 +2,7 @@ class App.view.SubaccountList extends Backbone.View
 
   initialize: (options) ->
 
-    @template = App.templates['members/subaccount_list']
+    @template = App.templates['accounts/subaccount_list']
 
     @collection.bind 'selectSubaccounts', (selected) =>
       $(@el).toggleClass 'selected', selected

@@ -13,7 +13,7 @@ App.view.Subaccount = (function() {
   __extends(Subaccount, Backbone.View);
   Subaccount.prototype.className = 'subaccount';
   Subaccount.prototype.initialize = function(options) {
-    this.template = App.templates['members/subaccount'];
+    this.template = App.templates['accounts/subaccount'];
     return this.model.bind('change', this.render);
   };
   Subaccount.prototype.render = function() {

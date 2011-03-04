@@ -20,6 +20,11 @@ gem 'pusher', '0.7.0'
 
 gem 'jammit'
 
+gem 'redis'
+gem 'SystemTimer'
+
+gem 'twitter'
+
 group :development, :test do
 
   gem 'cucumber-rails', ">= 0.3.2"

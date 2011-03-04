@@ -27,7 +27,8 @@ App.view.Social = (function() {
     return this.$('.twitter .latest-tweet').tweet({
       username: this.model.twitter_username,
       count: 1,
-      broadcast_only: true
+      broadcast_only: true,
+      internal: true
     });
   };
   return Social;

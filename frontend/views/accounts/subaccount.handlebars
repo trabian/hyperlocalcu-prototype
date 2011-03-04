@@ -5,7 +5,12 @@
   {{/formattedAvailableBalance}}
 </div>
 
-<h3><a href="#accounts/{{account_id}}/subaccounts/{{id}}">{{name}}</a></h3>
+{{#selected}}
+  <h3>{{../name}}</h3>
+{{/selected}}
+{{^selected}}
+  <h3><a href="#accounts/{{account_id}}/subaccounts/{{id}}">{{name}}</a></h3>
+{{/selected}}
 
 <div class="meta">
   <span class="subaccount-number">

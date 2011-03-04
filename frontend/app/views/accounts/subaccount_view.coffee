@@ -4,7 +4,7 @@ class App.view.Subaccount extends Backbone.View
 
   initialize: (options) ->
 
-    @template = App.templates['members/subaccount']
+    @template = App.templates['accounts/subaccount']
 
     @model.bind 'change', @render
 

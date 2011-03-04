@@ -104,21 +104,28 @@
     }
 
     function build_url() {
-      var proto = ('https:' == document.location.protocol ? 'https:' : 'http:');
-      var count = s.count;
-
-      if (s.broadcast_only) {
-        count = 25;
-      }
-
-      if (s.list) {
-        return proto+"//api.twitter.com/1/"+s.username[0]+"/lists/"+s.list+"/statuses.json?per_page="+count+"&callback=?";
-      } else if (s.query == null && s.username.length == 1) {
-        return proto+'//api.twitter.com/1/statuses/user_timeline.json?screen_name='+s.username[0]+'&count='+count+'&include_rts=1&callback=?';
+      if (s.internal) {
+        return "/tweets/" + s.username[0]
       } else {
-        var query = (s.query || 'from:'+s.username.join(' OR from:'));
-        return proto+'//search.twitter.com/search.json?&q='+encodeURIComponent(query)+'&rpp='+count+'&callback=?';
+
+        var proto = ('https:' == document.location.protocol ? 'https:' : 'http:');
+        var count = s.count;
+
+        if (s.broadcast_only) {
+          count = 25;
+        }
+
+        if (s.list) {
+          return proto+"//api.twitter.com/1/"+s.username[0]+"/lists/"+s.list+"/statuses.json?per_page="+count+"&callback=?";
+        } else if (s.query == null && s.username.length == 1) {
+          return proto+'//api.twitter.com/1/statuses/user_timeline.json?screen_name='+s.username[0]+'&count='+count+'&include_rts=1&callback=?';
+        } else {
+          var query = (s.query || 'from:'+s.username.join(' OR from:'));
+          return proto+'//search.twitter.com/search.json?&q='+encodeURIComponent(query)+'&rpp='+count+'&callback=?';
+        }
+
       }
+
     }
 
     return this.each(function(i, widget){

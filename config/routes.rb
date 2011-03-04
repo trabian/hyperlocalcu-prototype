@@ -28,6 +28,8 @@ Hyperlocalcu::Application.routes.draw do
 
   end
 
+  match 'tweets/:id', :to => 'twitter#show'
+
   devise_for :users
 
   root :to => "members#show", :id => 1

@@ -23,3 +23,4 @@ class App.view.Social extends Backbone.View
       username: @model.twitter_username
       count: 1
       broadcast_only: true
+      internal: true

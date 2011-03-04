@@ -13,7 +13,7 @@ App.view.SubaccountList = (function() {
   }
   __extends(SubaccountList, Backbone.View);
   SubaccountList.prototype.initialize = function(options) {
-    this.template = App.templates['members/subaccount_list'];
+    this.template = App.templates['accounts/subaccount_list'];
     return this.collection.bind('selectSubaccounts', __bind(function(selected) {
       return $(this.el).toggleClass('selected', selected);
     }, this));

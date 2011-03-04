@@ -25312,21 +25312,28 @@ function handler(event) {
     }
 
     function build_url() {
-      var proto = ('https:' == document.location.protocol ? 'https:' : 'http:');
-      var count = s.count;
-
-      if (s.broadcast_only) {
-        count = 25;
-      }
-
-      if (s.list) {
-        return proto+"//api.twitter.com/1/"+s.username[0]+"/lists/"+s.list+"/statuses.json?per_page="+count+"&callback=?";
-      } else if (s.query == null && s.username.length == 1) {
-        return proto+'//api.twitter.com/1/statuses/user_timeline.json?screen_name='+s.username[0]+'&count='+count+'&include_rts=1&callback=?';
+      if (s.internal) {
+        return "/tweets/" + s.username[0]
       } else {
-        var query = (s.query || 'from:'+s.username.join(' OR from:'));
-        return proto+'//search.twitter.com/search.json?&q='+encodeURIComponent(query)+'&rpp='+count+'&callback=?';
+
+        var proto = ('https:' == document.location.protocol ? 'https:' : 'http:');
+        var count = s.count;
+
+        if (s.broadcast_only) {
+          count = 25;
+        }
+
+        if (s.list) {
+          return proto+"//api.twitter.com/1/"+s.username[0]+"/lists/"+s.list+"/statuses.json?per_page="+count+"&callback=?";
+        } else if (s.query == null && s.username.length == 1) {
+          return proto+'//api.twitter.com/1/statuses/user_timeline.json?screen_name='+s.username[0]+'&count='+count+'&include_rts=1&callback=?';
+        } else {
+          var query = (s.query || 'from:'+s.username.join(' OR from:'));
+          return proto+'//search.twitter.com/search.json?&q='+encodeURIComponent(query)+'&rpp='+count+'&callback=?';
+        }
+
       }
+
     }
 
     return this.each(function(i, widget){
@@ -28526,7 +28533,7 @@ App.view.SubaccountList = (function() {
   }
   __extends(SubaccountList, Backbone.View);
   SubaccountList.prototype.initialize = function(options) {
-    this.template = App.templates['members/subaccount_list'];
+    this.template = App.templates['accounts/subaccount_list'];
     return this.collection.bind('selectSubaccounts', __bind(function(selected) {
       return $(this.el).toggleClass('selected', selected);
     }, this));
@@ -28567,7 +28574,7 @@ App.view.Subaccount = (function() {
   __extends(Subaccount, Backbone.View);
   Subaccount.prototype.className = 'subaccount';
   Subaccount.prototype.initialize = function(options) {
-    this.template = App.templates['members/subaccount'];
+    this.template = App.templates['accounts/subaccount'];
     return this.model.bind('change', this.render);
   };
   Subaccount.prototype.render = function() {
@@ -28964,7 +28971,8 @@ App.view.Social = (function() {
     return this.$('.twitter .latest-tweet').tweet({
       username: this.model.twitter_username,
       count: 1,
-      broadcast_only: true
+      broadcast_only: true,
+      internal: true
     });
   };
   return Social;
@@ -29552,6 +29560,8 @@ App.view.MerchantSearch = (function() {
 App.templates = App.templates || {};
 
 App.templates['accounts/show'] = Handlebars.compile('<h3 class="account-title">  Account <span class="account-number">#{{ number }}</span></h3>');
+App.templates['accounts/subaccount'] = Handlebars.compile('<div class="balances">  <div class="balance">{{{formattedBalance}}}</div>  {{#formattedAvailableBalance}}    <div class="available">Available: <span class="available-balance">{{{.}}}</span></div>  {{/formattedAvailableBalance}}</div>{{#selected}}  <h3>{{../name}}</h3>{{/selected}}{{^selected}}  <h3><a href="#accounts/{{account_id}}/subaccounts/{{id}}">{{name}}</a></h3>{{/selected}}<div class="meta">  <span class="subaccount-number">    {{accountNumber}}-<strong>{{suffix}}</strong>  </span>  |  <a href="#" class="manage">manage account &#9662;</a></div>');
+App.templates['accounts/subaccount_list'] = Handlebars.compile('<h2>{{title}}</h2><div class="subaccounts"></div>');
 App.templates['accounts/timeline'] = Handlebars.compile('<table id="timeline">  <thead class="ui-widget-header">    <tr>      <td class="date">Date</td>      <td class="name">Description</td>      <td class="amount">Amount</td>    </tr>  </thead>  <tbody class="ui-widget-content"></tbody></table>');
 App.templates['common/feedback/comment'] = Handlebars.compile('<a href="#" class="cancel">Cancel</a><h4>{{title}}</h4><textarea>{{comment}}</textarea><div class="buttons">  <button>{{ buttonText }}</button>  <p><strong>Your review will be shared, not your name.</strong>  <br />Enjoy your anonymity. Use it for good, not evil.</p></div>');
 App.templates['common/feedback/feedback'] = Handlebars.compile('<div class="avatar-and-question">  {{#avatar}}    <div class="avatar"><img src="{{ . }}" /></div>  {{/avatar}}  <div class="question-and-rating">    <div class="question">{{{ question }}}</div>  </div></div>');

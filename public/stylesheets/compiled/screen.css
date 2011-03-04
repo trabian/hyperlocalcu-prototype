@@ -2836,54 +2836,59 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
   height: 100px;
 }
 /* line 43, ../../../frontend/sass/accounts/_all.sass */
+#accounts .share-accounts.selected .subaccounts .subaccount.selected h3, #accounts .share-accounts.selected .subaccounts .subaccount.selected .balance, #accounts .loan-accounts.selected .subaccounts .subaccount.selected h3, #accounts .loan-accounts.selected .subaccounts .subaccount.selected .balance {
+  font-size: 15px;
+  line-height: 18px;
+}
+/* line 46, ../../../frontend/sass/accounts/_all.sass */
 #accounts .subaccounts {
   border: 1px solid #b4b4b4;
   border-width: 1px 0;
   padding: 0.2em 0;
   padding-left: 12px;
 }
-/* line 48, ../../../frontend/sass/accounts/_all.sass */
+/* line 51, ../../../frontend/sass/accounts/_all.sass */
 #accounts .subaccounts .subaccount {
   line-height: 1.5em;
   padding: 1em 1.5em 1em 0;
   border-bottom: 1px solid #dcdcdc;
   z-index: 3;
 }
-/* line 53, ../../../frontend/sass/accounts/_all.sass */
+/* line 56, ../../../frontend/sass/accounts/_all.sass */
 #accounts .subaccounts .subaccount:last-child {
   border: none;
 }
-/* line 55, ../../../frontend/sass/accounts/_all.sass */
+/* line 58, ../../../frontend/sass/accounts/_all.sass */
 #accounts .subaccounts .subaccount h3 {
   font-size: 12px;
   font-weight: bold;
   margin: 0 0 0.2em;
   line-height: 1.5em;
 }
-/* line 60, ../../../frontend/sass/accounts/_all.sass */
+/* line 63, ../../../frontend/sass/accounts/_all.sass */
 #accounts .subaccounts .subaccount .meta {
   color: #7b7b7b;
   font-size: 10px;
 }
-/* line 63, ../../../frontend/sass/accounts/_all.sass */
+/* line 66, ../../../frontend/sass/accounts/_all.sass */
 #accounts .subaccounts .subaccount .meta .subaccount-number {
   margin-right: 2px;
 }
-/* line 65, ../../../frontend/sass/accounts/_all.sass */
+/* line 68, ../../../frontend/sass/accounts/_all.sass */
 #accounts .subaccounts .subaccount .meta .manage {
   margin-left: 2px;
 }
-/* line 67, ../../../frontend/sass/accounts/_all.sass */
+/* line 70, ../../../frontend/sass/accounts/_all.sass */
 #accounts .subaccounts .subaccount .balances {
   float: right;
   text-align: right;
 }
-/* line 70, ../../../frontend/sass/accounts/_all.sass */
+/* line 73, ../../../frontend/sass/accounts/_all.sass */
 #accounts .subaccounts .subaccount .balances .balance {
   font-weight: bold;
   margin-bottom: 0.2em;
 }
-/* line 73, ../../../frontend/sass/accounts/_all.sass */
+/* line 76, ../../../frontend/sass/accounts/_all.sass */
 #accounts .subaccounts .subaccount .balances .available {
   color: #7b7b7b;
   font-size: 10px;
