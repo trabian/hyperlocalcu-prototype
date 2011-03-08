@@ -8,12 +8,14 @@ App.model.extension.Selectable =
 
     record = if _.isFunction(record_or_id) then record_or_id else this.get(record_or_id)
 
-    @selectedRecord?.set 'selected': false
+    unless record == @selectedRecord
 
-    if record?
-      @selectedRecord = record
-      record.set 'selected': true
-      this.trigger 'selectOne', record
+      @selectedRecord?.set 'selected': false
+
+      if record?
+        @selectedRecord = record
+        record.set 'selected': true
+        this.trigger 'selectOne', record
 
     record
 

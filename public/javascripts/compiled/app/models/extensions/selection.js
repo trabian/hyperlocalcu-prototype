@@ -7,17 +7,19 @@ App.model.extension.Selectable = {
   selectOne: function(record_or_id) {
     var record, _ref;
     record = _.isFunction(record_or_id) ? record_or_id : this.get(record_or_id);
-    if ((_ref = this.selectedRecord) != null) {
-      _ref.set({
-        'selected': false
-      });
-    }
-    if (record != null) {
-      this.selectedRecord = record;
-      record.set({
-        'selected': true
-      });
-      this.trigger('selectOne', record);
+    if (record !== this.selectedRecord) {
+      if ((_ref = this.selectedRecord) != null) {
+        _ref.set({
+          'selected': false
+        });
+      }
+      if (record != null) {
+        this.selectedRecord = record;
+        record.set({
+          'selected': true
+        });
+        this.trigger('selectOne', record);
+      }
     }
     return record;
   },
