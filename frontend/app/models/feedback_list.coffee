@@ -21,3 +21,11 @@ class App.model.FeedbackList extends Backbone.Collection
     feedback.subject = App.model.FeedbackSubjectFactory.getSubject(@event.get(subject_key))
 
     feedback
+
+  fetchIfNeeded: (options) =>
+
+    if this.fetched
+      options.success(this)
+    else
+      this.fetched = true
+      this.fetch options

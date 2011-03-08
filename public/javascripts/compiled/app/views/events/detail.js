@@ -21,8 +21,6 @@ App.view.EventDetail = (function() {
   EventDetail.prototype.initialize = function() {};
   EventDetail.prototype.setModel = function(model) {
     this.model = model;
-    this.model.feedbacks.unbind('refresh');
-    this.model.feedbacks.bind('refresh', this.renderFeedback);
     return this.eventTypeView = App.view.EventDetailFactory.getEventDetailView(this.model, this);
   };
   EventDetail.prototype.render = function() {
@@ -31,7 +29,9 @@ App.view.EventDetail = (function() {
     if (this.model.isSocial()) {
       this.renderSocialView();
     }
-    this.model.feedbacks.fetch();
+    this.model.feedbacks.fetchIfNeeded({
+      success: this.renderFeedback
+    });
     return this;
   };
   EventDetail.prototype.decorate = function() {

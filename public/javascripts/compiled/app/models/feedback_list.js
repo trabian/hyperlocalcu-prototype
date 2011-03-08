@@ -8,6 +8,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.model.FeedbackList = (function() {
   function FeedbackList() {
+    this.fetchIfNeeded = __bind(this.fetchIfNeeded, this);;
     this.for_subject = __bind(this.for_subject, this);;    FeedbackList.__super__.constructor.apply(this, arguments);
   }
   __extends(FeedbackList, Backbone.Collection);
@@ -30,6 +31,14 @@ App.model.FeedbackList = (function() {
     }
     feedback.subject = App.model.FeedbackSubjectFactory.getSubject(this.event.get(subject_key));
     return feedback;
+  };
+  FeedbackList.prototype.fetchIfNeeded = function(options) {
+    if (this.fetched) {
+      return options.success(this);
+    } else {
+      this.fetched = true;
+      return this.fetch(options);
+    }
   };
   return FeedbackList;
 })();

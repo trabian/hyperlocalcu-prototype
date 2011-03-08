@@ -8,9 +8,6 @@ class App.view.EventDetail extends Backbone.View
 
     @model = model
 
-    @model.feedbacks.unbind 'refresh'
-    @model.feedbacks.bind 'refresh', @renderFeedback
-
     @eventTypeView = App.view.EventDetailFactory.getEventDetailView @model, this
 
   render: =>
@@ -21,7 +18,8 @@ class App.view.EventDetail extends Backbone.View
 
     this.renderSocialView() if @model.isSocial()
 
-    @model.feedbacks.fetch()
+    @model.feedbacks.fetchIfNeeded
+      success: @renderFeedback
 
     return this
 

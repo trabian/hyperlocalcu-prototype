@@ -38251,8 +38251,6 @@ App.view.EventDetail = (function() {
   EventDetail.prototype.initialize = function() {};
   EventDetail.prototype.setModel = function(model) {
     this.model = model;
-    this.model.feedbacks.unbind('refresh');
-    this.model.feedbacks.bind('refresh', this.renderFeedback);
     return this.eventTypeView = App.view.EventDetailFactory.getEventDetailView(this.model, this);
   };
   EventDetail.prototype.render = function() {
@@ -38261,7 +38259,9 @@ App.view.EventDetail = (function() {
     if (this.model.isSocial()) {
       this.renderSocialView();
     }
-    this.model.feedbacks.fetch();
+    this.model.feedbacks.fetchIfNeeded({
+      success: this.renderFeedback
+    });
     return this;
   };
   EventDetail.prototype.decorate = function() {
@@ -38988,6 +38988,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.model.FeedbackList = (function() {
   function FeedbackList() {
+    this.fetchIfNeeded = __bind(this.fetchIfNeeded, this);;
     this.for_subject = __bind(this.for_subject, this);;    FeedbackList.__super__.constructor.apply(this, arguments);
   }
   __extends(FeedbackList, Backbone.Collection);
@@ -39010,6 +39011,14 @@ App.model.FeedbackList = (function() {
     }
     feedback.subject = App.model.FeedbackSubjectFactory.getSubject(this.event.get(subject_key));
     return feedback;
+  };
+  FeedbackList.prototype.fetchIfNeeded = function(options) {
+    if (this.fetched) {
+      return options.success(this);
+    } else {
+      this.fetched = true;
+      return this.fetch(options);
+    }
   };
   return FeedbackList;
 })();
