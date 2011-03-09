@@ -26,6 +26,8 @@ Hyperlocalcu::Application.routes.draw do
       end
     end
 
+    resource :statements
+
   end
 
   match 'tweets/:id', :to => 'twitter#show'

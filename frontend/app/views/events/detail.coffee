@@ -14,12 +14,17 @@ class App.view.EventDetail extends Backbone.View
 
     $(@el).html App.templates[@templatePath](@model.toDetailJSON())
 
+    if @eventTypeView?.render?
+      this.$('#event-detail').append @eventTypeView.render().el
+
     this.decorate()
 
     this.renderSocialView() if @model.isSocial()
 
     @model.feedbacks.fetchIfNeeded
-      success: @renderFeedback
+      success: (collection, response) =>
+        @eventTypeView?.renderFeedback?()
+        this.resize()
 
     return this
 
@@ -32,9 +37,6 @@ class App.view.EventDetail extends Backbone.View
       model: @model
 
     this.$('.footer').append(@socialView.render().el).show()
-
-  renderFeedback: =>
-    @eventTypeView?.renderFeedback?()
 
   renderLocationFeedbackView: (field, options) =>
 
@@ -63,16 +65,6 @@ class App.view.EventDetail extends Backbone.View
 
   resize: =>
     this.trigger 'resize'
-
-  #render: =>
-
-
-  #renderFeedback: =>
-
-    #if @model.get('merchant')?
-      #this.addLocationFeedbackView 'merchant',
-        #include_summary_view: true
-
 
   addSubjectFeedbackView: (subject_types...) =>
     _.each subject_types, (subject_type) =>

@@ -14,9 +14,9 @@ class Event < ActiveRecord::Base
   def as_json(options = {})
 
     if options.key?(:methods)
-      options[:methods] = [options[:methods], :event_type].uniq.flatten
+      options[:methods] = [options[:methods], :event_type, :vendor].uniq.flatten
     else
-      options[:methods] = [:event_type]
+      options[:methods] = [:event_type, :vendor]
     end
 
     super options

@@ -26,7 +26,7 @@ RailsAdmin.config do |config|
   config.model BillpayEvent do
     label_for_navigation "Billpay Transactions"
     edit do
-      field :account_id
+      field :subaccount_id
       field :posted_at
       field :merchant_id
       field :amount
@@ -38,7 +38,7 @@ RailsAdmin.config do |config|
   config.model CardEvent do
     label_for_navigation "Card Transactions"
     edit do
-      field :account_id
+      field :subaccount_id
       field :posted_at
       field :merchant_id
       field :name
@@ -51,7 +51,7 @@ RailsAdmin.config do |config|
   config.model CheckEvent do
     label_for_navigation "Check Transactions"
     edit do
-      field :account_id
+      field :subaccount_id
       field :posted_at
       field :merchant_id
       field :amount
@@ -64,7 +64,7 @@ RailsAdmin.config do |config|
   config.model NsfEvent do
     label_for_navigation "NSF Events"
     edit do
-      field :account_id
+      field :subaccount_id
       field :posted_at
       field :amount
     end
@@ -73,7 +73,7 @@ RailsAdmin.config do |config|
   config.model RewardEvent do
     label_for_navigation "Reward Events"
     edit do
-      field :account_id
+      field :subaccount_id
       field :rewards
       field :posted_at
       field :amount
@@ -83,7 +83,7 @@ RailsAdmin.config do |config|
   config.model StatementEvent do
     label_for_navigation "Statement Events"
     edit do
-      field :account_id
+      field :subaccount_id
       field :name
       field :posted_at
       field :opening_balance

@@ -8,16 +8,20 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.view.BillpayDetail = (function() {
   function BillpayDetail() {
-    this.renderDetail = __bind(this.renderDetail, this);;    BillpayDetail.__super__.constructor.apply(this, arguments);
+    this.renderFeedback = __bind(this.renderFeedback, this);;
+    this.render = __bind(this.render, this);;    BillpayDetail.__super__.constructor.apply(this, arguments);
   }
-  __extends(BillpayDetail, App.view.EventDetail);
-  BillpayDetail.prototype.eventTypeOptions = {
-    templatePath: 'members/events/billpay/detail'
+  __extends(BillpayDetail, Backbone.View);
+  BillpayDetail.prototype.render = function() {
+    $(this.el).html(App.templates['events/billpay/detail'](this.model.toDetailJSON()));
+    return this;
   };
-  BillpayDetail.prototype.renderDetail = function() {
+  BillpayDetail.prototype.renderFeedback = function() {
+    this.options.parent.renderLocationFeedbackView('merchant');
     if (this.model.get('vendor') != null) {
-      return this.addFeedbackView('vendor');
+      return this.options.parent.addSubjectFeedbackView('vendor');
     }
   };
   return BillpayDetail;
 })();
+App.view.EventDetailFactory.billpay = App.view.BillpayDetail;

@@ -29,7 +29,7 @@ App.view.MerchantSearch = (function() {
       defaultSearch: this.defaultSearch,
       searchPrompt: this.options.searchPrompt
     }));
-    this.$('a.search').button()({
+    this.$('a.search').button({
       icons: {
         primary: 'ui-icon-search'
       }

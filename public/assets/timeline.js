@@ -38241,7 +38241,6 @@ App.view.EventDetail = (function() {
     this.addSubjectFeedbackView = __bind(this.addSubjectFeedbackView, this);;
     this.resize = __bind(this.resize, this);;
     this.renderLocationFeedbackView = __bind(this.renderLocationFeedbackView, this);;
-    this.renderFeedback = __bind(this.renderFeedback, this);;
     this.renderSocialView = __bind(this.renderSocialView, this);;
     this.decorate = __bind(this.decorate, this);;
     this.render = __bind(this.render, this);;    EventDetail.__super__.constructor.apply(this, arguments);
@@ -38254,13 +38253,25 @@ App.view.EventDetail = (function() {
     return this.eventTypeView = App.view.EventDetailFactory.getEventDetailView(this.model, this);
   };
   EventDetail.prototype.render = function() {
+    var _ref;
     $(this.el).html(App.templates[this.templatePath](this.model.toDetailJSON()));
+    if (((_ref = this.eventTypeView) != null ? _ref.render : void 0) != null) {
+      this.$('#event-detail').append(this.eventTypeView.render().el);
+    }
     this.decorate();
     if (this.model.isSocial()) {
       this.renderSocialView();
     }
     this.model.feedbacks.fetchIfNeeded({
-      success: this.renderFeedback
+      success: __bind(function(collection, response) {
+        var _ref;
+        if ((_ref = this.eventTypeView) != null) {
+          if (typeof _ref.renderFeedback == "function") {
+            _ref.renderFeedback();
+          }
+        }
+        return this.resize();
+      }, this)
     });
     return this;
   };
@@ -38272,10 +38283,6 @@ App.view.EventDetail = (function() {
       model: this.model
     });
     return this.$('.footer').append(this.socialView.render().el).show();
-  };
-  EventDetail.prototype.renderFeedback = function() {
-    var _ref;
-    return (_ref = this.eventTypeView) != null ? typeof _ref.renderFeedback == "function" ? _ref.renderFeedback() : void 0 : void 0;
   };
   EventDetail.prototype.renderLocationFeedbackView = function(field, options) {
     var addressEl, feedback, locationRatingView, ratingViewOptions;
@@ -39496,12 +39503,16 @@ App.view.Subaccount = (function() {
   };
   Subaccount.prototype.renderChart = function() {
     var balanceChart;
-    if (this.model.get('selected') === true) {
-      balanceChart = new App.view.BalanceChart({
-        model: this.model,
-        el: this.$('#balance-chart')
-      });
-      return $(this.el).append(balanceChart.render().el);
+    try {
+      if (this.model.get('selected') === true) {
+        balanceChart = new App.view.BalanceChart({
+          model: this.model,
+          el: this.$('#balance-chart')
+        });
+        return $(this.el).append(balanceChart.render().el);
+      }
+    } catch (error) {
+      return console.log(error);
     }
   };
   return Subaccount;
@@ -39907,16 +39918,17 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.view.AtmDetail = (function() {
   function AtmDetail() {
-    this.renderDetail = __bind(this.renderDetail, this);;    AtmDetail.__super__.constructor.apply(this, arguments);
+    this.renderFeedback = __bind(this.renderFeedback, this);;    AtmDetail.__super__.constructor.apply(this, arguments);
   }
-  __extends(AtmDetail, App.view.EventDetail);
-  AtmDetail.prototype.renderDetail = function() {
-    return this.addLocationFeedbackView('atm', {
+  __extends(AtmDetail, Backbone.View);
+  AtmDetail.prototype.renderFeedback = function() {
+    return this.options.parent.renderLocationFeedbackView('atm', {
       commentFormTitle: "Care to elaborate? Did you feel safe?"
     });
   };
   return AtmDetail;
 })();
+App.view.EventDetailFactory.atm = App.view.AtmDetail;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -39942,19 +39954,23 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.view.BillpayDetail = (function() {
   function BillpayDetail() {
-    this.renderDetail = __bind(this.renderDetail, this);;    BillpayDetail.__super__.constructor.apply(this, arguments);
+    this.renderFeedback = __bind(this.renderFeedback, this);;
+    this.render = __bind(this.render, this);;    BillpayDetail.__super__.constructor.apply(this, arguments);
   }
-  __extends(BillpayDetail, App.view.EventDetail);
-  BillpayDetail.prototype.eventTypeOptions = {
-    templatePath: 'members/events/billpay/detail'
+  __extends(BillpayDetail, Backbone.View);
+  BillpayDetail.prototype.render = function() {
+    $(this.el).html(App.templates['events/billpay/detail'](this.model.toDetailJSON()));
+    return this;
   };
-  BillpayDetail.prototype.renderDetail = function() {
+  BillpayDetail.prototype.renderFeedback = function() {
+    this.options.parent.renderLocationFeedbackView('merchant');
     if (this.model.get('vendor') != null) {
-      return this.addFeedbackView('vendor');
+      return this.options.parent.addSubjectFeedbackView('vendor');
     }
   };
   return BillpayDetail;
 })();
+App.view.EventDetailFactory.billpay = App.view.BillpayDetail;
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -39988,30 +40004,36 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 App.view.CardDetail = (function() {
   function CardDetail() {
     this.addMerchantSearchView = __bind(this.addMerchantSearchView, this);;
-    this.renderDetail = __bind(this.renderDetail, this);;    CardDetail.__super__.constructor.apply(this, arguments);
+    this.renderFeedback = __bind(this.renderFeedback, this);;
+    this.render = __bind(this.render, this);;    CardDetail.__super__.constructor.apply(this, arguments);
   }
   __extends(CardDetail, App.view.EventDetail);
   CardDetail.prototype.initialize = function() {
     return this.model.bind('change:merchant', this.render);
   };
-  CardDetail.prototype.eventTypeOptions = {
-    templatePath: 'members/events/card/detail'
-  };
-  CardDetail.prototype.renderDetail = function() {
+  CardDetail.prototype.render = function() {
+    $(this.el).html(App.templates['events/card/detail'](this.model.toDetailJSON()));
     this.$('.receipt-image a').colorbox();
     this.$('.receipt-upload a.upload').button();
     if (this.model.get('merchant') == null) {
-      return this.addMerchantSearchView();
+      this.addMerchantSearchView();
+    }
+    return this;
+  };
+  CardDetail.prototype.renderFeedback = function() {
+    if (this.model.get('merchant') != null) {
+      return this.options.parent.renderLocationFeedbackView('merchant');
     }
   };
   CardDetail.prototype.addMerchantSearchView = function() {
     this.merchantSearchView = new App.view.MerchantSearch({
       model: this.model
     });
-    return this.$('#event-detail').prepend(this.merchantSearchView.render().el);
+    return $(this.el).prepend(this.merchantSearchView.render().el);
   };
   return CardDetail;
 })();
+App.view.EventDetailFactory.card = App.view.CardDetail;
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -40022,36 +40044,32 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.view.CheckDetail = (function() {
   function CheckDetail() {
-    this.addMerchantSearchView = __bind(this.addMerchantSearchView, this);;
     this.showCheckCommentView = __bind(this.showCheckCommentView, this);;
-    this.renderDetail = __bind(this.renderDetail, this);;
-    this.toggleCheckCommentView = __bind(this.toggleCheckCommentView, this);;    CheckDetail.__super__.constructor.apply(this, arguments);
+    this.toggleCheckCommentView = __bind(this.toggleCheckCommentView, this);;
+    this.renderFeedback = __bind(this.renderFeedback, this);;
+    this.render = __bind(this.render, this);;    CheckDetail.__super__.constructor.apply(this, arguments);
   }
-  __extends(CheckDetail, App.view.EventDetail);
+  __extends(CheckDetail, Backbone.View);
   CheckDetail.prototype.initialize = function() {
-    mpq.push(["track", "View billpay offer"]);
-    this.model.bind('change:merchant', this.render);
-    return CheckDetail.__super__.initialize.call(this);
+    return this.model.bind('change:merchant', this.render);
   };
-  CheckDetail.prototype.eventTypeOptions = {
-    events: {
-      "click .report-problems": 'toggleCheckCommentView'
-    },
-    templatePath: 'members/events/check/detail'
+  CheckDetail.prototype.events = {
+    "click .report-problems": 'toggleCheckCommentView'
+  };
+  CheckDetail.prototype.render = function() {
+    $(this.el).html(App.templates['events/check/detail'](this.model.toDetailJSON()));
+    this.$('.available-service li a').button();
+    this.$('.check-image ul a').colorbox();
+    return this;
+  };
+  CheckDetail.prototype.renderFeedback = function() {
+    return this.options.parent.renderLocationFeedbackView('merchant');
   };
   CheckDetail.prototype.toggleCheckCommentView = function() {
     if ((this.checkCommentView != null) && this.checkCommentView.isActive()) {
-      this.checkCommentView.hide();
+      return this.checkCommentView.hide();
     } else {
-      this.showCheckCommentView();
-    }
-    return false;
-  };
-  CheckDetail.prototype.renderDetail = function() {
-    this.$('.available-service li a').button();
-    this.$('.check-image a').colorbox();
-    if (this.model.get('merchant') == null) {
-      return this.addMerchantSearchView();
+      return this.showCheckCommentView();
     }
   };
   CheckDetail.prototype.showCheckCommentView = function() {
@@ -40064,21 +40082,15 @@ App.view.CheckDetail = (function() {
         title: 'Problems with the check image?',
         buttonText: 'Report problem'
       });
-      this.checkCommentView.bind('show', this.resize);
-      this.checkCommentView.bind('hide', this.resize);
+      this.checkCommentView.bind('show', this.options.parent.resize);
+      this.checkCommentView.bind('hide', this.options.parent.resize);
       this.$('.check-image').append(this.checkCommentView.render().el);
       return this.checkCommentView.trigger('show');
     }
   };
-  CheckDetail.prototype.addMerchantSearchView = function() {
-    this.merchantSearchView = new App.view.MerchantSearch({
-      model: this.model,
-      searchPrompt: "Search for merchant information:"
-    });
-    return this.$('#event-detail').prepend(this.merchantSearchView.render().el);
-  };
   return CheckDetail;
 })();
+App.view.EventDetailFactory.check = App.view.CheckDetail;
 App.view.MemberTimelineRowFactory = (function() {
   function MemberTimelineRowFactory() {}
   MemberTimelineRowFactory.prototype.build = function(event, collection) {
@@ -40452,7 +40464,7 @@ App.view.MerchantSearch = (function() {
       defaultSearch: this.defaultSearch,
       searchPrompt: this.options.searchPrompt
     }));
-    this.$('a.search').button()({
+    this.$('a.search').button({
       icons: {
         primary: 'ui-icon-search'
       }

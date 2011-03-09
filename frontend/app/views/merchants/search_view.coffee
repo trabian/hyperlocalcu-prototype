@@ -21,7 +21,7 @@ class App.view.MerchantSearch extends Backbone.View
       defaultSearch: @defaultSearch
       searchPrompt: @options.searchPrompt
 
-    this.$('a.search').button()
+    this.$('a.search').button
       icons:
         primary: 'ui-icon-search'
 

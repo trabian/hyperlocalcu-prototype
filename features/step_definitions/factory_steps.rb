@@ -28,4 +28,14 @@ Given /^subaccount (\d+) has the following events:$/ do |subaccount_id, events|
 
 end
 
+Given /^subaccount (\d+) has the following statements:$/ do |subaccount_id, statements|
+
+  subaccount = Subaccount.find(subaccount_id)
+
+  statements.hashes.each do |hash|
+    subaccount.statements << Factory.build(:statement, hash)
+  end
+
+end
+
 Cucumber::Factory.add_steps(self)

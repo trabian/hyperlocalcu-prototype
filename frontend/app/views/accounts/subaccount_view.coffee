@@ -25,10 +25,15 @@ class App.view.Subaccount extends Backbone.View
 
   renderChart: =>
 
-    if @model.get('selected') is true
+    try
 
-      balanceChart = new App.view.BalanceChart
-        model: @model
-        el: this.$('#balance-chart')
+      if @model.get('selected') is true
 
-      $(@el).append balanceChart.render().el
+        balanceChart = new App.view.BalanceChart
+          model: @model
+          el: this.$('#balance-chart')
+
+        $(@el).append balanceChart.render().el
+
+    catch error
+      console.log error

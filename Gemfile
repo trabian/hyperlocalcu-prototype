@@ -14,7 +14,8 @@ gem 'has_scope'
 gem 'haml'
 
 gem 'devise'
-gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git', :ref => 'e1a9542a599314b1fb13'
+#gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git', :ref => 'e1a9542a599314b1fb13'
+gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git', :branch => 'jquery'
 
 gem 'pusher', '0.7.0'
 

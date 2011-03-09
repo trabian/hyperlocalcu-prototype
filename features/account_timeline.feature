@@ -21,11 +21,9 @@ Feature: Account Timeline
     And I wait until the timeline has been loaded
     Then I should see "Sample Event" within "#timeline tbody .name"
 
-  @wip
   Scenario: Show transaction detail
     When I go to my dashboard page
     And I follow "Rewards Checking" within "#accounts .share-accounts"
     And I wait until the timeline has been loaded
     And I click "tr:first-child" within "#timeline tbody"
-    Then show me the page
-    Then I should see "Sample Event" within "#event-detail"
+    Then I should see "Sample Event" within "#event-header"

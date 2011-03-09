@@ -4,4 +4,8 @@ class BillpayEvent < Event
 
   validates :amount, :presence => true
 
+  def as_json(options = {})
+    super :methods => :vendor
+  end
+
 end

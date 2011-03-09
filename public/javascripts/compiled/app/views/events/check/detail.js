@@ -8,36 +8,32 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.view.CheckDetail = (function() {
   function CheckDetail() {
-    this.addMerchantSearchView = __bind(this.addMerchantSearchView, this);;
     this.showCheckCommentView = __bind(this.showCheckCommentView, this);;
-    this.renderDetail = __bind(this.renderDetail, this);;
-    this.toggleCheckCommentView = __bind(this.toggleCheckCommentView, this);;    CheckDetail.__super__.constructor.apply(this, arguments);
+    this.toggleCheckCommentView = __bind(this.toggleCheckCommentView, this);;
+    this.renderFeedback = __bind(this.renderFeedback, this);;
+    this.render = __bind(this.render, this);;    CheckDetail.__super__.constructor.apply(this, arguments);
   }
-  __extends(CheckDetail, App.view.EventDetail);
+  __extends(CheckDetail, Backbone.View);
   CheckDetail.prototype.initialize = function() {
-    mpq.push(["track", "View billpay offer"]);
-    this.model.bind('change:merchant', this.render);
-    return CheckDetail.__super__.initialize.call(this);
+    return this.model.bind('change:merchant', this.render);
   };
-  CheckDetail.prototype.eventTypeOptions = {
-    events: {
-      "click .report-problems": 'toggleCheckCommentView'
-    },
-    templatePath: 'members/events/check/detail'
+  CheckDetail.prototype.events = {
+    "click .report-problems": 'toggleCheckCommentView'
+  };
+  CheckDetail.prototype.render = function() {
+    $(this.el).html(App.templates['events/check/detail'](this.model.toDetailJSON()));
+    this.$('.available-service li a').button();
+    this.$('.check-image ul a').colorbox();
+    return this;
+  };
+  CheckDetail.prototype.renderFeedback = function() {
+    return this.options.parent.renderLocationFeedbackView('merchant');
   };
   CheckDetail.prototype.toggleCheckCommentView = function() {
     if ((this.checkCommentView != null) && this.checkCommentView.isActive()) {
-      this.checkCommentView.hide();
+      return this.checkCommentView.hide();
     } else {
-      this.showCheckCommentView();
-    }
-    return false;
-  };
-  CheckDetail.prototype.renderDetail = function() {
-    this.$('.available-service li a').button();
-    this.$('.check-image a').colorbox();
-    if (this.model.get('merchant') == null) {
-      return this.addMerchantSearchView();
+      return this.showCheckCommentView();
     }
   };
   CheckDetail.prototype.showCheckCommentView = function() {
@@ -50,18 +46,12 @@ App.view.CheckDetail = (function() {
         title: 'Problems with the check image?',
         buttonText: 'Report problem'
       });
-      this.checkCommentView.bind('show', this.resize);
-      this.checkCommentView.bind('hide', this.resize);
+      this.checkCommentView.bind('show', this.options.parent.resize);
+      this.checkCommentView.bind('hide', this.options.parent.resize);
       this.$('.check-image').append(this.checkCommentView.render().el);
       return this.checkCommentView.trigger('show');
     }
   };
-  CheckDetail.prototype.addMerchantSearchView = function() {
-    this.merchantSearchView = new App.view.MerchantSearch({
-      model: this.model,
-      searchPrompt: "Search for merchant information:"
-    });
-    return this.$('#event-detail').prepend(this.merchantSearchView.render().el);
-  };
   return CheckDetail;
 })();
+App.view.EventDetailFactory.check = App.view.CheckDetail;

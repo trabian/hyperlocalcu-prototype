@@ -11,7 +11,6 @@ App.view.EventDetail = (function() {
     this.addSubjectFeedbackView = __bind(this.addSubjectFeedbackView, this);;
     this.resize = __bind(this.resize, this);;
     this.renderLocationFeedbackView = __bind(this.renderLocationFeedbackView, this);;
-    this.renderFeedback = __bind(this.renderFeedback, this);;
     this.renderSocialView = __bind(this.renderSocialView, this);;
     this.decorate = __bind(this.decorate, this);;
     this.render = __bind(this.render, this);;    EventDetail.__super__.constructor.apply(this, arguments);
@@ -24,13 +23,25 @@ App.view.EventDetail = (function() {
     return this.eventTypeView = App.view.EventDetailFactory.getEventDetailView(this.model, this);
   };
   EventDetail.prototype.render = function() {
+    var _ref;
     $(this.el).html(App.templates[this.templatePath](this.model.toDetailJSON()));
+    if (((_ref = this.eventTypeView) != null ? _ref.render : void 0) != null) {
+      this.$('#event-detail').append(this.eventTypeView.render().el);
+    }
     this.decorate();
     if (this.model.isSocial()) {
       this.renderSocialView();
     }
     this.model.feedbacks.fetchIfNeeded({
-      success: this.renderFeedback
+      success: __bind(function(collection, response) {
+        var _ref;
+        if ((_ref = this.eventTypeView) != null) {
+          if (typeof _ref.renderFeedback == "function") {
+            _ref.renderFeedback();
+          }
+        }
+        return this.resize();
+      }, this)
     });
     return this;
   };
@@ -42,10 +53,6 @@ App.view.EventDetail = (function() {
       model: this.model
     });
     return this.$('.footer').append(this.socialView.render().el).show();
-  };
-  EventDetail.prototype.renderFeedback = function() {
-    var _ref;
-    return (_ref = this.eventTypeView) != null ? typeof _ref.renderFeedback == "function" ? _ref.renderFeedback() : void 0 : void 0;
   };
   EventDetail.prototype.renderLocationFeedbackView = function(field, options) {
     var addressEl, feedback, locationRatingView, ratingViewOptions;

@@ -3,19 +3,26 @@ class App.view.CardDetail extends App.view.EventDetail
   initialize: ->
     @model.bind 'change:merchant', @render
 
-  eventTypeOptions:
-    templatePath: 'members/events/card/detail'
+  render: =>
 
-  renderDetail: =>
+    $(@el).html App.templates['events/card/detail'](@model.toDetailJSON())
 
     this.$('.receipt-image a').colorbox()
     this.$('.receipt-upload a.upload').button()
 
     this.addMerchantSearchView() unless @model.get('merchant')?
 
+    return this
+
+  renderFeedback: =>
+
+    @options.parent.renderLocationFeedbackView 'merchant' if @model.get('merchant')?
+
   addMerchantSearchView: =>
 
     @merchantSearchView = new App.view.MerchantSearch
       model: @model
 
-    this.$('#event-detail').prepend @merchantSearchView.render().el
+    $(@el).prepend @merchantSearchView.render().el
+
+App.view.EventDetailFactory.card = App.view.CardDetail

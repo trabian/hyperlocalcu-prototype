@@ -9,27 +9,33 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 App.view.CardDetail = (function() {
   function CardDetail() {
     this.addMerchantSearchView = __bind(this.addMerchantSearchView, this);;
-    this.renderDetail = __bind(this.renderDetail, this);;    CardDetail.__super__.constructor.apply(this, arguments);
+    this.renderFeedback = __bind(this.renderFeedback, this);;
+    this.render = __bind(this.render, this);;    CardDetail.__super__.constructor.apply(this, arguments);
   }
   __extends(CardDetail, App.view.EventDetail);
   CardDetail.prototype.initialize = function() {
     return this.model.bind('change:merchant', this.render);
   };
-  CardDetail.prototype.eventTypeOptions = {
-    templatePath: 'members/events/card/detail'
-  };
-  CardDetail.prototype.renderDetail = function() {
+  CardDetail.prototype.render = function() {
+    $(this.el).html(App.templates['events/card/detail'](this.model.toDetailJSON()));
     this.$('.receipt-image a').colorbox();
     this.$('.receipt-upload a.upload').button();
     if (this.model.get('merchant') == null) {
-      return this.addMerchantSearchView();
+      this.addMerchantSearchView();
+    }
+    return this;
+  };
+  CardDetail.prototype.renderFeedback = function() {
+    if (this.model.get('merchant') != null) {
+      return this.options.parent.renderLocationFeedbackView('merchant');
     }
   };
   CardDetail.prototype.addMerchantSearchView = function() {
     this.merchantSearchView = new App.view.MerchantSearch({
       model: this.model
     });
-    return this.$('#event-detail').prepend(this.merchantSearchView.render().el);
+    return $(this.el).prepend(this.merchantSearchView.render().el);
   };
   return CardDetail;
 })();
+App.view.EventDetailFactory.card = App.view.CardDetail;

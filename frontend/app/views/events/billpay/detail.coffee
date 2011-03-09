@@ -1,10 +1,15 @@
-#define ['text!views/timeline/events/billpay/detail.handlebars?v=2', 'app/views/members/events/detail', 'vendor/handlebars'], (template, EventDetailView) ->
+class App.view.BillpayDetail extends Backbone.View
 
-class App.view.BillpayDetail extends App.view.EventDetail
+  render: =>
 
-  eventTypeOptions:
-    templatePath: 'members/events/billpay/detail'
+    $(@el).html App.templates['events/billpay/detail'](@model.toDetailJSON())
 
-  renderDetail: =>
-    if @model.get('vendor')?
-      this.addFeedbackView 'vendor'
+    return this
+
+  renderFeedback: =>
+
+    @options.parent.renderLocationFeedbackView 'merchant'
+
+    @options.parent.addSubjectFeedbackView 'vendor' if @model.get('vendor')?
+
+App.view.EventDetailFactory.billpay = App.view.BillpayDetail

@@ -8,13 +8,14 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.view.AtmDetail = (function() {
   function AtmDetail() {
-    this.renderDetail = __bind(this.renderDetail, this);;    AtmDetail.__super__.constructor.apply(this, arguments);
+    this.renderFeedback = __bind(this.renderFeedback, this);;    AtmDetail.__super__.constructor.apply(this, arguments);
   }
-  __extends(AtmDetail, App.view.EventDetail);
-  AtmDetail.prototype.renderDetail = function() {
-    return this.addLocationFeedbackView('atm', {
+  __extends(AtmDetail, Backbone.View);
+  AtmDetail.prototype.renderFeedback = function() {
+    return this.options.parent.renderLocationFeedbackView('atm', {
       commentFormTitle: "Care to elaborate? Did you feel safe?"
     });
   };
   return AtmDetail;
 })();
+App.view.EventDetailFactory.atm = App.view.AtmDetail;

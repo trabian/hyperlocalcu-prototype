@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110304043747) do
+ActiveRecord::Schema.define(:version => 20110309140252) do
 
   create_table "accounts", :force => true do |t|
     t.string   "number"
@@ -76,19 +76,6 @@ ActiveRecord::Schema.define(:version => 20110304043747) do
     t.datetime "updated_at"
   end
 
-  create_table "histories", :force => true do |t|
-    t.string   "message"
-    t.string   "username"
-    t.integer  "item"
-    t.string   "table"
-    t.integer  "month"
-    t.integer  "year",       :limit => 8
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "histories", ["item", "table", "month", "year"], :name => "index_histories_on_item_and_table_and_month_and_year"
-
   create_table "items", :force => true do |t|
     t.string   "original_name"
     t.string   "name"
@@ -128,6 +115,27 @@ ActiveRecord::Schema.define(:version => 20110304043747) do
     t.string   "facebook_username"
     t.string   "avatar"
     t.string   "merchant_number"
+  end
+
+  create_table "rails_admin_histories", :force => true do |t|
+    t.string   "message"
+    t.string   "username"
+    t.integer  "item"
+    t.string   "table"
+    t.integer  "month"
+    t.integer  "year",       :limit => 8
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_histories_on_item_and_table_and_month_and_year"
+
+  create_table "statements", :force => true do |t|
+    t.string   "filename"
+    t.date     "statement_date"
+    t.integer  "subaccount_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "subaccounts", :force => true do |t|

@@ -30,12 +30,16 @@ App.view.Subaccount = (function() {
   };
   Subaccount.prototype.renderChart = function() {
     var balanceChart;
-    if (this.model.get('selected') === true) {
-      balanceChart = new App.view.BalanceChart({
-        model: this.model,
-        el: this.$('#balance-chart')
-      });
-      return $(this.el).append(balanceChart.render().el);
+    try {
+      if (this.model.get('selected') === true) {
+        balanceChart = new App.view.BalanceChart({
+          model: this.model,
+          el: this.$('#balance-chart')
+        });
+        return $(this.el).append(balanceChart.render().el);
+      }
+    } catch (error) {
+      return console.log(error);
     }
   };
   return Subaccount;

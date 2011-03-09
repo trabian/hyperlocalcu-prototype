@@ -1,5 +1,8 @@
-class App.view.AtmDetail extends App.view.EventDetail
+class App.view.AtmDetail extends Backbone.View
 
-  renderDetail: =>
-    this.addLocationFeedbackView 'atm',
+  renderFeedback: =>
+
+    @options.parent.renderLocationFeedbackView 'atm',
       commentFormTitle: "Care to elaborate? Did you feel safe?"
+
+App.view.EventDetailFactory.atm = App.view.AtmDetail

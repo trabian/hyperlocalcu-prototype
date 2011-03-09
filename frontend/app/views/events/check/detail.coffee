@@ -1,32 +1,27 @@
-class App.view.CheckDetail extends App.view.EventDetail
+class App.view.CheckDetail extends Backbone.View
 
   initialize: ->
-
-    mpq.push ["track", "View billpay offer"]
-
     @model.bind 'change:merchant', @render
 
-    super()
+  events: 
+    "click .report-problems": 'toggleCheckCommentView'
 
-  eventTypeOptions:
+  render: =>
 
-    events: 
-      "click .report-problems": 'toggleCheckCommentView'
-
-    templatePath: 'members/events/check/detail'
-
-  toggleCheckCommentView: =>
-    if @checkCommentView? && @checkCommentView.isActive() then @checkCommentView.hide() else this.showCheckCommentView()
-
-    return false
-
-  renderDetail: =>
+    $(@el).html App.templates['events/check/detail'](@model.toDetailJSON())
 
     this.$('.available-service li a').button()
 
-    this.$('.check-image a').colorbox()
+    this.$('.check-image ul a').colorbox()
 
-    this.addMerchantSearchView() unless @model.get('merchant')?
+    return this
+
+  renderFeedback: =>
+
+    @options.parent.renderLocationFeedbackView 'merchant'
+
+  toggleCheckCommentView: =>
+    if @checkCommentView? && @checkCommentView.isActive() then @checkCommentView.hide() else this.showCheckCommentView()
 
   showCheckCommentView: =>
 
@@ -42,16 +37,11 @@ class App.view.CheckDetail extends App.view.EventDetail
         title: 'Problems with the check image?'
         buttonText: 'Report problem'
 
-      @checkCommentView.bind 'show', @resize
-      @checkCommentView.bind 'hide', @resize
+      @checkCommentView.bind 'show', @options.parent.resize
+      @checkCommentView.bind 'hide', @options.parent.resize
 
       this.$('.check-image').append @checkCommentView.render().el
 
       @checkCommentView.trigger 'show'
 
-  addMerchantSearchView: =>
-    @merchantSearchView = new App.view.MerchantSearch
-      model: @model
-      searchPrompt: "Search for merchant information:"
-
-    this.$('#event-detail').prepend @merchantSearchView.render().el
+App.view.EventDetailFactory.check = App.view.CheckDetail

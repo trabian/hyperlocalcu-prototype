@@ -27,3 +27,7 @@ Factory.define :billpay_event do |f|
   f.bill_payment_processing_days { 1 + Kernel.rand(4) }
   f.bill_payment_submitted_date { |e| e.posted_at - e.bill_payment_processing_days.days }
 end
+
+Factory.define :statement_event do |f|
+
+end
