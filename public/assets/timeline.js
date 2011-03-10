@@ -38663,7 +38663,8 @@ App.model.Subaccount = (function() {
   __extends(Subaccount, Backbone.Model);
   Subaccount.prototype.initialize = function() {
     this.events = new App.model.EventList;
-    return this.events.url = "/subaccounts/" + this.id + "/events";
+    this.events.url = "/subaccounts/" + this.id + "/events";
+    return this.statements = new App.model.StatementList(this.get('statements'));
   };
   Subaccount.prototype.dailyBalances = function() {
     var balances;
@@ -38680,14 +38681,10 @@ App.model.Subaccount = (function() {
       return [parseInt(key), value];
     });
   };
-  Subaccount.prototype.statements = function() {
-    return [["Feb. 2011", "/images/sample/statement.pdf"], ["Jan. 2011", "/images/sample/statement.pdf"]];
-  };
   Subaccount.prototype.toViewJSON = function() {
     return _.extend(this.toJSON(), {
       formattedBalance: App.helper.currency.format(this.get('balance')),
-      formattedAvailableBalance: this.get('balance') === this.get('available_balance') ? null : App.helper.currency.format(this.get('available_balance')),
-      statements: this.statements()
+      formattedAvailableBalance: this.get('balance') === this.get('available_balance') ? null : App.helper.currency.format(this.get('available_balance'))
     });
   };
   return Subaccount;
@@ -39116,6 +39113,37 @@ App.model.MerchantList = (function() {
   MerchantList.prototype.model = App.model.EventMerchant;
   return MerchantList;
 })();
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.model.Statement = (function() {
+  function Statement() {
+    Statement.__super__.constructor.apply(this, arguments);
+  }
+  __extends(Statement, Backbone.Model);
+  return Statement;
+})();
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.model.StatementList = (function() {
+  function StatementList() {
+    StatementList.__super__.constructor.apply(this, arguments);
+  }
+  __extends(StatementList, Backbone.Collection);
+  StatementList.prototype.model = App.model.Statement;
+  return StatementList;
+})();
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -39482,6 +39510,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 App.view.Subaccount = (function() {
   function Subaccount() {
     this.renderChart = __bind(this.renderChart, this);;
+    this.renderStatements = __bind(this.renderStatements, this);;
     this.render = __bind(this.render, this);;    Subaccount.__super__.constructor.apply(this, arguments);
   }
   __extends(Subaccount, Backbone.View);
@@ -39496,19 +39525,29 @@ App.view.Subaccount = (function() {
     $(this.el).html(this.template(this.model.toViewJSON()));
     selected = this.model.get('selected') === true;
     $(this.el).toggleClass('selected', selected);
+    this.renderStatements();
     if (this.model.events.fetched != null) {
       this.renderChart();
     }
     return this;
   };
+  Subaccount.prototype.renderStatements = function() {
+    var statementList;
+    statementList = new App.view.StatementList({
+      collection: this.model.statements
+    });
+    return this.$('.left').append(statementList.render().el);
+  };
   Subaccount.prototype.renderChart = function() {
     var balanceChart;
-    if (this.model.get('selected') === true) {
-      balanceChart = new App.view.BalanceChart({
-        model: this.model,
-        el: this.$('#balance-chart')
-      });
-      return $(this.el).append(balanceChart.render().el);
+    if (this.model.events.length !== 0) {
+      if (this.model.get('selected') === true) {
+        balanceChart = new App.view.BalanceChart({
+          model: this.model,
+          el: this.$('#balance-chart')
+        });
+        return $(this.el).append(balanceChart.render().el);
+      }
     }
   };
   return Subaccount;
@@ -40538,6 +40577,35 @@ App.view.MerchantSearch = (function() {
     return this.$('button.search').button('enable');
   };
   return MerchantSearch;
+})();
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.view.StatementList = (function() {
+  function StatementList() {
+    this.render = __bind(this.render, this);;    StatementList.__super__.constructor.apply(this, arguments);
+  }
+  __extends(StatementList, Backbone.View);
+  StatementList.prototype.initialize = function(options) {};
+  StatementList.prototype.render = function() {
+    var statementList;
+    statementList = this.make('ul', {
+      className: 'statements'
+    });
+    this.collection.each(__bind(function(statement) {
+      return $(statementList).append(this.make('li', {
+        className: 'statement'
+      }, 'Testing'));
+    }, this));
+    $(this.el).html(statementList);
+    return this;
+  };
+  return StatementList;
 })();(function(){
 App.templates = App.templates || {};
 
@@ -40564,4 +40632,5 @@ App.templates['members/subaccount'] = Handlebars.compile('<div class="balances">
 App.templates['members/subaccount_list'] = Handlebars.compile('<h2>{{title}}</h2><div class="subaccounts"></div>');
 App.templates['merchants/search_result'] = Handlebars.compile('<img src="/images/sample/merchants/map-1.png" class="map" /><h3>{{title}}</h3><p>{{{address}}}</p>');
 App.templates['merchants/search_with_options'] = Handlebars.compile('{{#defaultSearch}}<p class="note">  <strong>We do not currently have detailed information about this merchant.</strong>  <span class="search-summary"></span></p>{{/defaultSearch}}<div class="search-results"><ul></ul></div><div class="search-form">  {{#defaultSearch}}  <h4>Improve search results:</h4>  {{/defaultSearch}}  {{^defaultSearch}}  <h4>{{ searchPrompt }}</hr>  {{/defaultSearch}}  <input type="text" name="search-input" class="text search-field" value="{{ defaultSearch }}" />  <a href=\'#\' class="search">Search</a></div>');
+App.templates['statements/statement_list'] = Handlebars.compile('');
 })();

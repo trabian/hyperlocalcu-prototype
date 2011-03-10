@@ -9,6 +9,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 App.view.Subaccount = (function() {
   function Subaccount() {
     this.renderChart = __bind(this.renderChart, this);;
+    this.renderStatements = __bind(this.renderStatements, this);;
     this.render = __bind(this.render, this);;    Subaccount.__super__.constructor.apply(this, arguments);
   }
   __extends(Subaccount, Backbone.View);
@@ -23,19 +24,29 @@ App.view.Subaccount = (function() {
     $(this.el).html(this.template(this.model.toViewJSON()));
     selected = this.model.get('selected') === true;
     $(this.el).toggleClass('selected', selected);
+    this.renderStatements();
     if (this.model.events.fetched != null) {
       this.renderChart();
     }
     return this;
   };
+  Subaccount.prototype.renderStatements = function() {
+    var statementList;
+    statementList = new App.view.StatementList({
+      collection: this.model.statements
+    });
+    return this.$('.left').append(statementList.render().el);
+  };
   Subaccount.prototype.renderChart = function() {
     var balanceChart;
-    if (this.model.get('selected') === true) {
-      balanceChart = new App.view.BalanceChart({
-        model: this.model,
-        el: this.$('#balance-chart')
-      });
-      return $(this.el).append(balanceChart.render().el);
+    if (this.model.events.length !== 0) {
+      if (this.model.get('selected') === true) {
+        balanceChart = new App.view.BalanceChart({
+          model: this.model,
+          el: this.$('#balance-chart')
+        });
+        return $(this.el).append(balanceChart.render().el);
+      }
     }
   };
   return Subaccount;

@@ -5,10 +5,12 @@ class App.model.Subaccount extends Backbone.Model
     @events = new App.model.EventList
     @events.url = "/subaccounts/#{@id}/events"
 
+    @statements = new App.model.StatementList(this.get('statements'))
+
   dailyBalances: ->
 
     balances = {}
-    
+
     # Cheating until accessing a real db
     this.events.each (event) ->
 
@@ -21,13 +23,8 @@ class App.model.Subaccount extends Backbone.Model
     _.map balances, (value, key) ->
       [parseInt(key), value]
 
-  # Mock
-  statements: ->
-    [["Feb. 2011", "/images/sample/statement.pdf"], ["Jan. 2011", "/images/sample/statement.pdf"]]
-
   toViewJSON: ->
 
     _.extend this.toJSON(),
       formattedBalance: App.helper.currency.format(this.get('balance'))
       formattedAvailableBalance: if this.get('balance') == this.get('available_balance') then null else App.helper.currency.format(this.get('available_balance'))
-      statements: this.statements()

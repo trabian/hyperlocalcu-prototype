@@ -14,7 +14,13 @@ class Member < ActiveRecord::Base
 
     defaults = {
       :methods => { :name => {}, :short_name => {}},
-      :include => { :accounts => { :include => :subaccounts }}
+      :include => {
+        :accounts => {
+          :include => {
+            :subaccounts => { :include => :statements }
+          }
+        }
+      }
     }
 
     super defaults.deep_merge(options || {})

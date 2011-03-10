@@ -18,17 +18,28 @@ class App.view.Subaccount extends Backbone.View
 
     $(@el).toggleClass 'selected', selected
 
+    this.renderStatements()
+
     if @model.events.fetched?
       this.renderChart()
 
     return this
 
+  renderStatements: =>
+
+    statementList = new App.view.StatementList
+      collection: @model.statements
+
+    this.$('.left').append statementList.render().el
+
   renderChart: =>
 
-    if @model.get('selected') is true
+    unless @model.events.length == 0
 
-      balanceChart = new App.view.BalanceChart
-        model: @model
-        el: this.$('#balance-chart')
+      if @model.get('selected') is true
 
-      $(@el).append balanceChart.render().el
+        balanceChart = new App.view.BalanceChart
+          model: @model
+          el: this.$('#balance-chart')
+
+        $(@el).append balanceChart.render().el

@@ -55,3 +55,26 @@ describe 'a subaccount view', ->
       'selected': true
 
     expect($(@view.el).is('.selected')).toBeTruthy()
+
+  it "should show the available statements", ->
+
+    @subaccountWithStatements = new App.model.Subaccount
+      id: 2
+      name: "Rewards Checking"
+      balance: 1234.56
+      available_balance: 1234.56
+      statements:
+        [
+          {
+            statement_date: "2011-01-31"
+            filename: "/images/samples/statement.pdf"
+          }
+        ]
+
+    @view2 = new App.view.Subaccount
+      model: @subaccountWithStatements
+      id: "subaccount-2"
+
+    $('#test').append @view2.render().el
+
+    expect($('#subaccount-2')).toContain('ul.statements')
