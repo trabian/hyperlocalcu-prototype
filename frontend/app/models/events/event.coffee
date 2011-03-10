@@ -40,12 +40,6 @@ class App.model.Event extends Backbone.Model
   postedDate: ->
     $.datepicker.parseDate('yy-m-d', this.get('posted_at'))
 
-  formatDate: (date, format) ->
-
-    format or= 'm/d/yy'
-
-    $.datepicker.formatDate(format, $.datepicker.parseDate('yy-m-d', date))
-
   # Move the negative sign in front of the dollar sign for negative amounts and wrap the dollar
   # sign in <span class="currency"> to allow font customization.
   formatted_amount: =>
@@ -104,3 +98,5 @@ class App.model.Event extends Backbone.Model
         event_type: this.get('event_type')
         id: event.id
       }]
+
+_.extend App.model.Event.prototype, App.model.extension.Dates

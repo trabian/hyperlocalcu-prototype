@@ -29,6 +29,7 @@ class App.view.Subaccount extends Backbone.View
 
     statementList = new App.view.StatementList
       collection: @model.statements
+      visible: 2
 
     this.$('.left').append statementList.render().el
 

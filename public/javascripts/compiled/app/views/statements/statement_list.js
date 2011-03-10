@@ -11,18 +11,21 @@ App.view.StatementList = (function() {
     this.render = __bind(this.render, this);;    StatementList.__super__.constructor.apply(this, arguments);
   }
   __extends(StatementList, Backbone.View);
-  StatementList.prototype.initialize = function(options) {};
+  StatementList.prototype.initialize = function(options) {
+    this.template = App.templates['statements/statement_list'];
+    return this.statementTemplate = App.templates['statements/statement'];
+  };
   StatementList.prototype.render = function() {
-    var statementList;
-    statementList = this.make('ul', {
-      className: 'statements'
-    });
-    this.collection.each(__bind(function(statement) {
-      return $(statementList).append(this.make('li', {
-        className: 'statement'
-      }, 'Testing'));
+    var statementList, visibleStatements;
+    $(this.el).html(this.template());
+    statementList = this.$('.statements');
+    visibleStatements = this.collection.toArray().slice(0, this.options.visible);
+    _.each(visibleStatements, __bind(function(statement, index) {
+      return $(statementList).append(this.statementTemplate(statement.toViewJSON()));
     }, this));
-    $(this.el).html(statementList);
+    if (this.collection.length > this.options.visible) {
+      $(statementList).append(this.make('li', {}, "<a href='#' class='older'>Older &#9662;</a>"));
+    }
     return this;
   };
   return StatementList;

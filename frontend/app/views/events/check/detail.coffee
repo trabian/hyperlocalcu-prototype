@@ -18,7 +18,7 @@ class App.view.CheckDetail extends Backbone.View
 
   renderFeedback: =>
 
-    @options.parent.renderLocationFeedbackView 'merchant'
+    @options.parent.renderLocationFeedbackView 'merchant' if @model.get('merchant')
 
   toggleCheckCommentView: =>
     if @checkCommentView? && @checkCommentView.isActive() then @checkCommentView.hide() else this.showCheckCommentView()

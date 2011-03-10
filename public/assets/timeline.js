@@ -37653,6 +37653,12 @@ App = {
   },
   lib: {}
 };
+App.model.extension.Dates = {
+  formatDate: function(date, format) {
+    format || (format = 'm/d/yy');
+    return $.datepicker.formatDate(format, $.datepicker.parseDate('yy-m-d', date));
+  }
+};
 App.model.extension.Selectable = {
   selected: function() {
     return this.filter(function(record) {
@@ -37768,10 +37774,6 @@ App.model.Event = (function() {
   Event.prototype.postedDate = function() {
     return $.datepicker.parseDate('yy-m-d', this.get('posted_at'));
   };
-  Event.prototype.formatDate = function(date, format) {
-    format || (format = 'm/d/yy');
-    return $.datepicker.formatDate(format, $.datepicker.parseDate('yy-m-d', date));
-  };
   Event.prototype.formatted_amount = function() {
     return this.formatCurrency(this.get('amount'));
   };
@@ -37844,6 +37846,7 @@ App.model.Event = (function() {
   };
   return Event;
 })();
+_.extend(App.model.Event.prototype, App.model.extension.Dates);
 App.model.EventFactory = {
   getEvent: function(model) {
     var event_class;
@@ -39113,7 +39116,7 @@ App.model.MerchantList = (function() {
   MerchantList.prototype.model = App.model.EventMerchant;
   return MerchantList;
 })();
-var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
   ctor.prototype = parent.prototype;
@@ -39123,11 +39126,20 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
 };
 App.model.Statement = (function() {
   function Statement() {
-    Statement.__super__.constructor.apply(this, arguments);
+    this.formattedStatementDate = __bind(this.formattedStatementDate, this);;    Statement.__super__.constructor.apply(this, arguments);
   }
   __extends(Statement, Backbone.Model);
+  Statement.prototype.formattedStatementDate = function() {
+    return this.formatDate(this.get('statement_date'), 'M. yy');
+  };
+  Statement.prototype.toViewJSON = function() {
+    return _.extend(this.toJSON(), {
+      formattedStatementDate: this.formattedStatementDate
+    });
+  };
   return Statement;
 })();
+_.extend(App.model.Statement.prototype, App.model.extension.Dates);
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -39534,7 +39546,8 @@ App.view.Subaccount = (function() {
   Subaccount.prototype.renderStatements = function() {
     var statementList;
     statementList = new App.view.StatementList({
-      collection: this.model.statements
+      collection: this.model.statements,
+      visible: 2
     });
     return this.$('.left').append(statementList.render().el);
   };
@@ -40098,7 +40111,9 @@ App.view.CheckDetail = (function() {
     return this;
   };
   CheckDetail.prototype.renderFeedback = function() {
-    return this.options.parent.renderLocationFeedbackView('merchant');
+    if (this.model.get('merchant')) {
+      return this.options.parent.renderLocationFeedbackView('merchant');
+    }
   };
   CheckDetail.prototype.toggleCheckCommentView = function() {
     if ((this.checkCommentView != null) && this.checkCommentView.isActive()) {
@@ -40591,18 +40606,21 @@ App.view.StatementList = (function() {
     this.render = __bind(this.render, this);;    StatementList.__super__.constructor.apply(this, arguments);
   }
   __extends(StatementList, Backbone.View);
-  StatementList.prototype.initialize = function(options) {};
+  StatementList.prototype.initialize = function(options) {
+    this.template = App.templates['statements/statement_list'];
+    return this.statementTemplate = App.templates['statements/statement'];
+  };
   StatementList.prototype.render = function() {
-    var statementList;
-    statementList = this.make('ul', {
-      className: 'statements'
-    });
-    this.collection.each(__bind(function(statement) {
-      return $(statementList).append(this.make('li', {
-        className: 'statement'
-      }, 'Testing'));
+    var statementList, visibleStatements;
+    $(this.el).html(this.template());
+    statementList = this.$('.statements');
+    visibleStatements = this.collection.toArray().slice(0, this.options.visible);
+    _.each(visibleStatements, __bind(function(statement, index) {
+      return $(statementList).append(this.statementTemplate(statement.toViewJSON()));
     }, this));
-    $(this.el).html(statementList);
+    if (this.collection.length > this.options.visible) {
+      $(statementList).append(this.make('li', {}, "<a href='#' class='older'>Older &#9662;</a>"));
+    }
     return this;
   };
   return StatementList;
@@ -40632,5 +40650,6 @@ App.templates['members/subaccount'] = Handlebars.compile('<div class="balances">
 App.templates['members/subaccount_list'] = Handlebars.compile('<h2>{{title}}</h2><div class="subaccounts"></div>');
 App.templates['merchants/search_result'] = Handlebars.compile('<img src="/images/sample/merchants/map-1.png" class="map" /><h3>{{title}}</h3><p>{{{address}}}</p>');
 App.templates['merchants/search_with_options'] = Handlebars.compile('{{#defaultSearch}}<p class="note">  <strong>We do not currently have detailed information about this merchant.</strong>  <span class="search-summary"></span></p>{{/defaultSearch}}<div class="search-results"><ul></ul></div><div class="search-form">  {{#defaultSearch}}  <h4>Improve search results:</h4>  {{/defaultSearch}}  {{^defaultSearch}}  <h4>{{ searchPrompt }}</hr>  {{/defaultSearch}}  <input type="text" name="search-input" class="text search-field" value="{{ defaultSearch }}" />  <a href=\'#\' class="search">Search</a></div>');
-App.templates['statements/statement_list'] = Handlebars.compile('');
+App.templates['statements/statement'] = Handlebars.compile('<li class="statement"><a href="{{filename}}">{{formattedStatementDate}}</a></li>');
+App.templates['statements/statement_list'] = Handlebars.compile('<h4>View statements</h4><ul class="statements"></ul>');
 })();

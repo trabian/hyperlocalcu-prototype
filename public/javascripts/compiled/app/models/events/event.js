@@ -56,10 +56,6 @@ App.model.Event = (function() {
   Event.prototype.postedDate = function() {
     return $.datepicker.parseDate('yy-m-d', this.get('posted_at'));
   };
-  Event.prototype.formatDate = function(date, format) {
-    format || (format = 'm/d/yy');
-    return $.datepicker.formatDate(format, $.datepicker.parseDate('yy-m-d', date));
-  };
   Event.prototype.formatted_amount = function() {
     return this.formatCurrency(this.get('amount'));
   };
@@ -132,3 +128,4 @@ App.model.Event = (function() {
   };
   return Event;
 })();
+_.extend(App.model.Event.prototype, App.model.extension.Dates);

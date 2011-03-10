@@ -56,25 +56,50 @@ describe 'a subaccount view', ->
 
     expect($(@view.el).is('.selected')).toBeTruthy()
 
-  it "should show the available statements", ->
+  describe 'with statements', ->
 
-    @subaccountWithStatements = new App.model.Subaccount
-      id: 2
-      name: "Rewards Checking"
-      balance: 1234.56
-      available_balance: 1234.56
-      statements:
-        [
-          {
-            statement_date: "2011-01-31"
-            filename: "/images/samples/statement.pdf"
-          }
-        ]
+    beforeEach ->
 
-    @view2 = new App.view.Subaccount
-      model: @subaccountWithStatements
-      id: "subaccount-2"
+      @subaccountWithStatements = new App.model.Subaccount
+        id: 2
+        name: "Rewards Checking"
+        balance: 1234.56
+        available_balance: 1234.56
+        selected: true
+        statements:
+          [
+            {
+              statement_date: "2011-01-31"
+              filename: "/images/samples/statement.pdf"
+            },
+            {
+              statement_date: "2010-12-31"
+              filename: "/images/samples/statement.pdf"
+            },
+            {
+              statement_date: "2010-11-30"
+              filename: "/images/samples/statement.pdf"
+            },
+            {
+              statement_date: "2010-10-31"
+              filename: "/images/samples/statement.pdf"
+            }
+          ]
 
-    $('#test').append @view2.render().el
+      @view2 = new App.view.Subaccount
+        model: @subaccountWithStatements
+        id: "subaccount-2"
 
-    expect($('#subaccount-2')).toContain('ul.statements')
+      $('#test').append @view2.render().el
+
+    it "should show the available statements", ->
+      expect($('#subaccount-2')).toContain('ul.statements')
+
+    it "should show the available statements based on the formatted statement date", ->
+      expect($('#subaccount-2 ul.statements li.statement:first-child a')).toHaveText('Jan. 2011')
+
+    it "should only show the first two statements", ->
+      expect($('#subaccount-2 ul.statements li.statement').length).toEqual(2)
+
+    it "should only show an 'older' link if there are more than two statements available", ->
+      expect($('#subaccount-2 ul.statements')).toContain('a.older')

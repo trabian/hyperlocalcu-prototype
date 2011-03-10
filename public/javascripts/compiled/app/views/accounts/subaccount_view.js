@@ -33,7 +33,8 @@ App.view.Subaccount = (function() {
   Subaccount.prototype.renderStatements = function() {
     var statementList;
     statementList = new App.view.StatementList({
-      collection: this.model.statements
+      collection: this.model.statements,
+      visible: 2
     });
     return this.$('.left').append(statementList.render().el);
   };

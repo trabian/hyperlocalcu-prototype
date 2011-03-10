@@ -27,7 +27,9 @@ App.view.CheckDetail = (function() {
     return this;
   };
   CheckDetail.prototype.renderFeedback = function() {
-    return this.options.parent.renderLocationFeedbackView('merchant');
+    if (this.model.get('merchant')) {
+      return this.options.parent.renderLocationFeedbackView('merchant');
+    }
   };
   CheckDetail.prototype.toggleCheckCommentView = function() {
     if ((this.checkCommentView != null) && this.checkCommentView.isActive()) {

@@ -5,7 +5,7 @@ class Merchant < ActiveRecord::Base
   # Obviously not the best way to do this
   set_callback(:create, :after) do |merchant|
 
-    Event.where(:merchant_number => merchant.merchant_number).update_all :merchant_id => merchant.id
+    Event.where(:merchant_number => merchant.merchant_number).update_all :merchant_id => merchant.id unless merchant.merchant_number.blank?
 
   end
 

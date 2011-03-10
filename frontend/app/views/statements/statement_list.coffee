@@ -1,14 +1,23 @@
 class App.view.StatementList extends Backbone.View
 
   initialize: (options) ->
+    @template = App.templates['statements/statement_list']
+    @statementTemplate = App.templates['statements/statement']
 
   render: =>
 
-    statementList = this.make('ul', { className: 'statements'})
+    $(@el).html @template()
 
-    @collection.each (statement) =>
-      $(statementList).append this.make('li', { className: 'statement' }, 'Testing')
+    statementList = this.$('.statements')
 
-    $(@el).html statementList
+    visibleStatements = @collection.toArray().slice(0, @options.visible)
+
+    _.each visibleStatements, (statement, index) =>
+
+      $(statementList).append @statementTemplate(statement.toViewJSON())
+
+    if @collection.length > @options.visible
+      # Not the prettiest way of doing this
+      $(statementList).append this.make('li', {}, "<a href='#' class='older'>Older &#9662;</a>")
 
     return this
