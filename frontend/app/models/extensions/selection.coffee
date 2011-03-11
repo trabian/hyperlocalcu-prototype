@@ -21,3 +21,11 @@ App.model.extension.Selectable =
 
   current: ->
     @selectedRecord || this.defaultSelected?()
+
+  unselect: (event) ->
+
+    if @selectedRecord == event
+      @selectedRecord = null
+
+    event.set
+      selected: false

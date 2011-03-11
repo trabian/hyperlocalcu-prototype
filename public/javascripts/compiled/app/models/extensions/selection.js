@@ -25,5 +25,13 @@ App.model.extension.Selectable = {
   },
   current: function() {
     return this.selectedRecord || (typeof this.defaultSelected == "function" ? this.defaultSelected() : void 0);
+  },
+  unselect: function(event) {
+    if (this.selectedRecord === event) {
+      this.selectedRecord = null;
+    }
+    return event.set({
+      selected: false
+    });
   }
 };

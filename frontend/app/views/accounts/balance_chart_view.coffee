@@ -14,8 +14,6 @@ class App.view.BalanceChart extends Backbone.View
 
   render: =>
 
-    console.log 'here'
-
     maxBalance = _.max @balances, (balance) ->
       balance[1]
 

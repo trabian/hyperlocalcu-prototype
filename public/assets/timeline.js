@@ -37686,6 +37686,14 @@ App.model.extension.Selectable = {
   },
   current: function() {
     return this.selectedRecord || (typeof this.defaultSelected == "function" ? this.defaultSelected() : void 0);
+  },
+  unselect: function(event) {
+    if (this.selectedRecord === event) {
+      this.selectedRecord = null;
+    }
+    return event.set({
+      selected: false
+    });
   }
 };
 App.helper || (App.helper = {});
@@ -39308,7 +39316,6 @@ App.view.BalanceChart = (function() {
   };
   BalanceChart.prototype.render = function() {
     var chart, fontStyle, lineColor, maxBalance, minBalance, series, tickInterval;
-    console.log('here');
     maxBalance = _.max(this.balances, function(balance) {
       return balance[1];
     });
@@ -40337,9 +40344,7 @@ App.view.MemberDashboard = (function() {
     $('#sidebar').append(this.eventDetailView.render().el);
     $(this.eventDetailView.el).drawer('show');
     return $(this.eventDetailView.el).bind('hide', __bind(function() {
-      return event.set({
-        selected: false
-      });
+      return event.collection.unselect(event);
     }, this));
   };
   MemberDashboard.prototype.initEventDetailView = function() {

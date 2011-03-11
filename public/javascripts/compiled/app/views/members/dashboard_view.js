@@ -53,9 +53,7 @@ App.view.MemberDashboard = (function() {
     $('#sidebar').append(this.eventDetailView.render().el);
     $(this.eventDetailView.el).drawer('show');
     return $(this.eventDetailView.el).bind('hide', __bind(function() {
-      return event.set({
-        selected: false
-      });
+      return event.collection.unselect(event);
     }, this));
   };
   MemberDashboard.prototype.initEventDetailView = function() {

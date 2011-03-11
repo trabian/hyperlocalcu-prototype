@@ -50,8 +50,7 @@ class App.view.MemberDashboard extends Backbone.View
     $(@eventDetailView.el).drawer 'show'
 
     $(@eventDetailView.el).bind 'hide', =>
-      event.set
-        selected: false
+      event.collection.unselect event
 
   initEventDetailView: =>
 

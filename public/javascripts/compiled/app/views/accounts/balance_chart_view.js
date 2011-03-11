@@ -26,7 +26,6 @@ App.view.BalanceChart = (function() {
   };
   BalanceChart.prototype.render = function() {
     var chart, fontStyle, lineColor, maxBalance, minBalance, series, tickInterval;
-    console.log('here');
     maxBalance = _.max(this.balances, function(balance) {
       return balance[1];
     });
