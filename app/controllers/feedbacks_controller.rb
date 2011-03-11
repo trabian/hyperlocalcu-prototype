@@ -9,19 +9,33 @@ class FeedbacksController < ApplicationController
 
   has_scope :from_other_members
 
+  def index
+    render :json => end_of_association_chain
+  end
+
+  def update
+    feedback = Feedback.get(params[:id])
+    throw params[:feedback].to_json
+    throw "new, really?" if feedback.new_record?
+    feedback.update_attributes(params[:feedback])
+    render :json => feedback
+  end
+
 protected
 
   def build_resource
 
-    Event.find(params[:event_id]).feedbacks.build(params[:feedback]).tap do |feedback|
+    Feedback.new(params[:feedback]).tap do |feedback|
+
+      feedback.event_id = params[:event_id]
 
       if params[:subject]
-        subject_class = params[:subject][:key].classify.constantize
-        feedback.subject = subject_class.find(params[:subject][:id])
+        feedback.subject_id = params[:subject][:id]
+        feedback.subject_type = params[:subject][:key]
       end
 
     end
-
+    
   end
 
 end

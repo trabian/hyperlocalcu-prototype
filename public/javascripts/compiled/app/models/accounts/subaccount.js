@@ -12,6 +12,7 @@ App.model.Subaccount = (function() {
   }
   __extends(Subaccount, Backbone.Model);
   Subaccount.prototype.initialize = function() {
+    this.name = 'subaccount';
     this.events = new App.model.EventList;
     this.events.url = "/subaccounts/" + this.id + "/events";
     return this.statements = new App.model.StatementList(this.get('statements'));

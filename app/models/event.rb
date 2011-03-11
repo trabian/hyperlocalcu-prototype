@@ -5,8 +5,6 @@ class Event < ActiveRecord::Base
   validates :subaccount_id, :presence => true
   validates :posted_at, :presence => true
 
-  has_many :feedbacks
-
   scope :ordered, :order => 'events.posted_at DESC, id'
 
   scope :ordered_with_limit, :order => 'posted_at DESC, id', :limit => 30
@@ -33,6 +31,10 @@ class Event < ActiveRecord::Base
 
   def member_name
     self.try(:subaccount).try(:member).short_name
+  end
+
+  def feedbacks
+    Feedback.for_event(id)
   end
 
   def self.inherited(child)

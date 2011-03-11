@@ -21761,6 +21761,76 @@ Handlebars.Compiler.prototype = {
 
 })();
 
+//
+//     Backbone.Rails.js
+//
+//     Makes Backbone.js play nicely with the default Rails setup, i.e.,
+//     no need to set
+//       ActiveRecord::Base.include_root_in_json = false
+//     and build all of your models directly from `params` rather than
+//     `params[:model]`.
+//
+//     Load this file after backbone.js and before your application JS.
+//
+
+Backbone.RailsJSON = {
+  // In order to properly wrap/unwrap Rails JSON data, we need to specify
+  // what key the object will be wrapped with.
+  _name : function() {
+    if (!this.name) throw new Error("A 'name' property must be specified");
+    return this.name;
+  },
+
+  // A test to indicate whether the given object is wrapped.
+  isWrapped : function(object) {
+    return (object.hasOwnProperty(this._name()) &&
+        (typeof(object[this._name()]) == "object"));
+  },
+
+  // Extracts the object's wrapped attributes.
+  unwrappedAttributes : function(object) {
+    return object[this._name()];
+  },
+
+  // Wraps the model's attributes under the supplied key.
+  wrappedAttributes : function() {
+    var object = new Object;
+    object[this._name()] = _.clone(this.attributes);
+    return object;
+  },
+
+  // Sets up the new model's internal state so that it matches the
+  // expected format. Should be called early in the model's constructor.
+  maybeUnwrap : function(args) {
+    if (this.isWrapped(args)) {
+      this.set(this.unwrappedAttributes(args), { silent: true });
+      this.unset(this._name(), { silent: true });
+      this._previousAttributes = _.clone(this.attributes);
+    }
+  }
+};
+
+_.extend(Backbone.Model.prototype, Backbone.RailsJSON, {
+  // This is called on all models coming in from a remote server.
+  // Unwraps the given response from the default Rails format.
+  parse : function(resp) {
+    return this.unwrappedAttributes(resp);
+  },
+
+  // This is called just before a model is persisted to a remote server.
+  // Wraps the model's attributes into a Rails-friendly format.
+  toJSON : function() {
+    return this.wrappedAttributes();
+  },
+
+  // A new default initializer which handles data directly from Rails as
+  // well as unnested data.
+  initialize : function(args) {
+    this.maybeUnwrap(args);
+  }
+}); 
+
+
 /* Copyright (c) 2009 Michael Manning (actingthemaggot.com) Dual licensed under the MIT (MIT-LICENSE.txt) and GPL (GPL-LICENSE.txt) licenses.*/
 (function(A){A.fn.extend({currency:function(B){var C={s:",",d:".",c:2};C=A.extend({},C,B);return this.each(function(){var D=(C.n||A(this).text());D=(typeof D==="number")?D:((/\./.test(D))?parseFloat(D):parseInt(D)),s=D<0?"-":"",i=parseInt(D=Math.abs(+D||0).toFixed(C.c))+"",j=(j=i.length)>3?j%3:0;A(this).text(s+(j?i.substr(0,j)+C.s:"")+i.substr(j).replace(/(\d{3})(?=\d)/g,"$1"+C.s)+(C.c?C.d+Math.abs(D-i).toFixed(C.c).slice(2):""));return this})}})})(jQuery);jQuery.currency=function(){var A=jQuery("<span>").text(arguments[0]).currency(arguments[1]);return A.text()};
 
@@ -38005,7 +38075,7 @@ App.model.Feedback = (function() {
   Feedback.prototype.toUpdateJSON = function() {
     return {
       subject: {
-        key: this.get('subject_key'),
+        key: this.get('subject_type'),
         id: this.subject.id
       },
       feedback: {
@@ -38673,6 +38743,7 @@ App.model.Subaccount = (function() {
   }
   __extends(Subaccount, Backbone.Model);
   Subaccount.prototype.initialize = function() {
+    this.name = 'subaccount';
     this.events = new App.model.EventList;
     this.events.url = "/subaccounts/" + this.id + "/events";
     return this.statements = new App.model.StatementList(this.get('statements'));
@@ -39012,19 +39083,19 @@ App.model.FeedbackList = (function() {
     this.event = options.event;
     return this.url = options.url;
   };
-  FeedbackList.prototype.for_subject = function(subject_key) {
+  FeedbackList.prototype.for_subject = function(subject_type) {
     var feedback;
     feedback = this.find(__bind(function(feedback) {
-      return feedback.get('subject_key') === subject_key;
+      return feedback.get('subject_type') === subject_type;
     }, this));
     if (feedback == null) {
       feedback = new App.model.Feedback({
-        subject_key: subject_key
+        subject_type: subject_type
       }, {
         collection: this
       });
     }
-    feedback.subject = App.model.FeedbackSubjectFactory.getSubject(this.event.get(subject_key));
+    feedback.subject = App.model.FeedbackSubjectFactory.getSubject(this.event.get(subject_type));
     return feedback;
   };
   FeedbackList.prototype.fetchIfNeeded = function(options) {

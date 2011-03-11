@@ -26,6 +26,9 @@ gem 'SystemTimer'
 
 gem 'twitter'
 
+gem 'adapter-redis'
+gem 'toystore'
+
 group :development, :test do
 
   gem 'cucumber-rails', ">= 0.3.2"

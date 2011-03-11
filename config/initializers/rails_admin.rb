@@ -93,12 +93,12 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model Feedback do
-    edit do
-      field :rating
-      field :comment
-      field :teller
-    end
-  end
+  #config.model Feedback do
+    #edit do
+      #field :rating
+      #field :comment
+      #field :teller
+    #end
+  #end
 
 end

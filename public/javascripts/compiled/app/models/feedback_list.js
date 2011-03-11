@@ -17,19 +17,19 @@ App.model.FeedbackList = (function() {
     this.event = options.event;
     return this.url = options.url;
   };
-  FeedbackList.prototype.for_subject = function(subject_key) {
+  FeedbackList.prototype.for_subject = function(subject_type) {
     var feedback;
     feedback = this.find(__bind(function(feedback) {
-      return feedback.get('subject_key') === subject_key;
+      return feedback.get('subject_type') === subject_type;
     }, this));
     if (feedback == null) {
       feedback = new App.model.Feedback({
-        subject_key: subject_key
+        subject_type: subject_type
       }, {
         collection: this
       });
     }
-    feedback.subject = App.model.FeedbackSubjectFactory.getSubject(this.event.get(subject_key));
+    feedback.subject = App.model.FeedbackSubjectFactory.getSubject(this.event.get(subject_type));
     return feedback;
   };
   FeedbackList.prototype.fetchIfNeeded = function(options) {

@@ -7,18 +7,18 @@ class App.model.FeedbackList extends Backbone.Collection
     @event = options.event
     @url = options.url
 
-  for_subject: (subject_key) =>
+  for_subject: (subject_type) =>
 
     feedback = this.find (feedback) =>
-      feedback.get('subject_key') == subject_key
+      feedback.get('subject_type') == subject_type
 
     unless feedback?
       feedback = new App.model.Feedback {
-          subject_key: subject_key
+          subject_type: subject_type
         },
         collection: this
 
-    feedback.subject = App.model.FeedbackSubjectFactory.getSubject(@event.get(subject_key))
+    feedback.subject = App.model.FeedbackSubjectFactory.getSubject(@event.get(subject_type))
 
     feedback
 

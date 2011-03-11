@@ -22,7 +22,7 @@ App.model.Feedback = (function() {
   Feedback.prototype.toUpdateJSON = function() {
     return {
       subject: {
-        key: this.get('subject_key'),
+        key: this.get('subject_type'),
         id: this.subject.id
       },
       feedback: {

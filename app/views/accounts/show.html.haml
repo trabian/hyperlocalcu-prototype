@@ -22,7 +22,7 @@
 
     Backbone.emulateHTTP = true;
 
-    App.currentMember = new App.model.Member(#{@account.member.to_json});
+    App.currentMember = new App.model.Member(App.model.Member.unwrappedAttributes(#{@account.member.to_json}));
 
     var eventList = new App.model.EventList();
     eventList.url = "/accounts/#{@account.id}/events";

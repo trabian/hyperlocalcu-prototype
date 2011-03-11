@@ -46,6 +46,10 @@ GEM
       activemodel (= 3.0.3)
       activesupport (= 3.0.3)
     activesupport (3.0.3)
+    adapter (0.5.2)
+    adapter-redis (0.5.1)
+      adapter (~> 0.5.1)
+      redis (~> 2.1.1)
     addressable (2.2.4)
     akephalos (0.2.5)
       capybara (~> 0.4.0)
@@ -211,6 +215,7 @@ GEM
     signature (0.1.2)
       ruby-hmac
     simple_oauth (0.1.4)
+    simple_uuid (0.1.2)
     sinatra (1.1.2)
       rack (~> 1.1)
       tilt (~> 1.2)
@@ -218,6 +223,11 @@ GEM
     term-ansicolor (1.0.5)
     thor (0.14.6)
     tilt (1.2.2)
+    toystore (0.6.4)
+      activemodel (~> 3.0.3)
+      activesupport (~> 3.0.3)
+      adapter (~> 0.5.1)
+      simple_uuid (~> 0.1.1)
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     twitter (1.1.2)
@@ -239,6 +249,7 @@ PLATFORMS
 
 DEPENDENCIES
   SystemTimer
+  adapter-redis
   akephalos
   backports
   capybara
@@ -275,4 +286,5 @@ DEPENDENCIES
   responders
   rspec-rails (>= 2.0.0)
   spork (~> 0.9.0.rc)
+  toystore
   twitter

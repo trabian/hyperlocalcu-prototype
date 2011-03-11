@@ -5,7 +5,7 @@ class App.model.Feedback extends Backbone.Model
 
   toUpdateJSON: =>
     subject:
-      key: this.get('subject_key')
+      key: this.get('subject_type')
       id: this.subject.id
     feedback:
       rating: this.get('rating')
