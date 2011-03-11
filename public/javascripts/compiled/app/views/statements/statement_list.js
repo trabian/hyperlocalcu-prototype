@@ -17,14 +17,16 @@ App.view.StatementList = (function() {
   };
   StatementList.prototype.render = function() {
     var statementList, visibleStatements;
-    $(this.el).html(this.template());
-    statementList = this.$('.statements');
-    visibleStatements = this.collection.toArray().slice(0, this.options.visible);
-    _.each(visibleStatements, __bind(function(statement, index) {
-      return $(statementList).append(this.statementTemplate(statement.toViewJSON()));
-    }, this));
-    if (this.collection.length > this.options.visible) {
-      $(statementList).append(this.make('li', {}, "<a href='#' class='older'>Older &#9662;</a>"));
+    if (!this.collection.isEmpty()) {
+      $(this.el).html(this.template());
+      statementList = this.$('.statements');
+      visibleStatements = this.collection.toArray().slice(0, this.options.visible);
+      _.each(visibleStatements, __bind(function(statement, index) {
+        return $(statementList).append(this.statementTemplate(statement.toViewJSON()));
+      }, this));
+      if (this.collection.length > this.options.visible) {
+        $(statementList).append(this.make('li', {}, "<a href='#' class='older'>Older &#9662;</a>"));
+      }
     }
     return this;
   };

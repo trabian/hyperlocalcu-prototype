@@ -14,6 +14,8 @@ class App.view.BalanceChart extends Backbone.View
 
   render: =>
 
+    console.log 'here'
+
     maxBalance = _.max @balances, (balance) ->
       balance[1]
 
@@ -148,7 +150,5 @@ class App.view.BalanceChart extends Backbone.View
               hover:
                 enabled: true
                 radius: 2.4 
-
-    $(@el).show()
 
     return this

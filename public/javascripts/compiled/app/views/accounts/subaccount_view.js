@@ -25,7 +25,7 @@ App.view.Subaccount = (function() {
     selected = this.model.get('selected') === true;
     $(this.el).toggleClass('selected', selected);
     this.renderStatements();
-    if (this.model.events.fetched != null) {
+    if (selected && (this.model.events.fetched != null)) {
       this.renderChart();
     }
     return this;

@@ -20,7 +20,7 @@ class App.view.Subaccount extends Backbone.View
 
     this.renderStatements()
 
-    if @model.events.fetched?
+    if selected && @model.events.fetched?
       this.renderChart()
 
     return this

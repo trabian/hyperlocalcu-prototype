@@ -39308,6 +39308,7 @@ App.view.BalanceChart = (function() {
   };
   BalanceChart.prototype.render = function() {
     var chart, fontStyle, lineColor, maxBalance, minBalance, series, tickInterval;
+    console.log('here');
     maxBalance = _.max(this.balances, function(balance) {
       return balance[1];
     });
@@ -39464,7 +39465,6 @@ App.view.BalanceChart = (function() {
         }
       }
     });
-    $(this.el).show();
     return this;
   };
   return BalanceChart;
@@ -39538,7 +39538,7 @@ App.view.Subaccount = (function() {
     selected = this.model.get('selected') === true;
     $(this.el).toggleClass('selected', selected);
     this.renderStatements();
-    if (this.model.events.fetched != null) {
+    if (selected && (this.model.events.fetched != null)) {
       this.renderChart();
     }
     return this;
@@ -40612,14 +40612,16 @@ App.view.StatementList = (function() {
   };
   StatementList.prototype.render = function() {
     var statementList, visibleStatements;
-    $(this.el).html(this.template());
-    statementList = this.$('.statements');
-    visibleStatements = this.collection.toArray().slice(0, this.options.visible);
-    _.each(visibleStatements, __bind(function(statement, index) {
-      return $(statementList).append(this.statementTemplate(statement.toViewJSON()));
-    }, this));
-    if (this.collection.length > this.options.visible) {
-      $(statementList).append(this.make('li', {}, "<a href='#' class='older'>Older &#9662;</a>"));
+    if (!this.collection.isEmpty()) {
+      $(this.el).html(this.template());
+      statementList = this.$('.statements');
+      visibleStatements = this.collection.toArray().slice(0, this.options.visible);
+      _.each(visibleStatements, __bind(function(statement, index) {
+        return $(statementList).append(this.statementTemplate(statement.toViewJSON()));
+      }, this));
+      if (this.collection.length > this.options.visible) {
+        $(statementList).append(this.make('li', {}, "<a href='#' class='older'>Older &#9662;</a>"));
+      }
     }
     return this;
   };

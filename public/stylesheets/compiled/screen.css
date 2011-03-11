@@ -2929,7 +2929,6 @@ table#timeline tbody tr.selected + tr td, table#timeline tbody tr.selected + tr 
 }
 /* line 47, ../../../frontend/sass/accounts/_all.sass */
 #accounts .share-accounts.selected .subaccounts .subaccount.selected #balance-chart, #accounts .loan-accounts.selected .subaccounts .subaccount.selected #balance-chart {
-  display: none;
   float: right;
   margin: 0.7em 0 0.3em;
 }
