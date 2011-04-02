@@ -12,6 +12,8 @@ end
 
 Factory.define :check_event do |f|
   f.check_number { Factory.next(:check_number) }
+  f.check_image "/images/sample/checks/sample_check_1.png"
+  f.check_image_back "/images/sample/checks/sample_check_1_reverse.png"
 end
 
 Factory.define :atm_event do |f|
