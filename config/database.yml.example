@@ -1,0 +1,13 @@
+development: &base
+  adapter: mysql
+  host: localhost
+  username: root
+  password: 
+  database: onlinebanking
+
+production:
+  <<: *base
+
+test:
+  <<: *base
+  database: onlinebanking_test
