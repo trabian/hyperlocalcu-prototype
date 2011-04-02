@@ -66,6 +66,8 @@ GEM
     celerity (0.8.8)
     childprocess (0.1.7)
       ffi (~> 0.6.3)
+    ci_reporter (1.6.4)
+      builder (>= 2.1.2)
     closure-compiler (1.0.0)
     compass (0.10.6)
       haml (>= 3.0.4)
@@ -242,6 +244,7 @@ DEPENDENCIES
   akephalos
   backports
   capybara
+  ci_reporter
   compass
   cucumber-rails (>= 0.3.2)
   cucumber_factory

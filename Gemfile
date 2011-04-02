@@ -69,4 +69,6 @@ group :development, :test do
 
   gem 'fastercsv'
 
+  gem 'ci_reporter'
+
 end
