@@ -8,7 +8,7 @@ class App.view.BillpayDetail extends Backbone.View
 
   renderFeedback: =>
 
-    @options.parent.renderLocationFeedbackView 'merchant'
+    @options.parent.renderLocationFeedbackView 'merchant' if @model.get('merchant')?
 
     @options.parent.addSubjectFeedbackView 'vendor' if @model.get('vendor')?
 

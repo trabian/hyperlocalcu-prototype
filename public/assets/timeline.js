@@ -40018,7 +40018,9 @@ App.view.BillpayDetail = (function() {
     return this;
   };
   BillpayDetail.prototype.renderFeedback = function() {
-    this.options.parent.renderLocationFeedbackView('merchant');
+    if (this.model.get('merchant') != null) {
+      this.options.parent.renderLocationFeedbackView('merchant');
+    }
     if (this.model.get('vendor') != null) {
       return this.options.parent.addSubjectFeedbackView('vendor');
     }
