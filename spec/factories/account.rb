@@ -5,3 +5,9 @@ Factory.define :account do |f|
   f.association :member
 
 end
+
+Factory.define :subaccount do |f|
+
+  f.association :account
+
+end
