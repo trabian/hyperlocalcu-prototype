@@ -5,6 +5,7 @@ class App.controller.AvailableServices extends Backbone.Controller
   routes:
     "billpay/signup": 'signupForBillpay'
     "billpay/no": 'rejectBillpay'
+    "loans/apply": 'showLoanApplication'
 
   signupForBillpay: =>
     @billpaySignupView or= new App.view.BillpaySignup
@@ -12,3 +13,7 @@ class App.controller.AvailableServices extends Backbone.Controller
 
   rejectBillpay: =>
     $('.available-service.billpay').hide()
+
+  showLoanApplication: =>
+    @loanApplicationView or= new App.view.LoanApplication
+    @loanApplicationView.render()

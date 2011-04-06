@@ -8,6 +8,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.controller.AvailableServices = (function() {
   function AvailableServices() {
+    this.showLoanApplication = __bind(this.showLoanApplication, this);;
     this.rejectBillpay = __bind(this.rejectBillpay, this);;
     this.signupForBillpay = __bind(this.signupForBillpay, this);;    AvailableServices.__super__.constructor.apply(this, arguments);
   }
@@ -15,7 +16,8 @@ App.controller.AvailableServices = (function() {
   AvailableServices.prototype.intialize = function(options) {};
   AvailableServices.prototype.routes = {
     "billpay/signup": 'signupForBillpay',
-    "billpay/no": 'rejectBillpay'
+    "billpay/no": 'rejectBillpay',
+    "loans/apply": 'showLoanApplication'
   };
   AvailableServices.prototype.signupForBillpay = function() {
     this.billpaySignupView || (this.billpaySignupView = new App.view.BillpaySignup);
@@ -23,6 +25,10 @@ App.controller.AvailableServices = (function() {
   };
   AvailableServices.prototype.rejectBillpay = function() {
     return $('.available-service.billpay').hide();
+  };
+  AvailableServices.prototype.showLoanApplication = function() {
+    this.loanApplicationView || (this.loanApplicationView = new App.view.LoanApplication);
+    return this.loanApplicationView.render();
   };
   return AvailableServices;
 })();

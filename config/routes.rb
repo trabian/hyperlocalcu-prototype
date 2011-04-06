@@ -7,6 +7,8 @@ Hyperlocalcu::Application.routes.draw do
   resources :atms
   resources :branches
 
+  resources :loan_applications
+
   resources :merchants do
     resources :feedbacks
   end

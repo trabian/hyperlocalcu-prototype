@@ -38438,6 +38438,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.controller.AvailableServices = (function() {
   function AvailableServices() {
+    this.showLoanApplication = __bind(this.showLoanApplication, this);;
     this.rejectBillpay = __bind(this.rejectBillpay, this);;
     this.signupForBillpay = __bind(this.signupForBillpay, this);;    AvailableServices.__super__.constructor.apply(this, arguments);
   }
@@ -38445,7 +38446,8 @@ App.controller.AvailableServices = (function() {
   AvailableServices.prototype.intialize = function(options) {};
   AvailableServices.prototype.routes = {
     "billpay/signup": 'signupForBillpay',
-    "billpay/no": 'rejectBillpay'
+    "billpay/no": 'rejectBillpay',
+    "loans/apply": 'showLoanApplication'
   };
   AvailableServices.prototype.signupForBillpay = function() {
     this.billpaySignupView || (this.billpaySignupView = new App.view.BillpaySignup);
@@ -38453,6 +38455,10 @@ App.controller.AvailableServices = (function() {
   };
   AvailableServices.prototype.rejectBillpay = function() {
     return $('.available-service.billpay').hide();
+  };
+  AvailableServices.prototype.showLoanApplication = function() {
+    this.loanApplicationView || (this.loanApplicationView = new App.view.LoanApplication);
+    return this.loanApplicationView.render();
   };
   return AvailableServices;
 })();
@@ -39036,6 +39042,49 @@ App.model.FeedbackList = (function() {
     }
   };
   return FeedbackList;
+})();
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.model.LoanApplication = (function() {
+  function LoanApplication() {
+    this.toUpdateJSON = __bind(this.toUpdateJSON, this);;    LoanApplication.__super__.constructor.apply(this, arguments);
+  }
+  __extends(LoanApplication, Backbone.Model);
+  LoanApplication.prototype.initialize = function() {
+    return this.sync = App.model.CustomSync;
+  };
+  LoanApplication.prototype.toUpdateJSON = function() {
+    return {
+      loan_application: {
+        requested_amount: this.get('requested_amount'),
+        member_number: '1234'
+      }
+    };
+  };
+  return LoanApplication;
+})();
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+App.model.LoanApplicationList = (function() {
+  function LoanApplicationList() {
+    LoanApplicationList.__super__.constructor.apply(this, arguments);
+  }
+  __extends(LoanApplicationList, Backbone.Collection);
+  LoanApplicationList.prototype.url = "/loan_applications";
+  LoanApplicationList.prototype.model = App.model.LoanApplication;
+  return LoanApplicationList;
 })();
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
@@ -40245,6 +40294,57 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   child.__super__ = parent.prototype;
   return child;
 };
+App.view.LoanApplication = (function() {
+  function LoanApplication() {
+    this.submitForm = __bind(this.submitForm, this);;
+    this.open = __bind(this.open, this);;
+    this.close = __bind(this.close, this);;    LoanApplication.__super__.constructor.apply(this, arguments);
+  }
+  __extends(LoanApplication, Backbone.View);
+  LoanApplication.prototype.id = 'loan-application-dialog';
+  LoanApplication.prototype.events = {
+    "click .form button": "submitForm"
+  };
+  LoanApplication.prototype.initialize = function(options) {
+    return this.template = App.templates['loans/application'];
+  };
+  LoanApplication.prototype.render = function() {
+    $(this.el).html(this.template());
+    $(this.el).dialog({
+      title: "Apply for a Loan",
+      width: 460,
+      height: 310,
+      open: this.open,
+      close: this.close
+    });
+    return this.$('.form button').button();
+  };
+  LoanApplication.prototype.close = function(event, ui) {
+    window.location.hash = '#';
+    return this.remove();
+  };
+  LoanApplication.prototype.open = function(event, ui) {
+    return this.delegateEvents();
+  };
+  LoanApplication.prototype.submitForm = function() {
+    var loans;
+    loans = new App.model.LoanApplicationList;
+    loans.create({
+      requested_amount: this.$('.amount').val()
+    });
+    alert('Provide instructions on what will happen next');
+    return $(this.el).dialog('close');
+  };
+  return LoanApplication;
+})();
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
 App.view.BillpaySignup = (function() {
   function BillpaySignup() {
     this.submitForm = __bind(this.submitForm, this);;
@@ -40649,6 +40749,7 @@ App.templates['events/detail'] = Handlebars.compile('<div id="event-header" clas
 App.templates['events/row'] = Handlebars.compile('<td class="date">  <span>{{ formatted_timestamp }}<span></td><td class="name">  <p class="name"><a href="#events/{{ id }}">{{ description }}</a></p>  {{#meta}}    <p class="meta">{{ . }}</p>  {{/meta}}</td><td class="amount">{{{ formatted_amount }}}</td>');
 App.templates['events/statement/row'] = Handlebars.compile('<td class="date">  <span>{{ formatted_timestamp }}<span></td><td class="name" colspan="2">  <p class="name">{{ description }}</p>  <p class="meta">    Ending Balance: {{{ ending_balance }}}  </p>  <table class="statement-table" style="display: none;">    <tr><th>Opening Balance</th><td>{{{ opening_balance }}}</td></tr>  </table></td>');
 App.templates['feedback_subjects/overview'] = Handlebars.compile('<div class="subject-info">  {{#avatar}}    <img src="{{ . }}" class="avatar" />  {{/avatar}}  <div class="name">    <h2>{{ name }}</h2>    <p class="meta">{{ meta }}</p>  </div></div>{{#feedback_totals}}<div class="averages">    {{#month}}  <div class="month average">    <h2>This Month</h2>    <div class="rating"></div>    <p class="meta">{{ average }} based on {{ count }} reviews</p>  </div>  {{/month}}  {{#year}}  <div class="year average">    <h2>This Year</h2>    <div class="rating"></div>    <p class="meta">{{ average }} based on {{ count }} reviews</p>  </div>  {{/year}}</div>{{/feedback_totals}}');
+App.templates['loans/application'] = Handlebars.compile('<div class="form">  <div class="signup-form">    <label for="loan_application-amount">Amount</label>    <input type="text" name="amount" id="loan-application-amount" class="amount" />  </div>  <div class="buttons">    <button>Apply</button>  </div></div>');
 App.templates['members/billpay_signup'] = Handlebars.compile('<div class="form">  <div class="signup-form">[Signup form]</div>  <div class="buttons">    <button>Sign up for Billpay</button>  </div></div>');
 App.templates['members/login_status'] = Handlebars.compile('<ul class="login-user">  <li>Logged in as {{name}}</li>  <li><a href="/users/sign_out">Log Out</a></li></ul><div class="last-login">Last login: {{last_login}}</div>');
 App.templates['members/messages_notice'] = Handlebars.compile('<ul>  <li class="latest-message">James responded to your recent teller feedback</li>  <li><a href="#" class="inbox">View this and 4 other unread messages</a></li></ul>');
