@@ -20,6 +20,10 @@ class App.view.Subaccount extends Backbone.View
 
     this.renderStatements()
 
+    if @model.get('name') == 'Checking'
+      this.$('.left').append "<a href='#' class='pay-bills'>Pay bills</a>"
+      this.$('.pay-bills').button()
+
     if selected && @model.events.fetched?
       this.renderChart()
 

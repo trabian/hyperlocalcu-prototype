@@ -26,6 +26,10 @@ class App.view.AccountTimeline extends Backbone.View
       @collection.fetched = true
       @collection.fetch()
 
+    this.$('.search button').button
+      icons:
+        primary: 'ui-icon-search'
+
     return this
 
   buildView: (model) =>

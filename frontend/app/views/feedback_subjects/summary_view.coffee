@@ -5,6 +5,4 @@ class App.view.FeedbackSummary extends Backbone.View
 
   render: =>
 
-    #$(@el).html '<div>summary</div>'
-
     this

@@ -45,7 +45,7 @@ group :development, :test do
   gem 'guard-cucumber'
 
   gem 'capybara'
-  
+
   gem 'akephalos'
 
   gem 'database_cleaner'

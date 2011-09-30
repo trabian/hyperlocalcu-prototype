@@ -29,6 +29,11 @@ App.view.AccountTimeline = (function() {
       this.collection.fetched = true;
       this.collection.fetch();
     }
+    this.$('.search button').button({
+      icons: {
+        primary: 'ui-icon-search'
+      }
+    });
     return this;
   };
   AccountTimeline.prototype.buildView = function(model) {

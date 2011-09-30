@@ -12,6 +12,13 @@ App.model.SubaccountList = (function() {
   }
   __extends(SubaccountList, Backbone.Collection);
   SubaccountList.prototype.model = App.model.Subaccount;
+  SubaccountList.prototype.total = function() {
+    var summer;
+    summer = function(memo, num) {
+      return memo + num;
+    };
+    return _.reduce(this.pluck('balance'), summer, 0);
+  };
   return SubaccountList;
 })();
 _.extend(App.model.SubaccountList.prototype, App.model.extension.Selectable);

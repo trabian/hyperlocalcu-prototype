@@ -38714,6 +38714,13 @@ App.model.SubaccountList = (function() {
   }
   __extends(SubaccountList, Backbone.Collection);
   SubaccountList.prototype.model = App.model.Subaccount;
+  SubaccountList.prototype.total = function() {
+    var summer;
+    summer = function(memo, num) {
+      return memo + num;
+    };
+    return _.reduce(this.pluck('balance'), summer, 0);
+  };
   return SubaccountList;
 })();
 _.extend(App.model.SubaccountList.prototype, App.model.extension.Selectable);
@@ -39243,6 +39250,11 @@ App.view.AccountTimeline = (function() {
       this.collection.fetched = true;
       this.collection.fetch();
     }
+    this.$('.search button').button({
+      icons: {
+        primary: 'ui-icon-search'
+      }
+    });
     return this;
   };
   AccountTimeline.prototype.buildView = function(model) {
@@ -39298,6 +39310,9 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.view.BalanceChart = (function() {
   function BalanceChart() {
+    this.removeChartDetail = __bind(this.removeChartDetail, this);;
+    this.addChartDetail = __bind(this.addChartDetail, this);;
+    this.chartOptions = __bind(this.chartOptions, this);;
     this.render = __bind(this.render, this);;
     this.expandChart = __bind(this.expandChart, this);;    BalanceChart.__super__.constructor.apply(this, arguments);
   }
@@ -39315,7 +39330,13 @@ App.view.BalanceChart = (function() {
     return alert('Eventually show the full chart');
   };
   BalanceChart.prototype.render = function() {
-    var chart, fontStyle, lineColor, maxBalance, minBalance, series, tickInterval;
+    this.chart = new Highcharts.Chart(this.chartOptions('balance-chart-summary', false));
+    this.detailChart = new Highcharts.Chart(this.chartOptions('balance-chart-detail', true));
+    $(this.el).hover(this.addChartDetail, this.removeChartDetail);
+    return this;
+  };
+  BalanceChart.prototype.chartOptions = function(elementId, showDetail) {
+    var fontStyle, lineColor, maxBalance, minBalance, options, series, tickInterval;
     maxBalance = _.max(this.balances, function(balance) {
       return balance[1];
     });
@@ -39344,9 +39365,9 @@ App.view.BalanceChart = (function() {
     series = {
       data: this.balances
     };
-    chart = new Highcharts.Chart({
+    return options = {
       chart: {
-        renderTo: 'balance-chart',
+        renderTo: elementId,
         width: 150,
         height: 75,
         type: 'area',
@@ -39380,12 +39401,15 @@ App.view.BalanceChart = (function() {
         },
         gridLineColor: lineColor,
         minorGridLineColor: lineColor,
+        lineWidth: showDetail ? 1 : 0,
+        tickWidth: showDetail ? 1 : 0,
         tickInterval: 24 * 3600 * 1000,
-        gridLineWidth: 1,
+        gridLineWidth: showDetail ? 1 : 0,
         showFirstLabel: false,
         tickPosition: 'inside',
         labels: {
-          y: -4,
+          enabled: showDetail,
+          y: -2,
           x: -14,
           step: 2,
           style: fontStyle
@@ -39393,8 +39417,10 @@ App.view.BalanceChart = (function() {
       },
       yAxis: {
         gridLineColor: "#ddd",
+        gridLineWidth: showDetail ? 1 : 0,
+        lineWidth: showDetail ? 1 : 0,
         tickWidth: 0,
-        minorTickWidth: 0,
+        minorTickWidth: 1,
         minorGridLineColor: lineColor,
         title: {
           text: false
@@ -39406,8 +39432,9 @@ App.view.BalanceChart = (function() {
         max: maxBalance,
         min: minBalance,
         labels: {
+          enabled: showDetail,
           style: fontStyle,
-          y: 12,
+          y: -2,
           x: 35,
           formatter: function() {
             var ret, value;
@@ -39438,14 +39465,14 @@ App.view.BalanceChart = (function() {
         },
         borderRadius: 2,
         borderWidth: 1,
-        borderColor: "#4497cd"
+        borderColor: "#ccc"
       },
       plotOptions: {
         area: {
-          fillColor: 'rgba(68, 151, 205, 0.05)',
+          fillColor: 'rgba(0, 0, 0, 0.05)',
           animation: 5000,
           lineWidth: 1,
-          lineColor: 'rgba(68, 151, 205, 0.7)',
+          lineColor: 'rgba(0, 0, 0, 0.25)',
           shadow: false,
           events: {
             click: this.expandChart
@@ -39455,12 +39482,12 @@ App.view.BalanceChart = (function() {
               enabled: true,
               marker: {
                 lineWidth: 1,
-                lineColor: 'rgba(68, 151, 205, 1)'
+                lineColor: 'rgba(0, 0, 0, 0.7)'
               }
             }
           },
           marker: {
-            lineColor: 'rgba(68, 151, 205, 1)',
+            lineColor: 'rgba(0, 0, 0, 0.5)',
             radius: 1.4,
             states: {
               hover: {
@@ -39471,8 +39498,15 @@ App.view.BalanceChart = (function() {
           }
         }
       }
-    });
-    return this;
+    };
+  };
+  BalanceChart.prototype.addChartDetail = function() {
+    this.$('.chart-summary').hide();
+    return this.$('.chart-detail').show();
+  };
+  BalanceChart.prototype.removeChartDetail = function() {
+    this.$('.chart-summary').show();
+    return this.$('.chart-detail').hide();
   };
   return BalanceChart;
 })();
@@ -39497,7 +39531,13 @@ App.view.SubaccountList = (function() {
     }, this));
   };
   SubaccountList.prototype.render = function() {
-    $(this.el).html(this.template(this.options));
+    $(this.el).html(this.template({
+      title: this.options.title,
+      total: App.helper.currency.format(this.collection.total())
+    }));
+    if (this.options.className === 'share-accounts' && this.collection.total() > 4000) {
+      this.$('.offer').show();
+    }
     this.renderSubaccounts();
     return this;
   };
@@ -39545,6 +39585,10 @@ App.view.Subaccount = (function() {
     selected = this.model.get('selected') === true;
     $(this.el).toggleClass('selected', selected);
     this.renderStatements();
+    if (this.model.get('name') === 'Checking') {
+      this.$('.left').append("<a href='#' class='pay-bills'>Pay bills</a>");
+      this.$('.pay-bills').button();
+    }
     if (selected && (this.model.events.fetched != null)) {
       this.renderChart();
     }
@@ -40066,7 +40110,9 @@ App.view.CardDetail = (function() {
   }
   __extends(CardDetail, App.view.EventDetail);
   CardDetail.prototype.initialize = function() {
-    return this.model.bind('change:merchant', this.render);
+    return this.model.bind('change:merchant', __bind(function() {
+      return this.options.parent.options.mainView.renderEventDetail(this.model);
+    }, this));
   };
   CardDetail.prototype.render = function() {
     $(this.el).html(App.templates['events/card/detail'](this.model.toDetailJSON()));
@@ -40354,7 +40400,8 @@ App.view.MemberDashboard = (function() {
       id: 'event-detail-view'
     }));
     this.eventDetailView = new App.view.EventDetail({
-      el: $('#event-detail-view')
+      el: $('#event-detail-view'),
+      mainView: this
     });
     this.eventDetailView.el.bind('show', __bind(function() {
       return $(this.accountView.el).hide();
@@ -40637,12 +40684,12 @@ App.view.StatementList = (function() {
 App.templates = App.templates || {};
 
 App.templates['accounts/show'] = Handlebars.compile('<h3 class="account-title">  Account <span class="account-number">#{{ number }}</span></h3>');
-App.templates['accounts/subaccount'] = Handlebars.compile('<div class="balances">  <div class="balance">{{{formattedBalance}}}</div>  {{#formattedAvailableBalance}}    <div class="available">Available: <span class="available-balance">{{{.}}}</span></div>  {{/formattedAvailableBalance}}</div>{{#selected}}  <h3>{{../name}}</h3>{{/selected}}{{^selected}}  <h3><a href="#accounts/{{account_id}}/subaccounts/{{id}}">{{name}}</a></h3>{{/selected}}<div class="meta">  <span class="subaccount-number">    {{accountNumber}}-<strong>{{suffix}}</strong>  </span>  |  <a href="#" class="manage">manage account &#9662;</a></div>{{#selected}}  <div class="left">  </div>  <div id="balance-chart"></div>{{/selected}}');
-App.templates['accounts/subaccount_list'] = Handlebars.compile('<h2>{{title}}</h2><div class="subaccounts"></div>');
-App.templates['accounts/timeline'] = Handlebars.compile('<table id="timeline">  <thead class="ui-widget-header">    <tr>      <td class="date">Date</td>      <td class="name">Description</td>      <td class="amount">Amount</td>    </tr>  </thead>  <tbody class="ui-widget-content"></tbody></table>');
+App.templates['accounts/subaccount'] = Handlebars.compile('<div class="balances">  <div class="balance">{{{formattedBalance}}}</div>  {{#formattedAvailableBalance}}    <div class="available">Available: <span class="available-balance">{{{.}}}</span></div>  {{/formattedAvailableBalance}}</div>{{#selected}}  <h3>{{../name}}</h3>{{/selected}}{{^selected}}  <h3><a href="#accounts/{{account_id}}/subaccounts/{{id}}">{{name}}</a></h3>{{/selected}}<div class="meta">  <span class="subaccount-number">    {{accountNumber}}-<strong>{{suffix}}</strong>  </span>  |  <a href="#" class="manage">manage account &#9662;</a></div>{{#selected}}  <div class="left">  </div>  <div id="balance-chart">    <div class="chart-summary" id="balance-chart-summary"></div>    <div id="balance-chart-detail" class="chart-detail" style="display: none;"></div>  </div>{{/selected}}');
+App.templates['accounts/subaccount_list'] = Handlebars.compile('<h2>{{title}}</h2><div class="subaccounts"></div><div class="totals">  <span class="label">Total {{title}}</span>  <span class="total">{{{total}}}</span></div><div class="offer" style="display: none;">  <h2>Can we help your money earn money?</h2>  <p>Your share account balance has been over $4,000 for the past three months.  Would you like to consider opening a money market account to earn more on your balance?</p>  <ul>    <li class="yes"><a href="#">Sure, show me more.</a></li>    <li class="no"><a href="#">No, thanks.</a></li>  </ul></div>');
+App.templates['accounts/timeline'] = Handlebars.compile('<div class="navigation">  <div class="search">    <input type="text" placeholder="Search by name, date, or amount">    <button>Search</button>  </div>  <div class="account-and-dates">    <a href="#" class="account">Rewards Checking &#9662;</a>    transactions from the past    <a href="#" class="dates">30 days &#9662;</a>  </div></div><table id="timeline">  <thead class="ui-widget-header">    <tr>      <td class="date">Date</td>      <td class="name">Description</td>      <td class="amount">Amount</td>    </tr>  </thead>  <tbody class="ui-widget-content"></tbody></table>');
 App.templates['common/feedback/comment'] = Handlebars.compile('<a href="#" class="cancel">Cancel</a><h4>{{title}}</h4><textarea>{{comment}}</textarea><div class="buttons">  <button>{{ buttonText }}</button>  <p><strong>Your review will be shared, not your name.</strong>  <br />Enjoy your anonymity. Use it for good, not evil.</p></div>');
 App.templates['common/feedback/feedback'] = Handlebars.compile('<div class="avatar-and-question">  {{#avatar}}    <div class="avatar"><img src="{{ . }}" /></div>  {{/avatar}}  <div class="question-and-rating">    <div class="question">{{{ question }}}</div>  </div></div>');
-App.templates['common/feedback/timeline/row'] = Handlebars.compile('<td class="date">  <span>{{ formatted_timestamp }}<span></td><td class="comment">  {{#comment}}  <p class="description">{{ . }}</p>  {{/comment}}  <p class="meta">Feedback provided by {{ member_name }} for service on {{ formatted_service_timestamp }} | <a href="#">Create a service request</a></p></td><td class="rating"></td>');
+App.templates['common/feedback/timeline/row'] = Handlebars.compile('<td class="date">  <span>{{ formatted_timestamp }}<span></td><td class="comment">  {{#comment}}  <p class="description">{{ . }}</p>  {{/comment}}  <p class="meta">Feedback provided by {{ member_name }} for service on {{ formatted_service_timestamp }} | <a href="#">Create a ticket</a></p></td><td class="rating"></td>');
 App.templates['common/social/overview'] = Handlebars.compile('<div class="twitter">  {{#avatar}}    <img src="{{ . }}" class="avatar" />  {{/avatar}}  <div class="latest-tweet">  {{^twitter_username}}    <div class="form">      <input type="text" placeholder="Twitter username for {{name}}" class="text" />      <button>Add</button>    </div>  {{/twitter_username}}  </div></div><p class="security">  Don\'t trust Twitter with your financial information? That\'s ok -- <a href="#">neither do we</a>.</p>');
 App.templates['events/billpay/detail'] = Handlebars.compile('<div class="processing-summary">  <p class="processing-days">Your payment arrived in <strong>{{ bill_payment_processing_days }} business days</strong>.</p>  <p class="submitted-date">Payment submitted on {{ bill_payment_submitted_date }}</p></div>');
 App.templates['events/card/detail'] = Handlebars.compile('<div class="receipt-and-account-info">  {{#receipt_image}}    <div class="receipt-image">      <a href="{{ . }}"><img src="{{ . }}" /></a>    </div>  {{/receipt_image}}  {{^receipt_image}}    <div class="receipt-upload">      <a href="#" class="upload">Upload your receipt</a>      <p class="email">        or email it to <a href="mailto:receipts+092341234@vcu.com">receipts+092341234@vcu.com</a>      </p>    </div>  {{/receipt_image}}  {{#account_information}}    <div class="account-information">      {{{ . }}}    </div>  {{/account_information}}</div>');

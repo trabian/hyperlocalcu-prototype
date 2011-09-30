@@ -25,6 +25,10 @@ App.view.Subaccount = (function() {
     selected = this.model.get('selected') === true;
     $(this.el).toggleClass('selected', selected);
     this.renderStatements();
+    if (this.model.get('name') === 'Checking') {
+      this.$('.left').append("<a href='#' class='pay-bills'>Pay bills</a>");
+      this.$('.pay-bills').button();
+    }
     if (selected && (this.model.events.fetched != null)) {
       this.renderChart();
     }

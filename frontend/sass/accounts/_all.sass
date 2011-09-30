@@ -1,5 +1,21 @@
 $left_account_padding = 12px
 
+#account-timeline
+  .navigation
+    margin-top: -5px
+    +clearfix
+    .search
+      float: right
+      input
+        width: 150px
+        font-size: 9px
+        padding: 6px 5px 7px
+    .account-and-dates
+      float: left
+      padding: 7px 0
+      .account
+        margin-right: 2px
+
 #accounts
   color: #626262
   padding: 7px 0 0 2px
@@ -21,11 +37,11 @@ $left_account_padding = 12px
       padding-left: $left_account_padding
     &.selected
       .subaccounts
-        background: #f4f9ec
+        background: #f9f9f9
         .subaccount
           border: none
           .balance
-            color: #00890b
+            color: $deposit_color
           &.selected
             +clearfix
             +box-shadow(#eee, 3px)
@@ -48,6 +64,40 @@ $left_account_padding = 12px
               //display: none
               float: right
               margin: 0.7em 0 0.3em
+    .totals
+      font-weight: normal
+      font-size: 11px
+      margin-top: 5px
+      +clearfix
+      .label
+        float: left
+        margin-left: 12px
+      .total
+        float: right
+        margin-right: 18px
+        font-weight: bold
+    .offer
+      +speech-bubble(30px, #F3EEE3)
+      margin: 15px 0 -10px 10px
+      font-size: 11px
+      background: url(/images/background.png) repeat-x left -200px
+      h2
+        margin: 0 0 5px
+        padding: 0
+        font-size: 13px
+        font-weight: bold
+      ul
+        +divided-horizontal-list(8px, #ccc)
+        margin: 0 0 10px 55px
+        li
+          line-height: 1.2em
+          &.yes
+            font-weight: bold
+
+  .share-accounts
+    .totals
+      .total
+        color: $deposit_color
   .subaccounts
     border: 1px solid #b4b4b4
     border-width: 1px 0
@@ -84,6 +134,8 @@ $left_account_padding = 12px
           li
             line-height: 1.2em
             font-size: 10px
+        a.pay-bills
+          margin-top: 15px
       .balances
         float: right
         text-align: right

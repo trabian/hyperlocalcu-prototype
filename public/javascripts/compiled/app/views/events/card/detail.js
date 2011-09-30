@@ -14,7 +14,9 @@ App.view.CardDetail = (function() {
   }
   __extends(CardDetail, App.view.EventDetail);
   CardDetail.prototype.initialize = function() {
-    return this.model.bind('change:merchant', this.render);
+    return this.model.bind('change:merchant', __bind(function() {
+      return this.options.parent.options.mainView.renderEventDetail(this.model);
+    }, this));
   };
   CardDetail.prototype.render = function() {
     $(this.el).html(App.templates['events/card/detail'](this.model.toDetailJSON()));

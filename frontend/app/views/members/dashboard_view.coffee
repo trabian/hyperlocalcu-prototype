@@ -26,7 +26,7 @@ class App.view.MemberDashboard extends Backbone.View
       model: @model
 
     $('#global').append @loginStatusView.render().el
-    
+
   renderTimeline: (subaccount) =>
 
     @timelineView = new App.view.AccountTimeline
@@ -58,6 +58,7 @@ class App.view.MemberDashboard extends Backbone.View
 
     @eventDetailView = new App.view.EventDetail
       el: $('#event-detail-view')
+      mainView: this
 
     @eventDetailView.el.bind 'show', =>
       $(@accountView.el).hide()

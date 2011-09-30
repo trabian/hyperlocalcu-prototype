@@ -22,21 +22,21 @@ namespace :seed do
     ["Home Equity Line of Credit", -40000.0, -500.0, "21", "loan"]
   ]
 
-  #EVENT_TYPE_FREQUENCIES = [
-    #[:card_event, 40],
-    #[:atm_event, 2],
-    #[:branch_event, 2],
-    #[:check_event, 4],
-    #[:billpay_event, 5]
-  #]
-
   EVENT_TYPE_FREQUENCIES = [
-    [:card_event, 1],
-    [:atm_event, 1],
-    [:branch_event, 1],
-    [:check_event, 1],
-    [:billpay_event, 1]
+    [:card_event, 40],
+    [:atm_event, 2],
+    [:branch_event, 2],
+    [:check_event, 4],
+    [:billpay_event, 5]
   ]
+
+  # EVENT_TYPE_FREQUENCIES = [
+  #   [:card_event, 1],
+  #   [:atm_event, 1],
+  #   [:branch_event, 1],
+  #   [:check_event, 1],
+  #   [:billpay_event, 1]
+  # ]
 
   EVENT_TYPES = EVENT_TYPE_FREQUENCIES.collect { |event_type, frequency|
     [event_type] * frequency
@@ -69,7 +69,13 @@ namespace :seed do
       subaccounts << create_subaccount(account, SUBACCOUNTS[i])
     end
 
-    add_subaccount_events(subaccounts[0])
+    checking = subaccounts[0]
+
+    add_subaccount_events(checking)
+
+    checking.update_attributes(:available_balance => checking.balance)
+
+    checking.save!
 
   end
 
@@ -86,6 +92,15 @@ namespace :seed do
                          :name => subaccount_info[0],
                          :account_type => subaccount_info[4],
                          :suffix => subaccount_info[3])
+
+    3.times do |i|
+      subaccount.statements.create(
+        :statement_date => (i + 1).months.ago,
+        :filename => '/images/sample/statement.pdf'
+      )
+    end
+
+    subaccount
 
   end
 
@@ -153,7 +168,7 @@ namespace :seed do
 
     MERCHANTS = FasterCSV.read(Rails.root.join("db", "seed", "merchants.csv"))
 
-    1.times { create_member }
+    3.times { create_member }
 
   end
 

@@ -61,7 +61,8 @@ App.view.MemberDashboard = (function() {
       id: 'event-detail-view'
     }));
     this.eventDetailView = new App.view.EventDetail({
-      el: $('#event-detail-view')
+      el: $('#event-detail-view'),
+      mainView: this
     });
     this.eventDetailView.el.bind('show', __bind(function() {
       return $(this.accountView.el).hide();

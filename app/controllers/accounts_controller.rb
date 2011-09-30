@@ -1,10 +1,12 @@
 class AccountsController < ApplicationController
 
-  before_filter :authenticate_user!
+  # before_filter :authenticate_user!
 
   inherit_resources
 
   def index
+    
+    current_user ||= User.first
 
     @member = current_user.member
 

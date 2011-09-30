@@ -8,6 +8,9 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 };
 App.view.BalanceChart = (function() {
   function BalanceChart() {
+    this.removeChartDetail = __bind(this.removeChartDetail, this);;
+    this.addChartDetail = __bind(this.addChartDetail, this);;
+    this.chartOptions = __bind(this.chartOptions, this);;
     this.render = __bind(this.render, this);;
     this.expandChart = __bind(this.expandChart, this);;    BalanceChart.__super__.constructor.apply(this, arguments);
   }
@@ -25,7 +28,13 @@ App.view.BalanceChart = (function() {
     return alert('Eventually show the full chart');
   };
   BalanceChart.prototype.render = function() {
-    var chart, fontStyle, lineColor, maxBalance, minBalance, series, tickInterval;
+    this.chart = new Highcharts.Chart(this.chartOptions('balance-chart-summary', false));
+    this.detailChart = new Highcharts.Chart(this.chartOptions('balance-chart-detail', true));
+    $(this.el).hover(this.addChartDetail, this.removeChartDetail);
+    return this;
+  };
+  BalanceChart.prototype.chartOptions = function(elementId, showDetail) {
+    var fontStyle, lineColor, maxBalance, minBalance, options, series, tickInterval;
     maxBalance = _.max(this.balances, function(balance) {
       return balance[1];
     });
@@ -54,9 +63,9 @@ App.view.BalanceChart = (function() {
     series = {
       data: this.balances
     };
-    chart = new Highcharts.Chart({
+    return options = {
       chart: {
-        renderTo: 'balance-chart',
+        renderTo: elementId,
         width: 150,
         height: 75,
         type: 'area',
@@ -90,12 +99,15 @@ App.view.BalanceChart = (function() {
         },
         gridLineColor: lineColor,
         minorGridLineColor: lineColor,
+        lineWidth: showDetail ? 1 : 0,
+        tickWidth: showDetail ? 1 : 0,
         tickInterval: 24 * 3600 * 1000,
-        gridLineWidth: 1,
+        gridLineWidth: showDetail ? 1 : 0,
         showFirstLabel: false,
         tickPosition: 'inside',
         labels: {
-          y: -4,
+          enabled: showDetail,
+          y: -2,
           x: -14,
           step: 2,
           style: fontStyle
@@ -103,8 +115,10 @@ App.view.BalanceChart = (function() {
       },
       yAxis: {
         gridLineColor: "#ddd",
+        gridLineWidth: showDetail ? 1 : 0,
+        lineWidth: showDetail ? 1 : 0,
         tickWidth: 0,
-        minorTickWidth: 0,
+        minorTickWidth: 1,
         minorGridLineColor: lineColor,
         title: {
           text: false
@@ -116,8 +130,9 @@ App.view.BalanceChart = (function() {
         max: maxBalance,
         min: minBalance,
         labels: {
+          enabled: showDetail,
           style: fontStyle,
-          y: 12,
+          y: -2,
           x: 35,
           formatter: function() {
             var ret, value;
@@ -148,14 +163,14 @@ App.view.BalanceChart = (function() {
         },
         borderRadius: 2,
         borderWidth: 1,
-        borderColor: "#4497cd"
+        borderColor: "#ccc"
       },
       plotOptions: {
         area: {
-          fillColor: 'rgba(68, 151, 205, 0.05)',
+          fillColor: 'rgba(0, 0, 0, 0.05)',
           animation: 5000,
           lineWidth: 1,
-          lineColor: 'rgba(68, 151, 205, 0.7)',
+          lineColor: 'rgba(0, 0, 0, 0.25)',
           shadow: false,
           events: {
             click: this.expandChart
@@ -165,12 +180,12 @@ App.view.BalanceChart = (function() {
               enabled: true,
               marker: {
                 lineWidth: 1,
-                lineColor: 'rgba(68, 151, 205, 1)'
+                lineColor: 'rgba(0, 0, 0, 0.7)'
               }
             }
           },
           marker: {
-            lineColor: 'rgba(68, 151, 205, 1)',
+            lineColor: 'rgba(0, 0, 0, 0.5)',
             radius: 1.4,
             states: {
               hover: {
@@ -181,8 +196,15 @@ App.view.BalanceChart = (function() {
           }
         }
       }
-    });
-    return this;
+    };
+  };
+  BalanceChart.prototype.addChartDetail = function() {
+    this.$('.chart-summary').hide();
+    return this.$('.chart-detail').show();
+  };
+  BalanceChart.prototype.removeChartDetail = function() {
+    this.$('.chart-summary').show();
+    return this.$('.chart-detail').hide();
   };
   return BalanceChart;
 })();

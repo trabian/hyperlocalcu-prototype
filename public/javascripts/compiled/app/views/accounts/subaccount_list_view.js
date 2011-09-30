@@ -19,7 +19,13 @@ App.view.SubaccountList = (function() {
     }, this));
   };
   SubaccountList.prototype.render = function() {
-    $(this.el).html(this.template(this.options));
+    $(this.el).html(this.template({
+      title: this.options.title,
+      total: App.helper.currency.format(this.collection.total())
+    }));
+    if (this.options.className === 'share-accounts' && this.collection.total() > 4000) {
+      this.$('.offer').show();
+    }
     this.renderSubaccounts();
     return this;
   };

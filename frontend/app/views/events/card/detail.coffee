@@ -1,7 +1,13 @@
 class App.view.CardDetail extends App.view.EventDetail
 
   initialize: ->
-    @model.bind 'change:merchant', @render
+    @model.bind 'change:merchant', =>
+      @options.parent.options.mainView.renderEventDetail @model
+      # @options.parent.render()
+
+      # this.render()
+
+      # this.renderFeedback()
 
   render: =>
 

@@ -14,6 +14,16 @@ class App.view.BalanceChart extends Backbone.View
 
   render: =>
 
+    @chart = new Highcharts.Chart @chartOptions('balance-chart-summary', false)
+
+    @detailChart = new Highcharts.Chart @chartOptions('balance-chart-detail', true)
+
+    $(@el).hover @addChartDetail, @removeChartDetail
+
+    return this
+
+  chartOptions: (elementId, showDetail) =>
+
     maxBalance = _.max @balances, (balance) ->
       balance[1]
 
@@ -45,9 +55,10 @@ class App.view.BalanceChart extends Backbone.View
     series =
       data: @balances
 
-    chart = new Highcharts.Chart
+
+    options =
       chart:
-        renderTo: 'balance-chart'
+        renderTo: elementId
         width: 150
         height: 75
         type: 'area'
@@ -74,19 +85,24 @@ class App.view.BalanceChart extends Backbone.View
           day: '%b %e'
         gridLineColor: lineColor
         minorGridLineColor: lineColor
+        lineWidth: if showDetail then 1 else 0
+        tickWidth: if showDetail then 1 else 0
         tickInterval: 24 * 3600 * 1000
-        gridLineWidth: 1
+        gridLineWidth: if showDetail then 1 else 0
         showFirstLabel: false
         tickPosition: 'inside'
         labels:
-          y: -4
+          enabled: showDetail
+          y: -2
           x: -14
           step: 2
           style: fontStyle
       yAxis:
         gridLineColor: "#ddd"
+        gridLineWidth: if showDetail then 1 else 0
+        lineWidth: if showDetail then 1 else 0
         tickWidth: 0
-        minorTickWidth: 0
+        minorTickWidth: 1
         minorGridLineColor: lineColor
         title:
           text: false
@@ -97,8 +113,9 @@ class App.view.BalanceChart extends Backbone.View
         max: maxBalance
         min: minBalance
         labels:
+          enabled: showDetail
           style: fontStyle
-          y: 12 
+          y: -2 
           x: 35
           formatter: ->
 
@@ -113,7 +130,7 @@ class App.view.BalanceChart extends Backbone.View
               ret = Highcharts.numberFormat(value, 0, ',')
 
             '$' + ret
-        
+
       series: [series]
       legend:
         enabled: false
@@ -125,13 +142,13 @@ class App.view.BalanceChart extends Backbone.View
           padding: "5px 10px"
         borderRadius: 2
         borderWidth: 1
-        borderColor: "#4497cd"
+        borderColor: "#ccc"
       plotOptions:
         area:
-          fillColor: 'rgba(68, 151, 205, 0.05)'
+          fillColor: 'rgba(0, 0, 0, 0.05)'
           animation: 5000
           lineWidth: 1
-          lineColor: 'rgba(68, 151, 205, 0.7)'
+          lineColor: 'rgba(0, 0, 0, 0.25)'
           shadow: false
           events:
             click: @expandChart
@@ -140,13 +157,19 @@ class App.view.BalanceChart extends Backbone.View
               enabled: true
               marker:
                 lineWidth: 1
-                lineColor: 'rgba(68, 151, 205, 1)'
+                lineColor: 'rgba(0, 0, 0, 0.7)'
           marker:
-            lineColor: 'rgba(68, 151, 205, 1)'
+            lineColor: 'rgba(0, 0, 0, 0.5)'
             radius: 1.4
             states:
               hover:
                 enabled: true
                 radius: 2.4 
 
-    return this
+  addChartDetail: =>
+    this.$('.chart-summary').hide()
+    this.$('.chart-detail').show()
+
+  removeChartDetail: =>
+    this.$('.chart-summary').show()
+    this.$('.chart-detail').hide()

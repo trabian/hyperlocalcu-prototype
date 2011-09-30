@@ -9,7 +9,11 @@ class App.view.SubaccountList extends Backbone.View
 
   render: =>
 
-    $(@el).html @template(@options)
+    $(@el).html @template
+      title: @options.title
+      total: App.helper.currency.format(@collection.total())
+
+    this.$('.offer').show() if @options.className == 'share-accounts' && @collection.total() > 4000
 
     this.renderSubaccounts()
 

@@ -2,9 +2,9 @@
 !blueprint_grid_width = 30px
 !blueprint_grid_margin = 10px
 
-$font_color = darken(#5F83B9, 5)
+$font_color = #333
 $subtle_color = #7b7b7b
-$link_color = #4497cd
+$link_color = darken(#AB0634, 2)
 
 $timeline_row_date_border_color = lighten(#A7CFE6, 10)
 $timeline_row_stripe_color = #f6f3e9
@@ -22,7 +22,7 @@ $timeline_row_date_border_color = $timeline_row_selected_border_color
 
 $timeline_font_color = #666
 
-$deposit_color = #090
+$deposit_color = darken(#090, 10)
 
 @import compass/reset
 @import compass/utilities
@@ -45,6 +45,7 @@ textarea
   padding: 0
   a
     +link-colors($link_color, $link_color)
+    +hover-link
   #main
     +column(15)
     +box-shadow(#ddd, 1px)

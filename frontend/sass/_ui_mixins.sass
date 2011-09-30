@@ -1,4 +1,4 @@
-=speech-bubble($right)
+=speech-bubble($right, $background-color: #fff)
   position: relative
   margin: 10px 0 0 0
   background: #fff
@@ -22,7 +22,7 @@
 
   &::after
     border: 12px solid transparent
-    border-bottom-color: #fff
+    border-bottom-color: $background-color
     right: $right
     top: -24px
 
